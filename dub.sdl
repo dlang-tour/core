@@ -1,0 +1,6 @@
+name "dlang-tour"
+description "A simple vibe.d server application."
+copyright "Copyright © 2015, André Stein"
+authors "André Stein"
+dependency "vibe-d" version="~>0.7.23"
+versions "VibeDefaultMain"

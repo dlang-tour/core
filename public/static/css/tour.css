@@ -1,0 +1,28 @@
+#program-output {
+	font-family: monospace;
+	border-top: 2px solid #666;
+	background-color: #ccc;
+}
+
+#tour-content {
+	background-color: #efefef;
+	font-size: 14pt;
+}
+
+#command-box {
+	padding: 10px;
+}
+
+#content {
+	margin: 50px 15px 0px 15px;
+}
+
+#code-box {
+	/*position: fixed;
+	top: 50px;
+	width: auto;*/
+}
+
+body {
+	padding-bottom: 50px;
+}

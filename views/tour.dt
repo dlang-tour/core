@@ -1,0 +1,30 @@
+extends base
+
+block head
+	script(src="/static/js/tour-controller.js")
+	link(rel="stylesheet", href="/static/lib/codemirror/lib/codemirror.css")
+	script(src="/static/lib/codemirror/lib/codemirror.js")
+	script(src="/static/lib/codemirror/mode/d/d.js")
+	link(rel="stylesheet", href="/static/lib/codemirror/theme/elegant.css")
+	script(src="/static/lib/ui-codemirror.js")
+	link(rel="stylesheet", href="/static/css/tour.css")
+
+block content
+	#content(ng-controller="DlangTourAppCtrl as ctrl", ng-init="sourceCode = resstCode = '#{sourceCode}'")
+		.row
+			.col-md-6
+				#code-box(ng-hide="'' == sourceCode")
+					ui-codemirror(ui-codemirror-opts="editorOptions", ng-model="sourceCode")
+					.text-right#command-box
+						button.btn.btn-primary(ng-click="run()") Run
+						button.btn.btn-default(ng-click="reset()") Reset
+					div
+						pre#program-output {{programOutput}}
+			.col-md-6#tour-content!= htmlContent
+
+	nav.navbar.navbar-default.navbar-fixed-bottom
+		.container.text-center.h2
+			a(href="#{previousLink}", ng-show="'' != '#{previousLink}'") <
+			| #{section} /
+			span.small #{sectionCount}
+			a(href="#{nextLink}", ng-show="'' != '#{nextLink}'") >
