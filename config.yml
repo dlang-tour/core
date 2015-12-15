@@ -1,0 +1,7 @@
+port: 8080
+listen:
+    - ::1
+    - 127.0.0.1
+exec:
+    driver: stupidlocal
+    cache: true

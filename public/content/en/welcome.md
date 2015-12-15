@@ -4,7 +4,8 @@
 Welcome to the online tour of the *D Programming language*.
 
 This tour will give you an overview of this powerful and expressive systems
-programming language.
+programming language which compiles directly to efficient, *native*
+machine code.
 
 The navigation bar at the top of the page allows quick access to the content
 of this tour. The tour is divided into chapters with a number of sections.
@@ -52,6 +53,31 @@ download section:
 
 GDC and LDC are more likely behind the DMD frontend's versions but provide
 better optimization levels as well as support for other platforms like e.g. ARM.
+
+# Run D program locally
+
+D's standard build tool is [dub](http://code.dlang.org). When dub is installed
+locally a new project `test` can be created using the command line
+
+    dub init test
+
+Running `dub` inside this folder will fetch all dependencies, compile the
+application and run it. `dub build` will just compile the project.
+
+Given a D file `test.d` a binary can be created using *DMD* using the
+following command:
+
+    dmd test.d
+
+The helper tool `rdmd` distributed with the DMD compiler
+will make sure to compile all dependencies and automatically runs
+the resulting app:
+
+    rdmd test.d
+
+On UNIX systems the shebang line `#!/usr/bin/env rdmd` can be put
+on the first line of a executable D file to allow usages
+like with other script langugaes.
 
 # Documentation & Further reading
 

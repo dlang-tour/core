@@ -48,7 +48,7 @@ class StupidLocal: IExecProvider
 		typeof(return) result;
 		auto task = runTask(() {
 			auto tmpfile = getTempFile();
-			//scope(exit) std.file.remove(tmpfile.name);
+			scope(exit) std.file.remove(tmpfile.name);
 
 			tmpfile.write(source);
 			tmpfile.close();

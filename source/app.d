@@ -3,19 +3,51 @@ import std.algorithm;
 
 import webinterface;
 import contentprovider;
+import config;
 
 import rest.apiv1;
 
 import exec.cache;
 import exec.stupidlocal;
+import exec.dpaste;
+import exec.iexecprovider;
+import exec.off;
+
+private IExecProvider createExecProvider(Config config)
+{
+	IExecProvider execProvider;
+
+	switch (config.execProvider) {
+		case "stupidlocal":
+			execProvider = new StupidLocal;
+			break;
+		case "dpaste":
+			execProvider = new DPaste;
+			break;
+		case "off":
+			return new Off;
+		default:
+			throw new Exception("Unknown exec provider %s".format(config.execProvider));
+	}
+
+	if (config.enableExecCache)
+		return new Cache(execProvider);
+	return execProvider;
+}
 
 shared static this()
 {
-	auto settings = new HTTPServerSettings;
-	settings.port = 8080;
-	settings.bindAddresses = ["::1", "127.0.0.1"];
+	string configFile = "config.yml";
+	readOption("c|config", &configFile, "Configuration file");
+	auto config = new Config(configFile);
 
-	auto execProvider = new StupidLocal;
+	logInfo("Starting Dlang-tour with configuration: %s", config);
+
+	auto settings = new HTTPServerSettings;
+	settings.port = config.port;
+	settings.bindAddresses = config.bindAddresses;
+
+	auto execProvider = createExecProvider(config);
 
 	auto contentProvider = new ContentProvider("public/content");
 	auto urlRouter = new URLRouter;
@@ -27,9 +59,4 @@ shared static this()
 		.get("/static/*", serveStaticFiles("public/static/", fsettings));
 
 	listenHTTP(settings, urlRouter);
-}
-
-void hello(HTTPServerRequest req, HTTPServerResponse res)
-{
-	res.writeBody("Hello, World!");
 }

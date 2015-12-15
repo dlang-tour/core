@@ -19,7 +19,6 @@ class ContentProvider
 		"welcome",
 		"basics",
 		"gems",
-		"ranges",
 		"concurrency",
 		"vibed",
 	];
@@ -91,13 +90,11 @@ class ContentProvider
 						enforce(null is (language in chapterTitle_) || null is (chapter in chapterTitle_[language]),
 								new Exception("%s: Just one empty chapter title allowed: %s".format(filename, section.title)));
 						chapterTitle_[language][chapter] = section.title;
-						logInfo("%s: chapter title = %s", filename, section.title);
 					} else {
 						auto content = updateContent(language, chapter, ++currentSection);
 						content.title = section.title;
 						content.html = vibe.textfilter.markdown.filterMarkdown(section.content,
 							MarkdownFlags.backtickCodeBlocks | MarkdownFlags.vanillaMarkdown);
-						logInfo("%s: section %d = %s", filename, currentSection, section.title);
 					}
 				} else {
 					throw new Exception("%s: Illegal section %s".format(filename, section.title));
@@ -150,14 +147,16 @@ class ContentProvider
 	{
 		auto chapterTitles = language in chapterTitle_;
 		enforce(chapterTitles !is null, new Exception("%s not known.".format(language)));
+		enforce(ChapterOrdering.length == content_[language].length,
+				new Exception("Chapter ordering doesn't match chapters on disk!"));
 
 		struct Chapter {
 			string title;
 			string chapterId;
 			Tuple!(string, "title", int, "sectionId")[] sections;
 		}
-		Chapter[] toc;
-		toc.length = content_[language].length;
+		
+		auto toc = new Chapter[content_[language].length];
 		
 		foreach (chapterId, sections; content_[language]) {
 			auto idx = ChapterOrdering.countUntil(chapterId);

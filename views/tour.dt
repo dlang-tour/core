@@ -10,7 +10,7 @@ block head
 	link(rel="stylesheet", href="/static/css/tour.css")
 
 block content
-	#content(ng-controller="DlangTourAppCtrl as ctrl", ng-init="sourceCode = resstCode = '#{sourceCode}'")
+	#content(ng-controller="DlangTourAppCtrl as ctrl", ng-init="sourceCode = resetCode = '#{sourceCode}'")
 		.row
 			.col-md-6
 				#code-box(ng-hide="'' == sourceCode")
