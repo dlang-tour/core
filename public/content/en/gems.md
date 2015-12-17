@@ -17,8 +17,8 @@ It is possible to write
 
     a.bar().foo()
 
-UFCS becomes especially important when dealing with
-[Ranges](/tour/ranges/01) where several alorithms can be put
+UFCS is especially important when dealing with
+*Ranges* where several alorithms can be put
 together to perform complex operations, still allowing
 to write clear and manageable code.
 
@@ -94,11 +94,69 @@ void main()
 
 # Unittesting
 
-...
+D has unittesting builtin right from the start. Anywhere
+in a D module `unittest` blocks can be used to test
+functionality of the source code.
+ 
+    // Block for my function
+    unittest 
+    {
+        assert(myAbs(-1) == 1);
+        assert(myAbs(1)  == 1);
+    }
+
+`unittest` blocks can contain abritrary code which is just
+compiled in and run when the command line flag `-unittest`
+is passed to the DMD compiler. *DUB* also features compiling
+and running unittest through the `dub test` command.
+
+Typically `unittest`s contain `assert` expressions that test
+the functionality of a given function. `unittest` blocks
+are typically located near the definition of a function
+which might be at the top level of the source, or even
+within classes or structs.
+
+## {SourceCode}
+
+//TODO
 
 # String Mixins
 
-...
+The `mixin` expression takes an abritrary string and
+**compiles** it and generates instructions accordingly. It
+is purely a **compile-time** mechanism and can only work
+on strings available during compilation - a comparison
+with `eval` would be highly unfair.
+
+    mixin("int b = 5");
+    assert(b == 5); // compiles just fine
+
+`mixin` also works with strings that are constructed
+dynamically as long as the available information doesn't
+depend on *runtime* values.
+
+`mixin` together with *CTFE* from the next section allows
+writing impressive libraries like [Pegged](https://github.com/PhilippeSigaud/Pegged)
+which generates
+a grammar parser from a grammar defined as a string
+in the source code.
+
+## {SourceCode}
+
+import std.stdio;
+
+auto calculate(string op, T)(T lhs, T rhs)
+{
+    return mixin("lhs " ~ op ~ " rhs");
+}
+
+void main()
+{
+    writeln("5 + 12 = ", calculate!"+"(5,12));
+    writeln("10 - 8 = ", calculate!"-"(10,8));
+    writeln("8 * 8 = ", calculate!"*"(8,8));
+    writeln("100 / 5 = ", calculate!"/"(100,5));
+}
 
 # Compile Time Function Evaluation - CTFE
 
@@ -115,3 +173,13 @@ void main()
 - out
 - assert
 - enforce
+
+# Subtyping
+
+* alias this
+
+# Documentation
+
+  // Comment until end of line
+  /* Multiline comment */
+  /+ Multiline comment +/

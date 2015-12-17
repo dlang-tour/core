@@ -79,12 +79,13 @@ On UNIX systems the shebang line `#!/usr/bin/env rdmd` can be put
 on the first line of a executable D file to allow usages
 like with other script langugaes.
 
-# Documentation & Further reading
+# Documentation & Links
 
-* API Documentation
-* Language reference
-* Free E-Book
-* Books:
+* API Documentation of standard library [Phobos](https://dlang.org/phobos)
+* [Language reference](https://dlang.org/spec/)
+* Repository of DUB libraries and applications: [code.dlang.org](http://code.dlang.org)
+* Free E-Book by Ali Çehreli: [Programming in D](http://ddili.org/ders/d.en/). Also
+  available as hard cover.
 
 # Let's Go!
 
