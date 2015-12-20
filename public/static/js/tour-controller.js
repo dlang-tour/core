@@ -4,7 +4,7 @@ dlangTourApp.controller('DlangTourAppCtrl', [ '$scope', '$http', function($scope
 	$scope.editorOptions = {
 		lineWrapping : true,
 		lineNumbers: true,
-		indentLevel: 4,
+		indentUnit: 4,
 		mode: 'd',
 		theme: "elegant"
 	};

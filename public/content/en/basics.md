@@ -99,7 +99,7 @@ D is a system programming language and thus allows to manually
 manage and mess up *your* memory. Nevertheless D uses a
 *garbage collector* per default to free up unused memory.
 
-D provides pointer types `T*` like in C for example:
+D provides pointer types `T*` like in C:
 
     int a;
     int* b = &a; // b contains address of a
@@ -129,9 +129,82 @@ Unless specified otherwise the default is `@system`.
 ## {SourceCode}
 //TODO
 
-# Functions
+# Storage classes
 
-...
+D is a statically type language so once a variable has been declared
+its type can't be changed from that point onwards. This allows
+the compiler to prevent bugs early and enforce limitations
+before runtime.
+
+Besides static types D provides storage classes that enforce additional
+constraints on certain objects. For example an `immutable` object can just
+be initialized once and then isn't allowed to change - never, ever.
+
+    immutable int err = 5;
+    // or: immutable arr; and int is inferred.
+    err = 5; // won't compile
+
+`immutable` objects can thus safely be shared among different threads
+because they never change by design. And `immutable` objects can perfectly
+be cached.
+
+`const` objects can't be written to but the restriction is not as tight
+as with `immutable`. To a `const` object can't be written but this is
+limited to the current scope. A `const` pointer can be created from
+an `immutable` or mutable object.
+
+    immutable a = 10;
+    int b = 5;
+    const int* pa = &a;
+    const int* pb = &b;
+    *pa = 7; // disallowed
+
+`static` allows declaring an object that holds state that is
+is global *for the current thread*. Every thread will get its own
+`static` object (*TLS - thread local storage*). This is different to
+e.g. C/C++ and Java where `static` indeed means global
+for the application, entailing synchronization issues
+with multi-threading.
+
+# Functions, part I
+
+You've seen one function alredy: `main()` the start point of each
+D goodness. A function may return something - or be declard with a
+`void` if nothing is returned - and an arbitray number of parameters.
+
+    int add(int lhs, int rhs) {
+        return lhs + rhs;
+    }
+
+If the return type is defined as `auto` the D compiler infers the return
+type automatically. If the types of different `return` statements don't
+match in the function's body the compiler will certainly make you
+aware of that.
+
+Functions might even be declared inside others functions where they may be
+used locally. These function can even have access to objects local to
+the parent's scope - these *closures* are called `delegate` in D-land.
+
+A function can also be a parameter to another function:
+
+    void doSomething(int function(int, int) doer);
+    doSomething(add); // use add here
+
+`doer` can then be called like any other normal function. Local functions
+or member functions of objects are called `delegate` because they
+contain a context pointer where the information about their enclosure
+is stored (*closure*):
+
+    void doSomething(int delegate(int,int) doer);
+
+`delegate` and `function` objects cannot be used interchangely. But the
+standard function `std.function.toDelegate` converts a `function`
+to a `delegate`.
+
+# Functions, part II
+
+* delegate?
+* Lambdas
 
 # Structs
 
@@ -172,7 +245,10 @@ is defined through a `this(...)` member function:
 # Arrays
 
 The are two types of Arrays in D: **static** and **dynamic**
-arrays.
+arrays. Access to arrays of any kind are *always* bounds checked;
+a failed range check yields a `RangeError` that aborts the application. The brave
+can disable this with `-boundschecks=off` when compiling to squeeze
+the last cycles out.
 
 **static** arrays are stored on the *stack* and have a fixed,
 compile-time known *length*. An static array's type includes
@@ -216,7 +292,73 @@ Slices are objects from type `T[]` for any given type `T`.
 Slices provide a view on a subset (or the whole) of an array
 of `T` values.
 
-...
+A slice has a size of `2 * sizeof(T*)` so 16 bytes on 64bit platforms
+and 8 bytes on 32bit. It consists of two members:
+
+    T* ptr;
+    size_t length; // unsigned 32 bit on 32bit, unsigned 64 bit on 64bit
+
+If a new dynamic array is created we really get a slice to that freshly
+allocated memory:
+
+    auto arr = new int[5];
+    assert(arr.length == 5); // memory referenced in arr.ptr
+
+Using the `[Start .. End]` syntax a subslice is constructed from an existing
+slice:
+
+    auto newArr = arr[1 .. 4]; // index 4 ist NOT included
+    assert(newArr.length == 3);
+    newArr[0] = 10; // changes newArr[0] aka arr[1]
+
+Slices generate a new view on existing memory. They *don't* create
+a new copy. If no slice holds a reference to that memory anymore - or a *sliced*
+part of it - it will be freed by the *garbage collector*.
+
+Using slices it's possible to write very efficient code for e.g. parsers
+that just operate on one memory block and just *slice* the parts they really need
+to work on, instead of allocating new memory blocks.
+
+Like seen in the previsous section the `[$]` expression indexes the element
+one past the slice's end and thus would generate a `RangeError`.
+
+# Alias & Strings
+
+Now that we know what arrays are, have gotten in touch of `immutable`
+and had a quick look at the basic types we can now introduce two
+new constructs in one line:
+
+    alias string = immutable(char)[];
+
+The term `string` is defined by an `alias` expression which defines it
+as a slice of `immutable(char)`'s. That is, once a `string` has been constructed
+its content will never change again. And actually this is the second
+introduction: welcome `string`! This is how an **UTF-8** string
+is defined in D.
+
+Due to its `immutabl`ility `string`'s can perfectly be shared among
+different threads. Being a *slice* parts can be taken out of it without
+allocating memory. The standard function `std.algorithm.splitter`
+for example splits a string by newline without any memory allocations.
+
+Beside the UTF-8 `string` there are two more:
+
+    alias dstring = immutable(dchar)[]; // UTF-16
+    alias wstring = immutable(wchar)[]; // UTF-32
+
+The variants are most easily converted between each other using
+the `to` method from `std.conv`:
+
+    dstring myDstring = to!dstring(my_string);
+    string myString = to!string(myDstring);
+
+## {SourceCode}
+
+import std.stdio;
+
+void main() {
+    alias mystring = immutable(char)[];
+}
 
 # All the classic for's
 
@@ -265,12 +407,12 @@ Given an array `arr` of type `int[]` it is possible to
 iterate through the elements using this `foreach` loop:
 
     foreach(int e; arr) {
-        writeln(i);
+        writeln(e);
     }
 
 The first field in the `foreach` definition is the variable
 name used in the loop iteration. Its type can be omitted
-and it is induced like done when declaring variables with `auto`:
+and it is induced same as with `auto`:
 
     foreach(e; arr) {
         // typoef(e) is int
@@ -296,13 +438,6 @@ large types. To prevent copying or enable in-place
 # Ranges
 
 ...
-
-# Storage classes
-
-* shared
-* immutable
-* const
-
 
 # Associative Arrays
 
