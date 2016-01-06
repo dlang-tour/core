@@ -2,6 +2,9 @@ module rest.iapiv1;
 
 import vibe.d;
 
+/++
+	Interface definition for JSON REST  API.
++/
 interface IApiV1
 {
 	struct RunOutput

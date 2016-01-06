@@ -9,6 +9,12 @@ import std.conv;
 import std.typecons;
 import std.exception;
 
+/++
+	Manages the mark down files found in public/content
+	and holds them as prepared logical structures that
+	contain the associated source code as well as
+	the rendered HTML for output on the online tour.
++/
 class ContentProvider
 {
 	private immutable MarkdownExtension = "md";
@@ -96,6 +102,11 @@ class ContentProvider
 						content.html = vibe.textfilter.markdown.filterMarkdown(section.content,
 							MarkdownFlags.backtickCodeBlocks | MarkdownFlags.vanillaMarkdown);
 					}
+				} else if (section.level >= 3) {
+					enforce(currentSection != 0, new Exception("%s: level 3 section can't be first (%s)".format(filename, section.title)));
+					auto content = updateContent(language, chapter, currentSection);
+					content.html ~= vibe.textfilter.markdown.filterMarkdown(section.content,
+							MarkdownFlags.backtickCodeBlocks | MarkdownFlags.vanillaMarkdown);
 				} else {
 					throw new Exception("%s: Illegal section %s".format(filename, section.title));
 				}

@@ -5,6 +5,9 @@ import std.algorithm;
 
 import contentprovider;
 
+/++
+	Main entry point for user visible content
++/
 class WebInterface 
 {
 	private {
@@ -20,6 +23,10 @@ class WebInterface
 
 	private {
 		/++
+			Returns the the link to the next or previous section (depending on
+			$(D move)) of the current position. Handles overflow to next or
+			previous chapter acccordingly. An empty string mean "dead-end".
+
 			Parameters:
 			$(D move) either +1 or -1.
 			$(D chapter) and $(D section) specify current positon.

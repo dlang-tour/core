@@ -13,6 +13,9 @@ import exec.dpaste;
 import exec.iexecprovider;
 import exec.off;
 
+/++ Factory method that returns an execution provider
+    depending on the configuration settings.
++/
 private IExecProvider createExecProvider(Config config)
 {
 	IExecProvider execProvider;

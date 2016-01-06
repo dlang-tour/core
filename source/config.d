@@ -1,6 +1,9 @@
 import yaml;
 import std.algorithm;
 
+/++
+	Maps values of config.yml to properties.
++/
 class Config
 {
 	private ushort port_;
@@ -23,7 +26,7 @@ class Config
 		enableExecCache_ = root["exec"]["cache"].as!bool();
 	}
 
-	string toString() const
+	override string toString() const
 	{
 		import std.string: format;
 		return q{- Listening on %s

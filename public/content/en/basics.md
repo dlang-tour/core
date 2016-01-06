@@ -83,6 +83,7 @@ void main()
     int b = 7;
     short c = cast(short) b; // cast needed here.
     uint d = b; // fine
+    int f; // contains 0
 
     auto f = 3.1415f; // postfix f denotes a float
     // typeof(VAR) returns the type of an expression
@@ -96,8 +97,8 @@ void main()
 # Memory
 
 D is a system programming language and thus allows to manually
-manage and mess up *your* memory. Nevertheless D uses a
-*garbage collector* per default to free up unused memory.
+manage and mess up your memory. Nevertheless D uses a
+*garbage collector* per default to free unused memory.
 
 D provides pointer types `T*` like in C:
 
@@ -131,7 +132,7 @@ Unless specified otherwise the default is `@system`.
 
 # Storage classes
 
-D is a statically type language so once a variable has been declared
+D is a statically typed language so once a variable has been declared
 its type can't be changed from that point onwards. This allows
 the compiler to prevent bugs early and enforce limitations
 before runtime.
@@ -141,7 +142,7 @@ constraints on certain objects. For example an `immutable` object can just
 be initialized once and then isn't allowed to change - never, ever.
 
     immutable int err = 5;
-    // or: immutable arr; and int is inferred.
+    // or: immutable arr = 5 and int is inferred.
     err = 5; // won't compile
 
 `immutable` objects can thus safely be shared among different threads
@@ -149,8 +150,8 @@ because they never change by design. And `immutable` objects can perfectly
 be cached.
 
 `const` objects can't be written to but the restriction is not as tight
-as with `immutable`. To a `const` object can't be written but this is
-limited to the current scope. A `const` pointer can be created from
+as with `immutable`. To a `const` object can't be written, but if someone
+hold a mutable reference to it he will be able to. A `const` pointer can be created from
 an `immutable` or mutable object.
 
     immutable a = 10;
@@ -168,7 +169,7 @@ with multi-threading.
 
 # Functions, part I
 
-You've seen one function alredy: `main()` the start point of each
+You've seen one function already: `main()` the start point of each
 D goodness. A function may return something - or be declard with a
 `void` if nothing is returned - and an arbitray number of parameters.
 
@@ -205,6 +206,7 @@ to a `delegate`.
 
 * delegate?
 * Lambdas
+* @property's
 
 # Structs
 
@@ -218,7 +220,7 @@ define them through a `struct`:
     }
 
 `struct`s are always constructed on the stack (unless created
-with `new`) and are copied by value in assignments or
+with `new`) and are copied **by value** in assignments or
 function calls.
 
     Person p(30, 180, 3.1415);
@@ -247,8 +249,8 @@ is defined through a `this(...)` member function:
 The are two types of Arrays in D: **static** and **dynamic**
 arrays. Access to arrays of any kind are *always* bounds checked;
 a failed range check yields a `RangeError` that aborts the application. The brave
-can disable this with `-boundschecks=off` when compiling to squeeze
-the last cycles out.
+can disable this with the compiler flag `-boundschecks=off` to squeeze
+the last cycles out of their binary.
 
 **static** arrays are stored on the *stack* and have a fixed,
 compile-time known *length*. An static array's type includes
@@ -317,7 +319,7 @@ part of it - it will be freed by the *garbage collector*.
 
 Using slices it's possible to write very efficient code for e.g. parsers
 that just operate on one memory block and just *slice* the parts they really need
-to work on, instead of allocating new memory blocks.
+to work on - no need allocating new memory blocks.
 
 Like seen in the previsous section the `[$]` expression indexes the element
 one past the slice's end and thus would generate a `RangeError`.
@@ -337,7 +339,7 @@ introduction: welcome `string`! This is how an **UTF-8** string
 is defined in D.
 
 Due to its `immutabl`ility `string`'s can perfectly be shared among
-different threads. Being a *slice* parts can be taken out of it without
+different threads. Being a *slice*, parts can be taken out of it without
 allocating memory. The standard function `std.algorithm.splitter`
 for example splits a string by newline without any memory allocations.
 
@@ -437,7 +439,35 @@ large types. To prevent copying or enable in-place
 
 # Ranges
 
+If a `foreach` is encountered by the compiler
+
+    foreach(element; range) {
+
+.. it is rewritten to something equivalent to the following internally:
+
+    for (; !range.empty; range.popFront()) {
+        auto element = range.front;
+        ...
+
+Any object which fulfills the above interface is called a **range**
+and is thus something that can be iterated over:
+
+    struct Range {
+        @property empty() const;
+        void popFront();
+        T front();
+    }
+
+The functions that hide behind the `std.range` and `std.algorithm` functions also provide
+building blocks that make use of this interface. Ranges allow
+to compose complex algorithms behind an object that
+can be iterated with ease.
+
+### Exercise
+
 ...
+
+## {SourceCode}
 
 # Associative Arrays
 
@@ -475,7 +505,42 @@ do something which is left as an exercise to the reader.
 
 int[int][string]
 
-# Classes & Interfaces
+# Classes
+
+D provides support for classes and interfaces like in Java or C++.
+
+Any `class` type inherits from `Object` implicitely. D classes allow to inherit
+from just one class.
+
+    class Foo { } // inherits from Object
+    class Bar: Foo { } // Bar is a Foo too
+
+If a member function of a base class is overridden, the keyword
+`override` must be used to indicate that. This prevents unintentional
+overriding of functions.
+
+    class Bar: Foo {
+        override functionFromFoo() {}
+    }
+
+A function can be marked `final` in a base class to disallow overriding
+it. A function can be declared as `abstract` to force base classes to override
+it. A whole class can be declared as `abstract` as well to make sure
+that it can't be instantiated.
+
+Classes in D are generally instantiated on the heap using `new`:
+
+    auto bar = new Bar;
+
+Class objects are always references types and unlike `struct` aren't
+copied by value.
+
+    Bar bar = foo; // points to foo
+
+The garbage collector will make sure the memory is freed
+after noone references the object anymore.
+
+# Interfaces
 
 ...
 
