@@ -1,3 +1,5 @@
+language: d
+
 d:
   - dmd
   - gdc
