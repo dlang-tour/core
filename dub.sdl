@@ -4,4 +4,10 @@ copyright "Copyright © 2015, André Stein"
 authors "André Stein"
 dependency "vibe-d" version="~>0.7.23"
 dependency "dyaml" version="~>0.5.2"
-versions "VibeDefaultMain"
+configuration "executable" {
+	targetType "executable"
+	versions "VibeDefaultMain"
+}
+configuration "library" {
+	versions "VibeCustomMain"
+}
