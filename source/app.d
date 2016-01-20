@@ -51,14 +51,14 @@ shared static this()
 
 	auto execProvider = createExecProvider(config);
 
-	auto contentProvider = new ContentProvider("public/content");
+	auto contentProvider = new ContentProvider(config.publicDir ~ "/content");
 	auto urlRouter = new URLRouter;
 	auto fsettings = new HTTPFileServerSettings;
 	fsettings.serverPathPrefix = "/static";
 	urlRouter
 		.registerWebInterface(new WebInterface(contentProvider))
 		.registerRestInterface(new ApiV1(execProvider))
-		.get("/static/*", serveStaticFiles("public/static/", fsettings));
+		.get("/static/*", serveStaticFiles(config.publicDir ~ "/static/", fsettings));
 
 	listenHTTP(settings, urlRouter);
 }

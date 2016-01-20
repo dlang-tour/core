@@ -9,11 +9,13 @@ class Config
 	private string[] bindAddresses_;
 	private string execProvider_;
 	private bool enableExecCache_;
+	private string publicDir_;
 
 	@property ushort port() { return port_; }
 	@property string[] bindAddresses() { return bindAddresses_; }
 	@property string execProvider() { return execProvider_; }
 	@property bool enableExecCache() { return enableExecCache_; }
+	@property string publicDir() { return publicDir_; }
 	
 	this(string configFile)
 	{
@@ -23,6 +25,7 @@ class Config
 			bindAddresses_ ~= address;
 		execProvider_ = root["exec"]["driver"].as!string();
 		enableExecCache_ = root["exec"]["cache"].as!bool();
+		publicDir_ = root["public_dir"].as!string();
 	}
 
 	override string toString() const
@@ -31,6 +34,8 @@ class Config
 		return q{- Listening on %s
 - Port %d
 - Execution Driver: %s
-- Caching enabled: %b}.format(bindAddresses_, port_, execProvider_, enableExecCache_);
+- Caching enabled: %b
+- Public directory: %s}.format(bindAddresses_, port_, execProvider_, enableExecCache_,
+		publicDir_);
 	}
 }
