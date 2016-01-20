@@ -1,4 +1,9 @@
+sudo: required
+
 language: d
+
+services:
+  - docker
 
 d:
   - dmd
@@ -9,3 +14,6 @@ script:
   - if [[ "${DC}" == "dmd" ]]; then  dub test --compiler=${DC};            fi
   # Compiler to static binary with gdc
   - if [[ "${DC}" == "gdc" ]]; then  dub build -c static --compiler=${DC}; fi
+
+after_success:
+  - if [[ "${DC}" == "gdc" ]]; then docker build -t stonemaster/dlang-tour . ; fi
