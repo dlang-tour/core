@@ -17,3 +17,5 @@ script:
 
 after_success:
   - if [[ "${DC}" == "gdc" ]]; then docker build -t stonemaster/dlang-tour . ; fi
+  - if [[ "${DC}" == "gdc" ]]; then docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"; fi
+  - if [[ "${DC}" == "gdc" ]]; then docker push stonemaster/dlang-tour       ; fi
