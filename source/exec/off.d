@@ -2,7 +2,7 @@ module exec.off;
 
 import exec.iexecprovider;
 
-import std.typecons;
+import std.typecons: Tuple;
 
 class Off: IExecProvider
 {

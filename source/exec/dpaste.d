@@ -2,7 +2,7 @@ module exec.dpaste;
 
 import exec.iexecprovider;
 
-import std.typecons;
+import std.typecons: Tuple;
 
 class DPaste: IExecProvider
 {

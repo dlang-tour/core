@@ -1,5 +1,4 @@
 import yaml;
-import std.algorithm;
 
 /++
 	Maps values of config.yml to properties.

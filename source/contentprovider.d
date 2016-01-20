@@ -1,13 +1,13 @@
-import vibe.d;
+import vibe.core.log: logInfo;
+import vibe.textfilter.markdown;
 
-import std.typecons;
 import std.file;
-import std.string;
-import std.algorithm;
-import std.array;
-import std.conv;
-import std.typecons;
-import std.exception;
+import std.algorithm: splitter, filter, countUntil;
+import std.array: array, empty;
+import std.string: split, strip;
+import std.typecons: Tuple;
+import std.exception: enforce;
+import std.string: format;
 
 /++
 	Manages the mark down files found in public/content
@@ -99,13 +99,13 @@ class ContentProvider
 					} else {
 						auto content = updateContent(language, chapter, ++currentSection);
 						content.title = section.title;
-						content.html = vibe.textfilter.markdown.filterMarkdown(section.content,
+						content.html = filterMarkdown(section.content,
 							MarkdownFlags.backtickCodeBlocks | MarkdownFlags.vanillaMarkdown);
 					}
 				} else if (section.level >= 3) {
 					enforce(currentSection != 0, new Exception("%s: level 3 section can't be first (%s)".format(filename, section.title)));
 					auto content = updateContent(language, chapter, currentSection);
-					content.html ~= vibe.textfilter.markdown.filterMarkdown(section.content,
+					content.html ~= filterMarkdown(section.content,
 							MarkdownFlags.backtickCodeBlocks | MarkdownFlags.vanillaMarkdown);
 				} else {
 					throw new Exception("%s: Illegal section %s".format(filename, section.title));
@@ -228,7 +228,7 @@ private auto splitMarkdownBySection(string contents)
 	// Assuming lineSplitter just operates on the data pointer at
 	// contents we can use pointer magic to calculate the section
 	// extensions
-	foreach(line; lineSplitter(contents)) {
+	foreach(line; splitter(contents, '\n')) {
 		if (line.empty)
 			continue;
 		if (line[0] == '#') {

@@ -5,10 +5,10 @@ import exec.iexecprovider;
 import vibe.d;
 
 import std.process;
-import std.typecons;
-import std.file;
-import std.stdio;
-import std.random;
+import std.typecons: Tuple;
+import std.file: exists, tempDir;
+import std.stdio: File;
+import std.random: uniform;
 
 /++
 	Stupid local executor which just runs rdmd and passes the source to it

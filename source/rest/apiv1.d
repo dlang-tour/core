@@ -1,7 +1,5 @@
 module rest.apiv1;
 
-import vibe.d;
-
 import rest.iapiv1;
 import exec.iexecprovider;
 

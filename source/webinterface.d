@@ -1,7 +1,8 @@
 import vibe.d;
-import std.string;
-import std.traits;
-import std.algorithm;
+
+import std.string: format;
+import std.traits: ReturnType;
+import std.algorithm: countUntil;
 
 import contentprovider;
 

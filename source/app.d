@@ -1,5 +1,4 @@
 import vibe.d;
-import std.algorithm;
 
 import webinterface;
 import contentprovider;

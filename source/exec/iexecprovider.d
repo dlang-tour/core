@@ -1,6 +1,6 @@
 module exec.iexecprovider;
 
-import std.typecons;
+import std.typecons: Tuple;
 
 /++
 	Interface for exec providers that take source code

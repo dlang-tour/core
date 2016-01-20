@@ -1,8 +1,8 @@
 module exec.cache;
 
 import exec.iexecprovider;
-import std.typecons;
-import std.traits;
+import std.typecons: Tuple;
+import std.traits: ReturnType;
 
 import vibe.d;
 
@@ -36,9 +36,19 @@ class Cache: IExecProvider
 	}
 }
 
-private size_t getSourceCodeHash(string source)
+private uint getSourceCodeHash(string source)
 {
-	import std.digest.md: md5Of;
-	auto md5 = md5Of(source);
-	return hashOf(md5);
+	import std.digest.crc: crc32Of;
+	auto crc = crc32Of(source);
+	return cast(size_t)*crc.ptr;
+}
+
+unittest
+{
+	auto hash1 = getSourceCodeHash("test123");
+	auto hash2 = getSourceCodeHash("void main() {}");
+	auto hash3 = getSourceCodeHash("12838389349493");
+
+	assert(hash1 != hash2);
+	assert(hash2 != hash3);
 }
