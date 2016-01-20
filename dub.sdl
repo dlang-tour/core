@@ -8,6 +8,12 @@ configuration "executable" {
 	targetType "executable"
 	versions "VibeDefaultMain"
 }
+configuration "static" {
+	targetType "executable"
+	versions "VibeDefaultMain"
+	lflags "-lz" "-lssl" "-lcrypto" "-ldl" platform="posix"
+	dflags "-static" platform="posix"
+}
 configuration "library" {
 	versions "VibeCustomMain"
 }
