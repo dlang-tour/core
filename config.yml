@@ -1,7 +1,7 @@
 port: 8080
-public_dir: public
+public_dir: "public"
 listen:
     - 127.0.0.1
 exec:
-    driver: off
+    driver: "off"
     cache: true
