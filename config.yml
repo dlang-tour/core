@@ -3,5 +3,5 @@ public_dir: public
 listen:
     - 127.0.0.1
 exec:
-    driver: stupidlocal
+    driver: off
     cache: true
