@@ -3,6 +3,7 @@ doctype html
 head
 	script(src="/static/lib/angularjs.min.js")
 	link(rel="stylesheet", href="/static/lib/bootstrap.min.css")
+	link(href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700",rel="stylesheet",type="text/css")
 	script(src="/static/lib/jquery-1.11.3.min.js")
 	script(src="/static/lib/bootstrap.min.js")
 	link(rel="stylesheet", href="/static/css/common.css")
