@@ -6,11 +6,12 @@ To write a simple hello world program in D you need
 and types from the given **module** available.
 
 The standard library, called [Phobos](https://www.dlang.org/phobos/),
-is located under the *package* `std`
+is located under the **package** `std`
 and those modules are referenced through `import std.MODULE`.
 
 The import statement can also be used to selectively
-import certain symbols of a module:
+import certain symbols of a module. This improves
+the already short compile times of D source.
 
     import std.stdio: writeln, writefln;
 
@@ -35,11 +36,11 @@ void main()
 
 # Basic types
 
-D provides a number of basic types which have always have the same
+D provides a number of basic types which always have the same
 size **regardless** of the platform - the only exception
-is the `real` which provides the highest possible floating point
+is the `real` type which provides the highest possible floating point
 precision. There is no difference
-between the size of an *integer* regardless whether the application
+between the size of an integer regardless whether the application
 is compiled for 32bit or 64bit systems.
 
     bool                 (8 bit)
@@ -52,7 +53,7 @@ Floating point types:
 
     float                (32 bit)
     double               (64 bit)
-    real                 (depending on platform, 80 bit on x64)
+    real                 (depending on platform, 80 bit on Intel x64)
 
 The prefix `u` denotes *unsigned* types. `char` translates to
 UTF-8 characters, `dchar` is used in UTF-16 strings and `dchar`
@@ -67,12 +68,12 @@ A conversion to another type may be forced by using the
 The special keyword `auto` creates a variable and infers its
 type from the right hand side of the expression. `auto var = 7`
 will deduce the type `int` for `var`. Note that the type is still
-set at compile-time and can't be changed, just like with any other
-variable with an explicitely given type.
+set at compile-time and can't be changed - just like with any other
+variable with an explicitly given type.
 
-All integers are initialized with `0`, floating points
-with `NaN` (not a number) - unless another value is given
-during initialization.
+If no other value is given in the declaration all integers
+are initialized with `0` and floating points
+with `NaN` (*not a number*).
 
 ## {SourceCode}
 
@@ -125,7 +126,9 @@ but only in `@system` code.
         int* c = a + 5; // error
     }
 
-Unless specified otherwise the default is `@system`.
+Unless specified otherwise the default is `@system`. Using `@safe`
+a subset of D functionality can be forced by design to prevent memory
+bugs.
 
 ## {SourceCode}
 //TODO
@@ -135,7 +138,7 @@ Unless specified otherwise the default is `@system`.
 D is a statically typed language so once a variable has been declared
 its type can't be changed from that point onwards. This allows
 the compiler to prevent bugs early and enforce limitations
-before runtime.
+at compile time.
 
 Besides static types D provides storage classes that enforce additional
 constraints on certain objects. For example an `immutable` object can just
@@ -146,13 +149,13 @@ be initialized once and then isn't allowed to change - never, ever.
     err = 5; // won't compile
 
 `immutable` objects can thus safely be shared among different threads
-because they never change by design. And `immutable` objects can perfectly
-be cached.
+because they never change by design. And `immutable` objects can
+be cached perfectly.
 
-`const` objects can't be written to but the restriction is not as tight
-as with `immutable`. To a `const` object can't be written, but if someone
-hold a mutable reference to it he will be able to. A `const` pointer can be created from
-an `immutable` or mutable object.
+`const` objects can't be changed but the restriction is not as tight
+as with `immutable`. To a `const` object can't be written, but someone
+holding a mutable to the same object might just well. A `const` pointer can
+be created from `immutable` or mutable object.
 
     immutable a = 10;
     int b = 5;
@@ -161,16 +164,19 @@ an `immutable` or mutable object.
     *pa = 7; // disallowed
 
 `static` allows declaring an object that holds state that is
-is global *for the current thread*. Every thread will get its own
+is global for the *current* thread. Every thread will get its own
 `static` object (*TLS - thread local storage*). This is different to
 e.g. C/C++ and Java where `static` indeed means global
 for the application, entailing synchronization issues
 with multi-threading.
 
+## {SourceCode}
+//TODO
+
 # Functions, part I
 
-You've seen one function already: `main()` the start point of each
-D goodness. A function may return something - or be declard with a
+You've seen one function already: `main()` - the starting point of every 
+D goodness. A function may return something - or be declard with
 `void` if nothing is returned - and an arbitray number of parameters.
 
     int add(int lhs, int rhs) {
@@ -178,35 +184,70 @@ D goodness. A function may return something - or be declard with a
     }
 
 If the return type is defined as `auto` the D compiler infers the return
-type automatically. If the types of different `return` statements don't
-match in the function's body the compiler will certainly make you
+type automatically. If the types of different `return` statements within
+the function's body don't match the compiler will certainly make you
 aware of that.
 
+    auto add(int lhs, int rhs) { // still `int`
+        return lhs + rhs;
+    }
+
 Functions might even be declared inside others functions where they may be
-used locally. These function can even have access to objects local to
-the parent's scope - these *closures* are called `delegate` in D-land.
+used locally and aren't visible to the outside world.
+These function can even have access to objects local to
+the parent's scope
+
+    void fun() {
+        int local = 10;
+        int fun_secret() {
+            local++; // that's legal
+        }
+        ...
+
+## {SourceCode}
+//TODO
+
+# Functions, part II
 
 A function can also be a parameter to another function:
 
     void doSomething(int function(int, int) doer);
-    doSomething(add); // use add here
+    doSomething(add); // use global function `add` here
+                      // add must have to int parameters
 
 `doer` can then be called like any other normal function. Local functions
 or member functions of objects are called `delegate` because they
 contain a context pointer where the information about their enclosure
 is stored (*closure*):
 
+    void foo() {
+        void local() {
+            writeln("local");
+        }
+        auto f = &local; // f is of type delegate()
+    }
+
+The same function `doSomething` taking a `delegate`
+would look like this:
+
     void doSomething(int delegate(int,int) doer);
 
-`delegate` and `function` objects cannot be used interchangely. But the
+`delegate` and `function` objects cannot be mixed. But the
 standard function `std.function.toDelegate` converts a `function`
 to a `delegate`.
 
-# Functions, part II
+Nameless function which are called *lambdas* can be defined in two ways:
 
-* delegate?
-* Lambdas
-* @property's
+    auto f = (int lhs, int rhs) {
+        return lhs + rhs;
+    };
+    auto f = (lhs, rhs) => lhs + rhs;
+
+The second form is a shorthand form for lambdas that consist
+of just one line.
+
+## {SourceCode}
+//TODO
 
 # Structs
 
@@ -239,6 +280,8 @@ is defined through a `this(...)` member function:
             ...
     
     Person p(30, 180);
+
+* @property's
 
 ## {SourceCode}
 

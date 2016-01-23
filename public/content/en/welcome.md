@@ -13,8 +13,8 @@ Each chapter and section introduces a new feature or aspect of D. The bottom
 panel allows navigation to the next or previous section.
 
 The code editor contains D source code which can compiled and run online.
-The program's output, or compile errors, are displayed in the box
-beneath the code editor.
+The program's output - and sometimes compile errors - are displayed 
+in the box beneath the code editor.
 
 Each section comes with a source code example that can be modified and used
 to experiment with D's language features.
@@ -33,51 +33,52 @@ void main() {
 # Install D locally
 
 On the D language's website [dlang.org](http://www.dlang.org) the most recent
-compiler version of the reference compiler **DMD** (*Digital Mars D*)
+compiler version of the reference compiler **DMD** (Digital Mars D)
 can be downloaded and installed offline:
 
 * There is a Windows installer available - or a ZIP file which
   contains the pre-compiled toolkit
 * For Mac OS X there is a `.dmg` package. The most recent can also be installed
-  with `brew install dmd` using *Homebrew*
-* There are officially supported Linux packges for Fedora, OpenSuse and
+  with `brew install dmd` using [Homebrew](http://brew.sh)
+* There are officially supported Linux packages for Fedora, OpenSuse and
   Debian/Ubuntu. For the latter a regularly updated repository exists
-  at [d-apt.source-forge.net](http://d-apt.source-forge.net).
+  at [d-apt.source-forge.net](http://d-apt.source-forge.net)
 
-Besides the DMD reference compiler which uses its own backend, there are two
-other compilers that can be fetched through the [dlang.org](http://www.dlang.org)
-download section:
+Besides the DMD reference compiler which uses its own backend, there are
+two other compilers that can be fetched through the
+[dlang.org](http://www.dlang.org) download section:
 
 * **GDC** which uses the GCC backend
 * **LDC** based on the LLVM backend
 
-GDC and LDC are more likely behind the DMD frontend's versions but provide
-better optimization levels as well as support for other platforms like e.g. ARM.
+GDC and LDC aren't always at the most recent DMD frontend's versions 
+but provide better optimization levels as well as support
+for other platforms like e.g. ARM.
 
 # Run D program locally
 
-D's standard build tool is [dub](http://code.dlang.org). When dub is installed
-locally a new project `test` can be created using the command line
+D's standard build tool is [dub](http://code.dlang.org). When dub is 
+installed locally a new project `test` can be created using 
+the command line
 
     dub init test
 
 Running `dub` inside this folder will fetch all dependencies, compile the
 application and run it. `dub build` will just compile the project.
 
-Given a D file `test.d` a binary can be created using *DMD* using the
-following command:
+Given a D file `test.d` a binary is created using *DMD* with this command:
 
     dmd test.d
 
 The helper tool `rdmd` distributed with the DMD compiler
 will make sure to compile all dependencies and automatically runs
-the resulting app:
+the resulting application:
 
     rdmd test.d
 
 On UNIX systems the shebang line `#!/usr/bin/env rdmd` can be put
-on the first line of a executable D file to allow usages
-like with other script langugaes.
+on the first line of an executable D file to allow a script-like
+usage.
 
 # Documentation & Links
 
@@ -85,7 +86,7 @@ like with other script langugaes.
 * [Language reference](https://dlang.org/spec/)
 * Repository of DUB libraries and applications: [code.dlang.org](http://code.dlang.org)
 * Free E-Book by Ali Çehreli: [Programming in D](http://ddili.org/ders/d.en/). Also
-  available as hard cover.
+  available as hardcover.
 
 # Let's Go!
 
