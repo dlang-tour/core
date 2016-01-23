@@ -1,7 +1,7 @@
 port: 8080
 public_dir: "public"
 listen:
-    - 127.0.0.1
+    - 0.0.0.0 
 exec:
-    driver: "stupidlocal"
+    driver: "off"
     cache: true
