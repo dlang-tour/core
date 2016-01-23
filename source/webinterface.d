@@ -65,7 +65,7 @@ class WebInterface
 
 	void index(HTTPServerRequest req, HTTPServerResponse res)
 	{
-		redirect("/tour/welcome/01");
+		getTour(req, res, "welcome", 1);
 	}
 
 	@path("/tour/:chapter/:section")
