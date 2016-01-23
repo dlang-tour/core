@@ -262,12 +262,12 @@ define them through a `struct`:
 
 `struct`s are always constructed on the stack (unless created
 with `new`) and are copied **by value** in assignments or
-function calls.
+as parameters to function calls.
 
     Person p(30, 180, 3.1415);
     auto t = p; // copy
 
-When a new object is created of a `struct` its members can be initialized
+When a new object of a `struct` type is created its members can be initialized
 in the order they are defined in the `struct`. A custom constructor
 is defined through a `this(...)` member function:
 
@@ -281,7 +281,19 @@ is defined through a `this(...)` member function:
     
     Person p(30, 180);
 
-* @property's
+A `struct` might contain any number of member functions. Those
+are per default `public` and accessible from the outside. They might
+as well be `private` and thus only be callable by other
+member functions.
+
+    struct Person {
+        void doStuff() {
+            ...
+        private void privateStuff() {
+            ...
+
+    p.doStuff(); // call do_stuff
+    p.privateStuff(); // forbidden
 
 ## {SourceCode}
 
@@ -291,7 +303,7 @@ is defined through a `this(...)` member function:
 
 The are two types of Arrays in D: **static** and **dynamic**
 arrays. Access to arrays of any kind are *always* bounds checked;
-a failed range check yields a `RangeError` that aborts the application. The brave
+a failed range check yields a `RangeError` which aborts the application. The brave
 can disable this with the compiler flag `-boundschecks=off` to squeeze
 the last cycles out of their binary.
 
@@ -334,8 +346,8 @@ void main()
 # Slices
 
 Slices are objects from type `T[]` for any given type `T`.
-Slices provide a view on a subset (or the whole) of an array
-of `T` values.
+Slices provide a view on a subset of an array
+of `T` values - or just point to the whole array.
 
 A slice has a size of `2 * sizeof(T*)` so 16 bytes on 64bit platforms
 and 8 bytes on 32bit. It consists of two members:
@@ -349,7 +361,7 @@ allocated memory:
     auto arr = new int[5];
     assert(arr.length == 5); // memory referenced in arr.ptr
 
-Using the `[Start .. End]` syntax a subslice is constructed from an existing
+Using the `[Start .. End]` syntax a sub-slice is constructed from an existing
 slice:
 
     auto newArr = arr[1 .. 4]; // index 4 ist NOT included
@@ -358,19 +370,20 @@ slice:
 
 Slices generate a new view on existing memory. They *don't* create
 a new copy. If no slice holds a reference to that memory anymore - or a *sliced*
-part of it - it will be freed by the *garbage collector*.
+part of it - it will be freed by the garbage collector.
 
 Using slices it's possible to write very efficient code for e.g. parsers
-that just operate on one memory block and just *slice* the parts they really need
+that just operate on one memory block and just slice the parts they really need
 to work on - no need allocating new memory blocks.
 
-Like seen in the previsous section the `[$]` expression indexes the element
-one past the slice's end and thus would generate a `RangeError`.
+Like seen in the previous section the `[$]` expression indexes the element
+one past the slice's end and thus would generate a `RangeError`
+(if bounds-checking hasn't been disabled).
 
 # Alias & Strings
 
 Now that we know what arrays are, have gotten in touch of `immutable`
-and had a quick look at the basic types we can now introduce two
+and had a quick look at the basic types, it's time to introduce two
 new constructs in one line:
 
     alias string = immutable(char)[];
@@ -378,11 +391,11 @@ new constructs in one line:
 The term `string` is defined by an `alias` expression which defines it
 as a slice of `immutable(char)`'s. That is, once a `string` has been constructed
 its content will never change again. And actually this is the second
-introduction: welcome `string`! This is how an **UTF-8** string
+introduction: welcome `string`! This is how an UTF-8 string
 is defined in D.
 
 Due to its `immutabl`ility `string`'s can perfectly be shared among
-different threads. Being a *slice*, parts can be taken out of it without
+different threads. Being a slice parts can be taken out of it without
 allocating memory. The standard function `std.algorithm.splitter`
 for example splits a string by newline without any memory allocations.
 
@@ -394,7 +407,7 @@ Beside the UTF-8 `string` there are two more:
 The variants are most easily converted between each other using
 the `to` method from `std.conv`:
 
-    dstring myDstring = to!dstring(my_string);
+    dstring myDstring = to!dstring(myString);
     string myString = to!string(myDstring);
 
 ## {SourceCode}
@@ -457,7 +470,7 @@ iterate through the elements using this `foreach` loop:
 
 The first field in the `foreach` definition is the variable
 name used in the loop iteration. Its type can be omitted
-and it is induced same as with `auto`:
+and is then induced `auto`-style:
 
     foreach(e; arr) {
         // typoef(e) is int
@@ -469,8 +482,8 @@ object called a **range** which will be introduced in the next section.
 
 Elements will be copied from the array or range during iteration -
 this is okay for basic types but might be a problem for
-large types. To prevent copying or enable in-place
-*mutation* use `ref`:
+large types. To prevent copying or enable *in-place
+*mutation use `ref`:
 
     foreach(ref e; arr) {
         e = 10; // overwrite value
@@ -486,7 +499,7 @@ If a `foreach` is encountered by the compiler
 
     foreach(element; range) {
 
-.. it is rewritten to something equivalent to the following internally:
+.. it's rewritten to something equivalent to the following internally:
 
     for (; !range.empty; range.popFront()) {
         auto element = range.front;
@@ -501,20 +514,23 @@ and is thus something that can be iterated over:
         T front();
     }
 
-The functions that hide behind the `std.range` and `std.algorithm` functions also provide
+The functions that are in the `std.range` and `std.algorithm` modules also provide
 building blocks that make use of this interface. Ranges allow
 to compose complex algorithms behind an object that
 can be iterated with ease.
 
 ### Exercise
 
-...
+Complete the source code to create the `FibonacciRange` range
+that returns numbers of the
+[Fibonacci sequence](https://en.wikipedia.org/wiki/Fibonacci_number).
+Don't fool yourself into deleting the `assert`ions!
 
 ## {SourceCode}
 
 # Associative Arrays
 
-D has builtin *associative arrays* - also known as hash maps.
+D has builtin *associative arrays* also known as hash maps.
 An associative arry with a key type of `int` and a value type
 of `string` is declared as follows:
 
@@ -524,8 +540,8 @@ The syntax follows the actual usage of the hashmap:
 
     arr["key1"] = 10;
 
-To test whether a key is located in the associative array, the
-`in` expression should be used:
+To test whether a key is located in the associative array, use the
+`in` expression:
 
     if ("key1" in arr)
         writeln("Yes");
@@ -552,8 +568,8 @@ int[int][string]
 
 D provides support for classes and interfaces like in Java or C++.
 
-Any `class` type inherits from `Object` implicitely. D classes allow to inherit
-from just one class.
+Any `class` type inherits from `Object` implicitely. D classes can only
+inherit from one class.
 
     class Foo { } // inherits from Object
     class Bar: Foo { } // Bar is a Foo too
@@ -568,8 +584,8 @@ overriding of functions.
 
 A function can be marked `final` in a base class to disallow overriding
 it. A function can be declared as `abstract` to force base classes to override
-it. A whole class can be declared as `abstract` as well to make sure
-that it can't be instantiated.
+it. A whole class can be declared as `abstract` to make sure
+that it isn't instantiated.
 
 Classes in D are generally instantiated on the heap using `new`:
 
@@ -578,10 +594,10 @@ Classes in D are generally instantiated on the heap using `new`:
 Class objects are always references types and unlike `struct` aren't
 copied by value.
 
-    Bar bar = foo; // points to foo
+    Bar bar = foo; // bar points to foo
 
 The garbage collector will make sure the memory is freed
-after noone references the object anymore.
+after nobody references the object anymore.
 
 # Interfaces
 
