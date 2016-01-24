@@ -1,5 +1,5 @@
 # Concurrency
-# Message Passing Part I
+# Message Passing
 
 ...
 

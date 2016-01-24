@@ -6,7 +6,7 @@
 
 If `a.fun()` is seen by the compiler and the type doesn't
 have a member function called `fun()`, it tries to find a
-*free* functions whose first parameter matches that of `a`.
+global functions whose first parameter matches that of `a`.
 
 This feature is especially useful when chaining complex
 function calls. Instead of writing
@@ -18,7 +18,7 @@ It is possible to write
     a.bar().foo()
 
 UFCS is especially important when dealing with
-*Ranges* where several alorithms can be put
+*ranges* where several algorithms can be put
 together to perform complex operations, still allowing
 to write clear and manageable code.
 
@@ -47,18 +47,18 @@ Scope guards allow executing statements at certain conditions
 if the current block is left:
 
 * `scope(exit)` will always call the statements
-* `scope(success)` statements are called when **no** exceptions
+* `scope(success)` statements are called when no exceptions
   have been thrown
 * `scope(failure)` denotes statements that will be called when
   an exception has been thrown before the block's end
 
 Using scope guards makes code much cleaner and allows to place
 resource allocation and clean up code next to each other.
-These little helpers also improve saftey because they make sure
+These little helpers also improve safety because they make sure
 certain cleanup code is *always* called independent of which paths
-are acutally taken at runtime.
+are actually taken at runtime.
 
-The D `scope` feature effectively replaces the *RAII* idiom
+The D `scope` feature effectively replaces the RAII idiom
 used in C++ which often leads to special scope guards objects
 for special resources.
 
@@ -94,7 +94,7 @@ void main()
 
 # Unittesting
 
-D has unittesting builtin right from the start. Anywhere
+D has unit-testing built-in right from the start. Anywhere
 in a D module `unittest` blocks can be used to test
 functionality of the source code.
  
@@ -105,7 +105,7 @@ functionality of the source code.
         assert(myAbs(1)  == 1);
     }
 
-`unittest` blocks can contain abritrary code which is just
+`unittest` blocks can contain arbitrary code which is just
 compiled in and run when the command line flag `-unittest`
 is passed to the DMD compiler. *DUB* also features compiling
 and running unittest through the `dub test` command.
@@ -122,20 +122,20 @@ within classes or structs.
 
 # String Mixins
 
-The `mixin` expression takes an abritrary string and
-**compiles** it and generates instructions accordingly. It
+The `mixin` expression takes an arbitrary string and
+compiles it and generates instructions accordingly. It
 is purely a **compile-time** mechanism and can only work
 on strings available during compilation - a comparison
-with `eval` would be highly unfair.
+with the evil JavaScript `eval` would be highly unfair.
 
     mixin("int b = 5");
     assert(b == 5); // compiles just fine
 
 `mixin` also works with strings that are constructed
 dynamically as long as the available information doesn't
-depend on *runtime* values.
+depend on runtime values.
 
-`mixin` together with *CTFE* from the next section allows
+`mixin` together with **CTFE** from the next section allows
 writing impressive libraries like [Pegged](https://github.com/PhilippeSigaud/Pegged)
 which generates
 a grammar parser from a grammar defined as a string
@@ -180,6 +180,7 @@ void main()
 
 # Documentation
 
-  // Comment until end of line
-  /* Multiline comment */
-  /+ Multiline comment +/
+* ddox
+* // Comment until end of line
+*  /* Multiline comment */
+*  /+ Multiline comment +/

@@ -291,7 +291,7 @@ member functions.
             ...
         private void privateStuff() {
             ...
-
+    
     p.doStuff(); // call do_stuff
     p.privateStuff(); // forbidden
 
@@ -302,21 +302,21 @@ member functions.
 # Arrays
 
 The are two types of Arrays in D: **static** and **dynamic**
-arrays. Access to arrays of any kind are *always* bounds checked;
+arrays. Access to arrays of any kind are always bounds checked;
 a failed range check yields a `RangeError` which aborts the application. The brave
 can disable this with the compiler flag `-boundschecks=off` to squeeze
 the last cycles out of their binary.
 
-**static** arrays are stored on the *stack* and have a fixed,
-compile-time known *length*. An static array's type includes
+**static** arrays are stored on the stack and have a fixed,
+compile-time known length. An static array's type includes
 the fixed size:
 
     int[8] arr;
 
 `arr`s tye is `int[8]`. Note that the size of the array is denoted
-near the type and not after the variable name like in *C/C++*.
+near the type and not after the variable name like in C/C++.
 
-**dynamic** arrays are stored on the *heap* and can be expanded
+**dynamic** arrays are stored on the heap and can be expanded
 or shrunk at runtime. A dynamic array is created using a `new` expression
 and its length:
 
