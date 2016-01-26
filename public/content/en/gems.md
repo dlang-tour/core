@@ -165,14 +165,15 @@ void main()
 
 # Template meta programming
 
-...
+* Template constraints
+* static if
 
 # Contract programming
 
-- in
-- out
-- assert
-- enforce
+* in
+* out
+* assert
+* enforce
 
 # Subtyping
 

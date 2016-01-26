@@ -607,8 +607,150 @@ after nobody references the object anymore.
 
 # Interfaces
 
-...
+D allows defining `interface`s which are technically like
+`class` types but whose member functions must be implemented
+by any class inheriting from the `interface`.
+
+    interface Animal {
+        void makeNoise();
+    }
+
+The `makeNoise` member function has to be implemented
+by `Dog` because it inherits from the `Animal` interface.
+Technically `makeNoise` behaves like an `abstract` member
+function in a base class.
+
+    class Dog: Animal {
+        override makeNoise() {
+            ...
+        }
+    }
+    
+    auto dog = new Animal;
+    Animal animal = dog; // implicit cast to interface
+    dog.makeNoise();
+
+A `class` type can inherit from as many `interface`s it wishes
+but just from *one* base class.
+
+D easily enables the **NVI - non virtual interface** idiom by
+allowing the definition of `final` functions in an `interface`
+that aren't allowed to be overridden. This enforces specific
+behaviours customized by overriding the other `interface`
+functions.
+
+    interface Animal {
+        void makeNoise();
+        final doubleNoise() /* NVI pattern */ {
+            makeNoise();
+            makeNoise();
+        }
+    }
+
+## {SourceCode}
+
+import std.stdio;
+
+interface Animal {
+    void makeNoise();
+
+    final void multipleNoise(int n) {
+        for(int i = 0; i < n; ++i) {
+            makeNoise();
+        }
+    }
+}
+
+class Dog: Animal {
+    override void makeNoise() {
+        writeln("Bark!");
+    }
+}
+
+class Cat: Animal {
+    override void makeNoise() {
+        writeln("Meeoauw!");
+    }
+}
+
+void main() {
+    auto dog = new Dog;
+    auto cat = new Cat;
+    auto animals = [ cast(Animal)dog, cast(Animal)cat ];
+    foreach(animal; animals) {
+        animal.multipleNoise(5);
+    }
+}
 
 # Templates
 
-...
+Like in C++ **D** allows defining templated functions which is a means
+to define **generic** functions which work for any type
+that compiles with the statements within the function's body:
+
+    auto add(T)(T lhs, T rhs) {
+        return lhs + rhs;
+    }
+
+The template parameter `T` is defined in a set of parentheses
+in front of the actual function parameters. `T` is a placeholder
+which is replaced by the compiler when actually *instantiating*
+the function using the `!` operator:
+
+    add!int(5, 10);
+    add!float(5.0f, 10.0f);
+    add!Animal(dog, cat); // won't compile; Animal doesn't implement +
+
+If no template parameter is given for a templated function the compiler
+tries to deduce the type using the parameters the function is fed:
+
+    int a = 5; int b = 10;
+    add(a, b); // T is to deduced to `int`
+    float c = 5.0f;
+    add(a, c); // ERROR: conflict because compiler
+               // doesn't know what T should be
+
+A function can have any number of template parameters which
+are specified during instantiation using the `func!(T1, T2 ..)`
+syntax. Template parameters can be of any basic type
+including `string`s and floating point numbers.
+
+Unlike generics in Java, templates in D are compile-time only, and yield
+highly optimized code tailored to the specific set of types
+used when actually calling the function
+
+Of course, `struct`, `class` and `interface` types can be defined as template
+types too.
+
+    struct S(T) {
+        // ...
+    }
+
+## {SourceCode}
+
+import std.stdio;
+
+class Animal(string noise) {
+    void makeNoise() {
+        writeln(noise ~ "!");
+    }
+}
+
+class Dog: Animal!("Bark") {
+}
+
+class Cat: Animal!("Meeoauw") {
+}
+
+void multipleNoise(T)(T animal, int n) {
+    for (int i = 0; i < n; ++i) {
+        animal.makeNoise();
+    }
+}
+
+void main() {
+    auto dog = new Dog;
+    auto cat = new Cat;
+    multipleNoise(dog, 5);
+    multipleNoise(cat, 5);
+}
