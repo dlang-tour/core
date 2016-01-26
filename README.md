@@ -23,8 +23,18 @@ the ports the tour is listening to.
 
 ## Docker image
 
-To come.
+A Docker image is automatically built by Travis CI and pushed to the repository
+at https://hub.docker.com/r/stonemaster/dlang-tour/. So to run the latest dlang-tour
+version in a Docker container, run the following command:
 
+	docker run -d --rm -p 80:8080 --name dlang-tour stonemaster/dlang-tour
+
+The tour will be available at your host system on port 80. To stop the container
+again just run:
+	
+	docker stop dlang-tour
+
+For further Docker foo please refer to the Docker documentation.
 
 ## License
 
