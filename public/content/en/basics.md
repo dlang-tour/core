@@ -15,7 +15,7 @@ the already short compile times of D source.
 
     import std.stdio: writeln, writefln;
 
-An import statement mustn't appear at the top a source file.
+An import statement need not appear at the top a source file.
 It can also be used locally within functions.
 
 The *package* name is induced from the parent folder's name.
@@ -47,20 +47,21 @@ is compiled for 32bit or 64bit systems.
     byte, ubyte, char    (8 bit)
     short, ushort, dchar (16 bit)
     int, uint, wchar     (32 bit)
-    long, ulong          (32 bit)
+    long, ulong          (64 bit)
 
 Floating point types:
 
     float                (32 bit)
     double               (64 bit)
-    real                 (depending on platform, 80 bit on Intel x64)
+    real                 (depending on platform, 80 bit on Intel x86 32-bit)
 
 The prefix `u` denotes *unsigned* types. `char` translates to
 UTF-8 characters, `dchar` is used in UTF-16 strings and `dchar`
 in UTF-32 strings.
 
 A conversion between variables of different types is only
-allowed by the compiler if no precision is lost.
+allowed by the compiler if no precision is lost. A conversion
+from `double` to `float` is allowed though.
 
 A conversion to another type may be forced by using the
 `cast(TYPE) var` expression.
@@ -169,6 +170,10 @@ is global for the *current* thread. Every thread will get its own
 e.g. C/C++ and Java where `static` indeed means global
 for the application, entailing synchronization issues
 with multi-threading.
+
+If you want to declare a "classic" global variable that
+every thread can see and modify, use the storage class `__gshared` which is equivalent
+to C's `static`. The ugly name is just a friendly reminder to use it rarely.
 
 ## {SourceCode}
 //TODO
@@ -347,7 +352,8 @@ void main()
 
 Slices are objects from type `T[]` for any given type `T`.
 Slices provide a view on a subset of an array
-of `T` values - or just point to the whole array.
+of `T` values - or just point to the whole array. **Slices and
+dynamic arrays are technically the same.**
 
 A slice has a size of `2 * sizeof(T*)` so 16 bytes on 64bit platforms
 and 8 bytes on 32bit. It consists of two members:
