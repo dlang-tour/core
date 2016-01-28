@@ -132,7 +132,15 @@ a subset of D functionality can be forced by design to prevent memory
 bugs.
 
 ## {SourceCode}
-//TODO
+
+import std.stdio;
+
+void main() @safe
+{
+    writeln("Hello World"); // writeln is a safe function
+    int* p = new int; // allocating memory with the GC is safe too
+    int* fiddling = p + 5; // this is UNSAFE!
+}
 
 # Storage classes
 
@@ -176,13 +184,92 @@ every thread can see and modify, use the storage class `__gshared` which is equi
 to C's `static`. The ugly name is just a friendly reminder to use it rarely.
 
 ## {SourceCode}
-//TODO
+
+import std.stdio;
+
+void main()
+{
+    immutable forever = 100;
+    // ERROR:
+    // forever = 5;
+    writeln("forever: ", typeof(forever).stringof);
+
+    const int* cForever = &forever;
+    // ERROR:
+    // *cForever = 10;
+    writeln("const* forever: ", typeof(cForever).stringof);
+
+    int mutable = 100;
+    writeln("mutable: ", typeof(mutable).stringof);
+    mutable = 10; // Fine
+    const int* cMutable = &mutable; // Fine
+    // ERROR:
+    // *cMutable = 100;
+    writeln("cMutable: ", typeof(cMutable).stringof);
+
+    // ERROR:
+    // immutable int* imMutable = &mutable;
+}
+
+# Controlling flow
+
+Sometimes you have to control your application's flow
+depending on input parameters. `if`, `else` and `if else`
+are your friends then:
+
+    if (a == 5) {
+        writeln("Condition is met");
+    } else if (a > 10) {
+        writeln("Another condition is met");
+    } else {
+        writeln("Nothing is met!");
+    }
+
+When an `if`/`else` block just contains one statement
+the braces can be omitted.
+
+D provides the same operators as C/C++ and Java for testing
+variables for equality or compare them otherwise:
+
+* `==` and `!=` for testing equality and inequality
+* `<`, `<=`, `>` and `>=` for testing less (- or equal) and greater (- or equal)
+
+For combining multiple conditions the `||` operator represents
+the logical *OR*, and `&&` the logical *AND*.
+
+D also defines a `switch`..`case` statement which lets you take
+action depending on the value of *one* variable. `switch`
+works with all basic types as well as (`w`|`d`)`string`s!
+It's even possible to define ranges for integral types
+using the `case START: .. case END:` syntax. Make sure to
+take a look at the source code example.
+
+## {SourceCode}
+
+import std.stdio;
+
+void main()
+{
+    int c = 5;
+    if (c >= 0 && c < 11) // This is EVIL but works
+    switch(c) {
+        case 0: .. case 9:
+            writeln(c, " is within 0-9");
+            break; // necessary!
+        case 10:
+            writeln("A Ten!");
+            break;
+        default: // if nothing else matches
+            writeln("Nothing");
+            break;
+    }
+}
 
 # Functions, part I
 
 You've seen one function already: `main()` - the starting point of every 
-D goodness. A function may return something - or be declard with
-`void` if nothing is returned - and an arbitray number of parameters.
+D goodness. A function may return something - or be declared with
+`void` if nothing is returned - and an arbitrary number of parameters.
 
     int add(int lhs, int rhs) {
         return lhs + rhs;
@@ -210,7 +297,56 @@ the parent's scope
         ...
 
 ## {SourceCode}
-//TODO
+
+import std.stdio;
+import std.random;
+
+void main()
+{
+    // Define 4 local functions for
+    // 4 different mathematical operations
+    auto add(int lhs, int rhs) {
+        return lhs + rhs;
+    }
+    auto sub(int lhs, int rhs) {
+        return lhs - rhs;
+    }
+    auto mul(int lhs, int rhs) {
+        return lhs * rhs;
+    }
+    auto div(int lhs, int rhs) {
+        return lhs / rhs;
+    }
+
+    int a = 10;
+    int b = 5;
+
+    // uniform generates a number between START
+    // and END, whereas END is NOT inclusive.
+    // Depending on the result we call one of the math
+    // operations.
+    switch (uniform(0,4)) {
+        case 0:
+            writeln(add(a,b));
+            break;
+        case 1:
+            writeln(sub(a,b));
+            break;
+        case 2:
+            writeln(mul(a,b));
+            break;
+        case 3:
+            writeln(div(a,b));
+            break;
+        default:
+            assert(0); // special which marks UNREACHABLE
+                       // code
+    }
+}
+
+// NOTE:
+//   add(), sub(), mul() and div()
+//   are NOT visible outside of main!
 
 # Functions, part II
 
@@ -252,7 +388,58 @@ The second form is a shorthand form for lambdas that consist
 of just one line.
 
 ## {SourceCode}
-//TODO
+import std.stdio;
+import std.random;
+
+/* Returns: delegate which does a random mathematical
+            calculation depending on randomNumber.
+*/
+auto getBusinessLogic(int a, int b, int randomNumber)
+{
+    // Define 4 lambda functions for
+    // 4 different mathematical operations
+    auto add = (int lhs, int rhs) => lhs + rhs;
+    auto sub = (int lhs, int rhs) => lhs - rhs;
+    auto mul = (int lhs, int rhs) => lhs * rhs;
+    auto div = (int lhs, int rhs) => lhs / rhs;
+
+    writeln("Type of `add` for example is: ",
+        typeof(add).stringof);
+
+    return () {
+        switch (randomNumber) {
+            case 0:
+                writeln(add(a,b));
+                break;
+            case 1:
+                writeln(sub(a,b));
+                break;
+            case 2:
+                writeln(mul(a,b));
+                break;
+            case 3:
+                writeln(div(a,b));
+                break;
+            default:
+                assert(0); // special which marks UNREACHABLE
+                           // code
+        }
+    };
+}
+
+void main()
+{
+    int a = 10;
+    int b = 5;
+
+    auto func = getBusinessLogic(a, b, uniform(0,4));
+    writeln("The type of func is ",
+        typeof(func).stringof, "!");
+
+    // run the delegate func which does all the real
+    // work for us!
+    func();
+}
 
 # Structs
 
