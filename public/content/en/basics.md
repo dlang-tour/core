@@ -45,8 +45,8 @@ is compiled for 32bit or 64bit systems.
 
     bool                 (8 bit)
     byte, ubyte, char    (8 bit)
-    short, ushort, dchar (16 bit)
-    int, uint, wchar     (32 bit)
+    short, ushort, wchar (16 bit)
+    int, uint, dchar     (32 bit)
     long, ulong          (64 bit)
 
 Floating point types:
@@ -56,7 +56,7 @@ Floating point types:
     real                 (depending on platform, 80 bit on Intel x86 32-bit)
 
 The prefix `u` denotes *unsigned* types. `char` translates to
-UTF-8 characters, `dchar` is used in UTF-16 strings and `dchar`
+UTF-8 characters, `wchar` is used in UTF-16 strings and `dchar`
 in UTF-32 strings.
 
 A conversion between variables of different types is only
@@ -407,8 +407,8 @@ for example splits a string by newline without any memory allocations.
 
 Beside the UTF-8 `string` there are two more:
 
-    alias dstring = immutable(dchar)[]; // UTF-16
-    alias wstring = immutable(wchar)[]; // UTF-32
+    alias wstring = immutable(dchar)[]; // UTF-16
+    alias dstring = immutable(wchar)[]; // UTF-32
 
 The variants are most easily converted between each other using
 the `to` method from `std.conv`:
