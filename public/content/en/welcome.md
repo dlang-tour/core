@@ -26,6 +26,7 @@ features.
 
 import std.stdio;
 
+// Let's get going!
 void main() {
     writeln("Hello World!");
 }

@@ -9,6 +9,13 @@ dlangTourApp.controller('DlangTourAppCtrl', [ '$scope', '$http', function($scope
 		theme: "elegant"
 	};
 
+	$scope.init = function(chapterId, section) {
+		$http.get('/api/v1/source/' + chapterId + "/" + section)
+			.success(function(data) {
+				$scope.sourceCode = $scope.resetCode = data.sourceCode;
+			});
+	}
+
 	$scope.programOutput = "";
 
 	$scope.run = function() {

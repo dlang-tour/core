@@ -7,13 +7,43 @@ import vibe.d;
 +/
 interface IApiV1
 {
+	/+
+		POST /api/v1/run
+		{
+			source: "..."
+		}
+
+		Returns: output of compiled D program with success
+		flag.
+		{
+			output: "Program Output",
+			success: true/false
+		}
+	+/
 	struct RunOutput
 	{
 		string output;
 		bool success;
 	}
-
 	@method(HTTPMethod.POST)
 	@path("/api/v1/run")
 	RunOutput run(string source);
+
+	/+
+		GET /api/v1/source/CHAPTER/SECTION
+
+		Returns: source code (or empty if none) for the given
+		chapter and section. Also returns changed source code
+		if user switched between sections.
+		{
+			sourceCode: "..."
+		}
+	+/
+	struct SourceOutput
+	{
+		string sourceCode;
+	}
+	@method(HTTPMethod.GET)
+	@path("/api/v1/source/:chapter/:section")
+	SourceOutput getSource(string _chapter, int _section);
 }

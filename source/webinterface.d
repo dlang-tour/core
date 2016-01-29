@@ -78,15 +78,15 @@ class WebInterface
 		}
 
 		auto htmlContent = tourData.content.html;
-		auto sourceCode = tourData.content.sourceCode;
 		auto chapterId = _chapter;
+		auto hasSourceCode = !tourData.content.sourceCode.empty;
 		auto section = _section;
 		auto sectionCount = tourData.sectionCount;
 		auto toc = &toc_;
 		auto previousLink = previousSectionLink(_chapter, _section);
 		auto nextLink = nextSectionLink(_chapter, _section);
-		render!("tour.dt", htmlContent, sourceCode, section,
-				sectionCount, chapterId,
+		render!("tour.dt", htmlContent, section,
+				sectionCount, chapterId, hasSourceCode,
 				nextLink, previousLink,
 				toc)();
 	}

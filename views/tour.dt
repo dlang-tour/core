@@ -10,10 +10,10 @@ block head
 	link(rel="stylesheet", href="/static/css/tour.css")
 
 block content
-	#content(ng-controller="DlangTourAppCtrl as ctrl", ng-init="sourceCode = resetCode = '#{sourceCode}'")
+	#content(ng-controller="DlangTourAppCtrl as ctrl", ng-init="init('#{chapterId}',  #{section})")
 		.row
 			.col-md-6
-				- if (!sourceCode.empty)
+				- if (hasSourceCode)
 					#code-box
 						ui-codemirror(ui-codemirror-opts="editorOptions", ng-model="sourceCode")
 						.text-right#command-box

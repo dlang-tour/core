@@ -57,7 +57,7 @@ shared static this()
 	fsettings.serverPathPrefix = "/static";
 	urlRouter
 		.registerWebInterface(new WebInterface(contentProvider))
-		.registerRestInterface(new ApiV1(execProvider))
+		.registerRestInterface(new ApiV1(execProvider, contentProvider))
 		.get("/static/*", serveStaticFiles(config.publicDir ~ "/static/", fsettings));
 
 	listenHTTP(settings, urlRouter);
