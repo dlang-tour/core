@@ -13,13 +13,14 @@ block content
 	#content(ng-controller="DlangTourAppCtrl as ctrl", ng-init="sourceCode = resetCode = '#{sourceCode}'")
 		.row
 			.col-md-6
-				#code-box(ng-hide="'' == sourceCode")
-					ui-codemirror(ui-codemirror-opts="editorOptions", ng-model="sourceCode")
-					.text-right#command-box
-						button.btn.btn-primary(ng-click="run()") Run
-						button.btn.btn-default(ng-click="reset()") Reset
-					div
-						pre#program-output {{programOutput}}
+				- if (!sourceCode.empty)
+					#code-box
+						ui-codemirror(ui-codemirror-opts="editorOptions", ng-model="sourceCode")
+						.text-right#command-box
+							button.btn.btn-primary(ng-click="run()") Run
+							button.btn.btn-default(ng-click="reset()") Reset
+						div
+							pre#program-output {{programOutput}}
 			.col-md-6#tour-content!= htmlContent
 
 	nav.navbar.navbar-default.navbar-fixed-bottom
