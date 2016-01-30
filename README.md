@@ -44,6 +44,10 @@ again just run:
 
 For further Docker foo please refer to the Docker documentation.
 
+**Note:** The docker version inside the container must be compatible
+to that one on the host system! Generally a newer version might run
+on the host system than within the container.
+
 ## Systemd Unit
 
 A systemd unit has been included at [dlang-tour.service](dlang-tour.service)
