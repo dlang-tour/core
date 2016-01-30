@@ -24,10 +24,18 @@ the ports the tour is listening to.
 ## Docker image
 
 A Docker image is automatically built by Travis CI and pushed to the repository
-at https://hub.docker.com/r/stonemaster/dlang-tour/. So to run the latest dlang-tour
+at https://hub.docker.com/r/stonemaster/dlang-tour/. The Dlang-Tour Docker container
+is configured to use Docker itself to compile and run D source code
+in the online editor. For that to work the host system's Docker `/var/run/docker.sock`
+Unix domain socket has to be mounted to work inside the container. Any
+**sandbox** for compiling will then be started on the host system actually,
+and not within the Dlang Tour Docker container itself.
+
+So to run the latest dlang-tour
 version in a Docker container, run the following command:
 
-	docker run -d --rm -p 80:8080 --name dlang-tour stonemaster/dlang-tour
+	docker run -d --rm -p 80:8080 -v /var/run/docker.sock:/var/run/docker.sock \
+		--name dlang-tour stonemaster/dlang-tour
 
 The tour will be available at your host system on port 80. To stop the container
 again just run:
@@ -35,6 +43,14 @@ again just run:
 	docker stop dlang-tour
 
 For further Docker foo please refer to the Docker documentation.
+
+## Systemd Unit
+
+A systemd unit has been included at [dlang-tour.service](dlang-tour.service)
+which allows to quickly install a service for systemd
+enabled distributions like newer Debian/Ubuntu's and CoreOS. Just
+install this service file and run `systemctl start dlang-tour` to
+run the dlang-tour using Docker (which is a pre-requisite of course).
 
 ## License
 

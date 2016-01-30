@@ -1,0 +1,15 @@
+[Unit]
+Description=dlang-tour Container
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+Restart=always
+ExecStartPre=-/usr/bin/docker stop dlang-tour 
+ExecStartPre=-/usr/bin/docker rm dlang-tour 
+ExecStartPre=/usr/bin/docker pull stonemaster/dlang-tour
+ExecStart=/usr/bin/docker run --rm -v /var/run/docker.sock:/var/run/docker.sock --name dlang-tour -p 80:8080 stonemaster/dlang-tour
+
+[Install]
+WantedBy=multi-user.target

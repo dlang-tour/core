@@ -8,9 +8,9 @@ import rest.apiv1;
 
 import exec.cache;
 import exec.stupidlocal;
-import exec.dpaste;
 import exec.iexecprovider;
 import exec.off;
+import exec.docker;
 
 /++ Factory method that returns an execution provider
     depending on the configuration settings.
@@ -19,18 +19,24 @@ private IExecProvider createExecProvider(Config config)
 {
 	IExecProvider execProvider;
 
+	logInfo("Using execution driver '%s'", config.execProvider);
+
 	switch (config.execProvider) {
 		case "stupidlocal":
 			execProvider = new StupidLocal;
 			break;
-		case "dpaste":
-			execProvider = new DPaste;
-			break;
 		case "off":
 			return new Off;
+		case "docker":
+			return new Docker(config.dockerExecConfig.timeLimit,
+					config.dockerExecConfig.maximumOutputSize,
+					config.dockerExecConfig.maximumQueueSize,
+					config.dockerExecConfig.memoryLimit);
 		default:
 			throw new Exception("Unknown exec provider %s".format(config.execProvider));
 	}
+
+	logInfo("Caching enabled: %b", config.enableExecCache);
 
 	if (config.enableExecCache)
 		return new Cache(execProvider);
@@ -43,7 +49,7 @@ shared static this()
 	readOption("c|config", &configFile, "Configuration file");
 	auto config = new Config(configFile);
 
-	logInfo("Starting Dlang-tour with configuration: %s", config);
+	logInfo("Starting Dlang-tour on %s, port %d", config.bindAddresses, config.port);
 
 	auto settings = new HTTPServerSettings;
 	settings.port = config.port;

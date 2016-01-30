@@ -1,7 +1,13 @@
 port: 8080
 public_dir: "public"
 listen:
-    - 0.0.0.0 
+    - 0.0.0.0
 exec:
-    driver: "off"
+    driver: "docker"
+    # For docker driver
+    config:
+        memory_limit: 128
+        maximum_queue_size: 10
+        time_limit: 10
+        maximum_output_size: 4096
     cache: true
