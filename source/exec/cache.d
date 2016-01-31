@@ -25,7 +25,6 @@ class Cache: IExecProvider
 		auto hash = getSourceCodeHash(source);
 		auto entry = &sourceHashToOutput_[hash % HashTableSize];
 		if (entry.hash == hash) {
-			logInfo("Re-using cache entry with hash %s", hash);
 			return entry.result;
 		}
 		

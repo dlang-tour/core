@@ -456,7 +456,7 @@ define them through a `struct`:
 with `new`) and are copied **by value** in assignments or
 as parameters to function calls.
 
-    Person p(30, 180, 3.1415);
+    auto p = Person(30, 180, 3.1415);
     auto t = p; // copy
 
 When a new object of a `struct` type is created its members can be initialized
@@ -487,9 +487,85 @@ member functions.
     p.doStuff(); // call do_stuff
     p.privateStuff(); // forbidden
 
+If a member function is declared with `const` it won't be allowed
+to modify any of its members. This is enforced by the compiler.
+If a member function is declared as `static` if will be callable
+without an instantiated object e.g. `Person.myStatic()` but
+isn't allowed to access any non-`static` members.
+
+### Exercise
+
+Given the `struct Vector3` implement the following functions and make
+the example application successfully run:
+
+* `length()` which returns the vector's length
+* `dot(Vector3)` which returns the dot product of two vectors
+* `toString()` which returns a string representation of this vector.
+  We don't know strings yet but the function `std.string.format`
+  conveniently returns a string using `printf`-like syntax:
+  `format("MyInt = %d", myInt)`.
+
 ## {SourceCode}
 
-//TODO
+struct Vector3 {
+    double x;
+    double y;
+    double z;
+
+    double length() const {
+        import std.math: sqrt;
+        return 0.0;
+    }
+
+    // rhs will be copied
+    double dot(Vector3 rhs) const {
+        return 0.0;
+    }
+
+    /*
+    Returns: representation of the string in the
+    special format. The output is restricted to
+    a precision of one!
+    "x: 0.0 y: 0.0 z: 0.0"
+    */
+    string toString() const {
+        import std.string: format;
+        // Hint: refer to the documentation of std.format
+        // to see how to influence output for floating point
+        // numbers.
+        return format("");
+    }
+}
+
+void main() {
+    auto vec1 = Vector3(10.0, 0.0, 0.0);
+    Vector3 vec2;
+    vec2.x = 0.0;
+    vec2.y = 20.0;
+    vec2.z = 0.0;
+
+    // assert is a compiler built-in which verifies
+    // conditions in Debug mode and aborts the
+    // program with an AssertionError is it fails
+    assert(vec1.length() == 10.0);
+    // If a member function doesn't have parameters,
+    // the calling braces () might just be omitted
+    assert(vec2.length == 20.0);
+
+    // Test the functionality for the dot product
+    assert(vec1.dot(vec2) == 0.0);
+
+
+    // Thanks to toString() we can now just output
+    // our vector's with writeln
+    import std.stdio: writeln, writefln;
+    writeln("My vec1 = ", vec1);
+    writefln("My vec2 = %s", vec2);
+
+    // Check the string representation
+    assert(vec1.toString() == "x: 10.0 y: 0.0 z: 0.0");
+    assert(vec2.toString() == "x: 0.0 y: 20.0 z: 0.0");
+}
 
 # Arrays
 
@@ -505,7 +581,7 @@ the fixed size:
 
     int[8] arr;
 
-`arr`s tye is `int[8]`. Note that the size of the array is denoted
+`arr`s type is `int[8]`. Note that the size of the array is denoted
 near the type and not after the variable name like in C/C++.
 
 **dynamic** arrays are stored on the heap and can be expanded
@@ -516,23 +592,57 @@ and its length:
     auto arr = new int[size];
 
 The type of `arr` is `int[]` which is technically a
-**slice** - those are introduced in the next section.
+**slice** - those are introduced in the next section. Multi-dimensional
+arrays can be created easily using the `auto arr = new int[3][3]` syntax.
+
+Arrays can be concatenated using the `~` operator which
+will create a new dynamic array. Mathematical operations can
+be applied to whole arrays using the `c[] = a[] + b[]` syntax.
+Those operations might be optimized
+by the compiler to use special processors instructions that
+do the operations in one go.
 
 Both static and dynamic array provide the property `.length`
 which is read-only for static arrays but can be written to
-in case of dynamic arrays to change its size dynamically.
+in case of dynamic arrays to change its size dynamically. The
+property `.dup` creates a copy of the array.
 
 When indexing an array through the `arr[idx]` syntax the special
 `$` syntax denotes an array's length. `arr[$ - 1]` thus
 references the last element and is a short form for `arr[arr.length - 1]`.
 
+### Exercise
+
+Complete the function `encrypt` to decrypt the secret message.
+The text should be encrypted using *Caesar encryption*
+that shifts the characters in the alphabet using a certain index.
+The to-be-encrypted text just contains characters in the range `a-z`
+which should make things easier.
+
 ## {SourceCode}
 
 import std.stdio;
 
+auto encrypt(char[] input, char shift)
+{
+    auto result = input.dup;
+    // ...
+    return result;
+}
+
 void main()
 {
-    // TODO
+    // We will now encrypt the message with Caesar encryption and a shift
+    // factor of 16!
+    char[] toBeEncrypted = [ 'w','e','l','c','o','m',
+      'e','t','o','d' ];
+    writeln("Before: ", toBeEncrypted);
+    auto encrypted = encrypt(toBeEncrypted, 16);
+    writeln("After: ", encrypted);
+
+    // Make sure we the algorithm works as expected
+    assert(encrypted == [ 'm','u','b','s','e',
+            'c','u','j','e','t' ]);
 }
 
 # Slices
@@ -573,6 +683,34 @@ Like seen in the previous section the `[$]` expression indexes the element
 one past the slice's end and thus would generate a `RangeError`
 (if bounds-checking hasn't been disabled).
 
+## {SourceCode}
+
+import std.stdio;
+
+/// Calculates the minimum of all values
+/// in slice recursively. For every recursive
+/// call a sub-slice is taken thus we don't
+/// create a copy and don't do any allocations.
+///
+/// Note: @nogc is magic flag which tells the compiler
+/// to make NO allocations are done by this function!
+int minimum(int[] slice) @nogc
+{
+    assert(slice.length > 0);
+    if (slice.length == 1)
+        return slice[0];
+    auto otherMin = minimum(slice[1 .. $]);
+    return slice[0] < otherMin ? slice[0] : otherMin;
+}
+
+void main()
+{
+    int[] test = [ 3, 9, 11, 7, 2, 76, 90, 6 ];
+    auto min = minimum(test);
+    writefln("The minimum of %s is %d", test, min);
+    assert(min == 2);
+}
+
 # Alias & Strings
 
 Now that we know what arrays are, have gotten in touch of `immutable`
@@ -603,12 +741,39 @@ the `to` method from `std.conv`:
     dstring myDstring = to!dstring(myString);
     string myString = to!string(myDstring);
 
+Because `string`s are arrays the same operations apply to them
+e.g. strings might be concatenated using the `~` operator for example.
+The property `.length` isn't necessarily the number of characters
+for UTF strings so in that case use the function `std.utf.count`.
+
 ## {SourceCode}
 
 import std.stdio;
+import std.utf: count;
+import std.string: format;
 
 void main() {
-    alias mystring = immutable(char)[];
+    // format generates a string using a printf like
+    // syntax. D allows native UTF string
+    // handling!
+    string str = format("%s %s", "Hellö", "Wörld");
+    writeln("My string: ", str);
+    writeln("Array length of string: ", str.length);
+    writeln("Character length of string: ", count(str));
+
+    // Strings are just normal arrays, so any operation
+    // that works on arrays works here to!
+    import std.array: replace;
+    writeln(replace(str, "lö", "lo"));
+    import std.algorithm: endsWith;
+    writefln("Does %s end with 'rld'? %s",
+        str, endsWith(str, "rld"));
+
+    import std.conv: to;
+    // Convert to UTF-32
+    dstring dstr = to!dstring(str);
+    // .. which of course looks the same!
+    writeln("My dstring: ", dstr);
 }
 
 # All the classic for's

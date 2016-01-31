@@ -38,12 +38,14 @@ compiler version of the reference compiler **DMD** (Digital Mars D)
 can be downloaded and installed offline:
 
 * There is a Windows installer available - or a ZIP file which
-  contains the pre-compiled toolkit
+  contains the pre-compiled toolkit. Installing with
+  [chocolatey](https://chocolatey.org/packages/dmd)
+  is another option.
 * For Mac OS X there is a `.dmg` package. The most recent can also be installed
-  with `brew install dmd` using [Homebrew](http://brew.sh)
+  with `brew install dmd` using [Homebrew](http://brew.sh).
 * There are officially supported Linux packages for Fedora, OpenSuse and
   Debian/Ubuntu. For the latter a regularly updated repository exists
-  at [d-apt.source-forge.net](http://d-apt.source-forge.net)
+  at [d-apt.source-forge.net](http://d-apt.source-forge.net).
 
 Besides the DMD reference compiler which uses its own backend, there are
 two other compilers that can be fetched through the

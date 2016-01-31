@@ -75,8 +75,8 @@ void main()
 
     {
         writeln("  <head>");
+        scope(exit) writeln("  </head>");
         "    <title>%s</title>".writefln("Hello");
-        scope(exit) writeln("</head>");
     }
 
     writeln("  <body>");
@@ -167,6 +167,10 @@ void main()
 
 * Template constraints
 * static if
+
+# Functional programming
+
+...
 
 # Contract programming
 

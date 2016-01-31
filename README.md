@@ -1,5 +1,7 @@
 # The Dlang Online Tour
 
+[![Build Status](https://travis-ci.org/stonemaster/dlang-tour.svg?branch=master)](https://travis-ci.org/stonemaster/dlang-tour)
+
 This is the [D language](https://dlang.org) online tour which
 provides an online introduction to this great system programming language
 with examples that can be edited, compiled and run online.
@@ -30,6 +32,9 @@ in the online editor. For that to work the host system's Docker `/var/run/docker
 Unix domain socket has to be mounted to work inside the container. Any
 **sandbox** for compiling will then be started on the host system actually,
 and not within the Dlang Tour Docker container itself.
+
+The code for running RDMD is a Docker sandbox can be found here:
+[dlang-tour-rdmd](https://github.com/stonemaster/dlang-tour-rdmd).
 
 So to run the latest dlang-tour
 version in a Docker container, run the following command:
