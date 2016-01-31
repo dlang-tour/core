@@ -4,7 +4,9 @@ copyright "Copyright © 2015, André Stein"
 authors "André Stein"
 dependency "vibe-d" version="~>0.7.23"
 dependency "dyaml" version="~>0.5.2"
-subConfiguration "vibe-d" "libasync"
+// Commented out until GDC is up to date. Doesn't work
+// with 2.066.1 frontends currently.
+// subConfiguration "vibe-d" "libasync"
 configuration "executable" {
 	targetType "executable"
 	versions "VibeDefaultMain"
