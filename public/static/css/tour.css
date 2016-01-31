@@ -26,3 +26,9 @@
 body {
 	padding-bottom: 50px;
 }
+
+pre.prettyprint {
+	border: 1px solid #ccc;
+	margin-bottom: 0;
+	padding: 9.5px;
+}

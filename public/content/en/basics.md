@@ -746,6 +746,9 @@ e.g. strings might be concatenated using the `~` operator for example.
 The property `.length` isn't necessarily the number of characters
 for UTF strings so in that case use the function `std.utf.count`.
 
+To create multi-line strings use the
+`string str = q{ ... }` syntax.
+
 ## {SourceCode}
 
 import std.stdio;
@@ -812,7 +815,39 @@ The keyword `continue` starts with the next loop iteration.
 
 ## {SourceCode}
 
-//TODO
+import std.stdio;
+
+/// Returns: average of array
+double average(int[] array) {
+    // The property .empty for arrays isn't native in
+    // D but has to be made accessible by importing
+    // the function from std.array
+    import std.array: empty, front;
+
+    double accumulator = 0.0;
+    auto length = array.length;
+    while (!array.empty) {
+        // this could be also done with array.front
+        // with import std.array: front;
+        accumulator += array[0];
+        array = array[1 .. $];
+    }
+
+    return accumulator / length;
+}
+
+void main()
+{
+    auto testers = [ [1, 4, 7, 8],
+          [4, 5, 8, 9, 47, 88],
+          [3, 6, 2, 1, 38, 4] ];
+
+    for (auto i = 0; i < testers.length; ++i) {
+      writeln("The average of ", testers[i], " = ",
+        average(testers[i]));
+    }
+}
+
 
 # Foreach
 
@@ -822,7 +857,7 @@ through data less error-prone and easier to read.
 Given an array `arr` of type `int[]` it is possible to
 iterate through the elements using this `foreach` loop:
 
-    foreach(int e; arr) {
+    foreach (int e; arr) {
         writeln(e);
     }
 
@@ -830,7 +865,7 @@ The first field in the `foreach` definition is the variable
 name used in the loop iteration. Its type can be omitted
 and is then induced `auto`-style:
 
-    foreach(e; arr) {
+    foreach (e; arr) {
         // typoef(e) is int
         writeln(e);
     }
@@ -843,13 +878,35 @@ this is okay for basic types but might be a problem for
 large types. To prevent copying or enable *in-place
 *mutation use `ref`:
 
-    foreach(ref e; arr) {
+    foreach (ref e; arr) {
         e = 10; // overwrite value
     }
 
 ## {SourceCode}
 
-// TODO
+import std.stdio;
+
+void main() {
+    auto testers = [ [1, 4, 7, 8],
+          [4, 5, 8, 9, 47, 88],
+          [3, 6, 2, 1, 38, 4] ];
+
+    // This is just for the fun of it: iterate
+    // through the testers in reverse order. This
+    // integrates very nice with foreach because you
+    // just apply another algorith before you really
+    // iterate over the real object.
+    import std.range: retro;
+    foreach (tester; retro(testers))
+    {
+        double accumulator = 0.0;
+        foreach (c; tester)
+            accumulator += c;
+
+        writeln("The average of ", tester,
+            " = ", accumulator / tester.length);
+    }
+}
 
 # Ranges
 
@@ -875,7 +932,10 @@ and is thus something that can be iterated over:
 The functions that are in the `std.range` and `std.algorithm` modules also provide
 building blocks that make use of this interface. Ranges allow
 to compose complex algorithms behind an object that
-can be iterated with ease.
+can be iterated with ease. And ranges allows to create **lazy**
+objects that actually just perform a calculation when this
+is really needed in an iteration e.g. when a range's
+element is used.
 
 ### Exercise
 
@@ -886,10 +946,50 @@ Don't fool yourself into deleting the `assert`ions!
 
 ## {SourceCode}
 
+import std.stdio;
+
+struct FibonacciRange
+{
+    @property empty() const
+    {
+        // So when does the Fibonacci sequence
+        // end?!
+    }
+
+    void popFront()
+    {
+    }
+
+    int front()
+    {
+    }
+}
+
+void main() {
+    import std.range: take;
+    import std.array: array;
+
+    // Let's test this FibonacciRange!
+    FibonacciRange fib;
+
+    // The magic function take creates another range which
+    // just will return N elements at maximum. This range
+    // is _lazy_ and just touches the original range
+    // if actually needed (iteration)!
+    auto fib10 = take(fib, 10);
+
+    // But we do want to touch all elements and convert
+    // the range to an array of integers.
+    int[] the10Fibs = array(fib10);
+
+    writeln("Your first 10 Fibonacci numbers: ", the10Fibs);
+    assert(the10Fibs == [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]);
+}
+
 # Associative Arrays
 
-D has builtin *associative arrays* also known as hash maps.
-An associative arry with a key type of `int` and a value type
+D has built-in *associative arrays* also known as hash maps.
+An associative arrqy with a key type of `int` and a value type
 of `string` is declared as follows:
 
     int[string] arr;
@@ -920,7 +1020,48 @@ do something which is left as an exercise to the reader.
 
 ## {SourceCode}
 
-int[int][string]
+import std.stdio;
+
+/// Splits the given text into words and returns
+/// an associative array that maps words to their
+/// respective word counts.
+auto wordCount(string text)
+{
+    // The function splitter lazyily splits the input
+    // into a range
+    import std.algorithm.iteration: splitter;
+
+    // Indexed by words and returning the count
+    int[string] words;
+
+    // Define a predicate to use for splitting
+    // the string.
+    alias pred = c => c == ' ' || c == '.'
+      || c == ',' || c == '\n';
+
+    // The parameter we pass behind ! is an expression
+    // that marks the condition when to split text
+    foreach(word; splitter!pred(text)) {
+        // Increment word count if word has been found.
+        if (auto found = word in words) {
+            ++*found;
+        } else {
+            // create entry in hash map with count 1
+            words[word] = 1;
+        }
+    }
+
+    return words;
+}
+
+void main()
+{
+    string text = q{This tour will give you an overview of this powerful and expressive systems
+programming language which compiles directly to efficient, *native*
+machine code.};
+
+    writeln("Word counts: ", wordCount(text));
+}
 
 # Classes
 
