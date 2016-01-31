@@ -13,7 +13,7 @@ block head
 block content
 	#content(ng-controller="DlangTourAppCtrl as ctrl", ng-init="init('#{chapterId}',  #{section})")
 		.row
-			.col-md-6
+			.col-xs-6
 				- if (hasSourceCode)
 					#code-box
 						ui-codemirror(ui-codemirror-opts="editorOptions", ng-model="sourceCode")
@@ -22,7 +22,7 @@ block content
 							button.btn.btn-default(ng-click="reset()") Reset
 						div
 							pre#program-output {{programOutput}}
-			.col-md-6#tour-content!= htmlContent
+			.col-xs-6#tour-content!= htmlContent
 
 	nav.navbar.navbar-default.navbar-fixed-bottom
 		.container.text-center.h2
