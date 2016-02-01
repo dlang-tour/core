@@ -33,4 +33,9 @@ is allowed, that with title `{SourceCode}`). This section
 contains the source code of that section. Every section might contain as many 
 \>=3 level headings as needed (and useful).
 
-Source code examples should be indented with 4 spaces.
+## Source Code formatting
+
+* Source code examples should be indented with 4 spaces.
+* To prevent dynamic word wrap of code examples on mobile
+  devices make sure to have a line length for source code of 48
+  characters.

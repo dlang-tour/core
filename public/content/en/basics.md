@@ -87,8 +87,9 @@ void main()
     uint d = b; // fine
     int f; // contains 0
 
-    auto f = 3.1415f; // postfix f denotes a float
-    // typeof(VAR) returns the type of an expression
+    auto f = 3.1415f; // .f denotes a float
+    // typeof(VAR) returns the type of an
+    // expression.
     // .name is a builtin property
     writeln("type of f is %s", typeof(f).name);
     double pi = f; // fine
@@ -137,9 +138,12 @@ import std.stdio;
 
 void main() @safe
 {
-    writeln("Hello World"); // writeln is a safe function
-    int* p = new int; // allocating memory with the GC is safe too
-    int* fiddling = p + 5; // this is UNSAFE!
+    // writeln is a safe function
+    writeln("Hello World");
+    // allocating memory with the GC is safe too
+    int* p = new int;
+    // this is UNSAFE!
+    int* fiddling = p + 5;
 }
 
 # Storage classes
@@ -192,20 +196,24 @@ void main()
     immutable forever = 100;
     // ERROR:
     // forever = 5;
-    writeln("forever: ", typeof(forever).stringof);
+    writeln("forever: ",
+        typeof(forever).stringof);
 
     const int* cForever = &forever;
     // ERROR:
     // *cForever = 10;
-    writeln("const* forever: ", typeof(cForever).stringof);
+    writeln("const* forever: ",
+        typeof(cForever).stringof);
 
     int mutable = 100;
-    writeln("mutable: ", typeof(mutable).stringof);
+    writeln("mutable: ",
+        typeof(mutable).stringof);
     mutable = 10; // Fine
     const int* cMutable = &mutable; // Fine
     // ERROR:
     // *cMutable = 100;
-    writeln("cMutable: ", typeof(cMutable).stringof);
+    writeln("cMutable: ",
+        typeof(cMutable).stringof);
 
     // ERROR:
     // immutable int* imMutable = &mutable;
@@ -251,7 +259,8 @@ import std.stdio;
 void main()
 {
     int c = 5;
-    if (c >= 0 && c < 11) // This is EVIL but works
+    // This is EVIL but works
+    if (c >= 0 && c < 11)
     switch(c) {
         case 0: .. case 9:
             writeln(c, " is within 0-9");
@@ -323,8 +332,8 @@ void main()
 
     // uniform generates a number between START
     // and END, whereas END is NOT inclusive.
-    // Depending on the result we call one of the math
-    // operations.
+    // Depending on the result we call one of
+    // the math operations.
     switch (uniform(0,4)) {
         case 0:
             writeln(add(a,b));
@@ -339,8 +348,9 @@ void main()
             writeln(div(a,b));
             break;
         default:
-            assert(0); // special which marks UNREACHABLE
-                       // code
+            // special code which marks
+            // UNREACHABLE code
+            assert(0);
     }
 }
 
@@ -391,10 +401,10 @@ of just one line.
 import std.stdio;
 import std.random;
 
-/* Returns: delegate which does a random mathematical
-            calculation depending on randomNumber.
-*/
-auto getBusinessLogic(int a, int b, int randomNumber)
+/* Returns: delegate which does a random math
+     calculation depending on randomNumber.  */
+auto getBusinessLogic(int a, int b,
+    int randomNumber)
 {
     // Define 4 lambda functions for
     // 4 different mathematical operations
@@ -421,8 +431,9 @@ auto getBusinessLogic(int a, int b, int randomNumber)
                 writeln(div(a,b));
                 break;
             default:
-                assert(0); // special which marks UNREACHABLE
-                           // code
+                // special code which marks
+                // UNREACHABLE code
+                assert(0);
         }
     };
 }
@@ -432,12 +443,13 @@ void main()
     int a = 10;
     int b = 5;
 
-    auto func = getBusinessLogic(a, b, uniform(0,4));
+    auto func = getBusinessLogic(a, b,
+        uniform(0,4));
     writeln("The type of func is ",
         typeof(func).stringof, "!");
 
-    // run the delegate func which does all the real
-    // work for us!
+    // run the delegate func which does all the
+    // real work for us!
     func();
 }
 
@@ -530,9 +542,9 @@ struct Vector3 {
     */
     string toString() const {
         import std.string: format;
-        // Hint: refer to the documentation of std.format
-        // to see how to influence output for floating point
-        // numbers.
+        // Hint: refer to the documentation of
+        // std.format to see how to influence
+        // output for floating point numbers.
         return format("");
     }
 }
@@ -544,27 +556,30 @@ void main() {
     vec2.y = 20.0;
     vec2.z = 0.0;
 
-    // assert is a compiler built-in which verifies
-    // conditions in Debug mode and aborts the
-    // program with an AssertionError is it fails
+    // assert is a compiler built-in which
+    // verifies conditions in Debug mode and
+    // aborts the program with an AssertionError
+    // if it fails
     assert(vec1.length() == 10.0);
-    // If a member function doesn't have parameters,
-    // the calling braces () might just be omitted
+    // If a member function has no parameters,
+    // the calling braces () might be omitted
     assert(vec2.length == 20.0);
 
-    // Test the functionality for the dot product
+    // Test the functionality for dot product
     assert(vec1.dot(vec2) == 0.0);
 
 
-    // Thanks to toString() we can now just output
-    // our vector's with writeln
+    // Thanks to toString() we can now just
+    // output our vector's with writeln
     import std.stdio: writeln, writefln;
     writeln("My vec1 = ", vec1);
     writefln("My vec2 = %s", vec2);
 
     // Check the string representation
-    assert(vec1.toString() == "x: 10.0 y: 0.0 z: 0.0");
-    assert(vec2.toString() == "x: 0.0 y: 20.0 z: 0.0");
+    assert(vec1.toString() ==
+        "x: 10.0 y: 0.0 z: 0.0");
+    assert(vec2.toString() ==
+        "x: 0.0 y: 20.0 z: 0.0");
 }
 
 # Arrays
@@ -632,15 +647,20 @@ auto encrypt(char[] input, char shift)
 
 void main()
 {
-    // We will now encrypt the message with Caesar encryption and a shift
-    // factor of 16!
-    char[] toBeEncrypted = [ 'w','e','l','c','o','m',
-      'e','t','o','d' ];
+    // We will now encrypt the message with
+    // Caesar encryption and a
+    // shift factor of 16!
+    char[] toBeEncrypted = [ 'w','e','l','c',
+      'o','m','e','t','o','d',
+      // The last , is okay and will just
+      // be ignored!
+    ];
     writeln("Before: ", toBeEncrypted);
     auto encrypted = encrypt(toBeEncrypted, 16);
     writeln("After: ", encrypted);
 
-    // Make sure we the algorithm works as expected
+    // Make sure we the algorithm works
+    // as expected
     assert(encrypted == [ 'm','u','b','s','e',
             'c','u','j','e','t' ]);
 }
@@ -692,22 +712,25 @@ import std.stdio;
 /// call a sub-slice is taken thus we don't
 /// create a copy and don't do any allocations.
 ///
-/// Note: @nogc is magic flag which tells the compiler
-/// to make NO allocations are done by this function!
+/// Note: @nogc is magic flag which tells the
+/// compiler to make NO allocations are done
+/// by this function!
 int minimum(int[] slice) @nogc
 {
     assert(slice.length > 0);
     if (slice.length == 1)
         return slice[0];
     auto otherMin = minimum(slice[1 .. $]);
-    return slice[0] < otherMin ? slice[0] : otherMin;
+    return slice[0] < otherMin ?
+        slice[0] : otherMin;
 }
 
 void main()
 {
     int[] test = [ 3, 9, 11, 7, 2, 76, 90, 6 ];
     auto min = minimum(test);
-    writefln("The minimum of %s is %d", test, min);
+    writefln("The minimum of %s is %d",
+        test, min);
     assert(min == 2);
 }
 
@@ -756,16 +779,20 @@ import std.utf: count;
 import std.string: format;
 
 void main() {
-    // format generates a string using a printf like
-    // syntax. D allows native UTF string
+    // format generates a string using a printf
+    // like syntax. D allows native UTF string
     // handling!
-    string str = format("%s %s", "Hellö", "Wörld");
+    string str = format("%s %s", "Hellö",
+        "Wörld");
     writeln("My string: ", str);
-    writeln("Array length of string: ", str.length);
-    writeln("Character length of string: ", count(str));
+    writeln("Array length of string: ",
+        str.length);
+    writeln("Character length of string: ",
+        count(str));
 
-    // Strings are just normal arrays, so any operation
-    // that works on arrays works here to!
+    // Strings are just normal arrays, so any
+    // operation that works on arrays works here
+    // too!
     import std.array: replace;
     writeln(replace(str, "lö", "lo"));
     import std.algorithm: endsWith;
@@ -819,15 +846,15 @@ import std.stdio;
 
 /// Returns: average of array
 double average(int[] array) {
-    // The property .empty for arrays isn't native in
-    // D but has to be made accessible by importing
-    // the function from std.array
+    // The property .empty for arrays isn't
+    // native in D but has to be made accessible
+    // by importing the function from std.array
     import std.array: empty, front;
 
     double accumulator = 0.0;
     auto length = array.length;
     while (!array.empty) {
-        // this could be also done with array.front
+        // this could be also done with .front
         // with import std.array: front;
         accumulator += array[0];
         array = array[1 .. $];
@@ -843,8 +870,8 @@ void main()
           [3, 6, 2, 1, 38, 4] ];
 
     for (auto i = 0; i < testers.length; ++i) {
-      writeln("The average of ", testers[i], " = ",
-        average(testers[i]));
+      writeln("The average of ", testers[i],
+        " = ", average(testers[i]));
     }
 }
 
@@ -893,9 +920,9 @@ void main() {
 
     // This is just for the fun of it: iterate
     // through the testers in reverse order. This
-    // integrates very nice with foreach because you
-    // just apply another algorith before you really
-    // iterate over the real object.
+    // integrates very nice with foreach because
+    // you just apply another algorith before
+    // you really iterate over the real object.
     import std.range: retro;
     foreach (tester; retro(testers))
     {
@@ -972,18 +999,21 @@ void main() {
     // Let's test this FibonacciRange!
     FibonacciRange fib;
 
-    // The magic function take creates another range which
-    // just will return N elements at maximum. This range
-    // is _lazy_ and just touches the original range
-    // if actually needed (iteration)!
+    // The magic function take creates another
+    // range which just will return N elements
+    // at maximum. This range is _lazy_ and just
+    // touches the original range if actually
+    // needed (iteration)!
     auto fib10 = take(fib, 10);
 
-    // But we do want to touch all elements and convert
-    // the range to an array of integers.
+    // But we do want to touch all elements and
+    // convert the range to an array of integers.
     int[] the10Fibs = array(fib10);
 
-    writeln("Your first 10 Fibonacci numbers: ", the10Fibs);
-    assert(the10Fibs == [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]);
+    writeln("Your first 10 Fibonacci numbers: ",
+        the10Fibs);
+    assert(the10Fibs ==
+        [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]);
 }
 
 # Associative Arrays
@@ -1027,8 +1057,8 @@ import std.stdio;
 /// respective word counts.
 auto wordCount(string text)
 {
-    // The function splitter lazyily splits the input
-    // into a range
+    // The function splitter lazyily splits the
+    // input into a range
     import std.algorithm.iteration: splitter;
 
     // Indexed by words and returning the count
@@ -1039,14 +1069,17 @@ auto wordCount(string text)
     alias pred = c => c == ' ' || c == '.'
       || c == ',' || c == '\n';
 
-    // The parameter we pass behind ! is an expression
-    // that marks the condition when to split text
+    // The parameter we pass behind ! is an
+    // expression that marks the condition when
+    // to split text
     foreach(word; splitter!pred(text)) {
-        // Increment word count if word has been found.
+        // Increment word count if word
+        // has been found.
         if (auto found = word in words) {
             ++*found;
         } else {
-            // create entry in hash map with count 1
+            // create entry in hash map with
+            // count 1
             words[word] = 1;
         }
     }
@@ -1056,9 +1089,10 @@ auto wordCount(string text)
 
 void main()
 {
-    string text = q{This tour will give you an overview of this powerful and expressive systems
-programming language which compiles directly to efficient, *native*
-machine code.};
+    string text = q{This tour will give you an
+overview of this powerful and expressive systems
+programming language which compiles directly
+to efficient, *native* machine code.};
 
     writeln("Word counts: ", wordCount(text));
 }
@@ -1084,7 +1118,8 @@ overriding of functions.
 A function can be marked `final` in a base class to disallow overriding
 it. A function can be declared as `abstract` to force base classes to override
 it. A whole class can be declared as `abstract` to make sure
-that it isn't instantiated.
+that it isn't instantiated. To access the base class
+use the special keyword `super`.
 
 Classes in D are generally instantiated on the heap using `new`:
 
@@ -1097,6 +1132,83 @@ copied by value.
 
 The garbage collector will make sure the memory is freed
 after nobody references the object anymore.
+
+## {SourceCode}
+
+import std.stdio;
+
+// Fancy type which can be used for
+// anything...
+class Any {
+    // protected is just seen by inheriting
+    // classes
+    protected string type;
+
+    this(string type) {
+        this.type = type;
+    }
+
+    // public is implicit by the way
+    final string getType() {
+        return type;
+    }
+
+    // This needs to be implemented!
+    abstract string convertToString();
+}
+
+class Integer: Any {
+    // just seen by Integer
+    private {
+        int number;
+    }
+
+    // constructor
+    this(int number) {
+        // call base class constructor
+        super("integer");
+        this.number = number;
+    }
+
+    // This is implicit. And another way
+    // to specify the protection level
+    public:
+
+    override string convertToString() {
+        import std.conv: to;
+        // The swiss army knife of conversion.
+        return to!string(number);
+    }
+}
+
+class Float: Any {
+    private float number;
+
+    this(float number) {
+        super("float");
+        this.number = number;
+    }
+
+    override string convertToString() {
+        import std.string: format;
+        // We want to control precision
+        return format("%.1f", number);
+    }
+}
+
+void main()
+{
+    Any[] anys = [
+        new Integer(10),
+        new Float(3.1415f)
+        ];
+
+    foreach (any; anys) {
+        writeln("Type of any = ", any.getType());
+        writeln("Content = ",
+            any.convertToString());
+    }
+}
 
 # Interfaces
 
@@ -1145,8 +1257,13 @@ functions.
 import std.stdio;
 
 interface Animal {
+    // virtual function
+    // which needs to be overridden!
     void makeNoise();
 
+    // NVI pattern. Uses makeNoise internally
+    // to customoze behaviour in inheriting
+    // classes.
     final void multipleNoise(int n) {
         for(int i = 0; i < n; ++i) {
             makeNoise();
@@ -1169,7 +1286,10 @@ class Cat: Animal {
 void main() {
     auto dog = new Dog;
     auto cat = new Cat;
-    auto animals = [ cast(Animal)dog, cast(Animal)cat ];
+    auto animals = [
+      cast(Animal)dog,
+      cast(Animal)cat
+    ];
     foreach(animal; animals) {
         animal.multipleNoise(5);
     }
@@ -1223,6 +1343,8 @@ types too.
 
 import std.stdio;
 
+// Template class that allows
+// generic implementation of animals.
 class Animal(string noise) {
     void makeNoise() {
         writeln(noise ~ "!");
@@ -1235,6 +1357,9 @@ class Dog: Animal!("Bark") {
 class Cat: Animal!("Meeoauw") {
 }
 
+// Template function which takes any
+// type T that implements a function
+// makeNoise.
 void multipleNoise(T)(T animal, int n) {
     for (int i = 0; i < n; ++i) {
         animal.makeNoise();
