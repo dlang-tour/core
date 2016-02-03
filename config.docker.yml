@@ -6,7 +6,7 @@ exec:
     driver: "docker"
     # For docker driver
     config:
-        memory_limit: 128
+        memory_limit: 256
         maximum_queue_size: 10
         time_limit: 10
         maximum_output_size: 4096
