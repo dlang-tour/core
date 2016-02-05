@@ -197,7 +197,7 @@ functionality of the source code.
 
 `unittest` blocks can contain arbitrary code which is just
 compiled in and run when the command line flag `-unittest`
-is passed to the DMD compiler. *DUB* also features compiling
+is passed to the DMD compiler. DUB also features compiling
 and running unittest through the `dub test` command.
 
 Typically `unittest`s contain `assert` expressions that test
@@ -208,7 +208,53 @@ within classes or structs.
 
 ## {SourceCode}
 
-//TODO
+import std.stdio;
+
+struct Vector3 {
+    double x;
+    double y;
+    double z;
+
+    double dot(Vector3 rhs) const {
+        return x*rhs.x + y*rhs.y + z*rhs.z;
+    }
+
+    // That's okay!
+    unittest {
+        assert(Vector3(1,0,0).dot(
+          Vector3(0,1,0) == 0);
+    }
+
+    string toString() const {
+        import std.string: format;
+        return format("x:%.1f y:%.1f z:%.1f",
+          x, y, z);
+    }
+
+    // .. and that too!
+    unittest {
+        assert(Vector3(1,0,0).toString() ==
+          "x:1.0 y:0.0 z:0.0");
+    }
+}
+
+void main()
+{
+    Vector3 vec = Vector3(0,1,0);
+    writeln(`This vector has been tested: `, vec);
+}
+
+// Or just somewhere else.
+// Nothing is compiled in and just
+// ignored in normal mode. Run dub test
+// locally or compile with dmd -unittest
+// to actually test your modules.
+unittest {
+    Vector3 vec;
+    // .init a special built-in property that
+    // returns the initial value of type.
+    assert(vec.x == double.init);
+}
 
 # String Mixins
 
@@ -242,6 +288,11 @@ auto calculate(string op, T)(T lhs, T rhs)
 
 void main()
 {
+    // A whole new approach to Hello World!
+    mixin(`writeln("Hello World");`);
+
+    // pass the operation to perform as a
+    // template parameter.
     writeln("5 + 12 = ", calculate!"+"(5,12));
     writeln("10 - 8 = ", calculate!"-"(10,8));
     writeln("8 * 8 = ", calculate!"*"(8,8));
@@ -250,8 +301,78 @@ void main()
 
 # Compile Time Function Evaluation - CTFE
 
-`ctRegex`
-...
+*Compile Time Function Evaluation (CTFE)* is a mechanism
+which allows the compiler to execute functions
+at **compile time**. There is no special set of the D
+language necessary to use this feature - whenever
+a function just depends on compile time known values
+the D compiler might decide to interpret
+it during compilation.
+
+    // result will be calculated at compile
+    // time. Check the machine code, it won't
+    // contain a function call!
+    static val = sqrt(50);
+
+Keywords like `static` or `immutable` instruct
+the compiler to use CTFE whenever possible.
+The great thing about this technique is that
+functions need not be rewritten to use
+it, and the same code can perfectly be shared:
+
+    int n = doSomeRuntimeStuff();
+    // same function as above but this
+    // time it is just called the classical
+    // run-time way.
+    auto val = sqrt(n);
+
+One prominent example in D is the [std.regex](https://dlang.org/phobos/std_regex.html)
+library. It provides at type `ctRegex` type which uses
+*string mixins* and CTFE to generate a highly optimized
+regular expression automaton that is generated during
+compilation. The same code base is re-used for
+the run-time version `regex` that allows to compile
+regular expressions only available at run-time.
+
+    auto ctr = ctRegex!(`^.*/([^/]+)/?$`);
+    auto tr = regex(`^.*/([^/]+)/?$`);
+    // ctr and tr can be used interchangely
+    // but ctr will be faster!
+
+Not all language features are available
+during CTFE but the supported feature set is increased
+with every compile release.
+
+## {SourceCode}
+import std.stdio: writeln;
+
+/* Returns: square root of x using
+ Newton's approximation scheme. */
+auto sqrt(T)(T x) {
+    // our epsilon when to stop the approximation
+    // because we think the change isn't worth
+    // another iteration.
+    enum GoodEnough = 0.01;
+    import std.math: abs;
+    // choose a good starting value.
+    T z = x*x, old = 0;
+    int iter;
+    while (abs(z - old) > GoodEnough) {
+        old = z;
+        z -= ((z*z)-x) / (2*z);
+    }
+
+    return z;
+}
+
+void main() {
+    double n = 4.0;
+    writeln("The sqrt of runtime 4 = ",
+        sqrt(n));
+    static cn = sqrt(4.0);
+    writeln("The sqrt of compile time 4 = ",
+        cn);
+}
 
 # Template meta programming
 
