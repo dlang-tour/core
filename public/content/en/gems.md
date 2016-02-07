@@ -376,12 +376,78 @@ void main() {
 
 # Template meta programming
 
-* Template constraints
 * static if
+* mixin template
+* Template constraints
 
 # Functional programming
 
-...
+D puts an emphasis on *functional programming* and provides
+first-class support for development
+in a functional style.
+
+In D a function can be declared as `pure` which implies
+that given the same input parameters, always the **same**
+output is generated. `pure` functions cannot access or change
+any mutable global state and are thus just allowed to call other
+functions which are `pure` themselves.
+
+    int add(int lhs, int rhs) pure {
+        // ERROR: impureFunction();
+        return lhs + rhs;
+    }
+
+This variant of `add` is called **strongely pure function**
+because it returns a result dependent only on its input
+parameters without modifying them. D also allows the
+definition of **weakly pure functions** which might
+have mutable parameters:
+
+    void add(ref int result, int lhs, int rhs) pure {
+        result = lhs + rhs;
+    }
+
+These functions are still considered pure and can't
+access or change any mutable global state. Just passed-in
+mutable parameters might be altered.
+
+Due to the constraints imposed by `pure`, pure functions
+are ideal for multi-threading environments to prevent
+data races *by design*. Additionally pure functions
+can be cached easily and allow a range of compiler
+optimizations.
+
+The attribute `pure` is automatically induced by the
+compiler for templated functions, where applicable.
+
+## {SourceCode}
+
+// Calculates median of nums. This function
+// is pure because it always returns the same
+// result for the same set of numbers.
+T median(T)(T[] nums) pure {
+    import std.algorithm: sort;
+    nums.sort();
+    if (nums.length % 2)
+        return nums[$ / 2];
+    else
+        return (nums[$ / 2 - 1]
+            + nums[$ / 2]) / 2;
+}
+
+void main()
+{
+    import std.stdio: writeln;
+    import std.functional: memoize;
+    // memoize caches the result of the function
+    // call depending on the input parameters.
+    // pure functions are great for that!
+    alias fastMedian = memoize!(median!int);
+
+    writeln(fastMedian([7, 5, 3]));
+    // result will be cached!
+    writeln(fastMedian([7, 5, 3]));
+}
 
 # Contract programming
 

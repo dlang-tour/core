@@ -505,6 +505,10 @@ If a member function is declared as `static` if will be callable
 without an instantiated object e.g. `Person.myStatic()` but
 isn't allowed to access any non-`static` members.
 
+Note that a `struct` can't inherit from another `struct`.
+Hierachies of types can only be built using classes
+which we will see in a future section.
+
 ### Exercise
 
 Given the `struct Vector3` implement the following functions and make
