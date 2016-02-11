@@ -2,13 +2,14 @@ module exec.stupidlocal;
 
 import exec.iexecprovider;
 
-import vibe.d;
+import vibe.core.core: yield, runTask;
 
 import std.process;
 import std.typecons: Tuple;
 import std.file: exists, tempDir;
 import std.stdio: File;
 import std.random: uniform;
+import std.string: format;
 
 /++
 	Stupid local executor which just runs rdmd and passes the source to it

@@ -2,10 +2,13 @@ module exec.docker;
 
 import exec.iexecprovider;
 import std.process;
-import vibe.d;
+import vibe.core.core: yield;
+import vibe.core.log: logInfo;
 import std.base64;
 import std.datetime;
 import std.typecons: Tuple;
+import std.exception: enforce;
+import std.conv: to;
 
 /+
 	Execution provider that uses the Docker iamge
