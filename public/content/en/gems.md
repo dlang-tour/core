@@ -600,6 +600,68 @@ void main()
     writeln("vec dot vec2 = ", vec.dot(vec2));
 }
 
+# Attributes
+
+Functions can be attributed in various ways in D.
+Let's have a look at two built-in attributes
+as well as *user-defined attributes*.
+
+### `@property`
+
+A function marked as `@property` looks like
+a normal member to the outside world:
+
+    struct Foo {
+        @property bar() { return 10; }
+        @property bar(int x) { writeln(x); }
+    }
+    
+    Foo foo;
+    writeln(foo.bar); // actually calls foo.bar()
+    foo.bar = 10; // calls foo.bar(10);
+
+### `@nogc`
+
+When the D compiler encounters a function that is marked as `@nogc`
+it will make sure that **no** memory allocations are done
+within the context of that function. A `@nogc`
+function is just allowed to call other `@nogc`
+functions.
+
+
+    void foo() @nogc {
+      // ERROR:
+        auto a = new A;
+    }
+
+### User-defined attributes (UDAs)
+
+Any function or type in D can be attributed with user-defined
+types:
+
+    struct Bar { this(int x) {} }
+    
+    struct Foo {
+      @("Hello") {
+          @Bar(10) void foo() {
+            ...
+          }
+      }
+    }
+
+Any type, built-in or user-defined, can be attributed
+to functions. The function `foo()` in this example
+will have the attributes `"Hello"` (type `string`)
+and `Bar` (type `Bar` with value `10`). To get
+the attributes of a function (or type) use
+the built-in compiler *traits*
+`__traits(getAttributes, Foo)` which returns
+a [`TypeTuple`](https://dlang.org/phobos/std_typetuple.html).
+
+UDAs allow to enhance generic code by giving user-defined
+types another dimension that helps compile time
+generators to adapt to that specific type.
+
 # opDispatch & opApply
 
 D allows overriding operators like `+`, `-` or
@@ -672,19 +734,11 @@ import std.variant: Variant;
 struct var {
     private Variant[string] values;
 
-    // @property marks a function to be just
-    // called like a normal member
-    // e.g. foo.bar actually calls
-    // member function @property bar()
     @property
     Variant opDispatch(string name)() const {
         return values[name];
     }
 
-    // @property with one parameter on the
-    // other hand mimicks setting a member
-    // e.g. foo.bar = 5; actually calls
-    // the member @property bar(5)
     @property
     void opDispatch(string name, T)(T val) {
         values[name] = val;
@@ -893,6 +947,4 @@ void main()
       vecInt.getY, ",", vecInt.getZ);
 }
 
-# User defined attributes
 
-...
