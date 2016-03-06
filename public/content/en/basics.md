@@ -82,7 +82,10 @@ import std.stdio;
 
 void main()
 {
-    int b = 7;
+    // Big numbers can be made more
+    // readable with an "_"; it's still
+    // a 7000000 though.
+    int b = 7_000_000;
     short c = cast(short) b; // cast needed here.
     uint d = b; // fine
     int f; // contains 0
