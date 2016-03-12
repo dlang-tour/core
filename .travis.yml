@@ -6,7 +6,7 @@ services:
   - docker
 
 d:
-  - dmd
+  - dmd-2.069.2
   - gdc
 
 script:
