@@ -84,6 +84,12 @@ import vibe.d;
 
 shared static this()
 {
+    // Listen on port 8080 (TCP).
+    // Each time a new connection arrives
+    // it is handled by the delegate
+    // specified as 2nd parameter. conn
+    // is the TCP connection object to the
+    // client.
     listenTCP(8080, (TCPConnection conn) {
         string line;
         conn.write("ECHO server says Hi!\r\n");
@@ -92,6 +98,9 @@ shared static this()
             line = cast(string) conn.readLine();
             conn.write("ECHO: " ~ line ~ "\r\n");
         }
+
+        // Just exiting the delegate here
+        // will close the client's connection.
     });
 }
 
