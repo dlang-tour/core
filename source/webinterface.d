@@ -80,13 +80,14 @@ class WebInterface
 		auto htmlContent = tourData.content.html;
 		auto chapterId = _chapter;
 		auto hasSourceCode = !tourData.content.sourceCode.empty;
+		auto sourceCodeEnabled = tourData.content.sourceCodeEnabled;
 		auto section = _section;
 		auto sectionCount = tourData.sectionCount;
 		auto toc = &toc_;
 		auto previousLink = previousSectionLink(_chapter, _section);
 		auto nextLink = nextSectionLink(_chapter, _section);
 		render!("tour.dt", htmlContent, section,
-				sectionCount, chapterId, hasSourceCode,
+				sectionCount, chapterId, hasSourceCode, sourceCodeEnabled,
 				nextLink, previousLink,
 				toc)();
 	}

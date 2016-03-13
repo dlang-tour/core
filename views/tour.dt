@@ -16,7 +16,8 @@ block content
 			- if (hasSourceCode)
 				ui-codemirror(ui-codemirror-opts="editorOptions", ng-model="sourceCode")
 				.text-right#command-box
-					button.btn.btn-primary(ng-click="run()") Run
+					- if (sourceCodeEnabled)
+						button.btn.btn-primary(ng-click="run()") Run
 					button.btn.btn-default(ng-click="reset()") Reset
 				div
 					pre#program-output {{programOutput}}

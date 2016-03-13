@@ -33,6 +33,11 @@ is allowed, that with title `{SourceCode}`). This section
 contains the source code of that section. Every section might contain as many 
 \>=3 level headings as needed (and useful).
 
+If a section contains source code that shouldn't be run
+online (the Run button is not visible on that tour
+page) mark the source code with a 2nd level title
+`{SourceCode:disabled}` instead of just `{SourceCode}`.
+
 ## Source Code formatting
 
 * Source code examples should be indented with 4 spaces.

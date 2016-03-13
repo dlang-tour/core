@@ -19,6 +19,8 @@ class ContentProvider
 {
 	private immutable MarkdownExtension = "md";
 	private immutable SourceCodeSectionTitle ="{SourceCode}";
+	private immutable SourceCodeDisabledSectionTitle =
+		"{SourceCode:disabled}";
 	/// Determines ordering of chapters as displayed
 	/// in TOC
 	private immutable ChapterOrdering = [
@@ -32,6 +34,7 @@ class ContentProvider
 	private {
 		struct Content {
 			string sourceCode;
+			bool sourceCodeEnabled;
 			string html;
 			string title;
 		}
@@ -82,7 +85,8 @@ class ContentProvider
 			auto language = parts[0], chapter = chapterFile[0];
 			auto currentSection = 0;
 			foreach (ref section; splitMarkdownBySection(readText(filename))) {
-				if (section.title == SourceCodeSectionTitle) {
+				if (section.title == SourceCodeSectionTitle ||
+					section.title == SourceCodeDisabledSectionTitle) {
 					enforce(section.level == 2, new Exception("%s: %s section expected to be on 2nd level"
 								.format(filename, SourceCodeSectionTitle)));
 					auto content = updateContent(language, chapter, currentSection);
@@ -91,6 +95,7 @@ class ContentProvider
 					enforce(content.sourceCode.empty, new Exception("%s: Double %s section in '%s'"
 								.format(filename, SourceCodeSectionTitle, content.title)));
 					content.sourceCode = section.bodyOnly;
+					content.sourceCodeEnabled = section.title != SourceCodeDisabledSectionTitle;
 				} else if (section.level == 1) {
 					if (section.bodyOnly.empty) {
 						enforce(null is (language in chapterTitle_) || null is (chapter in chapterTitle_[language]),
