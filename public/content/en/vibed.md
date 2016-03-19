@@ -258,8 +258,7 @@ To make writing web pages easier vibe.d supports
 [DIET templates](https://vibed.org/templates/diet)
 which is a simplified syntax to write HTML pages.
 DIET is based on
-[pug templates](https://github.com/pugjs/pug),
-formerly known as **Jade**.
+[Jade templates](http://jade-lang.com/).
 
     doctype html
     html(lang="en")
