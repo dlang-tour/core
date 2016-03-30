@@ -11,7 +11,7 @@ with examples that can be edited, compiled and run online.
 ## Add Content
 
 Please refer to the document [public/content/README.md](public/content/README.md)
-for further information on who to add or change existing content.
+for further information on how to add or change existing content.
 
 ## Compile & Run
 
@@ -33,7 +33,7 @@ Unix domain socket has to be mounted to work inside the container. Any
 **sandbox** for compiling will then be started on the host system actually,
 and not within the Dlang Tour Docker container itself.
 
-The code for running RDMD is a Docker sandbox can be found here:
+The code for running RDMD in a Docker sandbox can be found here:
 [dlang-tour-rdmd](https://github.com/stonemaster/dlang-tour-rdmd).
 
 So to run the latest dlang-tour
@@ -44,13 +44,13 @@ version in a Docker container, run the following command:
 
 The tour will be available at your host system on port 80. To stop the container
 again just run:
-	
+
 	docker stop dlang-tour
 
 For further Docker foo please refer to the Docker documentation.
 
 **Note:** The docker version inside the container must be compatible
-to that one on the host system! Generally a newer version might run
+to that on the host system! Generally a newer version might run
 on the host system than within the container.
 
 ## Systemd Unit

@@ -160,7 +160,7 @@ at compile time.
 
 In addition to a static type system D provides
 storage classes that enforce additional
-constraints on certain objects. For example an 
+constraints on certain objects. For example an
 `immutable` object can just
 be initialized once and then isn't
 allowed to change - never, ever.
@@ -277,7 +277,7 @@ void main()
 
 # Functions, part I
 
-You've seen one function already: `main()` - the starting point of every 
+You've seen one function already: `main()` - the starting point of every
 D goodness. A function may return something - or be declared with
 `void` if nothing is returned - and an arbitrary number of parameters.
 
@@ -390,7 +390,7 @@ is defined through a `this(...)` member function:
             this.ageXHeight = cast(float)age * height;
         }
             ...
-    
+
     Person p(30, 180);
 
 A `struct` might contain any number of member functions. Those
@@ -403,7 +403,7 @@ member functions.
             ...
         private void privateStuff() {
             ...
-    
+
     p.doStuff(); // call do_stuff
     p.privateStuff(); // forbidden
 
@@ -625,8 +625,8 @@ import std.stdio;
 /// create a copy and don't do any allocations.
 ///
 /// Note: @nogc is magic flag which tells the
-/// compiler to make NO allocations are done
-/// by this function!
+/// compiler to make NO allocations inside
+/// this function.
 int minimum(int[] slice) @nogc
 {
     assert(slice.length > 0);
@@ -734,7 +734,7 @@ given code block while a certain condition is met:
     while (condition) {
         foo();
     }
-    
+
     do {
         foo();
     } while (condition);
@@ -1130,7 +1130,7 @@ A function can also be a parameter to another function:
         // call passed function
         doer(5,5);
     }
-    
+
     doSomething(add); // use global function `add` here
                       // add must have 2 int parameters
 
@@ -1250,7 +1250,7 @@ function in a base class.
             ...
         }
     }
-    
+
     auto dog = new Animal;
     Animal animal = dog; // implicit cast to interface
     dog.makeNoise();
