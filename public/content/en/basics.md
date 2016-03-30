@@ -122,18 +122,20 @@ As soon as the memory referenced by `a` isn't referenced anymore
 through any variable in the program, the garbage collector
 will free its memory.
 
-D also allows pointer arithmetic. This is *not* allowed in
-code which is marked as `@safe`
-but only in `@system` code.
+D also allows pointer arithmetic, except in
+code that is marked as @safe.
 
     void main() @safe {
+        int a = 5;
         int* p = &a;
-        int* c = a + 5; // error
+        int* c = p + 5; // error
     }
 
-Unless specified otherwise the default is `@system`. Using `@safe`
-a subset of D functionality can be forced by design to prevent memory
-bugs.
+Unless specified otherwise the default is `@system`. Using `@safe`,
+a subset of D can be forced to prevent memory
+bugs by design. `@trusted` functions are allowed to
+call both `@safe` and `@system` functions; `@safe`
+can just call other `@safe` or `@trusted` functions.
 
 ## {SourceCode}
 
@@ -156,9 +158,12 @@ its type can't be changed from that point onwards. This allows
 the compiler to prevent bugs early and enforce limitations
 at compile time.
 
-Besides static types D provides storage classes that enforce additional
-constraints on certain objects. For example an `immutable` object can just
-be initialized once and then isn't allowed to change - never, ever.
+In addition to a static type system D provides
+storage classes that enforce additional
+constraints on certain objects. For example an 
+`immutable` object can just
+be initialized once and then isn't
+allowed to change - never, ever.
 
     immutable int err = 5;
     // or: immutable arr = 5 and int is inferred.
@@ -168,27 +173,20 @@ be initialized once and then isn't allowed to change - never, ever.
 because they never change by design. And `immutable` objects can
 be cached perfectly.
 
-`const` objects can't be changed but the restriction is not as tight
-as with `immutable`. To a `const` object can't be written, but someone
-holding a mutable to the same object might just well. A `const` pointer can
-be created from `immutable` or mutable object.
+`const` objects can't be modified, too. This
+restriction is just valid for the current scope. A `const`
+pointer can be created from either a *mutable* or
+`immutable` object. That means that the object
+is `const` for your current scope, but someone
+else might modify it in future. Just with an `immutable`
+you will be sure that an object's value will never
+change.
 
     immutable a = 10;
     int b = 5;
     const int* pa = &a;
     const int* pb = &b;
     *pa = 7; // disallowed
-
-`static` allows declaring an object that holds state that is
-is global for the *current* thread. Every thread will get its own
-`static` object (*TLS - thread local storage*). This is different to
-e.g. C/C++ and Java where `static` indeed means global
-for the application, entailing synchronization issues
-with multi-threading.
-
-If you want to declare a "classic" global variable that
-every thread can see and modify, use the storage class `__gshared` which is equivalent
-to C's `static`. The ugly name is just a friendly reminder to use it rarely.
 
 ## {SourceCode}
 
@@ -361,100 +359,7 @@ void main()
 //   add(), sub(), mul() and div()
 //   are NOT visible outside of main!
 
-# Functions, part II
 
-A function can also be a parameter to another function:
-
-    void doSomething(int function(int, int) doer);
-    doSomething(add); // use global function `add` here
-                      // add must have to int parameters
-
-`doer` can then be called like any other normal function. Local functions
-or member functions of objects are called `delegate` because they
-contain a context pointer where the information about their enclosure
-is stored (*closure*):
-
-    void foo() {
-        void local() {
-            writeln("local");
-        }
-        auto f = &local; // f is of type delegate()
-    }
-
-The same function `doSomething` taking a `delegate`
-would look like this:
-
-    void doSomething(int delegate(int,int) doer);
-
-`delegate` and `function` objects cannot be mixed. But the
-standard function `std.function.toDelegate` converts a `function`
-to a `delegate`.
-
-Nameless function which are called *lambdas* can be defined in two ways:
-
-    auto f = (int lhs, int rhs) {
-        return lhs + rhs;
-    };
-    auto f = (lhs, rhs) => lhs + rhs;
-
-The second form is a shorthand form for lambdas that consist
-of just one line.
-
-## {SourceCode}
-import std.stdio;
-import std.random;
-
-/* Returns: delegate which does a random math
-     calculation depending on randomNumber.  */
-auto getBusinessLogic(int a, int b,
-    int randomNumber)
-{
-    // Define 4 lambda functions for
-    // 4 different mathematical operations
-    auto add = (int lhs, int rhs) => lhs + rhs;
-    auto sub = (int lhs, int rhs) => lhs - rhs;
-    auto mul = (int lhs, int rhs) => lhs * rhs;
-    auto div = (int lhs, int rhs) => lhs / rhs;
-
-    writeln("Type of `add` for example is: ",
-        typeof(add).stringof);
-
-    return () {
-        switch (randomNumber) {
-            case 0:
-                writeln(add(a,b));
-                break;
-            case 1:
-                writeln(sub(a,b));
-                break;
-            case 2:
-                writeln(mul(a,b));
-                break;
-            case 3:
-                writeln(div(a,b));
-                break;
-            default:
-                // special code which marks
-                // UNREACHABLE code
-                assert(0);
-        }
-    };
-}
-
-void main()
-{
-    int a = 10;
-    int b = 5;
-
-    auto func = getBusinessLogic(a, b,
-        uniform(0,4));
-    writeln("The type of func is ",
-        typeof(func).stringof, "!");
-
-    // run the delegate func which does all the
-    // real work for us!
-    func();
-}
 
 # Structs
 
@@ -1215,6 +1120,114 @@ void main()
         writeln("Content = ",
             any.convertToString());
     }
+}
+
+# Functions, part II
+
+A function can also be a parameter to another function:
+
+    void doSomething(int function(int, int) doer) {
+        // call passed function
+        doer(5,5);
+    }
+    
+    doSomething(add); // use global function `add` here
+                      // add must have 2 int parameters
+
+`doer` can then be called like any other normal function.
+
+The above example uses the `function` type which is
+a pointer to a global function. As soon as a member
+function or a local function is referenced we'll have
+to use the type `delegate`. It's a function pointer
+that additionally contains information about its
+context - or *enclosure*, thus also called **closure**
+in other languages. For example a `delegate`
+that points to a member function of a class also includes
+the pointer to the class object. A local `delegate`
+includes a link to the enclosing scope which is copied
+automatically to the heap by the D compiler.
+
+    void foo() {
+        void local() {
+            writeln("local");
+        }
+        auto f = &local; // f is of type delegate()
+    }
+
+The same function `doSomething` taking a `delegate`
+would look like this:
+
+    void doSomething(int delegate(int,int) doer);
+
+`delegate` and `function` objects cannot be mixed. But the
+standard function `std.function.toDelegate` converts a `function`
+to a `delegate`.
+
+Nameless function which are called *lambdas* can be defined in two ways:
+
+    auto f = (int lhs, int rhs) {
+        return lhs + rhs;
+    };
+    auto f = (lhs, rhs) => lhs + rhs;
+
+The second form is a shorthand form for lambdas that consist
+of just one line.
+
+## {SourceCode}
+import std.stdio;
+import std.random;
+
+/* Returns: delegate which does a random math
+     calculation depending on randomNumber.  */
+auto getBusinessLogic(int a, int b,
+    int randomNumber)
+{
+    // Define 4 lambda functions for
+    // 4 different mathematical operations
+    auto add = (int lhs, int rhs) => lhs + rhs;
+    auto sub = (int lhs, int rhs) => lhs - rhs;
+    auto mul = (int lhs, int rhs) => lhs * rhs;
+    auto div = (int lhs, int rhs) => lhs / rhs;
+
+    writeln("Type of `add` for example is: ",
+        typeof(add).stringof);
+
+    return () {
+        switch (randomNumber) {
+            case 0:
+                writeln(add(a,b));
+                break;
+            case 1:
+                writeln(sub(a,b));
+                break;
+            case 2:
+                writeln(mul(a,b));
+                break;
+            case 3:
+                writeln(div(a,b));
+                break;
+            default:
+                // special code which marks
+                // UNREACHABLE code
+                assert(0);
+        }
+    };
+}
+
+void main()
+{
+    int a = 10;
+    int b = 5;
+
+    auto func = getBusinessLogic(a, b,
+        uniform(0,4));
+    writeln("The type of func is ",
+        typeof(func).stringof, "!");
+
+    // run the delegate func which does all the
+    // real work for us!
+    func();
 }
 
 # Interfaces

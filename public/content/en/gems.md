@@ -100,30 +100,49 @@ have to define your own range and you will directly
 be able to profit from what already is in the standard
 library.
 
-**std.algorithm**
- * `filter` - Given a lambda as template parameter,
+### std.algorithm
+
+`filter` - Given a lambda as template parameter,
  generate a new range that filters elements:
- `filter!"a > 20"(range)` or `filter!(a => a > 20)(range)`
- * `map` - Generate a new range using the predicate
+
+    filter!"a > 20"(range);
+    filter!(a => a > 20)(range);
+
+`map` - Generate a new range using the predicate
  defined as template parameter:
- `[1, 2, 3].map!(x => to!string(x))`
- * `each` - Poor man's `foreach` as a range crunching
- function: `[1, 2, 3].each!(a => writeln(a))`
 
-**std.range**
- * `take` - Limit to *N* elements:
- `theBigBigRange.take(10)`.
- * `zip` - iterates over two ranges
- in parallel returning a tuple from both
- ranges during iteration:
- `zip([1,2], ["hello","world"]).front == tuple(1, "hello")`
- * `generate` - takes a function and creates a range
- which in turn calls it on each iteration, for example
- `alias RandomRange = generate!(x => uniform(1, 1000))`
- * `cycle` - returns a range that repeats the given input range
- forever. `cycle([1])` is never `.empty`!
+    [1, 2, 3].map!(x => to!string(x));
 
-The documentation is awaiting your visit!
+`each` - Poor man's `foreach` as a range crunching
+function:
+
+    [1, 2, 3].each!(a => writeln(a));
+
+### std.range
+`take` - Limit to *N* elements:
+
+    theBigBigRange.take(10);
+
+`zip` - iterates over two ranges
+in parallel returning a tuple from both
+ranges during iteration:
+
+    assert(zip([1,2], ["hello","world"]).front
+      == tuple(1, "hello"));
+
+`generate` - takes a function and creates a range
+which in turn calls it on each iteration, for example:
+
+    alias RandomRange = generate!(x => uniform(1, 1000));
+
+`cycle` - returns a range that repeats the given input range
+forever.
+
+    auto c = cycle([1]);
+    // range will never be empty!
+    assert(!c.empty);
+
+### The documentation is awaiting your visit!
 
 ## {SourceCode}
 
@@ -413,8 +432,10 @@ data races *by design*. Additionally pure functions
 can be cached easily and allow a range of compiler
 optimizations.
 
-The attribute `pure` is automatically induced by the
-compiler for templated functions, where applicable.
+The attribute `pure` is automatically inferred
+by the compiler for templated functions and `auto` functions,
+where applicable (this is also true for `@safe`, `nothrow`,
+and `@nogc`).
 
 ## {SourceCode}
 
@@ -604,7 +625,9 @@ void main()
 
 Functions can be attributed in various ways in D.
 Let's have a look at two built-in attributes
-as well as *user-defined attributes*.
+as well as *user-defined attributes*. There
+are also the built-ins `@safe`, `@system` and `@trusted`
+which have been mentioned in the first chapter.
 
 ### `@property`
 
@@ -824,14 +847,14 @@ based on the type they are going to be instantiated with.
 
 ### `static if` & `is`
 
-Like the normal `if`, `static if` conditionnally
+Like the normal `if`, `static if` conditionally
 compiles a code block based on a condition that can
 be evaluated at compile time:
 
     static if(is(T == int))
         writeln("T is an int");
     static if (is(typeof(x) :  int))
-        writeln("Variable x implictely converts to int");
+        writeln("Variable x implicitely converts to int");
 
 The [`is` expression](http://wiki.dlang.org/Is_expression) is
 a generic helper that evaluates conditions at compile time.

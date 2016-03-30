@@ -27,7 +27,7 @@ class ContentProvider
 		"welcome",
 		"basics",
 		"gems",
-		"concurrency",
+		"multi-threading",
 		"vibed",
 	];
 
