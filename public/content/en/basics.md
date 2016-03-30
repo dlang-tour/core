@@ -1,4 +1,4 @@
-# D's basics
+# D's Basics
 # Import's & Modules
 
 To write a simple hello world program in D you need
