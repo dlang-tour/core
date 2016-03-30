@@ -1,4 +1,4 @@
-# Multi-threading
+# Multithreading
 # Thread local storage
 
 The storage class `static` allows declaring objects
