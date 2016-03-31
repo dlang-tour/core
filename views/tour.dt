@@ -23,7 +23,7 @@ block content
 					pre#program-output {{programOutput}}
 		.col-xs-6.col-xs-offset-6#tour-content!= htmlContent
 
-	nav.navbar.navbar-default.navbar-fixed-bottom
+	nav.navbar.navbar-bottom
 		.container.text-center.h2
 			a(href="#{previousLink}", ng-show="'' != '#{previousLink}'") <
 			| #{section} /

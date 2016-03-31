@@ -7,15 +7,17 @@ body {
 	font-family: "Roboto Slab",sans-serif;
 }
 
-.navbar-fixed-bottom {
-  color: #ffffff;
+.navbar-bottom {
+  color: black;
+  background-color: white;
+  border-top: 1px solid #b03931;
 }
 
-.navbar-fixed-bottom .small {
-  color: #ecf0f1;
+.navbar-bottom .small {
+  color: #333;
 }
 
-.navbar-fixed-bottom a {
+.navbar-bottom a {
   color: #aaa;
 }
 
