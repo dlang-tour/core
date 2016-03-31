@@ -1,7 +1,7 @@
 # D's Gems
 # Uniform Function Call Syntax (UFCS)
 
-**UFCS** is totally simple: any call to a free function 
+**UFCS** is totally simple: any call to a free function
 `fun(a)` can be also be be written as `a.fun()`.
 
 If `a.fun()` is seen by the compiler and the type doesn't
@@ -638,7 +638,7 @@ a normal member to the outside world:
         @property bar() { return 10; }
         @property bar(int x) { writeln(x); }
     }
-    
+
     Foo foo;
     writeln(foo.bar); // actually calls foo.bar()
     foo.bar = 10; // calls foo.bar(10);
@@ -663,7 +663,7 @@ Any function or type in D can be attributed with user-defined
 types:
 
     struct Bar { this(int x) {} }
-    
+
     struct Foo {
       @("Hello") {
           @Bar(10) void foo() {
@@ -720,25 +720,25 @@ an `opApply` member function. Iterating with `foreach`
 over such a type will call `opApply` with a special
 delegate as a parameter:
 
-    struct Foo {
-        int[] arr;
-        void opApply(int delegate(ref int) dg) {
-            int result = 0;
-            foreach(ref int x; arr) {
-                if (result = dg(x)) break;
-            }
-            return result;
+    class Tree {
+        Tree lhs;
+        Tree rhs;
+        int opApply(int delegate(Tree) dg) {
+            if (lhs && lhs.opApply(dg)) return 1;
+            if (dg(this)) return 1;
+            if (rhs && rhs.opApply(dg)) return 1;
+            return 0;
         }
     }
-    
-    Foo foo;
-    foreach(x; foo) { 
+
+    Tree tree = new Tree;
+    foreach(node; tree) {
         ...
     }
 
 The compiler transform the `foreach` body to a special
 delegate that is passed to the object. Its one and only
-(must be `ref`) parameter will contain the current
+parameter will contain the current
 iteration's value. The magic `int` return value
 must be interpreted and if it is not `0`, the iteration
 must be stopped.
@@ -863,7 +863,7 @@ a generic helper that evaluates conditions at compile time.
         int x = 10;
     }
 
-Braces are omitted if the condition is `true` - no new scope is created. 
+Braces are omitted if the condition is `true` - no new scope is created.
 `{{` and `}}` explicitely create a new block.
 
 `static if` can be used anywhere in the code - in functions,
@@ -899,7 +899,7 @@ a type must have:
 Constraints can be combined in boolean expression
 and might even contain function calls that can be evaluated
 at compile-time. For example `std.range.primitives.isRandomAccessRange`
-checks whether a type is a range that supports 
+checks whether a type is a range that supports
 the `[]` operator.
 
 ## {SourceCode}
