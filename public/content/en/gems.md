@@ -703,14 +703,20 @@ template parameter. `opDispatch` is a *catch-all*
 member function and allows another level of generic
 programming - completely in **compile time**!
 
-    struct Foo {
-        void opDispatch(string name, T)(T val) {
-            writeln(val);
+    struct C {
+        void callA(int i, int j) { ... }
+        void callB(string s) { ... }
+    }
+    struct CallLogger(C) {
+        C content;
+        void opDispatch(string name, T...)(T vals) {
+            writeln("called ", name);
+            mixin("content." ~ name)(vals);
         }
     }
-    Foo foo;
-    // Call opDispatch!("dispatch")(10);
-    foo.dispatch(10);
+    CallLogger!C l;
+    l.callA(1, 2);
+    l.callB("ABC");
 
 ### opApply
 
@@ -730,7 +736,6 @@ delegate as a parameter:
             return 0;
         }
     }
-
     Tree tree = new Tree;
     foreach(node; tree) {
         ...
