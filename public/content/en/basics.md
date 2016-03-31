@@ -88,13 +88,12 @@ void main()
     int b = 7_000_000;
     short c = cast(short) b; // cast needed here.
     uint d = b; // fine
-    int f; // contains 0
+    int g; // contains 0
 
     auto f = 3.1415f; // .f denotes a float
-    // typeof(VAR) returns the type of an
-    // expression.
-    // .name is a builtin property
-    writeln("type of f is %s", typeof(f).name);
+    // typeid(VAR) returns the type information 
+    // of an expression.
+    writeln("type of f is ", typeid(f));
     double pi = f; // fine
     // would be an error:
     // float bad = pi;
