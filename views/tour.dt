@@ -12,7 +12,8 @@ block head
 
 block content
 	.row(ng-controller="DlangTourAppCtrl as ctrl", ng-init="init('#{chapterId}',  #{section})")
-		.col-xs-6(style="position: fixed; padding-left: 0px; padding-right: 0px")
+		.col-xs-6#tour-content!= htmlContent
+		.col-xs-6.col-xs-offset-6(style="position: fixed; padding-left: 0px; padding-right: 0px")
 			- if (hasSourceCode)
 				ui-codemirror(ui-codemirror-opts="editorOptions", ng-model="sourceCode")
 				.text-right#command-box
@@ -21,7 +22,6 @@ block content
 					button.btn.btn-default(ng-click="reset()") Reset
 				div
 					pre#program-output {{programOutput}}
-		.col-xs-6.col-xs-offset-6#tour-content!= htmlContent
 
 	nav.navbar.navbar-bottom
 		.container.text-center.h2
