@@ -34,7 +34,7 @@ class ContentProvider
 	private {
 		struct Content {
 			string sourceCode;
-			bool sourceCodeEnabled;
+			bool sourceCodeEnabled = true;
 			string html;
 			string title;
 		}

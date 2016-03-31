@@ -9,14 +9,17 @@ dlangTourApp.controller('DlangTourAppCtrl', [ '$scope', '$http', function($scope
 		theme: "elegant"
 	};
 
-	$scope.init = function(chapterId, section) {
+	$scope.init = function(chapterId, section, hasSourceCode) {
 		$http.get('/api/v1/source/' + chapterId + "/" + section)
 			.success(function(data) {
 				$scope.sourceCode = $scope.resetCode = data.sourceCode;
 			});
+
+		$scope.showSourceCode = hasSourceCode;
 	}
 
 	$scope.programOutput = "";
+	$scope.showContent = true;
 
 	$scope.run = function() {
 		$scope.programOutput = "... Waiting for remote service ...";

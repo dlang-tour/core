@@ -13,6 +13,12 @@
 	padding: 10px;
 }
 
+#content-command-box {
+	float: right;
+	text-align: right;
+	margin-top: 10px;
+}
+
 /* Custom .row for bootstrap */
 .row {
 	margin-top: 50px;

@@ -393,8 +393,6 @@ void main() {
         cn);
 }
 
- Template constraints
-
 # Functional programming
 
 D puts an emphasis on *functional programming* and provides

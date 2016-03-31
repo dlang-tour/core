@@ -11,17 +11,23 @@ block head
 	link(rel="stylesheet", href="/static/css/tour.css")
 
 block content
-	.row(ng-controller="DlangTourAppCtrl as ctrl", ng-init="init('#{chapterId}',  #{section})")
-		.col-xs-6#tour-content!= htmlContent
-		.col-xs-6.col-xs-offset-6(style="position: fixed; padding-left: 0px; padding-right: 0px")
-			- if (hasSourceCode)
-				ui-codemirror(ui-codemirror-opts="editorOptions", ng-model="sourceCode")
-				.text-right#command-box
-					- if (sourceCodeEnabled)
-						button.btn.btn-primary(ng-click="run()") Run
-					button.btn.btn-default(ng-click="reset()") Reset
-				div
-					pre#program-output {{programOutput}}
+	.row(ng-controller="DlangTourAppCtrl as ctrl", ng-init="init('#{chapterId}',  #{section}, #{hasSourceCode})")
+		div#tour-content(ng-show="showContent", ng-class="{'col-xs-12': !showSourceCode, 'col-xs-6': showSourceCode}")
+			#content-command-box
+				button.btn.btn-default.btn-xs(ng-click="showSourceCode = !showSourceCode", ng-class="{active: showSourceCode}")
+					code { code }
+			|!= htmlContent
+		div(ng-class="{'col-xs-6': showContent, 'col-xs-12': !showContent}", ng-show="showSourceCode", style="padding-left: 0px; padding-right: 0px")
+			.text-right#command-box
+				button.btn.btn-default(ng-click="showContent = !showContent")
+					span.glyphicon.glyphicon-resize-full(ng-show="showContent")
+					span.glyphicon.glyphicon-resize-small(ng-hide="showContent")
+				- if (sourceCodeEnabled)
+					button.btn.btn-primary(ng-click="run()") Run
+				button.btn.btn-default(ng-click="reset()") Reset
+			ui-codemirror(ui-codemirror-opts="editorOptions", ng-model="sourceCode")
+			div
+				pre#program-output {{programOutput}}
 
 	nav.navbar.navbar-bottom
 		.container.text-center.h2
