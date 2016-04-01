@@ -45,7 +45,6 @@ class ContentProvider
 		string[string][string] chapterTitle_;
 	}
 
-
 	/// Create or update Content structure
 	private Content* updateContent(string language, string chapter, int section)
 	{
@@ -194,6 +193,25 @@ class ContentProvider
 	string[] getLanguages() const
 	{
 		return content_.byKey().array;
+	}
+
+	/++
+	Returns: range that allows iterating
+	  over the whole content, regardless of language. Content
+	  doesn't guarantee any order.
+	+/
+	auto getContent() const
+	{
+		alias Element = const(Content)*;
+		Element[] range;
+		foreach(ref chapters; content_) {
+			foreach(ref sections; chapters) {
+				foreach(ref content; sections) {
+					range ~= &content;
+				}
+			}
+		}
+		return range;
 	}
 
 } // class ContentProvider

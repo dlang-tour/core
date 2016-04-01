@@ -15,7 +15,8 @@ import exec.docker;
 /++ Factory method that returns an execution provider
     depending on the configuration settings.
 +/
-private IExecProvider createExecProvider(Config config)
+private IExecProvider createExecProvider(Config config,
+		ContentProvider contentProvider)
 {
 	IExecProvider execProvider;
 
@@ -38,8 +39,13 @@ private IExecProvider createExecProvider(Config config)
 
 	logInfo("Caching enabled: %b", config.enableExecCache);
 
-	if (config.enableExecCache)
-		return new Cache(execProvider);
+	if (config.enableExecCache) {
+		import std.algorithm: map;
+		auto allowedSources = contentProvider.getContent()
+			.map!(x => x.sourceCode.idup)
+			.array;
+		return new Cache(execProvider, allowedSources);
+	}
 	return execProvider;
 }
 
@@ -55,9 +61,9 @@ shared static this()
 	settings.port = config.port;
 	settings.bindAddresses = config.bindAddresses;
 
-	auto execProvider = createExecProvider(config);
-
 	auto contentProvider = new ContentProvider(config.publicDir ~ "/content");
+	auto execProvider = createExecProvider(config, contentProvider);
+
 	auto urlRouter = new URLRouter;
 	auto fsettings = new HTTPFileServerSettings;
 	fsettings.serverPathPrefix = "/static";
