@@ -1,7 +1,7 @@
 #program-output {
 	font-family: monospace;
-	border-top: 2px solid #666;
-	background-color: #ccc;
+	border: none;
+	background-color: #efefef;
 }
 
 #tour-content {
@@ -13,10 +13,18 @@
 	padding: 10px;
 }
 
-#content-command-box {
+.content-command-box {
 	float: right;
 	text-align: right;
 	margin-top: 10px;
+}
+
+.program-output-title {
+	font-family: monospace;
+}
+
+.CodeMirror {
+	height: auto;
 }
 
 /* Custom .row for bootstrap */

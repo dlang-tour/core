@@ -6,7 +6,8 @@ dlangTourApp.controller('DlangTourAppCtrl', [ '$scope', '$http', function($scope
 		lineNumbers: true,
 		indentUnit: 4,
 		mode: 'd',
-		theme: "elegant"
+		theme: "elegant",
+		viewportMargin: Infinity
 	};
 
 	$scope.init = function(chapterId, section, hasSourceCode) {
@@ -20,9 +21,13 @@ dlangTourApp.controller('DlangTourAppCtrl', [ '$scope', '$http', function($scope
 
 	$scope.programOutput = "";
 	$scope.showContent = true;
+	$scope.showProgramOutput = false;
 
 	$scope.run = function() {
 		$scope.programOutput = "... Waiting for remote service ...";
+		$scope.showProgramOutput = true;
+		$scope.showContent = true;
+
 		$http.post('/api/v1/run', {
 			source: $scope.sourceCode
 		}).success(function(data) {
