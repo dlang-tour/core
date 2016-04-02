@@ -6,7 +6,17 @@
 
 #tour-content {
 	background-color: #efefef;
-	font-size: 14pt;
+	font-size: 16px;
+}
+
+#tour-content h1 {
+	font-weight: normal;
+}
+#tour-content h2 {
+	font-weight: normal;
+}
+#tour-content h3 {
+	font-weight: normal;
 }
 
 #command-box {
