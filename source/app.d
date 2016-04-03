@@ -29,10 +29,11 @@ private IExecProvider createExecProvider(Config config,
 		case "off":
 			return new Off;
 		case "docker":
-			return new Docker(config.dockerExecConfig.timeLimit,
+			execProvider = new Docker(config.dockerExecConfig.timeLimit,
 					config.dockerExecConfig.maximumOutputSize,
 					config.dockerExecConfig.maximumQueueSize,
 					config.dockerExecConfig.memoryLimit);
+			break;
 		default:
 			throw new Exception("Unknown exec provider %s".format(config.execProvider));
 	}
