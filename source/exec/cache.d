@@ -5,6 +5,9 @@ import std.typecons: Tuple;
 import std.traits: ReturnType;
 import std.algorithm: sort;
 
+import vibe.core.core : sleep;
+import core.time : msecs;
+
 /++
  Execution provider that implements caching
  for an allowed white list of source code files.
@@ -17,15 +20,22 @@ class Cache: IExecProvider
 	private alias HashType = ReturnType!getSourceCodeHash;
 	private ResultTuple[HashType] sourceHashToOutput_;
 	private HashType[] allowedSources_; ///< Hash of allowed source code contents
+	private uint minDelayMs_, maxDelayMs_;
 
 	/++
 	Params:
 	  realExecProvider = the execution provider if cache
 	                     can't give the answer
+	  minDelayMs = minimum delay to add randomly for each
+	               cache reply
+	  maxDelayMs = maximum delay to add randomly for each
+	               cache reply
 	  sourceCodeWhitelist = raw source code only allowed
 	                        to be cached
 	+/
 	this(IExecProvider realExecProvider,
+		uint minDelayMs,
+		uint maxDelayMs,
 		string[] sourceCodeWhitelist)
 	{
 		import std.algorithm: map;
@@ -36,6 +46,9 @@ class Cache: IExecProvider
 			.array;
 		sort(this.allowedSources_);
 		assert(sourceCodeWhitelist.length == this.allowedSources_.length);
+
+		this.minDelayMs_ = minDelayMs;
+		this.maxDelayMs_ = maxDelayMs;
 	}
 
 	Tuple!(string, "output", bool, "success") compileAndExecute(string source)
@@ -48,6 +61,9 @@ class Cache: IExecProvider
 			auto result = realExecProvider_.compileAndExecute(source);
 			return result;
 		} else if (auto cache = hash in sourceHashToOutput_) {
+			import std.random: uniform;
+			auto delay = uniform(minDelayMs_, maxDelayMs_);
+			sleep(delay.msecs);
 			return *cache;
 		} else {
 			auto result = realExecProvider_.compileAndExecute(source);
