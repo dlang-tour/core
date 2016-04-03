@@ -77,7 +77,10 @@ private uint getSourceCodeHash(string source)
 {
 	import std.digest.crc: crc32Of;
 	auto crc = crc32Of(source);
-	return crc[0] | crc[1] >> 8 | crc[2] >> 16 | crc[3] >> 24;
+	return (cast(uint)crc[0])
+		| ((cast(uint)crc[1]) << 8)
+		| ((cast(uint)crc[2]) << 16)
+		| ((cast(uint)crc[3]) << 24);
 }
 
 unittest
@@ -85,9 +88,13 @@ unittest
 	auto sourceCode1 = "test123";
 	auto sourceCode2 = "void main() {}";
 	auto sourceCode3 = "12838389349493";
+	import std.stdio: writeln;
 	auto hash1 = getSourceCodeHash(sourceCode1);
+	writeln("hash1 = ", hash1);
 	auto hash2 = getSourceCodeHash(sourceCode2);
+	writeln("hash2 = ", hash2);
 	auto hash3 = getSourceCodeHash(sourceCode3);
+	writeln("hash3 = ", hash3);
 
 	assert(hash1 != hash2);
 	assert(hash2 != hash3);
