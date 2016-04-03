@@ -95,7 +95,7 @@ unittest
 	assert(hash1 != hash2);
 	assert(hash2 != hash3);
 
-	auto cache = new Cache(null,
+	auto cache = new Cache(null, 0, 0,
 		[ sourceCode1, sourceCode2, sourceCode3 ]);
 	assert(cache.allowedSources_.length == 3);
 	import std.algorithm: canFind;
