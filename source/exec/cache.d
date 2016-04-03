@@ -56,6 +56,8 @@ class Cache: IExecProvider
 		import std.range: assumeSorted;
 		import std.algorithm: canFind;
 		auto hash = getSourceCodeHash(source);
+		import vibe.core.log: logInfo;
+		logInfo("Got hash %d", hash);
 
 		if (!assumeSorted(this.allowedSources_).canFind(hash)) {
 			auto result = realExecProvider_.compileAndExecute(source);
@@ -64,6 +66,7 @@ class Cache: IExecProvider
 			import std.random: uniform;
 			auto delay = uniform(minDelayMs_, maxDelayMs_);
 			sleep(delay.msecs);
+			logInfo("Found cached entry for %d", hash);
 			return *cache;
 		} else {
 			auto result = realExecProvider_.compileAndExecute(source);
