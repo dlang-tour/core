@@ -16,6 +16,46 @@ class ApiV1: IApiV1
 		this.contentProvider_ = contentProvider;
 	}
 
+	/++
+		Parses the message contained in $(D output)
+		and fills the appropriate errors and warnings
+		arrays.
+		Note: parsing s just done when $(D output.success)
+		is false.
+	+/
+	private static void parseErrorsAndWarnings(ref RunOutput output)
+	{
+		import std.regex;
+		import std.algorithm: splitter;
+		import std.conv: to;
+
+		if (output.success)
+			return;
+
+		static ctr = ctRegex!
+			`^[^(]+\(([0-9]+)(,[0-9]+)?\): ([a-zA-Z]+): (.*)$`;
+
+		foreach(line; splitter(output.output, '\n')) {
+			auto m = line.matchFirst(ctr);
+			if (m.empty)
+				continue;
+			auto lineNumber = to!int(m[1]);
+			string type = m[3];
+			string message = m[4];
+
+			switch (type) {
+				case "Warning":
+				case "Deprecation":
+					output.warnings ~= RunOutput.Message(lineNumber,
+						message);
+					break;
+				default:
+					output.errors ~= RunOutput.Message(lineNumber,
+						message);
+			}
+		}
+	}
+
 	RunOutput run(string source)
 	{
 		if (source.length > 4 * 1024) {
@@ -23,7 +63,9 @@ class ApiV1: IApiV1
 		}
 
 		auto result = execProvider_.compileAndExecute(source);
-		return RunOutput(result.output, result.success);
+		auto output = RunOutput(result.output, result.success);
+		parseErrorsAndWarnings(output);
+		return output;
 	}
 
 	SourceOutput getSource(string _chapter, int _section)
@@ -36,4 +78,38 @@ class ApiV1: IApiV1
 
 		return SourceOutput(tourData.content.sourceCode);
 	}
+}
+
+unittest {
+	string run1 = `onlineapp.d(6): Error: found '}' when expecting ';' following statement
+onlineapp.d(6): Error: found 'EOF' when expecting '}' following compound statement
+Failed: ["dmd", "-v", "-o-", "onlineapp.d", "-I."]`;
+
+	auto test1 = ApiV1.RunOutput(run1, true);
+	ApiV1.parseErrorsAndWarnings(test1);
+	assert(test1.errors.length == 0);
+	assert(test1.warnings.length == 0);
+
+	auto test2 = ApiV1.RunOutput(run1, false);
+	ApiV1.parseErrorsAndWarnings(test2);
+	assert(test2.errors.length == 2);
+	assert(test2.errors[0].line == 6);
+	assert(test2.errors[0].message[0 .. 9] == "found '}'");
+	assert(test2.errors[1].line == 6);
+	assert(test2.errors[1].message[0 .. 11] == "found 'EOF'");
+
+	string run2 = `dlang-tour ~master: building configuration "executable"...
+../.dub/packages/dyaml-0.5.2/source/dyaml/dumper.d(15,8): Deprecation: module std.stream is deprecated - It will be removed from Phobos in October 2016. If you still need it, go to https://github.com/DigitalMars/undeaD
+../.dub/packages/dyaml-0.5.2/source/dyaml/emitter.d(21,8): Deprecation: module std.stream is deprecated - It will be removed from Phobos in October 2016. If you still need it, go to https://github.com/DigitalMars/undeaD
+../.dub/packages/dyaml-0.5.2/source/dyaml/representer.d(679,8): Deprecation: module std.stream is deprecated - It will be removed from Phobos in October 2016. If you still need it, go to https://github.com/DigitalMars/undeaD
+../.dub/packages/dyaml-0.5.2/source/dyaml/loader.d(171,16): Deprecation: module std.stream is deprecated - It will be removed from Phobos in October 2016. If you still need it, go to https://github.com/DigitalMars/undeaD`;
+	auto test3 = ApiV1.RunOutput(run2, false);
+	ApiV1.parseErrorsAndWarnings(test3);
+	assert(test3.warnings.length == 4);
+	import std.algorithm: all;
+	assert(test3.warnings.all!(x => x.message[0 .. 31] == "module std.stream is deprecated"));
+	assert(test3.warnings[0].line == 15);
+	assert(test3.warnings[1].line == 21);
+	assert(test3.warnings[2].line == 679);
+	assert(test3.warnings[3].line == 171);
 }

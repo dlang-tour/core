@@ -14,7 +14,8 @@ interface IApiV1
 		}
 
 		Returns: output of compiled D program with success
-		flag.
+		flag and parsed errors and warnings (if any
+		and success is false).
 		{
 			output: "Program Output",
 			success: true/false
@@ -24,6 +25,12 @@ interface IApiV1
 	{
 		string output;
 		bool success;
+		struct Message {
+			int line;
+			string message;
+		}
+		Message[] errors;
+		Message[] warnings;
 	}
 	@method(HTTPMethod.POST)
 	@path("/api/v1/run")
