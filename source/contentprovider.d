@@ -154,7 +154,7 @@ class ContentProvider
 			string chapterId;
 			[] {
 				string title;
-				int section;
+				int sectionId;
 			} sections;
 		}
 	+/
