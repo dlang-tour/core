@@ -29,9 +29,6 @@ class ApiV1: IApiV1
 		import std.algorithm: splitter;
 		import std.conv: to;
 
-		if (output.success)
-			return;
-
 		static ctr = ctRegex!
 			`^[^(]+\(([0-9]+)(,[0-9]+)?\): ([a-zA-Z]+): (.*)$`;
 

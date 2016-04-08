@@ -5,6 +5,8 @@ block head
 	link(rel="stylesheet", href="/static/lib/codemirror/lib/codemirror.css")
 	script(src="/static/lib/codemirror/lib/codemirror.js")
 	script(src="/static/lib/codemirror/mode/d/d.js")
+	script(src="/static/lib/codemirror/addon/lint/lint.js")
+	link(rel="stylesheet", href="/static/lib/codemirror/addon/lint/lint.css")
 	link(rel="stylesheet", href="/static/lib/codemirror/theme/elegant.css")
 	script(src="/static/lib/ui-codemirror.js")
 	script(src="//google-code-prettify.googlecode.com/svn/loader/run_prettify.js")
@@ -32,7 +34,7 @@ block content
 				- if (sourceCodeEnabled)
 					button.btn.btn-primary(ng-click="run()") Run
 				button.btn.btn-default(ng-click="reset()") Reset
-			ui-codemirror(ui-codemirror-opts="editorOptions", ng-model="sourceCode")
+			ui-codemirror(ui-codemirror-opts="editorOptions", ui-codemirror="{ onLoad : codemirrorLoaded }", ng-model="sourceCode")
 
 	nav.navbar.navbar-bottom
 		.container.text-center.h2
