@@ -19,11 +19,14 @@ class WebInterface
 			string, "nextSectionLink");
 		LinkCache[int][string][string] sectionLinkCache_;
 			///< language, chapter and section indexing
+		string googleAnalyticsId_; ///< ID for google analytics
 	}
 
-	this(ContentProvider contentProvider)
+	this(ContentProvider contentProvider,
+		string googleAnalyticsId)
 	{
 		this.contentProvider_ = contentProvider;
+		this.googleAnalyticsId_ = googleAnalyticsId;
 		// Fetch all table-of-contents for all supported
 		// languages (just 'en' for now) and generate
 		// the previous/next link cache for each tour page.
@@ -107,9 +110,10 @@ class WebInterface
 		auto toc = &toc_["en"];
 		auto previousLink = linkCache.previousSectionLink;
 		auto nextLink = linkCache.nextSectionLink;
+		auto googleAnalyticsId = googleAnalyticsId_;
 		render!("tour.dt", htmlContent, section,
 				sectionCount, chapterId, hasSourceCode, sourceCodeEnabled,
-				nextLink, previousLink,
+				nextLink, previousLink, googleAnalyticsId,
 				toc)();
 	}
 }

@@ -57,6 +57,7 @@ shared static this()
 	auto config = new Config(configFile);
 
 	logInfo("Starting Dlang-tour on %s, port %d", config.bindAddresses, config.port);
+	logInfo("Google Analytics ID: %s", config.googleAnalyticsId);
 
 	auto settings = new HTTPServerSettings;
 	settings.port = config.port;
@@ -69,7 +70,7 @@ shared static this()
 	auto fsettings = new HTTPFileServerSettings;
 	fsettings.serverPathPrefix = "/static";
 	urlRouter
-		.registerWebInterface(new WebInterface(contentProvider))
+		.registerWebInterface(new WebInterface(contentProvider, config.googleAnalyticsId))
 		.registerRestInterface(new ApiV1(execProvider, contentProvider))
 		.get("/static/*", serveStaticFiles(config.publicDir ~ "/static/", fsettings));
 

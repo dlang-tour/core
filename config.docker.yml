@@ -2,6 +2,7 @@ port: 8080
 public_dir: "public"
 listen:
     - 0.0.0.0
+google_analytics_id: "%GOOGLE_ANALYTICS_ID%"
 exec:
     driver: "docker"
     # For docker driver

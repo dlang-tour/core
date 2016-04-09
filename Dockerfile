@@ -11,7 +11,9 @@ ADD https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION} /usr/loc
 RUN chmod +x /usr/local/bin/docker
 
 COPY dlang-tour /dlang-tour
-COPY config.docker.yml /config.yml
+COPY config.docker.yml /config.yml.tmpl
 COPY public /public
+COPY docker.start.sh /docker.start.sh
+RUN chmod +x /docker.start.sh
 
-CMD [ "/dlang-tour" ]
+CMD [ "/docker.start.sh" ]

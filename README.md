@@ -39,7 +39,7 @@ The code for running RDMD in a Docker sandbox can be found here:
 So to run the latest dlang-tour
 version in a Docker container, run the following command:
 
-	docker run -d --rm -p 80:8080 -v /var/run/docker.sock:/var/run/docker.sock \
+	docker run -d --rm -p 80:8080 -e GOOGLE_ANALYTICS_ID=123 -v /var/run/docker.sock:/var/run/docker.sock \
 		--name dlang-tour stonemaster/dlang-tour
 
 The tour will be available at your host system on port 80. To stop the container
@@ -52,6 +52,14 @@ For further Docker foo please refer to the Docker documentation.
 **Note:** The docker version inside the container must be compatible
 to that on the host system! Generally a newer version might run
 on the host system than within the container.
+
+### Environment variables
+
+#### `GOOGLE_ANALYTICS_ID`
+
+To enable **Google Analytics** please specify the environment variable
+`GOOGLE_ANALYTICS_ID` and set it to the tracking ID provided
+for your Analytics account.
 
 ## Systemd Unit
 
