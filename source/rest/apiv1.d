@@ -82,11 +82,6 @@ unittest {
 onlineapp.d(6): Error: found 'EOF' when expecting '}' following compound statement
 Failed: ["dmd", "-v", "-o-", "onlineapp.d", "-I."]`;
 
-	auto test1 = ApiV1.RunOutput(run1, true);
-	ApiV1.parseErrorsAndWarnings(test1);
-	assert(test1.errors.length == 0);
-	assert(test1.warnings.length == 0);
-
 	auto test2 = ApiV1.RunOutput(run1, false);
 	ApiV1.parseErrorsAndWarnings(test2);
 	assert(test2.errors.length == 2);
