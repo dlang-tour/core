@@ -37,7 +37,7 @@ block content
 			ui-codemirror(ui-codemirror-opts="editorOptions", ui-codemirror="{ onLoad : codemirrorLoaded }", ng-model="sourceCode")
 
 	nav.navbar.navbar-bottom
-		.container.text-center.h2
+		.container.text-center.h1
 			a(href="#{previousLink}", ng-show="'' != '#{previousLink}'") <
 			| #{section} /
 			span.small #{sectionCount}

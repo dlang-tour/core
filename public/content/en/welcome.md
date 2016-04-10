@@ -33,7 +33,7 @@ void main() {
 
 # Install D locally
 
-On the D language's website [dlang.org](http://www.dlang.org) the most recent
+On the D language's website [dlang.org](https://dlang.org) the most recent
 compiler version of the reference compiler **DMD** (Digital Mars D)
 can be downloaded and installed offline:
 
@@ -45,11 +45,11 @@ can be downloaded and installed offline:
   with `brew install dmd` using [Homebrew](http://brew.sh).
 * There are officially supported Linux packages for Fedora, OpenSuse and
   Debian/Ubuntu. For the latter a regularly updated repository exists
-  at [d-apt.source-forge.net](http://d-apt.source-forge.net).
+  at [d-apt.source-forge.net](http://d-apt.sourceforge.net).
 
 Besides the DMD reference compiler which uses its own backend, there are
 two other compilers that can be fetched through the
-[dlang.org](http://www.dlang.org) download section:
+[dlang.org](https://dlang.org) download section:
 
 * **GDC** which uses the GCC backend
 * **LDC** based on the LLVM backend
@@ -60,8 +60,8 @@ for other platforms like e.g. ARM.
 
 # Run D program locally
 
-D's standard build tool is [dub](http://code.dlang.org). When dub is 
-installed locally a new project `test` can be created using 
+D's standard package manager is [dub](http://code.dlang.org). When dub is
+installed locally a new project `test` can be created using
 the command line
 
     dub init test

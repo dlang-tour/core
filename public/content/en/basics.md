@@ -1,11 +1,11 @@
 # D's Basics
-# Import's & Modules
+# Imports and modules
 
 To write a simple hello world program in D you need
 `import`s. The `import` statement makes all public functions
 and types from the given **module** available.
 
-The standard library, called [Phobos](https://www.dlang.org/phobos/),
+The standard library, called [Phobos](https://dlang.org/phobos/),
 is located under the **package** `std`
 and those modules are referenced through `import std.MODULE`.
 
