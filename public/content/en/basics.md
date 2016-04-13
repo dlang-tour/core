@@ -733,7 +733,7 @@ given code block while a certain condition is met:
     while (condition) {
         foo();
     }
-
+    // ...
     do {
         foo();
     } while (condition);
