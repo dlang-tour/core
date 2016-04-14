@@ -57,9 +57,38 @@ on the host system than within the container.
 
 #### `GOOGLE_ANALYTICS_ID`
 
+> default: (empty)
+
 To enable **Google Analytics** please specify the environment variable
 `GOOGLE_ANALYTICS_ID` and set it to the tracking ID provided
 for your Analytics account.
+
+#### `EXEC_DOCKER_MEMORY_LIMIT`
+
+> default: 256
+
+Memory limit per started `rdmd` Docker container which compiles
+and runs the user code.
+
+#### `EXEC_DOCKER_MAX_QUEUE_SIZE`
+
+> default: 10
+
+Maximum number of parallel executions of the `rdmd` user code
+Docker container.
+
+#### `EXEC_DOCKER_TIME_LIMIT`
+
+> default: 20
+
+Time limit in seconds the `rdmd` Docker container with the user
+code is allowed to take until it is killed.
+
+#### `EXEC_DOCKER_MAX_OUTPUT_SIZE`
+
+> default: 4096
+
+Maximum allowed size in bytes of the generated user program's output.
 
 ## Systemd Unit
 
