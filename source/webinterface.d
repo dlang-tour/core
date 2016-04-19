@@ -15,8 +15,9 @@ class WebInterface
 		ContentProvider contentProvider_;
 		alias Toc = ReturnType!(ContentProvider.getTOC);
 		Toc[string] toc_;
-		alias LinkCache = Tuple!(string, "previousSectionLink",
-			string, "nextSectionLink");
+		alias DeltaSection = ReturnType!deltaSection;
+		alias LinkCache = Tuple!(DeltaSection, "previousSection",
+			DeltaSection, "nextSection");
 		LinkCache[int][string][string] sectionLinkCache_;
 			///< language, chapter and section indexing
 		string googleAnalyticsId_; ///< ID for google analytics
@@ -36,8 +37,8 @@ class WebInterface
 				foreach(ref section; chapter.sections) {
 					sectionLinkCache_[lang][chapter.chapterId][section.sectionId] =
 						LinkCache(
-							previousSectionLink(toc, chapter.chapterId, section.sectionId),
-							nextSectionLink(toc, chapter.chapterId, section.sectionId));
+							previousSection(toc, chapter.chapterId, section.sectionId),
+							nextSection(toc, chapter.chapterId, section.sectionId));
 				}
 			}
 		}
@@ -45,43 +46,54 @@ class WebInterface
 
 	private {
 		/++
-			Returns the the link to the next or previous section (depending on
+			Returns the information about the next or previous section (depending on
 			$(D move)) of the current position. Handles overflow to next or
 			previous chapter acccordingly. An empty string mean "dead-end".
 
 			Parameters:
 			$(D move) either +1 or -1.
 			$(D chapter) and $(D section) specify current positon.
+
+			Returns: struct witht the following information:
+			{
+				string link; // empty if none
+				string title;
+			}
 		+/
-		static string deltaSectionLink(ref Toc toc, string chapter,
+		static auto deltaSection(ref Toc toc, string chapter,
 			int section, int move) pure
 		{
+			alias R = Tuple!(string, "link", string, "title");
 			auto chapterIdx = toc.countUntil!"a.chapterId == b"(chapter);
 			if (chapterIdx == -1)
-				return "";
+				return R("", "");
 
 			section += move;
 			if (section < 1) {
 				if (--chapterIdx >= 0)
 					section = toc[chapterIdx].sections[$ - 1].sectionId;
 				else
-					return "";
+					return R("", "");
 			} else if (section > toc[chapterIdx].sections[$ - 1].sectionId) {
 				if (++chapterIdx < toc.length)
 					section = 1;
 				else
-					return "";
+					return R("", "");
 			}
 
-			return "/tour/%s/%d".format(toc[chapterIdx].chapterId,
-					section);
+			auto sectionTitle = toc[chapterIdx].sections[section - 1].title;
+
+			return R("/tour/%s/%d".format(
+						toc[chapterIdx].chapterId,
+						section),
+					sectionTitle);
 		}
 
-		auto previousSectionLink(ref Toc toc, string chapter, int section) pure {
-			return deltaSectionLink(toc, chapter, section, -1);
+		auto previousSection(ref Toc toc, string chapter, int section) pure {
+			return deltaSection(toc, chapter, section, -1);
 		}
-		auto nextSectionLink(ref Toc toc, string chapter, int section) pure {
-			return deltaSectionLink(toc, chapter, section, +1);
+		auto nextSection(ref Toc toc, string chapter, int section) pure {
+			return deltaSection(toc, chapter, section, +1);
 		}
 	}
 
@@ -108,12 +120,12 @@ class WebInterface
 		auto section = _section;
 		auto sectionCount = tourData.sectionCount;
 		auto toc = &toc_["en"];
-		auto previousLink = linkCache.previousSectionLink;
-		auto nextLink = linkCache.nextSectionLink;
+		auto previousSection = linkCache.previousSection;
+		auto nextSection = linkCache.nextSection;
 		auto googleAnalyticsId = googleAnalyticsId_;
 		render!("tour.dt", htmlContent, section,
 				sectionCount, chapterId, hasSourceCode, sourceCodeEnabled,
-				nextLink, previousLink, googleAnalyticsId,
+				nextSection, previousSection, googleAnalyticsId,
 				toc)();
 	}
 }

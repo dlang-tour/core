@@ -636,7 +636,7 @@ a normal member to the outside world:
         @property bar() { return 10; }
         @property bar(int x) { writeln(x); }
     }
-
+    
     Foo foo;
     writeln(foo.bar); // actually calls foo.bar()
     foo.bar = 10; // calls foo.bar(10);
@@ -661,7 +661,7 @@ Any function or type in D can be attributed with user-defined
 types:
 
     struct Bar { this(int x) {} }
-
+    
     struct Foo {
       @("Hello") {
           @Bar(10) void foo() {

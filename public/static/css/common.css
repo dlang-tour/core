@@ -21,6 +21,10 @@ body {
   color: #aaa;
 }
 
+.navbar-bottom a:hover {
+  text-decoration: none;
+}
+
 /* Navbar customization */
 /* generated using http://work.smarchal.com/twbscolor/ */
 
