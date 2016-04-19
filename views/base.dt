@@ -41,5 +41,8 @@ body(ng-app="DlangTourApp")
 								- foreach(ref sec; tocItem.sections)
 									li
 										a(href="/tour/#{tocItem.chapterId}/#{sec.sectionId}") #{sec.title}
+				ul.nav.navbar-nav.navbar-right
+					a.navbar-brand(href="https://github.com/stonemaster/dlang-tour")
+						img(src="/static/img/GitHub-Mark-Light-32px.png")
 
 	block content
