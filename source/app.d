@@ -62,6 +62,7 @@ shared static this()
 	auto settings = new HTTPServerSettings;
 	settings.port = config.port;
 	settings.bindAddresses = config.bindAddresses;
+	settings.useCompressionIfPossible = true;
 
 	auto contentProvider = new ContentProvider(config.publicDir ~ "/content");
 	auto execProvider = createExecProvider(config, contentProvider);
