@@ -30,6 +30,10 @@ dlangTourApp.controller('DlangTourAppCtrl', [ '$scope', '$http', function($scope
 	$scope.codemirrorLoaded = function(editor) {
 		$scope.editor = editor;
 		$scope.editor.setOption("lint", {});
+		$scope.editor.on("change", function() {
+			sessionStorage.setItem($scope.sourceCodeKey,
+				 $scope.editor.getDoc().getValue());
+		});
 	}
 
 	$scope.editorOptions = {
@@ -45,8 +49,16 @@ dlangTourApp.controller('DlangTourAppCtrl', [ '$scope', '$http', function($scope
 	$scope.init = function(chapterId, section, hasSourceCode) {
 		$http.get('/api/v1/source/' + chapterId + "/" + section)
 			.success(function(data) {
-				$scope.sourceCode = $scope.resetCode = data.sourceCode;
-			});
+				$scope.resetCode = data.sourceCode;
+				$scope.sourceCodeKey = "sourcecode_" + chapterId + "_" + section;
+
+				var sessionSC = sessionStorage.getItem($scope.sourceCodeKey)
+				if (sessionSC) {
+					$scope.sourceCode = sessionSC;
+				} else {
+					$scope.sourceCode = data.sourceCode;
+				}
+		});
 
 		$scope.showSourceCode = hasSourceCode;
 	}
