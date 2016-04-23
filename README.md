@@ -111,7 +111,7 @@ Maximum allowed size in bytes of the generated user program's output.
 
 ## Systemd Unit
 
-A systemd unit has been included at [dlang-tour.service](dlang-tour.service)
+A systemd unit has been included at [deploy/dlang-tour.service](dlang-tour.service)
 which allows to quickly install a service for systemd
 enabled distributions like newer Debian/Ubuntu's and CoreOS. Just
 install this service file and run `systemctl start dlang-tour` to
