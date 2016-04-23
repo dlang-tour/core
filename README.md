@@ -23,6 +23,25 @@ the `dlang-tour` folder:
 You might want to change the settings in `config.yml` to change
 the ports the tour is listening to.
 
+## Compiling & running of user source code
+
+The source code on the tour can be compiled and then executed online and its output returned
+to the user. Therefore three different types of **execution drivers** have been
+implemented within the dlang-tour:
+
+ * `off`: no online compilation allowed. If the user hits ***Runs*** an error message
+   will be returned.
+ * `stupidlocal`: an unsafe method that just runs `rdmd` on the local host system
+   and returns its output. ***Very unsafe*** and musn't ever be used in production!
+ * `docker`: runs `rdmd` within a special Docker container ([dlang-tour-rdmd](https://github.com/stonemaster/dlang-tour-rdmd))
+   and returns its output. The driver imposes the Docker container memory and 
+   execution time limits. Additional configurations options available in `config.yml`.
+
+The execution driver is set in `config.yml`.
+
+Caching of the program output can also be enabled in `config.yml` (`exec.cache = true`). Caching
+will only be enabled for the built-in default examples however.
+
 ## Docker image
 
 A Docker image is automatically built by Travis CI and pushed to the repository
