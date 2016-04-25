@@ -1,0 +1,15 @@
+tour:
+  image: stonemaster/dlang-tour
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+  ports:
+    - "80:8080"
+  environment:
+    - GOOGLE_ANALYTICS_ID=
+  restart: always
+watchtower:
+  image: centurylink/watchtower
+  command: --cleanup
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+  restart: always

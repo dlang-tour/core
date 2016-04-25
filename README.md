@@ -109,13 +109,10 @@ code is allowed to take until it is killed.
 
 Maximum allowed size in bytes of the generated user program's output.
 
-## Systemd Unit
+## Deployment
 
-A systemd unit has been included with [dlang-tour.service](deploy/dlang-tour.service)
-which allows to quickly install a service for systemd
-enabled distributions like newer Debian/Ubuntu's and CoreOS. Just
-install this service file and run `systemctl start dlang-tour` to
-run the dlang-tour using Docker (which is a pre-requisite of course).
+A deployment guide can be found in the [deploy](deploy/README.md)
+folder.
 
 ## License
 
