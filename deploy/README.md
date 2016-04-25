@@ -24,12 +24,13 @@ and restarts the `dlang-tour` container when a newer version is available.
 
 ### Installation of dlang-tour
 
-1. Download [docker-compose.yml](docker-compose.yml) file:
-
-    wget https://raw.githubusercontent.com/stonemaster/dlang-tour/master/deploy/docker-compose.yml
-
-1. Adapt the environment variable `GOOGLE_ANALYTICS_ID` if needed
+ * Checkout the repository featuring the latest `docker-compose.yml`:
+```
+git clone git@github.com:stonemaster/dlang-tour.git
+cd dlang-tour/deploy
+```
+ * Adapt the environment variable `GOOGLE_ANALYTICS_ID` if needed
    in `docker-compose.yml`.
-1. Run `docker-compose up -d`.
-1. Running `docker-compose logs tour` will show logfiles of the currently
+ * Run `docker-compose up -d`.
+ * Running `docker-compose logs tour` will show logfiles of the currently
    running `dlang-tour` container.
