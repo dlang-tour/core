@@ -26,7 +26,7 @@ and restarts the `dlang-tour` container when a newer version is available.
 
  * Checkout the repository featuring the latest `docker-compose.yml`:
 ```
-git clone git@github.com:stonemaster/dlang-tour.git
+git clone https://github.com/stonemaster/dlang-tour.git
 cd dlang-tour/deploy
 ```
  * Adapt the environment variable `GOOGLE_ANALYTICS_ID` if needed
