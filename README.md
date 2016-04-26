@@ -72,6 +72,9 @@ For further Docker foo please refer to the Docker documentation.
 to that on the host system! Generally a newer version might run
 on the host system than within the container.
 
+The Docker container is also the suggested way
+of [dlang-tour's deployment](deploy/README.md).
+
 ### Environment variables
 
 #### `GOOGLE_ANALYTICS_ID`
