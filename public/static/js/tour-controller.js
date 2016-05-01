@@ -1,12 +1,14 @@
-var dlangTourApp = angular.module('DlangTourApp', ['ui.codemirror']);
+var dlangTourApp = angular.module('DlangTourApp', ['ui.codemirror', 'cfp.hotkeys']);
 
-dlangTourApp.controller('DlangTourAppCtrl', [ '$scope', '$http', function($scope, $http) {
+dlangTourApp.controller('DlangTourAppCtrl', [ '$scope', '$http', 'hotkeys', function($scope, $http, hotkeys) {
 	$scope.programOutput = "";
 	$scope.warnings = [];
 	$scope.errors = [];
 	$scope.showContent = true;
 	$scope.showProgramOutput = false;
 	$scope.editor = null;
+	$scope.chapterId = null;
+	$scope.section = null;
 
 	$scope.updateErrorsAndWarnings = function(doc, options, editor) {
 		var lintings = [];
@@ -47,6 +49,8 @@ dlangTourApp.controller('DlangTourAppCtrl', [ '$scope', '$http', function($scope
 	};
 
 	$scope.init = function(chapterId, section, hasSourceCode) {
+		$scope.chapterId = chapterId;
+		$scope.section = section;
 		$http.get('/api/v1/source/' + chapterId + "/" + section)
 			.success(function(data) {
 				$scope.resetCode = data.sourceCode;
@@ -88,4 +92,40 @@ dlangTourApp.controller('DlangTourAppCtrl', [ '$scope', '$http', function($scope
 	$scope.reset = function() {
 		$scope.sourceCode = $scope.resetCode;
 	}
+
+	// Add hotkeys
+	hotkeys.add({
+		combo: 'left',
+		description: 'Go to previous section',
+		callback: function() {
+			$http.get('/previous-section/' + $scope.chapterId + '/' + $scope.section)
+				.success(function(data) {
+					window.location.href = data.location;
+				});
+		}
+	});
+	hotkeys.add({
+		combo: 'right',
+		description: 'Go to next section',
+		callback: function() {
+			$http.get('/next-section/' + $scope.chapterId + '/' + $scope.section)
+				.success(function(data) {
+					window.location.href = data.location;
+				});
+		}
+	});
+	hotkeys.add({
+		combo: 'ctrl+enter',
+		description: 'Run source code',
+		callback: function() {
+			$scope.run();
+		}
+	});
+	hotkeys.add({
+		combo: 'ctrl+r',
+		description: 'Reset source code',
+		callback: function() {
+			$scope.reset();
+		}
+	});
 }]);

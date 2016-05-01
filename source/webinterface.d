@@ -102,30 +102,73 @@ class WebInterface
 		getTour(req, res, "welcome", 1);
 	}
 
+	/+
+		Returns: tuple containing .tourData and .linkCache
+		for specified chapter and section.
+	+/
+	private auto getTourDataAndValidate(string chapter, int section)
+	{
+		auto tourData = contentProvider_.getContent("en", chapter, section);
+		if (tourData.content == null) {
+			throw new HTTPStatusException(404,
+				"Couldn't find tour data for chapter '%s', section %d".format(chapter, section));
+		}
+
+		auto linkCache = &sectionLinkCache_["en"][chapter][section];
+
+		return tuple!("tourData", "linkCache")(tourData, linkCache);
+	}
+
 	@path("/tour/:chapter/:section")
 	void getTour(HTTPServerRequest req, HTTPServerResponse res, string _chapter, int _section)
 	{
-		auto tourData = contentProvider_.getContent("en", _chapter, _section);
-		if (tourData.content == null) {
-			throw new HTTPStatusException(404,
-				"Couldn't find tour data for chapter '%s', section %d".format(_chapter, _section));
-		}
-
-		auto linkCache = &sectionLinkCache_["en"][_chapter][_section];
-
-		auto htmlContent = tourData.content.html;
+		auto sec = getTourDataAndValidate(_chapter, _section);
+		auto htmlContent = sec.tourData.content.html;
 		auto chapterId = _chapter;
-		auto hasSourceCode = !tourData.content.sourceCode.empty;
-		auto sourceCodeEnabled = tourData.content.sourceCodeEnabled;
+		auto hasSourceCode = !sec.tourData.content.sourceCode.empty;
+		auto sourceCodeEnabled = sec.tourData.content.sourceCodeEnabled;
 		auto section = _section;
-		auto sectionCount = tourData.sectionCount;
+		auto sectionCount = sec.tourData.sectionCount;
 		auto toc = &toc_["en"];
-		auto previousSection = linkCache.previousSection;
-		auto nextSection = linkCache.nextSection;
+		auto previousSection = sec.linkCache.previousSection;
+		auto nextSection = sec.linkCache.nextSection;
 		auto googleAnalyticsId = googleAnalyticsId_;
 		render!("tour.dt", htmlContent, section,
 				sectionCount, chapterId, hasSourceCode, sourceCodeEnabled,
 				nextSection, previousSection, googleAnalyticsId,
 				toc)();
+	}
+
+	/+
+		GET /api/v1/next/CHAPTER/SECTION
+		GET /api/v1/previous/CHAPTER/SECTION
+
+		Returns: the URL ({ location: "xxx"}) of the next or
+		previous section based the chapter and section parameters.
+	+/
+	private struct Location
+	{
+		string location;
+	}
+	@method(HTTPMethod.GET)
+	@path("/next-section/:chapter/:section")
+	void getNextSection(HTTPServerResponse res, string _chapter, int _section)
+	{
+		auto sec = getTourDataAndValidate(_chapter, _section);
+		if (sec.linkCache.nextSection.link.empty)
+			throw new HTTPStatusException(404,
+				"Couldn't find next section chapter '%s', section %d".format(_chapter, _section));
+		res.writeJsonBody(Location(sec.linkCache.nextSection.link));
+	}
+
+	@method(HTTPMethod.GET)
+	@path("/previous-section/:chapter/:section")
+	void getPreviousSection(HTTPServerResponse res, string _chapter, int _section)
+	{
+		auto sec = getTourDataAndValidate(_chapter, _section);
+		if (sec.linkCache.previousSection.link.empty)
+			throw new HTTPStatusException(404,
+				"Couldn't find previous section chapter '%s', section %d".format(_chapter, _section));
+		res.writeJsonBody(Location(sec.linkCache.previousSection.link));
 	}
 }
