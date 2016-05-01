@@ -2,7 +2,7 @@ name "dlang-tour"
 description "The Dlang Tour"
 copyright "Copyright © 2015, André Stein"
 authors "André Stein"
-dependency "vibe-d" version="~>0.7.28"
+dependency "vibe-d" version="==0.7.26"
 dependency "dyaml" version="~>0.5.2"
 // Commented out until GDC is up to date. Doesn't work
 // with 2.066.1 frontends currently.
