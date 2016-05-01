@@ -9,7 +9,7 @@ import contentprovider;
 /++
 	Main entry point for user visible content
 +/
-class WebInterface 
+class WebInterface
 {
 	private {
 		ContentProvider contentProvider_;
@@ -108,15 +108,20 @@ class WebInterface
 	+/
 	private auto getTourDataAndValidate(string chapter, int section)
 	{
-		auto tourData = contentProvider_.getContent("en", chapter, section);
-		if (tourData.content == null) {
+		auto _tourData = contentProvider_.getContent("en", chapter, section);
+		if (_tourData.content == null) {
 			throw new HTTPStatusException(404,
 				"Couldn't find tour data for chapter '%s', section %d".format(chapter, section));
 		}
 
-		auto linkCache = &sectionLinkCache_["en"][chapter][section];
+		auto _linkCache = &sectionLinkCache_["en"][chapter][section];
 
-		return tuple!("tourData", "linkCache")(tourData, linkCache);
+		struct Ret {
+			typeof(_tourData) tourData;
+			typeof(_linkCache) linkCache;
+		}
+
+		return Ret(_tourData, _linkCache);
 	}
 
 	@path("/tour/:chapter/:section")
