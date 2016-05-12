@@ -22,6 +22,12 @@ and restarts the `dlang-tour` container when a newer version is available.
  * **Docker compose**: 
    * Install [Docker Compose](https://docs.docker.com/compose/install/)
 
+#### CentOS
+
+To allow the dlang-tour container to start other containers
+on CentOS, the following SELinux module needs be installed
+beforehand: https://github.com/dpw/selinux-dockersock
+
 ### Installation of dlang-tour
 
  * Checkout the repository featuring the latest `docker-compose.yml`:
