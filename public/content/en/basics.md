@@ -91,7 +91,7 @@ void main()
     int g; // contains 0
 
     auto f = 3.1415f; // .f denotes a float
-    // typeid(VAR) returns the type information 
+    // typeid(VAR) returns the type information
     // of an expression.
     writeln("type of f is ", typeid(f));
     double pi = f; // fine
@@ -618,15 +618,13 @@ one past the slice's end and thus would generate a `RangeError`
 
 import std.stdio;
 
-/// Calculates the minimum of all values
-/// in slice recursively. For every recursive
-/// call a sub-slice is taken thus we don't
-/// create a copy and don't do any allocations.
-///
-/// Note: @nogc is magic flag which tells the
-/// compiler to make NO allocations inside
-/// this function.
-int minimum(int[] slice) @nogc
+/**
+Calculates the minimum of all values
+in slice recursively. For every recursive
+call a sub-slice is taken thus we don't
+create a copy and don't do any allocations.
+*/
+int minimum(int[] slice)
 {
     assert(slice.length > 0);
     if (slice.length == 1)
