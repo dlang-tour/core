@@ -11,7 +11,7 @@ block head
 	script(src="/static/lib/ui-codemirror.min.js")
 	script(src="/static/lib/hotkeys.min.js")
 	link(rel="stylesheet", href="/static/lib/hotkeys.min.css")
-	script(src="//google-code-prettify.googlecode.com/svn/loader/run_prettify.js")
+	script(src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js")
 	link(rel="stylesheet", href="/static/css/tour.css")
 
 block content

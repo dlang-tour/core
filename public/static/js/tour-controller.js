@@ -42,7 +42,7 @@ dlangTourApp.controller('DlangTourAppCtrl', [ '$scope', '$http', 'hotkeys', func
 		lineWrapping : true,
 		lineNumbers: true,
 		indentUnit: 4,
-		mode: 'd',
+		mode: 'text/x-d',
 		theme: "elegant",
 		viewportMargin: Infinity,
 		gutters: ["CodeMirror-lint-markers"]
