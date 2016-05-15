@@ -24,9 +24,15 @@ and restarts the `dlang-tour` container when a newer version is available.
 
 #### CentOS
 
-To allow the dlang-tour container to start other containers
-on CentOS, the following SELinux module needs be installed
-beforehand: https://github.com/dpw/selinux-dockersock
+* To allow the dlang-tour container to start other containers
+  on CentOS, the following SELinux module needs be installed
+  beforehand: https://github.com/dpw/selinux-dockersock
+* Make sure the docker daemon uses `overlay`storage driver
+  as the default `devicemapper` driver makes sure your drive
+  fills up after some time.
+  * Change `OPTIONS` in `/etc/sysconfig/docker`: `OPTIONS='--selinux-enabled=false -s overlay'`
+  * Run `systemctl daemon-reload`
+  * Run `systemctl restart docker`
 
 ### Installation of dlang-tour
 
