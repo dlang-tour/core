@@ -152,12 +152,13 @@ void main() @safe
 
 # Storage classes
 
-D is a statically typed language so once a variable has been declared
+D is a statically typed language: once a variable has been declared,
 its type can't be changed from that point onwards. This allows
-the compiler to prevent bugs early and enforce limitations
-at compile time.
+the compiler to prevent bugs early and enforce restrictions
+at compile time.  Good type-safety gives you the support you need
+to make large programs safer and more maintainable.
 
-In addition to a static type system D provides
+In addition to a static type system, D provides
 storage classes that enforce additional
 constraints on certain objects. For example an
 `immutable` object can just
