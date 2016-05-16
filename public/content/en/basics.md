@@ -95,8 +95,7 @@ void main()
     // of an expression.
     writeln("type of f is ", typeid(f));
     double pi = f; // fine
-    // would be an error:
-    // float bad = pi;
+    float demoted = pi; // also fine
 }
 
 # Memory
