@@ -406,14 +406,24 @@ member functions.
     p.doStuff(); // call do_stuff
     p.privateStuff(); // forbidden
 
-If a member function is declared with `const` it won't be allowed
+If a member function is declared with `const`, it won't be allowed
 to modify any of its members. This is enforced by the compiler.
-If a member function is declared as `static` if will be callable
+Making a member function `const` makes it callable on any `const`
+or `immutable` object, but also helps callers reason about the
+code by offering a guarantee that the member function will never
+change the state of the object.
+
+If a member function is declared as `static`, it will be callable
 without an instantiated object e.g. `Person.myStatic()` but
-isn't allowed to access any non-`static` members.
+isn't allowed to access any non-`static` members.  Use a `static`
+member function when you want to work with all instances of a given
+`struct`, rather than with one instance in particular, or when the
+member function must be usable by callers that don't have an instance
+available.  For example, a function that asked how many instances
+existed would probably be `static`.
 
 Note that a `struct` can't inherit from another `struct`.
-Hierachies of types can only be built using classes
+Hierachies of types can only be built using classes,
 which we will see in a future section.
 
 ### Exercise
