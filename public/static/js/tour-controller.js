@@ -133,8 +133,9 @@ dlangTourApp.controller('DlangTourAppCtrl', [ '$scope', '$http', 'hotkeys', func
 	hotkeys.add({
 		combo: 'ctrl+r',
 		description: 'Reset source code',
-		callback: function() {
+		callback: function(e) {
 			$scope.reset();
+			e.preventDefault();
 		}
 	});
 }]);
