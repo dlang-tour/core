@@ -395,7 +395,8 @@ is defined through a `this(...)` member function:
 A `struct` might contain any number of member functions. Those
 are per default `public` and accessible from the outside. They might
 as well be `private` and thus only be callable by other
-member functions.
+member functions of the same `struct` or other code in the same
+module.
 
     struct Person {
         void doStuff() {
