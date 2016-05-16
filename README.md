@@ -10,7 +10,7 @@ The most recent version of this tour can be seen here: http://tour.dlang.org.
 
 ## Add Content
 
-Please refer to the document [public/content/README.md](public/content/README.md)
+Please refer to the document [CONTRIBUTING.md](CONTRIBUTING.md)
 for further information on how to add or change existing content.
 
 ## Compile & Run

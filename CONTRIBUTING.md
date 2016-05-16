@@ -1,8 +1,12 @@
-# Tour contents
+# Contributing
+
+Welcome to the D community and thanks for your interest in contributing!
+
+## Tour contents
 
 This directory contains the contents of the Dlang online tour.
 
-## Structure
+### Structure
 
 The folder structure is very simple:
 
@@ -38,7 +42,7 @@ online (the Run button is not visible on that tour
 page) mark the source code with a 2nd level title
 `{SourceCode:disabled}` instead of just `{SourceCode}`.
 
-## Source Code formatting
+### Source Code formatting
 
 * Source code examples should be indented with 4 spaces.
 * To prevent dynamic word wrap of code examples on mobile
