@@ -101,8 +101,8 @@ void main()
 
 # Memory
 
-D is a system programming language and thus allows to manually
-manage and mess up your memory. Nevertheless D uses a
+D is a system programming language and thus allows you to manually
+manage and mess up your memory. Nevertheless, D uses a
 *garbage collector* per default to free unused memory.
 
 D provides pointer types `T*` like in C:
@@ -112,7 +112,7 @@ D provides pointer types `T*` like in C:
     auto c = &a // c is int* and contains address of a
 
 A new memory block on the heap is allocated using the
-`new` expression which returns a pointer to the managed
+`new` expression, which returns a pointer to the managed
 memory:
 
     int* a = new int;
