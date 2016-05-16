@@ -928,7 +928,7 @@ void main() {
 # Associative Arrays
 
 D has built-in *associative arrays* also known as hash maps.
-An associative arrqy with a key type of `int` and a value type
+An associative array with a key type of `int` and a value type
 of `string` is declared as follows:
 
     int[string] arr;
