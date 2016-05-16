@@ -46,6 +46,13 @@ can be downloaded and installed offline:
 * There are officially supported Linux packages for Fedora, OpenSuse and
   Debian/Ubuntu. For the latter a regularly updated repository exists
   at [d-apt.source-forge.net](http://d-apt.sourceforge.net).
+* On OSX, Linux, and FreeBSD a [script](https://dlang.org/install.sh) can
+  be used to easily install different compilers and dub to `$HOME/dlang`.
+
+  ```sh
+  curl -fsS https://dlang.org/install.sh | bash -s dmd
+  ```
+  
 
 Besides the DMD reference compiler which uses its own backend, there are
 two other compilers that can be fetched through the
