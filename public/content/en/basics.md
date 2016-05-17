@@ -1299,12 +1299,9 @@ class Cat: Animal {
 }
 
 void main() {
-    auto dog = new Dog;
-    auto cat = new Cat;
-    auto animals = [
-      cast(Animal)dog,
-      cast(Animal)cat
-    ];
+    Animal dog = new Dog;
+    Animal cat = new Cat;
+    Animal[] animals = [dog, cat];
     foreach(animal; animals) {
         animal.multipleNoise(5);
     }
@@ -1358,8 +1355,12 @@ types too.
 
 import std.stdio;
 
-// Template class that allows
-// generic implementation of animals.
+/**
+Template class that allows
+generic implementation of animals.
+Params:
+    noise = string to write
+*/
 class Animal(string noise) {
     void makeNoise() {
         writeln(noise ~ "!");
@@ -1372,9 +1373,14 @@ class Dog: Animal!("Bark") {
 class Cat: Animal!("Meeoauw") {
 }
 
-// Template function which takes any
-// type T that implements a function
-// makeNoise.
+/**
+Template function which takes any
+type T that implements a function
+makeNoise.
+Params:
+    animal = object that can make noise
+    n = number of makeNoise calls
+*/
 void multipleNoise(T)(T animal, int n) {
     for (int i = 0; i < n; ++i) {
         animal.makeNoise();
