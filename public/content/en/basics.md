@@ -1271,6 +1271,10 @@ functions.
         }
     }
 
+### In-depth
+
+- [Interfaces in D](https://dlang.org/spec/interface.html)
+
 ## {SourceCode}
 
 import std.stdio;
