@@ -515,10 +515,10 @@ or shrunk at runtime. A dynamic array is created using a `new` expression
 and its length:
 
     int size = 8; // run-time variable
-    auto arr = new int[size];
+    int[] arr = new int[size];
 
-The type of `arr` is `int[]` which is technically a
-**slice** - those are introduced in the next section. Multi-dimensional
+The type of `arr` is `int[]` which is a **slice**
+and will be explained in more detail in the next section. Multi-dimensional
 arrays can be created easily using the `auto arr = new int[3][3]` syntax.
 
 Arrays can be concatenated using the `~` operator which
