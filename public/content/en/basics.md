@@ -501,7 +501,8 @@ a failed range check yields a `RangeError` which aborts the application. The bra
 can disable this with the compiler flag `-boundschecks=off` to squeeze
 the last cycles out of their binary.
 
-**static** arrays are stored on the stack and have a fixed,
+**static** arrays are stored on the stack if defined inside a function
+or in static memory otherwise.  They have a fixed,
 compile-time known length. An static array's type includes
 the fixed size:
 
