@@ -776,9 +776,9 @@ double average(int[] array) {
 
 void main()
 {
-    auto testers = [ [1, 4, 7, 8],
-          [4, 5, 8, 9, 47, 88],
-          [3, 6, 2, 1, 38, 4] ];
+    auto testers = [ [5, 15], // 20
+          [2, 3, 2, 3], // 10
+          [3, 6, 2, 9] ]; // 20
 
     for (auto i = 0; i < testers.length; ++i) {
       writeln("The average of ", testers[i],
@@ -801,7 +801,7 @@ iterate through the elements using this `foreach` loop:
 
 The first field in the `foreach` definition is the variable
 name used in the loop iteration. Its type can be omitted
-and is then induced `auto`-style:
+and is then induced automatically:
 
     foreach (e; arr) {
         // typoef(e) is int
@@ -825,9 +825,9 @@ large types. To prevent copying or enable *in-place
 import std.stdio;
 
 void main() {
-    auto testers = [ [1, 4, 7, 8],
-          [4, 5, 8, 9, 47, 88],
-          [3, 6, 2, 1, 38, 4] ];
+    auto testers = [ [5, 15], // 20
+          [2, 3, 2, 3], // 10
+          [3, 6, 2, 9] ]; // 20
 
     // This is just for the fun of it: iterate
     // through the testers in reverse order. This
