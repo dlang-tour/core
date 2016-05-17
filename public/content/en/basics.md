@@ -620,6 +620,10 @@ Like seen in the previous section the `[$]` expression indexes the element
 one past the slice's end and thus would generate a `RangeError`
 (if bounds-checking hasn't been disabled).
 
+### In-depth
+
+- [Introduction to Slices in D](http://dlang.org/d-array-article.html)
+
 ## {SourceCode}
 
 import std.stdio;
