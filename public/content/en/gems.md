@@ -691,6 +691,10 @@ UDAs allow to enhance generic code by giving user-defined
 types another dimension that helps compile time
 generators to adapt to that specific type.
 
+### In-depth
+
+- [Attributes in D](https://dlang.org/spec/attribute.html)
+
 # opDispatch & opApply
 
 D allows overriding operators like `+`, `-` or
