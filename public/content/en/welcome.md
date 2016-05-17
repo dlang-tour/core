@@ -12,15 +12,9 @@ of this tour. The tour is divided into chapters with a number of sections.
 Each chapter and section introduces a new feature or aspect of D. The bottom
 panel allows navigation to the next or previous section.
 
-The code editor contains D source code which can compiled and run online.
-The program's output - and sometimes compile errors - are displayed 
-in the box beneath the code editor.
-
 Each section comes with a source code example that can be modified and used
 to experiment with D's language features.
-
-Some sections contain exercises which invite using the introduced
-features.
+Click the run button (or `Shift-enter`) to compile and run it.
 
 ## {SourceCode}
 
