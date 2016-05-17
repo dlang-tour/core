@@ -586,11 +586,11 @@ void main()
 
 Slices are objects from type `T[]` for any given type `T`.
 Slices provide a view on a subset of an array
-of `T` values - or just point to the whole array. **Slices and
-dynamic arrays are technically the same.**
+of `T` values - or just point to the whole array.
+**Slices and dynamic arrays are the same.**
 
-A slice has a size of `2 * sizeof(T*)` so 16 bytes on 64bit platforms
-and 8 bytes on 32bit. It consists of two members:
+A slice consists of two members - a pointer to the starting element and the
+length of the slice:
 
     T* ptr;
     size_t length; // unsigned 32 bit on 32bit, unsigned 64 bit on 64bit
