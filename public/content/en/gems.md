@@ -821,6 +821,11 @@ Have a look at the source code example
 to see some standardized documentation
 sections.
 
+### In-depth
+
+- [DDoc design](https://dlang.org/spec/ddoc.html)
+- [Phobos standard library documentation](https://dlang.org/phobos)
+
 ## {SourceCode}
 
 /**
