@@ -1180,12 +1180,12 @@ of just one line.
 ## {SourceCode}
 import std.stdio;
 
-enum IntOps = {
+enum IntOps {
     add = 0,
     sub = 1,
     mul = 2,
     div = 3
-};
+}
 
 /**
 Provides a math calculuation
@@ -1220,13 +1220,13 @@ void main()
     int a = 10;
     int b = 5;
 
-    auto func = getBusinessLogic(0);
+    auto func = getMathOperation(IntOps.add);
     writeln("The type of func is ",
         typeof(func).stringof, "!");
 
     // run the delegate func which does all the
     // real work for us!
-    writeln(func(a, b));
+    writeln("result: ", func(a, b));
 }
 
 # Interfaces
