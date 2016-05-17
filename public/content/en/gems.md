@@ -913,6 +913,15 @@ at compile-time. For example `std.range.primitives.isRandomAccessRange`
 checks whether a type is a range that supports
 the `[]` operator.
 
+### In-depth
+
+- [Conditional compilation](https://dlang.org/spec/version.html)
+- [std.traits](https://dlang.org/phobos/std_traits.html)
+- [Traits](https://dlang.org/spec/traits.html)
+- [Mixin templates](https://dlang.org/spec/template-mixin.html)
+- [Tutorial to D Templates](https://github.com/PhilippeSigaud/D-templates-tutorial)
+- [D Templates spec](https://dlang.org/spec/template.html)
+
 ## {SourceCode}
 
 import std.traits: isFloatingPoint;
