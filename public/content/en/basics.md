@@ -961,10 +961,15 @@ do something which is left as an exercise to the reader.
 
 import std.stdio;
 
-/// Splits the given text into words and returns
-/// an associative array that maps words to their
-/// respective word counts.
-auto wordCount(string text)
+/**
+Splits the given text into words and returns
+an associative array that maps words to their
+respective word counts.
+
+Params:
+    text = text to be splitted
+*/
+int[string] wordCount(string text)
 {
     // The function splitter lazyily splits the
     // input into a range
