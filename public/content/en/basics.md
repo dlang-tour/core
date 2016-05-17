@@ -963,6 +963,11 @@ a `.remove(val)` member to remove entries by their key.
 The special `.byKeys` and `.byValues` return ranges which
 do something which is left as an exercise to the reader.
 
+### In-depth
+
+- [Associative arrays spec](https://dlang.org/spec/hash-map.html)
+- [byPair](http://dlang.org/phobos/std_array.html#.byPair)
+
 ## {SourceCode}
 
 import std.stdio;
