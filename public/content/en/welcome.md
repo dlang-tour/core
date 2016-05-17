@@ -58,10 +58,10 @@ Besides the DMD reference compiler which uses its own backend, there are
 two other compilers that can be fetched through the
 [dlang.org](https://dlang.org) download section:
 
-* **GDC** which uses the GCC backend
-* **LDC** based on the LLVM backend
+* [**GDC**](http://gdcproject.org/downloads) which uses the GCC backend
+* [**LDC**](https://github.com/ldc-developers/ldc#installation) based on the LLVM backend
 
-GDC and LDC aren't always at the most recent DMD frontend's versions 
+GDC and LDC aren't always at the most recent DMD frontend's versions, 
 but provide better optimization levels as well as support
 for other platforms like e.g. ARM.
 
