@@ -991,13 +991,8 @@ int[string] wordCount(string text)
     foreach(word; splitter!pred(text)) {
         // Increment word count if word
         // has been found.
-        if (auto found = word in words) {
-            ++*found;
-        } else {
-            // create entry in hash map with
-            // count 1
-            words[word] = 1;
-        }
+        // Integers are by default 0.
+        words[word]++;
     }
 
     return words;
