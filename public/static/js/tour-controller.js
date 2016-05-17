@@ -45,7 +45,16 @@ dlangTourApp.controller('DlangTourAppCtrl', [ '$scope', '$http', 'hotkeys', func
 		mode: 'text/x-d',
 		theme: "elegant",
 		viewportMargin: Infinity,
-		gutters: ["CodeMirror-lint-markers"]
+		gutters: ["CodeMirror-lint-markers"],
+		extraKeys: {
+			// hotkeys within code editor
+			'Ctrl-Enter': function(cm) {
+				$scope.$apply('run()');
+			},
+			'Ctrl-R': function(cm) {
+				$scope.$apply('reset()');
+			}
+		}
 	};
 
 	$scope.init = function(chapterId, section, hasSourceCode) {
@@ -124,8 +133,9 @@ dlangTourApp.controller('DlangTourAppCtrl', [ '$scope', '$http', 'hotkeys', func
 	hotkeys.add({
 		combo: 'ctrl+r',
 		description: 'Reset source code',
-		callback: function() {
+		callback: function(e) {
 			$scope.reset();
+			e.preventDefault();
 		}
 	});
 }]);
