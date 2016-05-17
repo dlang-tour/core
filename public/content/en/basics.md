@@ -1173,12 +1173,21 @@ of just one line.
 
 ## {SourceCode}
 import std.stdio;
-import std.random;
 
-/* Returns: delegate which does a random math
-     calculation depending on randomNumber.  */
-auto getBusinessLogic(int a, int b,
-    int randomNumber)
+enum IntOps = {
+    add = 0,
+    sub = 1,
+    mul = 2,
+    div = 3
+};
+
+/**
+Provides a math calculuation
+Params:
+    op = selected math operation
+Returns: delegate which does a math operation
+*/
+auto getMathOperation(IntOps op)
 {
     // Define 4 lambda functions for
     // 4 different mathematical operations
@@ -1187,29 +1196,17 @@ auto getBusinessLogic(int a, int b,
     auto mul = (int lhs, int rhs) => lhs * rhs;
     auto div = (int lhs, int rhs) => lhs / rhs;
 
-    writeln("Type of `add` for example is: ",
-        typeof(add).stringof);
-
-    return () {
-        switch (randomNumber) {
-            case 0:
-                writeln(add(a,b));
-                break;
-            case 1:
-                writeln(sub(a,b));
-                break;
-            case 2:
-                writeln(mul(a,b));
-                break;
-            case 3:
-                writeln(div(a,b));
-                break;
-            default:
-                // special code which marks
-                // UNREACHABLE code
-                assert(0);
-        }
-    };
+    // we can ensure that the switch covers all cases
+    final switch (op) {
+        case IntOps.add:
+            return add;
+        case IntOps.sub:
+            return sub;
+        case IntOps.mul:
+            return mul;
+        case IntOps.div:
+            return div;
+    }
 }
 
 void main()
@@ -1217,14 +1214,13 @@ void main()
     int a = 10;
     int b = 5;
 
-    auto func = getBusinessLogic(a, b,
-        uniform(0,4));
+    auto func = getBusinessLogic(0);
     writeln("The type of func is ",
         typeof(func).stringof, "!");
 
     // run the delegate func which does all the
     // real work for us!
-    func();
+    writeln(func(a, b));
 }
 
 # Interfaces
