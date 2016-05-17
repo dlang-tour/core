@@ -416,6 +416,10 @@ Note that a `struct` can't inherit from another `struct`.
 Hierachies of types can only be built using classes
 which we will see in a future section.
 
+### In-depth
+
+- [In detail](https://dlang.org/spec/struct.html)
+
 ### Exercise
 
 Given the `struct Vector3` implement the following functions and make
