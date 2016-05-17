@@ -3,7 +3,6 @@ docs.json
 __dummy.html
 *.o
 *.obj
-dub.selections.json
 dlang-tour
 __test__library__
 *.swp
