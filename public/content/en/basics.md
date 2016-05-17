@@ -11,26 +11,19 @@ and those modules are referenced through `import std.MODULE`.
 
 The import statement can also be used to selectively
 import certain symbols of a module. This improves
-the already short compile times of D source.
+the already short compile time of D source code.
 
     import std.stdio: writeln, writefln;
 
 An import statement need not appear at the top a source file.
 It can also be used locally within functions.
 
-The *package* name is induced from the parent folder's name.
-So all modules in the directoy `mypkg` can be imported
-using `import mypkg.module`.
-
 ## {SourceCode}
-
-// Either: import std.stdio;
-// or import std.stdio: writeln;
 
 void main()
 {
-    // This works too:
     import std.stdio;
+    // or import std.stdio: writeln;
     writeln("Hello World!");
 }
 
