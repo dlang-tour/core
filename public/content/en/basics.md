@@ -450,7 +450,7 @@ struct Vector3 {
         return 0.0;
     }
 
-    /*
+    /**
     Returns: representation of the string in the
     special format. The output is restricted to
     a precision of one!
@@ -472,13 +472,9 @@ void main() {
     vec2.y = 20.0;
     vec2.z = 0.0;
 
-    // assert is a compiler built-in which
-    // verifies conditions in Debug mode and
-    // aborts the program with an AssertionError
-    // if it fails
-    assert(vec1.length() == 10.0);
     // If a member function has no parameters,
     // the calling braces () might be omitted
+    assert(vec1.length == 10.0);
     assert(vec2.length == 20.0);
 
     // Test the functionality for dot product
