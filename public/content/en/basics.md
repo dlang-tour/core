@@ -76,26 +76,37 @@ If no other value is given in the declaration all integers
 are initialized with `0` and floating points
 with `NaN` (*not a number*).
 
+In D indexes have usually the alias type `size_t` as it is a type that
+is large enough to represent an offset into all addressible memory - that is
+`uint` for 32-bit and `ulong` for 64-bit architectures.
+
+`assert` is compiler built-in which verifies conditions in debug mode and aborts
+with an `AssertionError` if it fails.
+
 ## {SourceCode}
 
 import std.stdio;
 
 void main()
 {
-    // Big numbers can be made more
-    // readable with an "_"; it's still
-    // a 7000000 though.
+    // Big numbers can be separated
+    // with an underscore "_"
+    // to enhance readability.
     int b = 7_000_000;
     short c = cast(short) b; // cast needed here.
     uint d = b; // fine
-    int g; // contains 0
+    int g;
+    assert(g == 0);
 
     auto f = 3.1415f; // .f denotes a float
+
     // typeid(VAR) returns the type information
     // of an expression.
     writeln("type of f is ", typeid(f));
     double pi = f; // fine
-    float demoted = pi; // also fine
+    // for floating-point types
+    // implicit down-casting is allowed
+    float demoted = pi;
 }
 
 # Memory
