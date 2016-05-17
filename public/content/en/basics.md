@@ -281,7 +281,7 @@ void main()
 # Functions, part I
 
 You've seen one function already: `main()` - the starting point of every
-D goodness. A function may return something - or be declared with
+D program. A function may return something - or be declared with
 `void` if nothing is returned - and an arbitrary number of parameters.
 
     int add(int lhs, int rhs) {
