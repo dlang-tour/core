@@ -40,7 +40,7 @@ the parent's scope
 import std.stdio;
 import std.random;
 
-void main()
+void randomCalculator()
 {
     // Define 4 local functions for
     // 4 different mathematical operations
@@ -64,18 +64,18 @@ void main()
     // and END, whereas END is NOT inclusive.
     // Depending on the result we call one of
     // the math operations.
-    switch (uniform(0,4)) {
+    switch (uniform(0, 4)) {
         case 0:
-            writeln(add(a,b));
+            writeln(add(a, b));
             break;
         case 1:
-            writeln(sub(a,b));
+            writeln(sub(a, b));
             break;
         case 2:
-            writeln(mul(a,b));
+            writeln(mul(a, b));
             break;
         case 3:
-            writeln(div(a,b));
+            writeln(div(a, b));
             break;
         default:
             // special code which marks
@@ -84,7 +84,13 @@ void main()
     }
 }
 
-// NOTE:
-//   add(), sub(), mul() and div()
-//   are NOT visible outside of main!
+void main()
+{
+    randomCalculator();
+    // add(), sub(), mul() and div()
+    // are NOT visible outside of their scope
+    static assert(!__traits(compiles,
+                            add(1, 2)));
+}
+
 ```
