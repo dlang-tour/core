@@ -754,6 +754,10 @@ iteration's value. The magic `int` return value
 must be interpreted and if it is not `0`, the iteration
 must be stopped.
 
+### In-depth
+
+- [Operator overloading in D](https://dlang.org/spec/operatoroverloading.html)
+
 ## {SourceCode}
 
 // A Variant is something that might contain
