@@ -1,7 +1,7 @@
 {
 	"fileVersion": 1,
 	"versions": {
-		"dyaml": "0.5.2",
+		"dyaml": "0.5.3",
 		"tinyendian": "0.1.2",
 		"libasync": "0.7.9",
 		"memutils": "0.4.5",

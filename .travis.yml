@@ -6,16 +6,16 @@ services:
   - docker
 
 d:
-  - dmd-2.069.2
-  - gdc
+  - dmd
+  - ldc
 
 script:
   # Compile & test with DMD
   - if [[ "${DC}" == "dmd" ]]; then  dub test --compiler=${DC};            fi
   # Compiler to static binary with gdc
-  - if [[ "${DC}" == "gdc" ]]; then  dub build -c static --compiler=${DC}; fi
+  - if [[ "${DC}" == "ldc" ]]; then  dub build -c static --compiler=${DC}; fi
 
 after_success:
-  - if [[ "${DC}" == "gdc" ]]; then docker build -t stonemaster/dlang-tour . ; fi
-  - if [[ "${DC}" == "gdc" && "${TRAVIS_PULL_REQUEST}" == "false" ]]; then docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"; fi
-  - if [[ "${DC}" == "gdc" && "${TRAVIS_PULL_REQUEST}" == "false" ]]; then docker push stonemaster/dlang-tour       ; fi
+  - if [[ "${DC}" == "ldc" ]]; then docker build -t stonemaster/dlang-tour . ; fi
+  - if [[ "${DC}" == "ldc" && "${TRAVIS_PULL_REQUEST}" == "false" ]]; then docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"; fi
+  - if [[ "${DC}" == "ldc" && "${TRAVIS_PULL_REQUEST}" == "false" ]]; then docker push stonemaster/dlang-tour       ; fi
