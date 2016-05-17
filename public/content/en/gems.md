@@ -304,6 +304,10 @@ which generates
 a grammar parser from a grammar defined as a string
 in the source code.
 
+### In-depth
+
+- [Mixins in D](https://dlang.org/spec/template-mixin.html)
+
 ## {SourceCode}
 
 import std.stdio;
