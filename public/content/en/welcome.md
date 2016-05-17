@@ -90,18 +90,44 @@ On UNIX systems the shebang line `#!/usr/bin/env rdmd` can be put
 on the first line of an executable D file to allow a script-like
 usage.
 
-# Documentation & Links
+# Links & Documentation
 
-* API Documentation of standard library [Phobos](https://dlang.org/phobos)
-* [Language reference](https://dlang.org/spec/)
-* Repository of DUB libraries and applications: [code.dlang.org](http://code.dlang.org)
-* Free E-Book by Ali Çehreli: [Programming in D](http://ddili.org/ders/d.en/). Also
-  available as hardcover.
+The best places to learn D are
+
+* [Learning D as a beginner](http://ddili.org/ders/d.en/index.html)
+* [Learning D for experienced programmers](http://wiki.dlang.org/Coming_From) coming from other languages
+* The [D Wiki](https://wiki.dlang.org/), which contains a lot of information and links
+* [D Tutorials](https://wiki.dlang.org/Tutorials)
+* [Overview about D's unique features](http://dlang.org/overview.html)
+* [FAQ](http://dlang.org/faq.html)
+* [Articles about D](http://dlang.org/articles.html)
+* [Books about D](https://wiki.dlang.org/Books), for an in-depth view
+
+### Help
+
+* Ask questions in the #d IRC channel on freenode ([web interface](https://kiwiirc.com/client/irc.freenode.net/d))
+* Get help at [D.learn](http://forum.dlang.org/group/learn)
+* Open an issue [at the D bugtracker](https://issues.dlang.org)
+
+### In-depth
+
+* Get familiar with the API of the standard library [Phobos](https://dlang.org/phobos)
+* Read the [language reference](https://dlang.org/spec/)
+* The [Forums](https://forum.dlang.org/) contain very active discussions
+* Browse the [Dub Repository](code.dlang.org), hosting an ever growing list of 3rd-party D programs and libraries.
+* Browse the source code on github ([dmd compiler](https://github.com/dlang/dmd), [Phobos standard library](https://github.com/dlang/phobos), [druntime](https://github.com/dlang/druntime))
+* Follow the [DStyle](http://dlang.org/dstyle.html)
+* [awesome-d](https://github.com/zhaopuming/awesome-d/blob/master/README.md): A curated list of awesome D frameworks, libraries and software
+* [Idioms for the D Programming Language](https://p0nce.github.io/d-idioms/)
+
+### Contributing
+
+This tour is [open source](https://github.com/stonemaster/dlang-tour/tree/master/public/content/en)
+and we are glad about pull requests making this tour even better.
 
 # Let's Go!
 
 Congratulations for finishing the first chapter. You're now ready to dive
 into the world of **D**.
 
-Either use the navigation panel at the bottom or select the next chapter
-using the top bar.
+Either use the navigation panel at the bottom or press the right arrow key.
