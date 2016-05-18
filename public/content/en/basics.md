@@ -122,24 +122,32 @@ code that is marked as @safe.
         int* c = p + 5; // error
     }
 
-Unless specified otherwise the default is `@system`. Using `@safe`,
-a subset of D can be forced to prevent memory
-bugs by design. `@trusted` functions are allowed to
-call both `@safe` and `@system` functions; `@safe`
-can just call other `@safe` or `@trusted` functions.
+Unless specified otherwise the default is `@system`.
+Using `@safe`, a subset of D can be forced to prevent memory bugs by design.
+`@safe` code can only call other `@safe` or `@trusted` functions.
+`@trusted` functions are manually verified functions and allow to bridge the
+world between SafeD and the underlying dirty low-level world.
 
 ## {SourceCode}
 
 import std.stdio;
 
-void main() @safe
+void safeFun() @safe
 {
-    // writeln is a safe function
     writeln("Hello World");
     // allocating memory with the GC is safe too
     int* p = new int;
-    // this is UNSAFE!
+}
+
+void unsafeFun()
+{
     int* fiddling = p + 5;
+}
+
+void main()
+{
+    safeFun();
+    unsafeFun();
 }
 
 # Storage classes
