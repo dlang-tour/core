@@ -1166,8 +1166,9 @@ would look like this:
     void doSomething(int delegate(int,int) doer);
 
 `delegate` and `function` objects cannot be mixed. But the
-standard function `std.function.toDelegate` converts a `function`
-to a `delegate`.
+standard function
+[`std.functional.toDelegate`](https://dlang.org/phobos/std_functional.html#.toDelegate)
+converts a `function` to a `delegate`.
 
 Nameless function which are called *lambdas* can be defined in two ways:
 
