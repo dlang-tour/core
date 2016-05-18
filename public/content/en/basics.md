@@ -541,7 +541,19 @@ which should make things easier.
 
 import std.stdio;
 
-auto encrypt(char[] input, char shift)
+/**
+Shifts every character in the
+array `input` for `shift` characters.
+The character range is limited to `a-z`
+and the next character after z is a.
+
+Params:
+    input = array to shift
+    shift = shift length for each char
+Returns:
+    Shifted char array
+*/
+char[] encrypt(char[] input, char shift)
 {
     auto result = input.dup;
     // ...
