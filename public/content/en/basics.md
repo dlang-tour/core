@@ -264,10 +264,10 @@ import std.stdio;
 
 void main()
 {
-    if (1 == 1)
-        writeln("You can trust math in D");
-
-    switch(5) {
+    int c = 5;
+    // This is EVIL but works
+    if (c >= 0 && c < 11)
+    switch(c) {
         case 0: .. case 9:
             writeln(c, " is within 0-9");
             break; // necessary!
