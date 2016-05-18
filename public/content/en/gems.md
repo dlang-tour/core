@@ -518,6 +518,10 @@ state during its whole lifetime:
 * `invariant()` is called after exiting a member
   function.
 
+### In-depth
+
+- [Contract programming in D](https://dlang.org/spec/contracts.html)
+
 ## {SourceCode}
 
 // Very simple Date type with a lot of
