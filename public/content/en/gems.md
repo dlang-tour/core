@@ -470,10 +470,14 @@ void main()
     // pure functions are great for that!
     alias fastMedian = memoize!(median!int);
 
-    writeln(fastMedian([7, 5, 3]));
+    writeln([7, 5, 3].fastMedian);
     // result will be cached!
-    writeln(fastMedian([7, 5, 3]));
+    writeln([7, 5, 3].fastMedian);
 }
+
+### In depth
+
+- [Functional DLang Garden](https://garden.dlang.io/)
 
 # Contract programming
 
