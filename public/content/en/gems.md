@@ -1,7 +1,7 @@
 # D's Gems
 # Uniform Function Call Syntax (UFCS)
 
-**UFCS** is totally simple: any call to a free function
+**UFCS** is a special feature of D. It allows that any call to a free function
 `fun(a)` can be also be be written as `a.fun()`.
 
 If `a.fun()` is seen by the compiler and the type doesn't
@@ -38,9 +38,8 @@ void main()
       .writeln(); // writes them to stdout
 
     // Traditional style:
-    //
-    //  writeln(filter!(a => a % 2 == 0)
-    //    (iota(1,10)));
+    writeln(filter!(a => a % 2 == 0)
+    			   (iota(1,10)));
 }
 
 # Scope guards
