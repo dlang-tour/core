@@ -232,6 +232,10 @@ are typically located near the definition of a function
 which might be at the top level of the source, or even
 within classes or structs.
 
+### In-depth
+
+- [Unittesting in D](https://dlang.org/spec/unittest.html)
+
 ## {SourceCode}
 
 import std.stdio;
