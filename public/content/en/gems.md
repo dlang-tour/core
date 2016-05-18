@@ -78,20 +78,12 @@ void main()
         writeln("  <head>");
         scope(exit) writeln("  </head>");
         "    <title>%s</title>".writefln("Hello");
-    } // the scope(exit) on the previous line
-      // is executed here
+    }
 
     writeln("  <body>");
     scope(exit) writeln("  </body>");
 
     writeln("    <h1>Hello World!</h1>");
-    
-    // scope guards allow placing allocations
-    // and their clean up code next to each
-    // other
-    import core.stdc.stdlib;
-    int* p = malloc(int.sizeof);
-    scope(exit) free(p);
 }
 
 # Range algorithms
