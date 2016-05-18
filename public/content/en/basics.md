@@ -141,6 +141,7 @@ void safeFun() @safe
 
 void unsafeFun()
 {
+    int* p = new int;
     int* fiddling = p + 5;
 }
 
