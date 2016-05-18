@@ -466,9 +466,9 @@ void main()
     // pure functions are great for that!
     alias fastMedian = memoize!(median!int);
 
-    writeln([7, 5, 3].fastMedian);
+    writeln(fastMedian([7, 5, 3]));
     // result will be cached!
-    writeln([7, 5, 3].fastMedian);
+    writeln(fastMedian([7, 5, 3]));
 }
 
 ### In depth
