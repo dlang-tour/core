@@ -242,7 +242,7 @@ It's even possible to define ranges for integral types
 using the `case START: .. case END:` syntax. Make sure to
 take a look at the source code example.
 
-### Dive deeper
+### In-depth
 
 - [Expressions in detail](https://dlang.org/spec/expression.html)
 
