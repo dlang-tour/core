@@ -1055,6 +1055,10 @@ copied by value.
 The garbage collector will make sure the memory is freed
 after nobody references the object anymore.
 
+### In-depth
+
+- [Classes in D](https://dlang.org/spec/class.html)
+
 ## {SourceCode}
 
 import std.stdio;
