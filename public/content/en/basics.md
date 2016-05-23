@@ -295,7 +295,7 @@ type automatically. If the types of different `return` statements within
 the function's body don't match the compiler will certainly make you
 aware of that.
 
-    auto add(int lhs, int rhs) { // still `int`
+    auto add(int lhs, int rhs) { // returns `int`
         return lhs + rhs;
     }
 
