@@ -1177,6 +1177,10 @@ Nameless function which are called *lambdas* can be defined in two ways:
 The second form is a shorthand form for lambdas that consist
 of just one line.
 
+### In-depth
+
+- [Delegate's specification](https://dlang.org/spec/function.html#closures)
+
 ## {SourceCode}
 import std.stdio;
 
