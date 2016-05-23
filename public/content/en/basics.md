@@ -413,12 +413,16 @@ module.
     p.doStuff(); // call do_stuff
     p.privateStuff(); // forbidden
 
+### Const member functions
+
 If a member function is declared with `const`, it won't be allowed
 to modify any of its members. This is enforced by the compiler.
 Making a member function `const` makes it callable on any `const`
 or `immutable` object, but also helps callers reason about the
 code by offering a guarantee that the member function will never
 change the state of the object.
+
+### Static member functions
 
 If a member function is declared as `static`, it will be callable
 without an instantiated object e.g. `Person.myStatic()` but
@@ -429,9 +433,13 @@ member function must be usable by callers that don't have an instance
 available.  For example, a function that asked how many instances
 existed would probably be `static`.
 
+### Inheritance
+
 Note that a `struct` can't inherit from another `struct`.
 Hierachies of types can only be built using classes,
 which we will see in a future section.
+However with `alias this` or `mixins` one can easily achieve
+polymorphic inheritance.
 
 ### Exercise
 
