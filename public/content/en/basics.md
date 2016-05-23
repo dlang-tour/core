@@ -684,10 +684,9 @@ new constructs in one line:
 The term `string` is defined by an `alias` expression which defines it
 as a slice of `immutable(char)`'s. That is, once a `string` has been constructed
 its content will never change again. And actually this is the second
-introduction: welcome `string`! This is how an UTF-8 string
-is defined in D.
+introduction: welcome UTF-8 `string`! 
 
-Due to its `immutabl`ility `string`'s can perfectly be shared among
+Due to their immutablility `string`s can perfectly be shared among
 different threads. Being a slice parts can be taken out of it without
 allocating memory. The standard function `std.algorithm.splitter`
 for example splits a string by newline without any memory allocations.
