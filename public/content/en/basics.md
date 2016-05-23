@@ -615,7 +615,7 @@ length of the slice:
     T* ptr;
     size_t length; // unsigned 32 bit on 32bit, unsigned 64 bit on 64bit
 
-If a new dynamic array is created we really get a slice to that freshly
+If a new dynamic array is created, we get a slice to that freshly
 allocated memory:
 
     auto arr = new int[5];
@@ -636,7 +636,7 @@ Using slices it's possible to write very efficient code for e.g. parsers
 that just operate on one memory block and just slice the parts they really need
 to work on - no need allocating new memory blocks.
 
-Like seen in the previous section the `[$]` expression indexes the element
+As seen in the previous section the `[$]` expression indexes the element
 one past the slice's end and thus would generate a `RangeError`
 (if bounds-checking hasn't been disabled).
 
