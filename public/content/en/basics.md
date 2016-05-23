@@ -249,7 +249,7 @@ the logical *OR*, and `&&` the logical *AND*.
 
 D also defines a `switch`..`case` statement which lets you take
 action depending on the value of *one* variable. `switch`
-works with all basic types as well as (`w`|`d`)`string`s!
+works with all basic types as well as strings!
 It's even possible to define ranges for integral types
 using the `case START: .. case END:` syntax. Make sure to
 take a look at the source code example.
