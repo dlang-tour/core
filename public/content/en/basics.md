@@ -1051,20 +1051,6 @@ inherit from one class.
     class Foo { } // inherits from Object
     class Bar: Foo { } // Bar is a Foo too
 
-If a member function of a base class is overridden, the keyword
-`override` must be used to indicate that. This prevents unintentional
-overriding of functions.
-
-    class Bar: Foo {
-        override functionFromFoo() {}
-    }
-
-A function can be marked `final` in a base class to disallow overriding
-it. A function can be declared as `abstract` to force base classes to override
-it. A whole class can be declared as `abstract` to make sure
-that it isn't instantiated. To access the base class
-use the special keyword `super`.
-
 Classes in D are generally instantiated on the heap using `new`:
 
     auto bar = new Bar;
@@ -1076,6 +1062,24 @@ copied by value.
 
 The garbage collector will make sure the memory is freed
 after nobody references the object anymore.
+
+#### Inheritance
+
+If a member function of a base class is overridden, the keyword
+`override` must be used to indicate that. This prevents unintentional
+overriding of functions.
+
+    class Bar: Foo {
+        override functionFromFoo() {}
+    }
+    
+#### Final and abstract member functions
+
+A function can be marked `final` in a base class to disallow overriding
+it. A function can be declared as `abstract` to force base classes to override
+it. A whole class can be declared as `abstract` to make sure
+that it isn't instantiated. To access the base class
+use the special keyword `super`.
 
 ### In-depth
 
