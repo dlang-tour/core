@@ -197,7 +197,8 @@ pointer can be created from either a *mutable* or
 is `const` for your current scope, but someone
 else might modify it in future. Just with an `immutable`
 you will be sure that an object's value will never
-change.
+change. It is common for APIs to accept `const` types
+to ensure they don't modify the input.
 
     immutable a = 10;
     int b = 5;
@@ -205,10 +206,13 @@ change.
     const int* pb = &b;
     *pa = 7; // disallowed
 
+Both `immutable` and `const` are transitive which ensures that once
+`const` is applied to a type, it applies recursively to every sub-component of that type.
+
 ### In-depth
 
-- [Type qualifiers](https://dlang.org/spec/const3.html)
 - [const(FAQ)](https://dlang.org/const-faq.html)
+- [Type qualifiers D](https://dlang.org/spec/const3.html)
 
 ## {SourceCode}
 
