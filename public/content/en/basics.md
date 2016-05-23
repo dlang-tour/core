@@ -745,29 +745,44 @@ void main() {
     writeln("My dstring: ", dstr);
 }
 
-# All the classic for's
+# Loops
 
 D provides four loop constructs.
 
-The classical `for` loop known from C, Java and the like
-with initiliazer, loop condition and loop statement:
+#### 1) Classical `for` loop
+
+The classical `for` loop known from C/C++ or Java
+with _initiliazer_, _loop condition_ and _loop statement_:
 
     for (int i = 0; i < arr.length; ++i) {
         ...
 
-The `while` and `do .. while` loops execute the
-given code block while a certain condition is met:
+#### 2) `while`
+
+`while`  loops execute the given code block
+while a certain condition is met:
 
     while (condition) {
         foo();
     }
-    // ...
+
+#### 3) `do ... while`
+
+The `do .. while` loops execute the given code block
+while a certain condition is met, but in contrast to `while`
+the _loop block_ is executed before the loop condition is
+evaluated for the first time.
+
     do {
         foo();
     } while (condition);
 
+#### 4) `foreach`
+
 The `foreach` loop which will be introduced in the
 next section.
+
+#### Special keywords
 
 The special keyword `break` will immediately abort the current loop.
 If we are in a nested loop a label can be used to break any outer loop:
