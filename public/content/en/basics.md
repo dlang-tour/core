@@ -404,11 +404,10 @@ void main()
     }
 }
 
-// NOTE:
-//   add(), sub(), mul() and div()
-//   are NOT visible outside of main!
+// add(), sub(), mul() and div()
+// are NOT visible outside of main!
 
-
+assert(!__traits(compiles, add(1, 2)));
 
 # Structs
 
