@@ -70,9 +70,21 @@ will deduce the type `int` for `var`. Note that the type is still
 set at compile-time and can't be changed - just like with any other
 variable with an explicitly given type.
 
-If no other value is given in the declaration all integers
-are initialized with `0` and floating points
-with `NaN` (*not a number*).
+### Type properties
+
+All data types have a property `.init` to which they are initialized.
+For all integers this is `0` and for floating points it is `NaN` (*not a number*).
+Integral and floating point types have a `.min` and `.max` property for the lowest
+and highest value they can represent. Floating point values have more properties 
+`.nan` (NaN-value), `.infinity` (Infinity value), `.dig` (number of
+decimal digits of precisions), `.mant_dig` (number of bits in mantissa) and more.
+
+Every type also has a `.stringof` property which yields its name as a string.
+
+### In-depth
+
+- [Overview of all basic data types in D](https://dlang.org/spec/type.html)
+- [Type properties](https://dlang.org/spec/property.html)
 
 In D indexes have usually the alias type `size_t` as it is a type that
 is large enough to represent an offset into all addressible memory - that is
@@ -105,6 +117,13 @@ void main()
     // for floating-point types
     // implicit down-casting is allowed
     float demoted = pi;
+
+    // access to type properties
+    assert(int.init == 0);
+    assert(int.sizeof == 32);
+    assert(bool.max == 1);
+    writeln(int.min, " ", int.max);
+    writeln(int.stringof); // int
 }
 
 # Memory
