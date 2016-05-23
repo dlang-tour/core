@@ -410,7 +410,7 @@ module.
         private void privateStuff() {
             ...
 
-    p.doStuff(); // call do_stuff
+    p.doStuff(); // call method doStuff
     p.privateStuff(); // forbidden
 
 If a member function is declared with `const`, it won't be allowed
