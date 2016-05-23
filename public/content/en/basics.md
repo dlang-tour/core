@@ -54,7 +54,8 @@ in UTF-32 strings.
 
 A conversion between variables of different types is only
 allowed by the compiler if no precision is lost. A conversion
-from `double` to `float` is allowed though.
+between floating point types (e.g `double` to `float`)
+is allowed though.
 
 A conversion to another type may be forced by using the
 `cast(TYPE) var` expression.
