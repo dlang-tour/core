@@ -75,15 +75,15 @@ void main()
     scope(exit) writeln("</html>");
 
     {
-        writeln("  <head>");
-        scope(exit) writeln("  </head>");
-        "    <title>%s</title>".writefln("Hello");
+        writeln("\t<head>");
+        scope(exit) writeln("\t</head>");
+        "\t<title>%s</title>".writefln("Hello");
     }
 
-    writeln("  <body>");
-    scope(exit) writeln("  </body>");
+    writeln("\t<body>");
+    scope(exit) writeln("\t</body>");
 
-    writeln("    <h1>Hello World!</h1>");
+    writeln("\t\t<h1>Hello World!</h1>");
 }
 
 # Range algorithms
