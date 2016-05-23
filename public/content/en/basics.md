@@ -980,12 +980,13 @@ which is not `null` when found:
         *test = 20;
 
 Access to a key which doesn't exist yields an `RangeError`
-that immediately aborts the application.
+that immediately aborts the application. For a safe access
+with a default value, you can use `get(key, defaultValue)`.
 
 AA's have the `.length` property like arrays and provide
 a `.remove(val)` member to remove entries by their key.
-The special `.byKeys` and `.byValues` return ranges which
-do something which is left as an exercise to the reader.
+It is left as an exercise to the reader to explore
+the special `.byKeys` and `.byValues` ranges.
 
 ### In-depth
 
@@ -1006,7 +1007,7 @@ Params:
 */
 int[string] wordCount(string text)
 {
-    // The function splitter lazyily splits the
+    // The function splitter lazily splits the
     // input into a range
     import std.algorithm.iteration: splitter;
 
