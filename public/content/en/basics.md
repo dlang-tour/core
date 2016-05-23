@@ -509,14 +509,16 @@ void main() {
 # Arrays
 
 The are two types of Arrays in D: **static** and **dynamic**
-arrays. Access to arrays of any kind are always bounds checked;
-a failed range check yields a `RangeError` which aborts the application. The brave
-can disable this with the compiler flag `-boundschecks=off` to squeeze
+arrays. Access to arrays of any kind is always bounds checked -
+a failed range check yields a `RangeError` which aborts the application.
+The brave can disable this with the compiler flag `-boundschecks=off` to squeeze
 the last cycles out of their binary.
 
-**static** arrays are stored on the stack if defined inside a function
+#### Static arrays
+
+*Static arrays are stored on the stack if defined inside a function
 or in static memory otherwise.  They have a fixed,
-compile-time known length. An static array's type includes
+compile-time known length. A static array's type includes
 the fixed size:
 
     int[8] arr;
@@ -524,7 +526,9 @@ the fixed size:
 `arr`s type is `int[8]`. Note that the size of the array is denoted
 near the type and not after the variable name like in C/C++.
 
-**dynamic** arrays are stored on the heap and can be expanded
+#### Dynamic arrays
+
+Dynamic arrays are stored on the heap and can be expanded
 or shrunk at runtime. A dynamic array is created using a `new` expression
 and its length:
 
@@ -534,6 +538,8 @@ and its length:
 The type of `arr` is `int[]` which is a **slice**
 and will be explained in more detail in the next section. Multi-dimensional
 arrays can be created easily using the `auto arr = new int[3][3]` syntax.
+
+#### Array operations and properties
 
 Arrays can be concatenated using the `~` operator which
 will create a new dynamic array. Mathematical operations can
