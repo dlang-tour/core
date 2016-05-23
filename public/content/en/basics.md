@@ -301,7 +301,7 @@ void main()
     }
 }
 
-# Functions, part I
+# Functions
 
 You've seen one function already: `main()` - the starting point of every
 D program. A function may return something - or be declared with
@@ -1272,7 +1272,7 @@ void main() {
     }
 }
 
-# Functions, part II
+# Delegates
 
 A function can also be a parameter to another function:
 
