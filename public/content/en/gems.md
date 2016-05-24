@@ -369,6 +369,12 @@ Not all language features are available
 during CTFE but the supported feature set is increased
 with every compile release.
 
+### In-depth
+
+- [Introduction to regular expressions in D](https://dlang.org/regular-expression.html)
+- [std.regex](https://dlang.org/phobos/std_regex.html)
+- [Conditional compilation](https://dlang.org/spec/version.html)
+
 ## {SourceCode}
 import std.stdio: writeln;
 
