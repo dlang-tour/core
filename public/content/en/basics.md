@@ -1031,6 +1031,7 @@ int[string] wordCount(string text)
     // The function splitter lazily splits the
     // input into a range
     import std.algorithm.iteration: splitter;
+    import std.string: toLower;
 
     // Indexed by words and returning the count
     int[string] words;
@@ -1043,7 +1044,7 @@ int[string] wordCount(string text)
     // The parameter we pass behind ! is an
     // expression that marks the condition when
     // to split text
-    foreach(word; splitter!pred(text)) {
+    foreach(word; splitter!pred(text.toLower())) {
         // Increment word count if word
         // has been found.
         // Integers are by default 0.
