@@ -205,6 +205,11 @@ change.
     const int* pb = &b;
     *pa = 7; // disallowed
 
+### In-depth
+
+- [Type qualifiers](https://dlang.org/spec/const3.html)
+- [const(FAQ)](https://dlang.org/const-faq.html)
+
 ## {SourceCode}
 
 import std.stdio;
