@@ -636,6 +636,12 @@ Slices generate a new view on existing memory. They *don't* create
 a new copy. If no slice holds a reference to that memory anymore - or a *sliced*
 part of it - it will be freed by the garbage collector.
 
+Slices can also enhance C style manual memory management by getting typed,
+dynamic arrays from `void*`.
+
+    void* ptr = calloc(4, int.sizeof);
+    int[] arr = (cast(int*) ptr)[0 .. 4];
+
 Using slices it's possible to write very efficient code for e.g. parsers
 that just operate on one memory block and just slice the parts they really need
 to work on - no need allocating new memory blocks.
@@ -651,6 +657,17 @@ one past the slice's end and thus would generate a `RangeError`
 ## {SourceCode}
 
 import std.stdio;
+import core.stdc.stdlib;
+
+/**
+Gets a dynamic array from a chunk of
+C style memory using slices.
+*/
+int[] intArray(uint n)
+{
+    void* ptr = calloc(n, int.sizeof);
+    return (cast(int*) ptr)[0 .. n];
+}
 
 /**
 Calculates the minimum of all values
@@ -675,6 +692,11 @@ void main()
     writefln("The minimum of %s is %d",
         test, min);
     assert(min == 2);
+    
+    auto arr = intArray(3);
+    assert(arr == [0, 0, 0]);
+    free(arr.ptr); // remember to free non-GC
+                   // allocated memory
 }
 
 # Alias & Strings
