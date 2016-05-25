@@ -976,14 +976,13 @@ void main() {
     import std.range: take;
     import std.array: array;
 
-    // Let's test this FibonacciRange!
     FibonacciRange fib;
 
-    // The magic function take creates another
-    // range which just will return N elements
-    // at maximum. This range is _lazy_ and just
-    // touches the original range if actually
-    // needed (iteration)!
+    // `take` creates another range which
+    // will return N elements at maximum.
+    // This range is _lazy_ and just
+    // touches the original range
+    // if actually needed
     auto fib10 = take(fib, 10);
 
     // But we do want to touch all elements and
