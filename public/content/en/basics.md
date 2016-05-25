@@ -228,8 +228,8 @@ void main()
 # Controlling flow
 
 Sometimes you have to control your application's flow
-depending on input parameters. `if`, `else` and `if else`
-are your friends then:
+depending on input parameters. `if` and `else` are
+your friends:
 
     if (a == 5) {
         writeln("Condition is met");
