@@ -251,7 +251,7 @@ your friends:
         writeln("Nothing is met!");
     }
 
-When an `if`/`else` block just contains one statement
+When an `if` or `else` block just contains one statement
 the braces can be omitted.
 
 D provides the same operators as C/C++ and Java for testing
