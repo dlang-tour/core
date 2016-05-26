@@ -883,7 +883,7 @@ object called a **range** which will be introduced in the next section.
 Elements will be copied from the array or range during iteration -
 this is okay for basic types but might be a problem for
 large types. To prevent copying or enable *in-place
-*mutation use `ref`:
+*mutation, use `ref`:
 
     foreach (ref e; arr) {
         e = 10; // overwrite value
@@ -894,24 +894,20 @@ large types. To prevent copying or enable *in-place
 import std.stdio;
 
 void main() {
-    auto testers = [ [5, 15], // 20
+    auto arr = [ [5, 15], // 20
           [2, 3, 2, 3], // 10
           [3, 6, 2, 9] ]; // 20
 
-    // This is just for the fun of it: iterate
-    // through the testers in reverse order. This
-    // integrates very nice with foreach because
-    // you just apply another algorith before
-    // you really iterate over the real object.
+    // Iterate through array in reverse order
     import std.range: retro;
-    foreach (tester; retro(testers))
+    foreach (row; retro(arr))
     {
         double accumulator = 0.0;
-        foreach (c; tester)
+        foreach (c; row)
             accumulator += c;
 
-        writeln("The average of ", tester,
-            " = ", accumulator / tester.length);
+        writeln("The average of ", row,
+            " = ", accumulator / row.length);
     }
 }
 
