@@ -450,31 +450,47 @@ and `@nogc`).
 
 ## {SourceCode}
 
-// Calculates median of nums. This function
-// is pure because it always returns the same
-// result for the same set of numbers.
-T median(T)(T[] nums) pure {
-    import std.algorithm: sort;
-    nums.sort();
-    if (nums.length % 2)
-        return nums[$ / 2];
-    else
-        return (nums[$ / 2 - 1]
-            + nums[$ / 2]) / 2;
+import std.bigint;
+
+/**
+ * Computes the power of a base
+ * with an exponent.
+ *
+ * Returns:
+ *     Result of the power as an
+ *     arbitrary-sized integer
+ */
+BigInt bigPow(uint base, uint power) pure
+{
+    BigInt result = 1;
+
+    foreach (_; 0 .. power)
+        result *= base;
+
+    return result;
 }
 
 void main()
 {
-    import std.stdio: writeln;
+    import std.datetime: benchmark, to;
     import std.functional: memoize;
+    import std.stdio;
+
     // memoize caches the result of the function
     // call depending on the input parameters.
     // pure functions are great for that!
-    alias fastMedian = memoize!(median!int);
+    alias fastBigPow = memoize!(bigPow);
 
-    writeln(fastMedian([7, 5, 3]));
-    // result will be cached!
-    writeln(fastMedian([7, 5, 3]));
+    void test()
+    {
+        writef(".uintLength() = %s ",
+        	   fastBigPow(5, 10000).uintLength);
+    }
+
+    foreach (i; 0 .. 10)
+        benchmark!test(1)[0]
+        	.to!("msecs", double)
+        	.writeln("took: miliseconds");
 }
 
 ### In depth
