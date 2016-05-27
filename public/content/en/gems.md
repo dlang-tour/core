@@ -340,10 +340,10 @@ it during compilation.
     // contain a function call!
     static val = sqrt(50);
 
-Keywords like `static` or `immutable` instruct
-the compiler to use CTFE whenever possible.
+Keywords like `static`, `immutable` or `enum`
+instruct the compiler to use CTFE whenever possible.
 The great thing about this technique is that
-functions need not be rewritten to use
+functions don't need to be rewritten to use
 it, and the same code can perfectly be shared:
 
     int n = doSomeRuntimeStuff();
@@ -367,7 +367,7 @@ regular expressions only available at run-time.
 
 Not all language features are available
 during CTFE but the supported feature set is increased
-with every compile release.
+with every release of the compiler.
 
 ### In-depth
 
