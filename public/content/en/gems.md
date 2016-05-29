@@ -486,9 +486,10 @@ void main()
 Contract programming in D includes a set of language constructs
 that allow increasing the code quality by implementing
 sanity checks that make sure that the code base
-behaves as intended. All contracts presented here are
-just available in **debug** mode and won't be run
-in release mode.
+behaves as intended. Contracts are only available in
+**debug** mode and won't be run in release mode.
+
+#### `assert`
 
 The simplest form of contract programming in D is
 the `assert(...)` expression that checks that a certain
@@ -498,6 +499,8 @@ an `AssertionError` otherwise.
     assert(sqrt(4) == 2);
     // optional custom assertion error message
     assert(sqrt(16) == 4, "sqrt is broken!");
+
+#### Function contracts
 
 `in` and `out` allow to formalize contracts for input
 parameters and return values of functions.
@@ -517,6 +520,8 @@ within the function's body but the intent is much clearer
 this way. In the `out` block the function's return
 value can be captured with `out(result)` and
 verified accordingly.
+
+#### Invariant checking
 
 `invariant()` is a special member function of `struct`
 and `class` types that allows sanity checking an object's
