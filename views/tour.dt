@@ -16,7 +16,7 @@ block head
 
 block content
 	.row(ng-controller="DlangTourAppCtrl as ctrl", ng-init="init('#{chapterId}',  #{section}, #{hasSourceCode})")
-		div#tour-content(ng-show="showContent", ng-class="{'col-xs-12': !showSourceCode, 'col-xs-6': showSourceCode}")
+		div#tour-content(ng-show="showContent", ng-class="{'col-md-12': !showSourceCode, 'col-md-6 col-sm-12': showSourceCode}")
 			div(ng-hide="showProgramOutput")
 				.content-command-box
 					button.btn.btn-default.btn-sm(ng-click="showSourceCode = !showSourceCode", ng-class="{active: showSourceCode}")
@@ -28,7 +28,7 @@ block content
 						span.glyphicon.glyphicon-remove-circle
 				h2.program-output-title rdmd playground.d
 				pre#program-output {{programOutput}}
-		div(ng-class="{'col-xs-6': showContent, 'col-xs-12': !showContent}", ng-show="showSourceCode", style="padding-left: 0px; padding-right: 0px")
+		div(ng-class="{'col-md-6 col-sm-12': showContent, 'col-md-12': !showContent}", ng-show="showSourceCode", style="padding-left: 0px; padding-right: 0px")
 			.text-right#command-box
 				button.btn.btn-default(ng-click="showContent = !showContent")
 					span.glyphicon.glyphicon-resize-full(ng-show="showContent")
