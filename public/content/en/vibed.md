@@ -101,7 +101,8 @@ shared static this()
         conn.write("Type 'quit' to close.\r\n");
         while (line != "quit") {
             line = cast(string) conn.readLine();
-            conn.write("ECHO: " ~ line ~ "\r\n");
+            conn.write("ECHO: " ~ line
+              ~ "\r\n");
         }
 
         // Just exiting the delegate here

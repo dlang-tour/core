@@ -263,7 +263,8 @@ struct Vector3 {
 void main()
 {
     Vector3 vec = Vector3(0,1,0);
-    writeln(`This vector has been tested: `, vec);
+    writeln(`This vector has been tested: `,
+      vec);
 }
 
 // Or just somewhere else.
@@ -381,9 +382,9 @@ import std.stdio: writeln;
 /* Returns: square root of x using
  Newton's approximation scheme. */
 auto sqrt(T)(T x) {
-    // our epsilon when to stop the approximation
-    // because we think the change isn't worth
-    // another iteration.
+    // our epsilon when to stop the
+    // approximation because we think the change
+    // isn't worth another iteration.
     enum GoodEnough = 0.01;
     import std.math: abs;
     // choose a good starting value.
@@ -599,8 +600,8 @@ void main() {
     date.setDate(2016, 2, 7);
     // This will make invariant fail.
     // Of course this should not be validated
-    // inside a invariant! External data needs to
-    // be checked in release mode too, and
+    // inside a invariant! External data needs
+    // to be checked in release mode too, and
     // be propgated through e.g. exceptions.
     date.fromString("2016-13-7");
 }
@@ -833,7 +834,8 @@ void main() {
     writeln("test.foobar = ", test.foobar);
     // ERROR because it doesn't exist
     // already
-    // writeln("test.notthere = ", test.notthere);
+    // writeln("test.notthere = ",
+    //   test.notthere);
 }
 
 # Documentation

@@ -21,6 +21,8 @@ class ContentProvider
 	private immutable SourceCodeSectionTitle ="{SourceCode}";
 	private immutable SourceCodeDisabledSectionTitle =
 		"{SourceCode:disabled}";
+	private immutable SourceCodeMaxCharsPerLine = 48;
+
 	/// Determines ordering of chapters as displayed
 	/// in TOC
 	private immutable ChapterOrdering = [
@@ -95,6 +97,7 @@ class ContentProvider
 								.format(filename, SourceCodeSectionTitle, content.title)));
 					content.sourceCode = section.bodyOnly;
 					content.sourceCodeEnabled = section.title != SourceCodeDisabledSectionTitle;
+					checkSourceCodeLineWidth(content.sourceCode, content.title);
 				} else if (section.level == 1) {
 					if (section.bodyOnly.empty) {
 						enforce(null is (language in chapterTitle_) || null is (chapter in chapterTitle_[language]),
@@ -114,6 +117,26 @@ class ContentProvider
 				} else {
 					throw new Exception("%s: Illegal section %s".format(filename, section.title));
 				}
+			}
+		}
+	}
+
+	/++
+		Checks whether the provided source code adheres
+		to the SourceCodeMaxCharsPerLine bytes per lines
+		restriction.
+
+		Throws: Exception when contraint doesn't apply.
+	+/
+	private void checkSourceCodeLineWidth(string sourceCode, string sectionTitle)
+	{
+		import std.algorithm: all;
+		auto lineNo = 0;
+		foreach (line; splitter(sourceCode, '\n')) {
+			++lineNo;
+			if (line.length > SourceCodeMaxCharsPerLine) {
+				throw new Exception("Source code line length exceeds %d limit in '%s': %s"
+						.format(SourceCodeMaxCharsPerLine, sectionTitle, line));
 			}
 		}
 	}

@@ -91,7 +91,7 @@ void main()
     // with an underscore "_"
     // to enhance readability.
     int b = 7_000_000;
-    short c = cast(short) b; // cast needed here.
+    short c = cast(short) b; // cast needed
     uint d = b; // fine
     int g;
     assert(g == 0);
@@ -1000,10 +1000,10 @@ void main() {
     auto fib10 = take(fib, 10);
 
     // But we do want to touch all elements and
-    // convert the range to an array of integers.
+    // convert the range to array of integers.
     int[] the10Fibs = array(fib10);
 
-    writeln("Your first 10 Fibonacci numbers: ",
+    writeln("The 10 first Fibonacci numbers: ",
         the10Fibs);
     assert(the10Fibs ==
         [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]);
@@ -1077,7 +1077,8 @@ int[string] wordCount(string text)
     // The parameter we pass behind ! is an
     // expression that marks the condition when
     // to split text
-    foreach(word; splitter!pred(text.toLower())) {
+    foreach(word; splitter!pred(text.toLower()))
+    {
         // Increment word count if word
         // has been found.
         // Integers are by default 0.
@@ -1212,7 +1213,7 @@ void main()
         ];
 
     foreach (any; anys) {
-        writeln("Type of any = ", any.getType());
+        writeln("any's type = ", any.getType());
         writeln("Content = ",
             any.convertToString());
     }
@@ -1386,7 +1387,8 @@ auto getMathOperation(IntOps op)
     auto mul = (int lhs, int rhs) => lhs * rhs;
     auto div = (int lhs, int rhs) => lhs / rhs;
 
-    // we can ensure that the switch covers all cases
+    // we can ensure that the switch covers
+    // all cases
     final switch (op) {
         case IntOps.add:
             return add;
