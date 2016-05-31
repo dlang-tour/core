@@ -554,7 +554,7 @@ state during its whole lifetime:
 
 - [Contract programming in D](https://dlang.org/spec/contracts.html)
 
-## {SourceCode}
+## {SourceCode:incomplete}
 
 // Very simple Date type with a lot of
 // flaws. Hint: don't use it!
@@ -870,7 +870,7 @@ sections.
 - [DDoc design](https://dlang.org/spec/ddoc.html)
 - [Phobos standard library documentation](https://dlang.org/phobos)
 
-## {SourceCode}
+## {SourceCode:incomplete}
 
 /**
   Calculates the square root of a number.

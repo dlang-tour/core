@@ -21,6 +21,8 @@ class ContentProvider
 	private immutable SourceCodeSectionTitle ="{SourceCode}";
 	private immutable SourceCodeDisabledSectionTitle =
 		"{SourceCode:disabled}";
+	private immutable SourceCodeIncompleteSectionTitle =
+		"{SourceCode:incomplete}";
 	private immutable SourceCodeMaxCharsPerLine = 48;
 
 	/// Determines ordering of chapters as displayed
@@ -37,8 +39,12 @@ class ContentProvider
 		struct Content {
 			string sourceCode;
 			bool sourceCodeEnabled = true;
+			bool sourceCodeIncomplete = false;
+			///< flag whether the source code is supposed NOT to compile (false);
+			/// true otherwise (the default)
 			string html;
 			string title;
+			string language;
 		}
 
 		/// language, chapter, section
@@ -59,6 +65,7 @@ class ContentProvider
 		if (!content) {
 			content_[language][chapter][section] = Content();
 			content = &content_[language][chapter][section];
+			content.language = language;
 		}
 		return content;
 	}
@@ -87,7 +94,8 @@ class ContentProvider
 			auto currentSection = 0;
 			foreach (ref section; splitMarkdownBySection(readText(filename))) {
 				if (section.title == SourceCodeSectionTitle ||
-					section.title == SourceCodeDisabledSectionTitle) {
+					section.title == SourceCodeDisabledSectionTitle ||
+					section.title == SourceCodeIncompleteSectionTitle) {
 					enforce(section.level == 2, new Exception("%s: %s section expected to be on 2nd level"
 								.format(filename, SourceCodeSectionTitle)));
 					auto content = updateContent(language, chapter, currentSection);
@@ -97,6 +105,7 @@ class ContentProvider
 								.format(filename, SourceCodeSectionTitle, content.title)));
 					content.sourceCode = section.bodyOnly;
 					content.sourceCodeEnabled = section.title != SourceCodeDisabledSectionTitle;
+					content.sourceCodeIncomplete = section.title == SourceCodeIncompleteSectionTitle;
 					checkSourceCodeLineWidth(content.sourceCode, content.title);
 				} else if (section.level == 1) {
 					if (section.bodyOnly.empty) {

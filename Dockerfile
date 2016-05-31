@@ -16,4 +16,4 @@ COPY public /public
 COPY docker/docker.start.sh /docker.start.sh
 RUN chmod +x /docker.start.sh
 
-CMD [ "/docker.start.sh" ]
+ENTRYPOINT [ "/docker.start.sh" ]

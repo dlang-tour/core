@@ -42,6 +42,13 @@ online (the Run button is not visible on that tour
 page) mark the source code with a 2nd level title
 `{SourceCode:disabled}` instead of just `{SourceCode}`.
 
+If source code doesn't compile from the start and the user is
+supposed to complete the example code, mark the source code
+section title with `{SourceCode:incomplete}`. A sanity
+check is implemented which automatically checks source code
+examples for validity and those source code examples
+are just ignored.
+
 ### Source Code formatting
 
 * Source code examples should be indented with 4 spaces.
