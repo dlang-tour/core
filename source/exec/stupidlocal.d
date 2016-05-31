@@ -2,7 +2,8 @@ module exec.stupidlocal;
 
 import exec.iexecprovider;
 
-import vibe.core.core: yield, runTask;
+import vibe.core.core: sleep, runTask;
+import core.time : msecs;
 
 import std.process;
 import std.typecons: Tuple;
@@ -59,7 +60,7 @@ class StupidLocal: IExecProvider
 		});
 
 		while (task.running)
-			yield();
+			sleep(300.msecs);
 
 		return result;
 	}

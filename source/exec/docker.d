@@ -2,7 +2,8 @@ module exec.docker;
 
 import exec.iexecprovider;
 import std.process;
-import vibe.core.core: yield;
+import vibe.core.core : sleep;
+import core.time : msecs;
 import vibe.core.log: logInfo;
 import std.base64;
 import std.datetime;
@@ -83,7 +84,7 @@ class Docker: IExecProvider
 		bool success;
 		auto startTime = Clock.currTime();
 		// Don't block and give away current time slice
-		// by yielding until child process has finished. Kill process if time limit
+		// by sleeping for a certain time until child process has finished. Kill process if time limit
 		// has been reached.
 		while (true) {
 			auto result = tryWait(docker.pid);
@@ -98,7 +99,7 @@ class Docker: IExecProvider
 				break;
 			}
 
-			yield();
+			sleep(300.msecs);
 		}
 
 		string output;
