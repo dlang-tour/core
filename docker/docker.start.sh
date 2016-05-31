@@ -9,4 +9,4 @@ cat /config.yml.tmpl | \
   sed "s/%EXEC_DOCKER_MAX_OUTPUT_SIZE%/${EXEC_DOCKER_MAX_OUTPUT_SIZE:-4096}/g" \
   > /config.yml
 
-exec /dlang-tour
+exec /dlang-tour $*
