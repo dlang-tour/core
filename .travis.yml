@@ -17,6 +17,6 @@ script:
   - if [[ "${DC}" == "ldc2" ]]; then docker build -t stonemaster/dlang-tour . ; fi
   - if [[ "${DC}" == "ldc2" ]]; then docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -ti stonemaster/dlang-tour --sanitycheck ; fi
 
-before_deploy:
+after_success:
   - if [[ "${DC}" == "ldc2" && "${TRAVIS_BRANCH}" == "master" && "${TRAVIS_PULL_REQUEST}" == "false" ]]; then docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"; fi
   - if [[ "${DC}" == "ldc2" && "${TRAVIS_BRANCH}" == "master" && "${TRAVIS_PULL_REQUEST}" == "false" ]]; then docker push stonemaster/dlang-tour       ; fi
