@@ -1239,7 +1239,7 @@ function in a base class.
             ...
         }
     }
-
+    
     auto dog = new Animal;
     Animal animal = dog; // implicit cast to interface
     dog.makeNoise();
