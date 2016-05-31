@@ -120,7 +120,7 @@ void main()
 
     // access to type properties
     assert(int.init == 0);
-    assert(int.sizeof == 32);
+    assert(int.sizeof == 4);
     assert(bool.max == 1);
     writeln(int.min, " ", int.max);
     writeln(int.stringof); // int
