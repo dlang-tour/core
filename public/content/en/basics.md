@@ -420,7 +420,7 @@ is defined through a `this(...)` member function:
             this.ageXHeight = cast(float)age * height;
         }
             ...
-
+    
     Person p(30, 180);
 
 A `struct` might contain any number of member functions. Those
@@ -434,7 +434,7 @@ module.
             ...
         private void privateStuff() {
             ...
-
+    
     p.doStuff(); // call method doStuff
     p.privateStuff(); // forbidden
 
