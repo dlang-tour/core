@@ -1,8 +1,3 @@
-.brand-logo {
-	height: 30px;
-	width: auto;
-}
-
 body {
 	font-family: "Roboto Slab",sans-serif;
 }
@@ -25,66 +20,30 @@ body {
   text-decoration: none;
 }
 
-/* Navbar customization */
-/* generated using http://work.smarchal.com/twbscolor/ */
-
-.navbar-default {
-  background-color: #b03931;
-  border-color: #98312a;
-}
-.navbar-default .navbar-brand {
-  color: #ffffff;
-}
-.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
-  color: #ecf0f1;
-}
-.navbar-default .navbar-text {
-  color: #ffffff;
-}
-.navbar-default .navbar-nav > li > a {
-  color: #ffffff;
-  font-weight: bold;
-}
-.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
-  color: #ecf0f1;
-}
-.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
-  color: #ecf0f1;
-  background-color: #98312a;
-}
-.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
-  color: #ecf0f1;
-  background-color: #98312a;
-}
-.navbar-default .navbar-toggle {
-  border-color: #98312a;
-}
-.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
-  background-color: #98312a;
-}
-.navbar-default .navbar-toggle .icon-bar {
-  background-color: #ffffff;
-}
-.navbar-default .navbar-collapse,
-.navbar-default .navbar-form {
-  border-color: #ffffff;
-}
-.navbar-default .navbar-link {
-  color: #ffffff;
-}
-.navbar-default .navbar-link:hover {
-  color: #ecf0f1;
+#title {
+    display: inline-block;
+    height: 100%;
+    padding: 0.6em 1em;
+    position: relative;
+    white-space: nowrap;
+    margin-right: 5em;
 }
 
-@media (max-width: 767px) {
-  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
-    color: #ffffff;
-  }
-  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
-    color: #ecf0f1;
-  }
-  .navbar-default .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
-    color: #ecf0f1;
-    background-color: #98312a;
-  }
+@media only screen and (max-width: 66em) {
+    #title {
+        margin-right: 0em;
+    }
+    #top .logo > a {
+        margin-left: -4em;
+    }
+}
+
+@media only screen and (max-width: 66em)
+{
+    #github_avatar {
+        display: none;
+    }
+}
+#github_avatar {
+    float: right;
 }
