@@ -501,7 +501,7 @@ the example application successfully run:
   conveniently returns a string using `printf`-like syntax:
   `format("MyInt = %d", myInt)`.
 
-## {SourceCode:incomplete}
+## {SourceCode}
 
 struct Vector3 {
     double x;
@@ -621,7 +621,7 @@ that shifts the characters in the alphabet using a certain index.
 The to-be-encrypted text just contains characters in the range `a-z`
 which should make things easier.
 
-## {SourceCode:incomplete}
+## {SourceCode}
 
 import std.stdio;
 
