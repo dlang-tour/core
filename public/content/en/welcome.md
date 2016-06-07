@@ -135,8 +135,9 @@ The best places to learn D are
 * Browse the [Dub Repository](code.dlang.org), hosting an ever growing list of 3rd-party D programs and libraries.
 * Browse the source code on github ([dmd compiler](https://github.com/dlang/dmd), [Phobos standard library](https://github.com/dlang/phobos), [druntime](https://github.com/dlang/druntime))
 * Follow the [DStyle](http://dlang.org/dstyle.html)
-* [awesome-d](https://github.com/zhaopuming/awesome-d/blob/master/README.md): A curated list of awesome D frameworks, libraries and software
-* [Idioms for the D Programming Language](https://p0nce.github.io/d-idioms/)
+* See the D Language on [Rosetta code](http://rosettacode.org/wiki/Category:D)
+* Explore [awesome-d](https://github.com/zhaopuming/awesome-d/blob/master/README.md) - A curated list of awesome D frameworks, libraries and software
+* Get inspired by [Idioms for the D Programming Language](https://p0nce.github.io/d-idioms/)
 
 ### Contributing
 
