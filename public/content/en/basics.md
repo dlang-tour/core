@@ -404,10 +404,11 @@ void main()
     }
 }
 
-// add(), sub(), mul() and div()
-// are NOT visible outside of main!
+// NOTE:
+//   add(), sub(), mul() and div()
+//   are NOT visible outside of main!
 
-assert(!__traits(compiles, add(1, 2)));
+
 
 # Structs
 
@@ -500,7 +501,7 @@ the example application successfully run:
   conveniently returns a string using `printf`-like syntax:
   `format("MyInt = %d", myInt)`.
 
-## {SourceCode}
+## {SourceCode:incomplete}
 
 struct Vector3 {
     double x;
@@ -620,7 +621,7 @@ that shifts the characters in the alphabet using a certain index.
 The to-be-encrypted text just contains characters in the range `a-z`
 which should make things easier.
 
-## {SourceCode}
+## {SourceCode:incomplete}
 
 import std.stdio;
 
