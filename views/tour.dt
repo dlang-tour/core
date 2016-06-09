@@ -2,6 +2,7 @@ extends base
 
 block head
 	script(src="/static/js/tour-controller.js")
+	script(src="/static/js/swipe.js")
 	link(rel="stylesheet", href="/static/lib/codemirror/lib/codemirror.min.css")
 	script(src="/static/lib/codemirror/lib/codemirror.min.js")
 	script(src="/static/lib/codemirror/mode/d/d.min.js")

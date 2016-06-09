@@ -106,22 +106,12 @@ dlangTourApp.controller('DlangTourAppCtrl', [ '$scope', '$http', 'hotkeys', func
 	hotkeys.add({
 		combo: 'left',
 		description: 'Go to previous section',
-		callback: function() {
-			$http.get('/previous-section/' + $scope.chapterId + '/' + $scope.section)
-				.success(function(data) {
-					window.location.href = data.location;
-				});
-		}
+		callback: prevPage
 	});
 	hotkeys.add({
 		combo: 'right',
 		description: 'Go to next section',
-		callback: function() {
-			$http.get('/next-section/' + $scope.chapterId + '/' + $scope.section)
-				.success(function(data) {
-					window.location.href = data.location;
-				});
-		}
+		callback: nextPage
 	});
 	hotkeys.add({
 		combo: 'ctrl+enter',
@@ -136,6 +126,30 @@ dlangTourApp.controller('DlangTourAppCtrl', [ '$scope', '$http', 'hotkeys', func
 		callback: function(e) {
 			$scope.reset();
 			e.preventDefault();
+		}
+	});
+
+	function prevPage()
+	{
+		$http.get('/previous-section/' + $scope.chapterId + '/' + $scope.section)
+		.success(function(data) {
+			window.location.href = data.location;
+		});
+	};
+
+	function nextPage()
+	{
+		$http.get('/next-section/' + $scope.chapterId + '/' + $scope.section)
+		.success(function(data) {
+			window.location.href = data.location;
+		});
+	}
+
+	detectswipe(document.getElementById('tour-content'), function(el, direction) {
+		if (direction == "r") {
+			prevPage();
+		} else if (direction == "l") {
+			nextPage();
 		}
 	});
 }]);
