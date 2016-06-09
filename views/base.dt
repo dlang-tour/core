@@ -8,6 +8,8 @@ head
 	script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js", integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS", crossorigin="anonymous")
 	link(rel="stylesheet", href="/static/css/common.css")
 	link(rel="shortcut icon", href="/static/img/favicon.ico")
+	link(rel="stylesheet", type="text/css", href="/static/css/menu.css")
+	meta(name="viewport",content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0")
 	title The Dlang Tour
 	block head
 	script.
@@ -19,31 +21,32 @@ head
 		ga('send', 'pageview');
 
 body(ng-app="DlangTourApp")
-	nav.navbar.navbar-default.navbar-fixed-top
-		.container-fluid
-			.navbar-header
-				button.navbar-toggle.collapsed(type="button", data-toggle="collapse",data-target="#navbar",aria-expanded="false",aria-controls="navbar")
-					span.sr-only Toggle navigation
-					span.icon-bar
-					span.icon-bar
-					span.icon-bar
-				a.navbar-brand(href="https://dlang.org")
-					img.brand-logo(src="/static/img/dlogo.svg")
-				a.navbar-brand(href="/") The Dlang Tour
-			.navbar-collapse.collapse#navbar
-				ul.nav.navbar-nav
-					- foreach(ref tocItem; *toc)
-						- auto style = chapterId == tocItem.chapterId ? "active" : "";
-						li.dropdown(class="#{style}")
-							a.dropdown-toggle(href="#", data-toggle="dropdown", role="button", aria-haspopup="true", aria-expanded="false")
-								| #{tocItem.title}
-								span.caret
-							ul.dropdown-menu
-								- foreach(ref sec; tocItem.sections)
-									li
-										a(href="/tour/#{tocItem.chapterId}/#{sec.sectionId}") #{sec.title}
-				ul.nav.navbar-nav.navbar-right
-					a.navbar-brand(href="https://github.com/stonemaster/dlang-tour")
+	#top
+		.helper
+			.helper.expand-container.active
+				.logo
+					a(href="https://dlang.org")
+						img(id="logo", alt="DLang Logo", src="/static/img/dlogo.svg")
+					a(href="#{req.rootDir}", id="title")
+						span The DLang Tour
+				a(href="#", title="Menu", class="hamburger expand-toggle")
+					span Menu
+				#cssmenu
+					ul
+						- foreach(ref tocItem; *toc)
+							- auto active = chapterId == tocItem.chapterId;
+							li(class=(active ? "expand-container active" : "expand-container"))
+								a.expand-toggle(href="#")
+									span=tocItem.title
+								ul.expand-content
+									- foreach(ref sec; tocItem.sections)
+										li(class=(active ? "active" : ""))
+											a(href="/tour/#{tocItem.chapterId}/#{sec.sectionId}")
+												span=sec.title
+
+				#github_avatar
+					a(href="https://github.com/stonemaster/dlang-tour")
 						img(src="/static/img/GitHub-Mark-Light-32px.png")
 
 	block content
+	script(type="application/javascript", src="/static/js/menu.js")
