@@ -438,7 +438,8 @@ the home page, intro pitch and your-code-here layed out vertically */
         font-size: 2em;
         height: 100%;
         line-height: 1;
-        padding: 0.15em 1em;
+        margin-top: 0.2em;
+        margin-right: 0.75em;
     }
     #top a.hamburger span
     {
@@ -446,7 +447,9 @@ the home page, intro pitch and your-code-here layed out vertically */
     }
     #top a.hamburger::after
     {
-        content: "\f0c9"; /* bars */
-        font-family: FontAwesome;
+        /*content: "\f0c9"; [> bars <]*/
+        /*font-family: FontAwesome;*/
+        font-family: 'Glyphicons Halflings';
+        content: "\e236";
     }
 }

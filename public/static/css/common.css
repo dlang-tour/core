@@ -33,7 +33,7 @@ body {
     #title {
         margin-right: 0em;
     }
-    #top .logo > a {
+    body #top .logo > a {
         margin-left: -4em;
     }
 }
