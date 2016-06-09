@@ -1,17 +1,10 @@
 #program-output {
 	font-family: monospace;
 	border: none;
-	background-color: #efefef;
 }
 
 #tour-content {
 	font-size: 16px;
-}
-
-@media only screen and (min-width: 66.01em) {
-    #tour-content {
-    	background-color: #efefef;
-    }
 }
 
 #tour-content h1 {
