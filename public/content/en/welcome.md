@@ -132,7 +132,7 @@ The best places to learn D are
 * Get familiar with the API of the standard library [Phobos](https://dlang.org/phobos)
 * Read the [language reference](https://dlang.org/spec/)
 * The [Forums](https://forum.dlang.org/) contain very active discussions
-* Browse the [Dub Repository](code.dlang.org), hosting an ever growing list of 3rd-party D programs and libraries.
+* Browse the [Dub Repository](https://code.dlang.org), hosting an ever growing list of 3rd-party D programs and libraries.
 * Browse the source code on github ([dmd compiler](https://github.com/dlang/dmd), [Phobos standard library](https://github.com/dlang/phobos), [druntime](https://github.com/dlang/druntime))
 * Follow the [DStyle](http://dlang.org/dstyle.html)
 * See the D Language on [Rosetta code](http://rosettacode.org/wiki/Category:D)
