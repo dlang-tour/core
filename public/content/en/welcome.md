@@ -40,6 +40,11 @@ Each section comes with a source code example that can be modified and used
 to experiment with D's language features.
 Click the run button (or `Shift-enter`) to compile and run it.
 
+### Contributing
+
+This tour is [open source](https://github.com/stonemaster/dlang-tour/tree/master/public/content/en)
+and we are glad about pull requests making this tour even better.
+
 ## {SourceCode}
 
 import std.stdio;
@@ -110,16 +115,13 @@ usage.
 
 # Links & Documentation
 
-The best places to learn D are
+After you complete the tour, you can check out some of the following links for help or more information:
 
 * [Learning D as a beginner](http://ddili.org/ders/d.en/index.html)
 * [Learning D for experienced programmers](http://wiki.dlang.org/Coming_From) coming from other languages
-* The [D Wiki](https://wiki.dlang.org/), which contains a lot of information and links
 * [D Tutorials](https://wiki.dlang.org/Tutorials)
 * [Overview about D's unique features](http://dlang.org/overview.html)
 * [FAQ](http://dlang.org/faq.html)
-* [Articles about D](http://dlang.org/articles.html)
-* [Books about D](https://wiki.dlang.org/Books), for an in-depth view
 
 ### Help
 
@@ -127,22 +129,6 @@ The best places to learn D are
 * Get help at [D.learn](http://forum.dlang.org/group/learn)
 * Open an issue [at the D bugtracker](https://issues.dlang.org)
 
-### In-depth
-
-* Get familiar with the API of the standard library [Phobos](https://dlang.org/phobos)
-* Read the [language reference](https://dlang.org/spec/)
-* The [Forums](https://forum.dlang.org/) contain very active discussions
-* Browse the [Dub Repository](https://code.dlang.org), hosting an ever growing list of 3rd-party D programs and libraries.
-* Browse the source code on github ([dmd compiler](https://github.com/dlang/dmd), [Phobos standard library](https://github.com/dlang/phobos), [druntime](https://github.com/dlang/druntime))
-* Follow the [DStyle](http://dlang.org/dstyle.html)
-* See the D Language on [Rosetta code](http://rosettacode.org/wiki/Category:D)
-* Explore [awesome-d](https://github.com/zhaopuming/awesome-d/blob/master/README.md) - A curated list of awesome D frameworks, libraries and software
-* Get inspired by [Idioms for the D Programming Language](https://p0nce.github.io/d-idioms/)
-
-### Contributing
-
-This tour is [open source](https://github.com/stonemaster/dlang-tour/tree/master/public/content/en)
-and we are glad about pull requests making this tour even better.
 
 # Let's Go!
 
