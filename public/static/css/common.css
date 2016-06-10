@@ -47,3 +47,6 @@ body {
 #github_avatar {
     float: right;
 }
+.ng-cloak {
+    display: none !important;
+}

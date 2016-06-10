@@ -20,7 +20,7 @@ head
 		ga('create', '#{googleAnalyticsId}', 'auto');
 		ga('send', 'pageview');
 
-body(ng-app="DlangTourApp")
+body(ng-app="DlangTourApp", class="ng-cloak")
 	#top
 		.helper
 			.helper.expand-container.active
