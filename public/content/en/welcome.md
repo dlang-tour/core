@@ -129,10 +129,3 @@ After you complete the tour, you can check out some of the following links for h
 * Get help at [D.learn](http://forum.dlang.org/group/learn)
 * Open an issue [at the D bugtracker](https://issues.dlang.org)
 
-
-# Let's Go!
-
-Congratulations for finishing the first chapter. You're now ready to dive
-into the world of **D**.
-
-Either use the navigation panel at the bottom or press the right arrow key.
