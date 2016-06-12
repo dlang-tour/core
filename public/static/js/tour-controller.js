@@ -145,11 +145,13 @@ dlangTourApp.controller('DlangTourAppCtrl', [ '$scope', '$http', 'hotkeys', func
 		});
 	}
 
-	detectswipe(document.getElementById('tour-content'), function(el, direction) {
+	detectswipe(document.getElementById('tour-content'), function(el, direction, e) {
 		if (direction == "r") {
 			prevPage();
+			e.preventDefault();
 		} else if (direction == "l") {
 			nextPage();
+			e.preventDefault();
 		}
 	});
 }]);
