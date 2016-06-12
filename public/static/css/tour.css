@@ -8,13 +8,16 @@
 }
 
 #tour-content h1 {
-	font-weight: normal;
+	font-weight: 300;
+	padding-bottom: 10px;
 }
 #tour-content h2 {
-	font-weight: normal;
+	font-weight: 300;
+	padding-bottom: 5px;
 }
 #tour-content h3 {
-	font-weight: normal;
+	font-weight: 300;
+	padding-bottom: 5px;
 }
 
 #command-box {
@@ -41,8 +44,75 @@
 	margin-right: 0px;
 }
 
-pre.prettyprint {
+/* pre.prettyprint and div.prototype come from prettyprint.js */
+pre, pre.prettyprint, div.prototype
+{
+	background: white;
+	border-radius: 4px;
+	padding: 1ex;
+	margin: 1em 0 1em 0;
+	line-height: normal;
 	border: 1px solid #ccc;
-	margin-bottom: 0;
-	padding: 9.5px;
+	width: auto;
+}
+pre
+{
+	white-space: pre-wrap;		 /* css-3 */
+	white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+	white-space: -pre-wrap;		 /* Opera 4-6 */
+	white-space: -o-pre-wrap;	 /* Opera 7 */
+	word-wrap: break-word;		 /* Internet Explorer 5.5+ */
+}
+
+table
+{
+	border: solid #333;
+	border-width: 2px 0;
+	border-collapse: collapse;
+}
+
+table tr
+{
+	border: none;
+}
+
+table td, table th, table caption
+{
+	text-align: left;
+	vertical-align: top;
+	padding: 0.3em;
+}
+
+table td
+{
+	border: none;
+	border-bottom: 1px solid #E6E6E6;
+	text-align: justify;
+}
+
+table th
+{
+	border: none;
+	border-bottom: 1px solid #333;
+}
+
+table td:not(:last-child), table th:not(:last-child)
+{
+	padding-right: 1em;
+}
+
+/* dlang.org links */
+a, .question, .expand-toggle
+{
+	color: #B03931;
+	cursor: pointer;
+}
+
+a:hover, .question:hover, .expand-toggle:hover
+{
+	color: #742620;
+}
+
+pre, code, .tt, .d_inlinecode, td.param_id, .CodeMirror pre, .d_decl {
+	font-family: Consolas, "Bitstream Vera Sans Mono", "Andale Mono", Monaco, "DejaVu Sans Mono", "Lucida Console", monospace;
 }
