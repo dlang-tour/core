@@ -65,7 +65,7 @@ class ApiV1: IApiV1
 		return output;
 	}
 
-	SourceOutput getSource(string _chapter, int _section)
+	SourceOutput getSource(string _chapter, string _section)
 	{
 		auto tourData = contentProvider_.getContent("en", _chapter, _section);
 		if (tourData.content == null) {

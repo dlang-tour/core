@@ -16,7 +16,7 @@ block head
 	link(rel="stylesheet", href="/static/css/tour.css")
 
 block content
-	.row(ng-controller="DlangTourAppCtrl as ctrl", ng-init="init('#{chapterId}',  #{section}, #{hasSourceCode}, '#{previousSection.link}', '#{nextSection.link}')")
+	.row(ng-controller="DlangTourAppCtrl as ctrl", ng-init="init('#{chapterId}', '#{section}', #{hasSourceCode}, '#{previousSection.link}', '#{nextSection.link}')")
 		div#tour-content(ng-show="showContent", ng-class="{'col-md-12': !showSourceCode, 'col-md-6 col-sm-12': showSourceCode}")
 			div(ng-hide="showProgramOutput")
 				.content-command-box(class="visible-md-block")
@@ -44,7 +44,7 @@ block content
 			a(href="#{previousSection.link}", ng-show="'' != '#{previousSection.link}'")
 				| <
 				span.h4 #{previousSection.title}
-			| #{section} /
+			| #{sectionId + 1} /
 			span.small #{sectionCount}
 			a(href="#{nextSection.link}", ng-show="'' != '#{nextSection.link}'")
 				span.h4 #{nextSection.title}
