@@ -64,5 +64,6 @@ generators to adapt to that specific type.
 
 ### In-depth
 
+- [User Defined Attributes in _Programming in D_](http://ddili.org/ders/d.en/uda.html)
 - [Attributes in D](https://dlang.org/spec/attribute.html)
 

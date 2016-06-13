@@ -37,6 +37,11 @@ To create multi-line strings use the
 backticks `` ` "unescaped string"` ``
 or the r-prefix `r"string that "doesn't" need to be escaped"`.
 
+### In-depth
+
+- [Characters in _Programming in D_](http://ddili.org/ders/d.en/characters.html)
+- [Strings in _Programming in D_](http://ddili.org/ders/d.en/strings.html)
+
 ## {SourceCode}
 
 ```d

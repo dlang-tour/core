@@ -47,6 +47,12 @@ If we are in a nested loop a label can be used to break any outer loop:
 
 The keyword `continue` starts with the next loop iteration.
 
+### In-depth
+
+- [`for` Loop in _Programming in D_](http://ddili.org/ders/d.en/for.html)
+- [`while` Loop in _Programming in D_](http://ddili.org/ders/d.en/while.html)
+- [`do while` Loop in _Programming in D_](http://ddili.org/ders/d.en/do_while.html)
+
 ## {SourceCode}
 
 ```d

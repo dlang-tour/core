@@ -40,7 +40,10 @@ use the special keyword `super`.
 
 ### In-depth
 
-- [Classes in D](https://dlang.org/spec/class.html)
+- [Classes in _Programming in D_](http://ddili.org/ders/d.en/class.html)
+- [Inheritance in _Programming in D_](http://ddili.org/ders/d.en/inheritance.html)
+- [Object class in  in _Programming in D_](http://ddili.org/ders/d.en/object.html)
+- [Classes in D spec](https://dlang.org/spec/class.html)
 
 ## {SourceCode}
 

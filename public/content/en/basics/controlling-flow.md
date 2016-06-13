@@ -33,6 +33,15 @@ take a look at the source code example.
 
 ### In-depth
 
+#### Basic references
+
+- [Logical expressions in _Programming in D_](http://ddili.org/ders/d.en/logical_expressions.html)
+- [If statement in _Programming in D_](http://ddili.org/ders/d.en/if.html)
+- [Ternary expressions in _Programming in D_](http://ddili.org/ders/d.en/ternary.html)
+- [`switch` and `case` in _Programming in D_](http://ddili.org/ders/d.en/switch_case.html)
+
+#### Advanced references
+
 - [Expressions in detail](https://dlang.org/spec/expression.html)
 
 ## {SourceCode}

@@ -21,6 +21,10 @@ for special resources.
 
 Scope guards are called in the reverse order they are defined.
 
+### In-depth
+
+- [`scope` in _Programming in D_](http://ddili.org/ders/d.en/scope.html)
+
 ## {SourceCode}
 
 ```d

@@ -54,7 +54,18 @@ Every type also has a `.stringof` property which yields its name as a string.
 
 ### In-depth
 
+#### Basic references
+
+- [Assignment](http://ddili.org/ders/d.en/assignment.html)
+- [Variables](http://ddili.org/ders/d.en/variables.html)
+- [Arithmetics](http://ddili.org/ders/d.en/arithmetic.html)
+- [Floating Point](http://ddili.org/ders/d.en/floating_point.html)
+- [Fundamental types in _Programming in D_](http://ddili.org/ders/d.en/types.html)
+
+#### Advanced references
+
 - [Overview of all basic data types in D](https://dlang.org/spec/type.html)
+- [`auto` and `typeof` in _Programming in D_](http://ddili.org/ders/d.en/auto_and_typeof.html)
 - [Type properties](https://dlang.org/spec/property.html)
 
 In D indexes have usually the alias type `size_t` as it is a type that

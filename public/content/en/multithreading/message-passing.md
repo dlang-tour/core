@@ -47,6 +47,11 @@ type:
 The `receive` family functions block until something
 has been sent to the thread's mailbox.
 
+
+### In-depth
+
+- [Messaging passing concurrency](http://ddili.org/ders/d.en/concurrency.html)
+
 ## {SourceCode}
 
 ```d

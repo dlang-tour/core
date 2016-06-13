@@ -57,6 +57,10 @@ that shifts the characters in the alphabet using a certain index.
 The to-be-encrypted text just contains characters in the range `a-z`
 which should make things easier.
 
+### In-depth
+
+- [Arrays in _Programming in D_](http://ddili.org/ders/d.en/arrays.html)
+
 ## {SourceCode:incomplete}
 
 ```d

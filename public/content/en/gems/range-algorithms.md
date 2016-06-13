@@ -55,6 +55,12 @@ forever.
 
 ### The documentation is awaiting your visit!
 
+
+### In-depth
+
+- [Ranges in _Programming in D_](http://ddili.org/ders/d.en/ranges.html)
+- [More Ranges in _Programming in D_](http://ddili.org/ders/d.en/ranges_more.html)
+
 ## {SourceCode}
 
 ```d
