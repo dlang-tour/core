@@ -155,3 +155,12 @@ dlangTourApp.controller('DlangTourAppCtrl', [ '$scope', '$http', 'hotkeys', func
 		}
 	});
 }]);
+
+// use CodeMirror to highlight pre
+$(document).ready(function() {
+	$('code').each(function(i, block) {
+	    var val = block.textContent || "";
+		CodeMirror.runMode(val, "text/x-d", block);
+		block.className += "cm-s-elegant";
+	});
+});
