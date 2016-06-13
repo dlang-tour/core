@@ -1,7 +1,9 @@
 name "dlang-tour"
 description "The Dlang Tour"
 copyright "Copyright © 2015, André Stein"
-authors "André Stein"
+authors "André Stein" "Sebastian Wilzbach"
+homepage "http://tour.dlang.org"
+license "Boost"
 dependency "vibe-d" version="~>0.7.28"
 dependency "dyaml" version="~>0.5.2"
 // Commented out until GDC is up to date. Doesn't work
