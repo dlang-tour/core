@@ -1,22 +1,14 @@
 doctype html
 
 head
-	script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js")
 	link(href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400",rel="stylesheet",type="text/css")
-	script(src="//code.jquery.com/jquery-1.12.0.min.js")
 	link(rel="stylesheet", href="/static/css/common.css")
 	link(rel="shortcut icon", href="/static/img/favicon.ico")
 	link(rel="stylesheet", type="text/css", href="/static/css/menu.css")
 	meta(name="viewport",content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0")
 	title The Dlang Tour
 	block head
-	script.
-		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-		ga('create', '#{googleAnalyticsId}', 'auto');
-		ga('send', 'pageview');
+	script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js")
 
 body(ng-app="DlangTourApp", class="ng-cloak")
 	#top
@@ -47,4 +39,15 @@ body(ng-app="DlangTourApp", class="ng-cloak")
 						img(src="/static/img/GitHub-Mark-Light-32px.png")
 
 	block content
+
+	script(src="//code.jquery.com/jquery-1.12.0.min.js")
 	script(type="application/javascript", src="/static/js/menu.js")
+	script.
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+		ga('create', '#{googleAnalyticsId}', 'auto');
+		ga('send', 'pageview');
+	
+	block js
