@@ -46,10 +46,11 @@ and we are glad about pull requests making this tour even better.
 
 ## {SourceCode}
 
+```d
 import std.stdio;
 
 // Let's get going!
 void main() {
     writeln("Hello World!");
 }
-
+```

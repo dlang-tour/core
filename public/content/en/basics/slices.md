@@ -42,6 +42,7 @@ one past the slice's end and thus would generate a `RangeError`
 
 ## {SourceCode}
 
+```d
 import std.stdio;
 
 /**
@@ -68,4 +69,4 @@ void main()
         test, min);
     assert(min == 2);
 }
-
+```

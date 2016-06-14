@@ -73,6 +73,7 @@ on it. It will block until the reuslt is available.
 
 ## {SourceCode}
 
+```d
 import std.parallelism;
 import std.array: array;
 import std.stdio: writeln;
@@ -116,4 +117,4 @@ void main()
     // earlier.
     writeln(task.yieldForce);
 }
-
+```

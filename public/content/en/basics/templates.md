@@ -51,6 +51,7 @@ types too.
 
 ## {SourceCode}
 
+```d
 import std.stdio;
 
 /**
@@ -91,4 +92,4 @@ void main() {
     multipleNoise(dog, 5);
     multipleNoise(cat, 5);
 }
-
+```

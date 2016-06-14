@@ -42,6 +42,7 @@ and `@nogc`).
 
 ## {SourceCode}
 
+```d
 import std.bigint;
 
 /**
@@ -88,4 +89,4 @@ void main()
 ### In depth
 
 - [Functional DLang Garden](https://garden.dlang.io/)
-
+```

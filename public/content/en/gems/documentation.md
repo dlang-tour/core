@@ -32,6 +32,7 @@ sections.
 
 ## {SourceCode:incomplete}
 
+```d
 /**
   Calculates the square root of a number.
 
@@ -55,4 +56,4 @@ sections.
 */
 T sqrt(T)(T number) {
 }
-
+```

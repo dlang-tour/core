@@ -27,6 +27,7 @@ accessing the `alias this` member.
 
 ## {SourceCode}
 
+```d
 import std.stdio: writeln;
 
 struct Vector3 {
@@ -53,4 +54,4 @@ void main()
     // extended!
     writeln("vec dot vec2 = ", vec.dot(vec2));
 }
-
+```

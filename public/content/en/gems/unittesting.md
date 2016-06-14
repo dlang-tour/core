@@ -28,6 +28,7 @@ within classes or structs.
 
 ## {SourceCode}
 
+```d
 import std.stdio;
 
 struct Vector3 {
@@ -76,4 +77,4 @@ unittest {
     // returns the initial value of type.
     assert(vec.x == double.init);
 }
-
+```

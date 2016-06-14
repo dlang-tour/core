@@ -38,6 +38,7 @@ the special `.byKeys` and `.byValues` ranges.
 
 ## {SourceCode}
 
+```d
 import std.stdio;
 
 /**
@@ -86,4 +87,4 @@ to efficient, *native* machine code.};
 
     writeln("Word counts: ", wordCount(text));
 }
-
+```

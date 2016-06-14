@@ -74,6 +74,7 @@ is shared between client and server.
 
 ## {SourceCode:disabled}
 
+```d
 import vibe.d;
 
 interface IRest
@@ -137,4 +138,4 @@ shared static this()
     settings.port = 8080;
     listenHTTP(settings, router);
 }
-
+```

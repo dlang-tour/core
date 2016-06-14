@@ -25,6 +25,7 @@ in the source code.
 
 ## {SourceCode}
 
+```d
 import std.stdio;
 
 auto calculate(string op, T)(T lhs, T rhs)
@@ -44,4 +45,4 @@ void main()
     writeln("8 * 8 = ", calculate!"*"(8,8));
     writeln("100 / 5 = ", calculate!"/"(100,5));
 }
-
+```

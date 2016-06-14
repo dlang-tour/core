@@ -49,7 +49,8 @@ with every release of the compiler.
 - [Conditional compilation](https://dlang.org/spec/version.html)
 
 ## {SourceCode}
-import std.stdio: writeln;
+
+```dimport std.stdio: writeln;
 
 /* Returns: square root of x using
  Newton's approximation scheme. */
@@ -78,4 +79,4 @@ void main() {
     writeln("The sqrt of compile time 4 = ",
         cn);
 }
-
+```

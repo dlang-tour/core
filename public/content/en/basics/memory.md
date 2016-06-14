@@ -37,6 +37,7 @@ world between SafeD and the underlying dirty low-level world.
 
 ## {SourceCode}
 
+```d
 import std.stdio;
 
 void safeFun() @safe
@@ -57,4 +58,4 @@ void main()
     safeFun();
     unsafeFun();
 }
-
+```

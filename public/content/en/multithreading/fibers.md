@@ -42,6 +42,7 @@ code.
 
 ## {SourceCode}
 
+```d
 import core.thread: Fiber;
 import std.stdio: write;
 import std.range: iota;
@@ -95,5 +96,4 @@ void main()
     // squareFiber could still be run because
     // it has finished yet!
 }
-
-
+```

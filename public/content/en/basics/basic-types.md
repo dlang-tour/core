@@ -66,6 +66,7 @@ with an `AssertionError` if it fails.
 
 ## {SourceCode}
 
+```d
 import std.stdio;
 
 void main()
@@ -96,4 +97,4 @@ void main()
     writeln(int.min, " ", int.max);
     writeln(int.stringof); // int
 }
-
+```

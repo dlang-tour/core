@@ -45,6 +45,7 @@ The ugly name is just a friendly reminder to use it rarely.
 
 ## {SourceCode}
 
+```d
 import std.concurrency;
 
 void worker(bool firstTime)
@@ -70,4 +71,4 @@ void main()
         spawn(&worker, true);
     }
 }
-
+```

@@ -31,6 +31,7 @@ the parent's scope
 
 ## {SourceCode}
 
+```d
 import std.stdio;
 import std.random;
 
@@ -81,6 +82,4 @@ void main()
 // NOTE:
 //   add(), sub(), mul() and div()
 //   are NOT visible outside of main!
-
-
-
+```

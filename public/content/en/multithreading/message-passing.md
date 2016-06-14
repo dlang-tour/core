@@ -49,6 +49,7 @@ has been sent to the thread's mailbox.
 
 ## {SourceCode}
 
+```d
 import std.stdio: writeln;
 import std.concurrency;
 
@@ -125,4 +126,4 @@ void main()
         writeln("Received CancelAckMessage!");
     }
 }
-
+```

@@ -91,6 +91,7 @@ the example application successfully run:
 
 ## {SourceCode:incomplete}
 
+```d
 struct Vector3 {
     double x;
     double y;
@@ -149,4 +150,4 @@ void main() {
     assert(vec2.toString() ==
         "x: 0.0 y: 20.0 z: 0.0");
 }
-
+```

@@ -46,6 +46,7 @@ functions.
 
 ## {SourceCode}
 
+```d
 import std.stdio;
 
 interface Animal {
@@ -83,4 +84,4 @@ void main() {
         animal.multipleNoise(5);
     }
 }
-
+```

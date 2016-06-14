@@ -56,7 +56,8 @@ of just one line.
 - [Delegate's specification](https://dlang.org/spec/function.html#closures)
 
 ## {SourceCode}
-import std.stdio;
+
+```dimport std.stdio;
 
 enum IntOps {
     add = 0,
@@ -107,4 +108,4 @@ void main()
     // real work for us!
     writeln("result: ", func(a, b));
 }
-
+```

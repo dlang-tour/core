@@ -49,6 +49,7 @@ and just passes it if needed.
 
 ## {SourceCode:disabled}
 
+```d
 import vibe.d;
 
 class WebService
@@ -146,4 +147,4 @@ shared static this()
     settings.port = 8080;
     listenHTTP(settings, router);
 }
-
+```

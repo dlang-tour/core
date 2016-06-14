@@ -37,6 +37,7 @@ take a look at the source code example.
 
 ## {SourceCode}
 
+```d
 import std.stdio;
 
 void main()
@@ -56,4 +57,4 @@ void main()
             break;
     }
 }
-
+```

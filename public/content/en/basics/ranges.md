@@ -36,6 +36,7 @@ Don't fool yourself into deleting the `assert`ions!
 
 ## {SourceCode:incomplete}
 
+```d
 import std.stdio;
 
 struct FibonacciRange
@@ -77,4 +78,4 @@ void main() {
     assert(the10Fibs ==
         [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]);
 }
-
+```
