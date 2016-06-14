@@ -44,7 +44,7 @@ body(ng-app="DlangTourApp", class="ng-cloak")
 
 				#github_avatar
 					a(href="https://github.com/stonemaster/dlang-tour")
-						img(src="/static/img/GitHub-Mark-Light-32px.png")
+						i(class="fa fa-github",aria-hidden="true")
 
 	block content
 	script(type="application/javascript", src="/static/js/menu.js")

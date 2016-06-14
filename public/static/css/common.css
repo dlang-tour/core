@@ -50,6 +50,8 @@ body {
 }
 #github_avatar {
     float: right;
+    font-size: 36px;
+    line-height: 1.0;
 }
 .ng-cloak {
     display: none !important;
