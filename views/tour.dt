@@ -14,6 +14,8 @@ block head
 	script(src="/static/lib/hotkeys.min.js")
 	link(rel="stylesheet", href="/static/lib/hotkeys.min.css")
 	link(rel="stylesheet", href="/static/css/tour.css")
+	link(rel="stylesheet", href="/static/lib/grid12.min.css")
+	link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css")
 
 block content
 	.row(ng-controller="DlangTourAppCtrl as ctrl", ng-init="init('#{chapterId}', '#{section}', #{hasSourceCode}, '#{previousSection.link}', '#{nextSection.link}')")
@@ -23,22 +25,26 @@ block content
 					button.btn.btn-default.btn-sm(ng-click="showSourceCode = !showSourceCode", ng-class="{active: showSourceCode}")
 						code { code }
 					button.btn.btn-default(ng-click="editOnGithub()")
-						span.glyphicon.glyphicon-edit(ng-show="showContent")
+						span.fa.fa-edit(ng-show="showContent")
 				|!= htmlContent
 			div(ng-show="showProgramOutput")
 				.content-command-box
 					button.btn.btn-danger.btn-sm(ng-click="showProgramOutput = !showProgramOutput")
-						span.glyphicon.glyphicon-remove-circle
+						span.fa.fa-close
 				h2.program-output-title rdmd playground.d
 				pre#program-output {{programOutput}}
 		div(ng-class="{'col-md-6 col-sm-12': showContent, 'col-md-12': !showContent}", ng-show="showSourceCode", style="padding-left: 0px; padding-right: 0px")
 			.text-right#command-box
 				button.btn.btn-default(ng-click="showContent = !showContent")
-					span.glyphicon.glyphicon-resize-full(ng-show="showContent")
-					span.glyphicon.glyphicon-resize-small(ng-hide="showContent")
+					i.fa.fa-expand(ng-show="showContent",aria-hidden="true")
+					i.fa.fa-compress(ng-hide="showContent",aria-hidden="true")
 				- if (sourceCodeEnabled)
-					button.btn.btn-primary(ng-click="run()") Run
-				button.btn.btn-default(ng-click="reset()") Reset
+					button.btn.btn-primary(ng-click="run()")
+						i.fa.fa-play(aria-hidden="true")
+						span Run
+					button.btn.btn-default(ng-click="reset()")
+						i.fa.fa-undo(aria-hidden="true")
+						span Reset
 			ui-codemirror(ui-codemirror-opts="editorOptions", ui-codemirror="{ onLoad : codemirrorLoaded }", ng-model="sourceCode")
 
 	nav.navbar.navbar-bottom
