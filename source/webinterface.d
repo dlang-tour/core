@@ -131,6 +131,19 @@ class WebInterface
 	@path("/tour/:chapter/:section")
 	void getTour(HTTPServerRequest req, HTTPServerResponse res, string _chapter, string _section)
 	{
+		// for compatibility with integer-based ids
+		// @@@@DEPRECATED_2016-12@@@ - will be removed in December 2016
+		import std.string : isNumeric;
+		if (_section.isNumeric)
+		{
+			auto nr = _section.to!int;
+			auto chapters = contentProvider_.getTOC("en");
+			foreach (chapter; chapters)
+			{
+				if (chapter.chapterId == _chapter)
+					_section = chapter.sections[nr].sectionId;
+			}
+		}
 		auto sec = getTourDataAndValidate(_chapter, _section);
 		auto htmlContent = sec.tourData.content.html;
 		auto chapterId = _chapter;
