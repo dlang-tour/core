@@ -47,11 +47,11 @@ and we are glad about pull requests making this tour even better.
 
 ## {SourceCode}
 
-import std.stdio;
+// The unix uniq command, in 4 lines of code
+import std.stdio, std.algorithm;
 
-// Let's get going!
 void main() {
-    writeln("Hello World!");
+    stdin.byLine.uniq.each!writeln;
 }
 
 # Install D locally
