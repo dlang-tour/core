@@ -143,37 +143,4 @@ class WebInterface
 				nextSection, previousSection, googleAnalyticsId,
 				toc)();
 	}
-
-	/+
-		GET /api/v1/next/CHAPTER/SECTION
-		GET /api/v1/previous/CHAPTER/SECTION
-
-		Returns: the URL ({ location: "xxx"}) of the next or
-		previous section based the chapter and section parameters.
-	+/
-	private struct Location
-	{
-		string location;
-	}
-	@method(HTTPMethod.GET)
-	@path("/next-section/:chapter/:section")
-	void getNextSection(HTTPServerResponse res, string _chapter, int _section)
-	{
-		auto sec = getTourDataAndValidate(_chapter, _section);
-		if (sec.linkCache.nextSection.link.empty)
-			throw new HTTPStatusException(404,
-				"Couldn't find next section chapter '%s', section %d".format(_chapter, _section));
-		res.writeJsonBody(Location(sec.linkCache.nextSection.link));
-	}
-
-	@method(HTTPMethod.GET)
-	@path("/previous-section/:chapter/:section")
-	void getPreviousSection(HTTPServerResponse res, string _chapter, int _section)
-	{
-		auto sec = getTourDataAndValidate(_chapter, _section);
-		if (sec.linkCache.previousSection.link.empty)
-			throw new HTTPStatusException(404,
-				"Couldn't find previous section chapter '%s', section %d".format(_chapter, _section));
-		res.writeJsonBody(Location(sec.linkCache.previousSection.link));
-	}
 }

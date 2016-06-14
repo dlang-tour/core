@@ -9,6 +9,8 @@ dlangTourApp.controller('DlangTourAppCtrl', [ '$scope', '$http', 'hotkeys', func
 	$scope.editor = null;
 	$scope.chapterId = null;
 	$scope.section = null;
+	$scope.prevPage = null;
+	$scope.nextPage = null;
 
 	$scope.updateErrorsAndWarnings = function(doc, options, editor) {
 		var lintings = [];
@@ -57,9 +59,11 @@ dlangTourApp.controller('DlangTourAppCtrl', [ '$scope', '$http', 'hotkeys', func
 		}
 	};
 
-	$scope.init = function(chapterId, section, hasSourceCode) {
+	$scope.init = function(chapterId, section, hasSourceCode, prevPage, nextPage) {
 		$scope.chapterId = chapterId;
 		$scope.section = section;
+		$scope.prevPage = prevPage;
+		$scope.nextPage = nextPage;
 		$http.get('/api/v1/source/' + chapterId + "/" + section)
 			.success(function(data) {
 				$scope.resetCode = data.sourceCode;
@@ -131,18 +135,12 @@ dlangTourApp.controller('DlangTourAppCtrl', [ '$scope', '$http', 'hotkeys', func
 
 	function prevPage()
 	{
-		$http.get('/previous-section/' + $scope.chapterId + '/' + $scope.section)
-		.success(function(data) {
-			window.location.href = data.location;
-		});
+		window.location.href = $scope.prevPage;
 	};
 
 	function nextPage()
 	{
-		$http.get('/next-section/' + $scope.chapterId + '/' + $scope.section)
-		.success(function(data) {
-			window.location.href = data.location;
-		});
+		window.location.href = $scope.nextPage;
 	}
 
 	detectswipe(document.getElementById('tour-content'), function(el, direction, e) {
