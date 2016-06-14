@@ -19,9 +19,11 @@ block content
 	.row(ng-controller="DlangTourAppCtrl as ctrl", ng-init="init('#{chapterId}', '#{section}', #{hasSourceCode}, '#{previousSection.link}', '#{nextSection.link}')")
 		div#tour-content(ng-show="showContent", ng-class="{'col-md-12': !showSourceCode, 'col-md-6 col-sm-12': showSourceCode}")
 			div(ng-hide="showProgramOutput")
-				.content-command-box(class="visible-md-block")
+				.content-command-box(class="hidden-xs hidden-sm")
 					button.btn.btn-default.btn-sm(ng-click="showSourceCode = !showSourceCode", ng-class="{active: showSourceCode}")
 						code { code }
+					button.btn.btn-default(ng-click="editOnGithub()")
+						span.glyphicon.glyphicon-edit(ng-show="showContent")
 				|!= htmlContent
 			div(ng-show="showProgramOutput")
 				.content-command-box
