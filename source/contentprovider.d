@@ -125,6 +125,15 @@ class ContentProvider
 				enforce(content.sourceCode.empty, new Exception("%s: Double %s section in '%s'"
 							.format(filename, SourceCodeSectionTitle, content.title)));
 				content.sourceCode = section.bodyOnly;
+				// ignore markdown code blocks
+				if (content.sourceCode[0..3] == "```")
+				{
+                    // allow additional code language specifiers
+					auto startPos = content.sourceCode.countUntil("\n");
+					assert(content.sourceCode.length > 10, "source code file too small");
+	                // remove three first and last backticks
+					content.sourceCode = content.sourceCode[startPos + 1 .. $ - 4];
+				}
 				content.sourceCodeEnabled = section.title != SourceCodeDisabledSectionTitle;
 				content.sourceCodeIncomplete = section.title == SourceCodeIncompleteSectionTitle;
 				checkSourceCodeLineWidth(content.sourceCode, content.title);

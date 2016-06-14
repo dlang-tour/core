@@ -9,7 +9,7 @@ new constructs in one line:
 The term `string` is defined by an `alias` expression which defines it
 as a slice of `immutable(char)`'s. That is, once a `string` has been constructed
 its content will never change again. And actually this is the second
-introduction: welcome UTF-8 `string`! 
+introduction: welcome UTF-8 `string`!
 
 Due to their immutablility `string`s can perfectly be shared among
 different threads. Being a slice parts can be taken out of it without
@@ -39,6 +39,7 @@ or the r-prefix `r"string that "doesn't" need to be escaped"`.
 
 ## {SourceCode}
 
+```d
 import std.stdio;
 import std.utf: count;
 import std.string: format;
@@ -70,4 +71,4 @@ void main() {
     // .. which of course looks the same!
     writeln("My dstring: ", dstr);
 }
-
+```
