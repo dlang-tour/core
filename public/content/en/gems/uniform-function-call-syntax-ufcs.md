@@ -23,6 +23,7 @@ to write clear and manageable code.
 
 ## {SourceCode}
 
+```d
 import std.stdio;
 import std.algorithm;
 import std.range: iota;
@@ -40,4 +41,4 @@ void main()
     writeln(filter!(a => a % 2 == 0)
     			   (iota(1,10)));
 }
-
+```

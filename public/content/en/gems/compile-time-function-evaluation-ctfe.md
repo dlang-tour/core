@@ -49,6 +49,8 @@ with every release of the compiler.
 - [Conditional compilation](https://dlang.org/spec/version.html)
 
 ## {SourceCode}
+
+```d
 import std.stdio: writeln;
 
 /* Returns: square root of x using
@@ -78,4 +80,4 @@ void main() {
     writeln("The sqrt of compile time 4 = ",
         cn);
 }
-
+```

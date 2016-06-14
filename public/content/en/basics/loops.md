@@ -49,6 +49,7 @@ The keyword `continue` starts with the next loop iteration.
 
 ## {SourceCode}
 
+```d
 import std.stdio;
 
 /// Returns: average of array
@@ -81,5 +82,4 @@ void main()
         " = ", average(testers[i]));
     }
 }
-
-
+```

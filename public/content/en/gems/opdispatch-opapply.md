@@ -67,6 +67,7 @@ must be stopped.
 
 ## {SourceCode}
 
+```d
 // A Variant is something that might contain
 // any other type:
 // https://dlang.org/phobos/std_variant.html
@@ -105,4 +106,4 @@ void main() {
     // writeln("test.notthere = ",
     //   test.notthere);
 }
-
+```

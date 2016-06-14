@@ -40,8 +40,13 @@ by the compiler for templated functions and `auto` functions,
 where applicable (this is also true for `@safe`, `nothrow`,
 and `@nogc`).
 
+### In depth
+
+- [Functional DLang Garden](https://garden.dlang.io/)
+
 ## {SourceCode}
 
+```d
 import std.bigint;
 
 /**
@@ -84,8 +89,4 @@ void main()
         	.to!("msecs", double)
         	.writeln("took: miliseconds");
 }
-
-### In depth
-
-- [Functional DLang Garden](https://garden.dlang.io/)
-
+```

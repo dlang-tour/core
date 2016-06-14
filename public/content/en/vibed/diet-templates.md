@@ -54,6 +54,7 @@ are passed as template parameters to `render`.
 
 ## {SourceCode:disabled}
 
+```d
 doctype html
 html
   head
@@ -67,4 +68,4 @@ html
         b= num
     p Prints 8:
     p= min(10, 2*6, 8)
-
+```

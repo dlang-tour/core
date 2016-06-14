@@ -59,6 +59,7 @@ which should make things easier.
 
 ## {SourceCode:incomplete}
 
+```d
 import std.stdio;
 
 /**
@@ -99,4 +100,4 @@ void main()
     assert(encrypted == [ 'm','u','b','s','e',
             'c','u','j','e','t' ]);
 }
-
+```

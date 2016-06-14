@@ -6,7 +6,7 @@ A function can also be a parameter to another function:
         // call passed function
         doer(5,5);
     }
-    
+
     doSomething(add); // use global function `add` here
                       // add must have 2 int parameters
 
@@ -56,6 +56,8 @@ of just one line.
 - [Delegate's specification](https://dlang.org/spec/function.html#closures)
 
 ## {SourceCode}
+
+```d
 import std.stdio;
 
 enum IntOps {
@@ -107,4 +109,4 @@ void main()
     // real work for us!
     writeln("result: ", func(a, b));
 }
-
+```

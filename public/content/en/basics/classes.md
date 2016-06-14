@@ -44,6 +44,7 @@ use the special keyword `super`.
 
 ## {SourceCode}
 
+```d
 import std.stdio;
 
 // Fancy type which can be used for
@@ -118,4 +119,4 @@ void main()
             any.convertToString());
     }
 }
-
+```

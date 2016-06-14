@@ -75,6 +75,7 @@ the `[]` operator.
 
 ## {SourceCode}
 
+```d
 import std.traits: isFloatingPoint;
 import std.uni: toUpper;
 import std.string: format;
@@ -140,6 +141,4 @@ void main()
     writeln(vecInt.getX, ",",
       vecInt.getY, ",", vecInt.getZ);
 }
-
-
-
+```

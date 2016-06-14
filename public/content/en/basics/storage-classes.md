@@ -47,6 +47,7 @@ Both `immutable` and `const` are transitive which ensures that once
 
 ## {SourceCode}
 
+```d
 import std.stdio;
 
 void main()
@@ -76,4 +77,4 @@ void main()
     // ERROR:
     // immutable int* imMutable = &mutable;
 }
-
+```

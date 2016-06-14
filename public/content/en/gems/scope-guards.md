@@ -23,6 +23,7 @@ Scope guards are called in the reverse order they are defined.
 
 ## {SourceCode}
 
+```d
 import std.stdio;
 
 void main()
@@ -41,4 +42,4 @@ void main()
 
     writeln("\t\t<h1>Hello World!</h1>");
 }
-
+```

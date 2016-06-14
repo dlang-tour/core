@@ -33,6 +33,7 @@ large types. To prevent copying or enable *in-place
 
 ## {SourceCode}
 
+```d
 import std.stdio;
 
 void main() {
@@ -52,4 +53,4 @@ void main() {
             " = ", accumulator / row.length);
     }
 }
-
+```

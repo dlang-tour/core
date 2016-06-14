@@ -48,6 +48,7 @@ helper:
 
 ## {SourceCode}
 
+```d
 import std.concurrency;
 import core.atomic;
 
@@ -134,4 +135,4 @@ void main()
     auto stopped = receiveOnly!bool;
     assert(stopped);
 }
-
+```

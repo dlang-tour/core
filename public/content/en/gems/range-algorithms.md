@@ -57,6 +57,7 @@ forever.
 
 ## {SourceCode}
 
+```d
 // Hey come on, just get the whole army!
 import std.algorithm: canFind, map,
   filter, sort, uniq, joiner, chunkBy, splitter;
@@ -111,4 +112,4 @@ to efficient, *native* machine code.};
       // pipe to stdout
       .writeln();
 }
-
+```

@@ -46,6 +46,7 @@ to implement a simple TCP based echo server.
 
 ## {SourceCode:disabled}
 
+```d
 import vibe.d;
 
 shared static this()
@@ -70,4 +71,4 @@ shared static this()
         // will close the client's connection.
     });
 }
-
+```

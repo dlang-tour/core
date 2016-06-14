@@ -56,6 +56,7 @@ state during its whole lifetime:
 
 ## {SourceCode:incomplete}
 
+```d
 // Very simple Date type with a lot of
 // flaws. Hint: don't use it!
 struct Date {
@@ -105,4 +106,4 @@ void main() {
     // be propgated through e.g. exceptions.
     date.fromString("2016-13-7");
 }
-
+```
