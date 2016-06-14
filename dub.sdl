@@ -6,6 +6,9 @@ homepage "http://tour.dlang.org"
 license "Boost"
 dependency "vibe-d" version="~>0.7.28"
 dependency "dyaml" version="~>0.5.2"
+
+copyFiles "config.yml"
+
 // Commented out until GDC is up to date. Doesn't work
 // with 2.066.1 frontends currently.
 // subConfiguration "vibe-d" "libasync"
