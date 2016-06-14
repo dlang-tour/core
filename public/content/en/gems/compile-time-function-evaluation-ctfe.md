@@ -50,7 +50,8 @@ with every release of the compiler.
 
 ## {SourceCode}
 
-```dimport std.stdio: writeln;
+```d
+import std.stdio: writeln;
 
 /* Returns: square root of x using
  Newton's approximation scheme. */
