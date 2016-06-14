@@ -31,14 +31,14 @@ class WebInterface
 		// Fetch all table-of-contents for all supported
 		// languages (just 'en' for now) and generate
 		// the previous/next link cache for each tour page.
-		foreach(lang; ["en"]) {
+		foreach(lang; contentProvider.getLanguages()) {
 			auto toc = toc_[lang] = contentProvider_.getTOC(lang);
 			foreach(ref chapter; toc) {
 				foreach(ref section; chapter.sections) {
 					sectionLinkCache_[lang][chapter.chapterId][section.sectionId] =
 						LinkCache(
-							previousSection(toc, chapter.chapterId, section.sectionId),
-							nextSection(toc, chapter.chapterId, section.sectionId));
+							previousSection(toc, lang, chapter.chapterId, section.sectionId),
+							nextSection(toc, lang, chapter.chapterId, section.sectionId));
 				}
 			}
 		}
@@ -60,7 +60,7 @@ class WebInterface
 				string title;
 			}
 		+/
-		static auto deltaSection(ref Toc toc, string chapter,
+		static auto deltaSection(ref Toc toc, string language, string chapter,
 			string section, int move) pure
 		{
 			alias R = Tuple!(string, "link", string, "title");
@@ -87,39 +87,46 @@ class WebInterface
 
 			auto sec = toc[chapterIdx].sections[sectionIdx];
 
-			return R("/tour/%s/%s".format(
+			return R("/tour/%s/%s/%s".format(
+						language,
 						toc[chapterIdx].chapterId,
 						sec.sectionId),
 						sec.title);
 		}
 
-		auto previousSection(ref Toc toc, string chapter, string section) pure {
-			return deltaSection(toc, chapter, section, -1);
+		auto previousSection(ref Toc toc, string language, string chapter, string section) pure {
+			return deltaSection(toc, language, chapter, section, -1);
 		}
-		auto nextSection(ref Toc toc, string chapter, string section) pure {
-			return deltaSection(toc, chapter, section, +1);
+		auto nextSection(ref Toc toc, string language, string chapter, string section) pure {
+			return deltaSection(toc, language, chapter, section, +1);
 		}
 	}
 
 	void index(HTTPServerRequest req, HTTPServerResponse res)
 	{
-		auto startPoint = contentProvider_.getMeta("en").start;
-		getTour(req, res, startPoint.chapter, startPoint.section);
+		getStart(req, res, "en");
+	}
+
+	@path("/tour/:language")
+	void getStart(HTTPServerRequest req, HTTPServerResponse res, string _language)
+	{
+		auto startPoint = contentProvider_.getMeta(_language).start;
+		getTour(req, res, _language, startPoint.chapter, startPoint.section);
 	}
 
 	/+
 		Returns: tuple containing .tourData and .linkCache
 		for specified chapter and section.
 	+/
-	private auto getTourDataAndValidate(string chapter, string section)
+	private auto getTourDataAndValidate(string language, string chapter, string section)
 	{
-		auto _tourData = contentProvider_.getContent("en", chapter, section);
+		auto _tourData = contentProvider_.getContent(language, chapter, section);
 		if (_tourData.content == null) {
 			throw new HTTPStatusException(404,
 				"Couldn't find tour data for chapter '%s', section %s".format(chapter, section));
 		}
-
-		auto _linkCache = &sectionLinkCache_["en"][chapter][section];
+		enforce(language in sectionLinkCache_, "Language not found");
+		auto _linkCache = &sectionLinkCache_[language][chapter][section];
 
 		struct Ret {
 			typeof(_tourData) tourData;
@@ -129,8 +136,16 @@ class WebInterface
 		return Ret(_tourData, _linkCache);
 	}
 
+	// for compatibility with old urls
+	// @@@@DEPRECATED_2016-12@@@ - will be removed in December 2016
 	@path("/tour/:chapter/:section")
 	void getTour(HTTPServerRequest req, HTTPServerResponse res, string _chapter, string _section)
+	{
+		res.redirect("/tour/en/" ~ _chapter ~ "/" ~ _section);
+	}
+
+	@path("/tour/:language/:chapter/:section")
+	void getTour(HTTPServerRequest req, HTTPServerResponse res, string _language, string _chapter, string _section)
 	{
 		// for compatibility with integer-based ids
 		// @@@@DEPRECATED_2016-12@@@ - will be removed in December 2016
@@ -138,14 +153,15 @@ class WebInterface
 		if (_section.isNumeric)
 		{
 			auto nr = _section.to!int;
-			auto chapters = contentProvider_.getTOC("en");
+			auto chapters = contentProvider_.getTOC(_language);
 			foreach (chapter; chapters)
 			{
 				if (chapter.chapterId == _chapter)
 					_section = chapter.sections[nr].sectionId;
 			}
 		}
-		auto sec = getTourDataAndValidate(_chapter, _section);
+		auto language = _language;
+		auto sec = getTourDataAndValidate(_language, _chapter, _section);
 		auto htmlContent = sec.tourData.content.html;
 		auto chapterId = _chapter;
 		auto hasSourceCode = !sec.tourData.content.sourceCode.empty;
@@ -153,11 +169,11 @@ class WebInterface
 		auto section = _section;
 		auto sectionId =  sec.tourData.content._id;
 		auto sectionCount = sec.tourData.sectionCount;
-		auto toc = &toc_["en"];
+		auto toc = &toc_[_language];
 		auto previousSection = sec.linkCache.previousSection;
 		auto nextSection = sec.linkCache.nextSection;
 		auto googleAnalyticsId = googleAnalyticsId_;
-		render!("tour.dt", htmlContent, section, sectionId,
+		render!("tour.dt", htmlContent, language, section, sectionId,
 				sectionCount, chapterId, hasSourceCode, sourceCodeEnabled,
 				nextSection, previousSection, googleAnalyticsId,
 				toc)();

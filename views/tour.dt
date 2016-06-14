@@ -10,7 +10,7 @@ block head
 	link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css")
 
 block content
-	.row(ng-controller="DlangTourAppCtrl as ctrl", ng-init="init('#{chapterId}', '#{section}', #{hasSourceCode}, '#{previousSection.link}', '#{nextSection.link}')")
+	.row(ng-controller="DlangTourAppCtrl as ctrl", ng-init="init('#{language}', '#{chapterId}', '#{section}', #{hasSourceCode}, '#{previousSection.link}', '#{nextSection.link}')")
 		div#tour-content(ng-show="showContent", ng-class="{'col-md-12': !showSourceCode, 'col-md-6 col-sm-12': showSourceCode}")
 			div(ng-hide="showProgramOutput")
 				.content-command-box(class="hidden-xs hidden-sm")

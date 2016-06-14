@@ -65,12 +65,12 @@ class ApiV1: IApiV1
 		return output;
 	}
 
-	SourceOutput getSource(string _chapter, string _section)
+	SourceOutput getSource(string _language, string _chapter, string _section)
 	{
-		auto tourData = contentProvider_.getContent("en", _chapter, _section);
+		auto tourData = contentProvider_.getContent(_language, _chapter, _section);
 		if (tourData.content == null) {
 			throw new HTTPStatusException(404,
-				"Couldn't find tour data for chapter '%s', section %d".format(_chapter, _section));
+				"Couldn't find tour data for chapter '%s', section %d".format(_language, _chapter, _section));
 		}
 
 		return SourceOutput(tourData.content.sourceCode);

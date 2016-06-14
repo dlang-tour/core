@@ -31,7 +31,7 @@ body(ng-app="DlangTourApp", class="ng-cloak")
 								ul.expand-content
 									- foreach(ref sec; tocItem.sections)
 										li(class=(active ? "active" : ""))
-											a(href="/tour/#{tocItem.chapterId}/#{sec.sectionId}")
+											a(href="/tour/#{language}/#{tocItem.chapterId}/#{sec.sectionId}")
 												span=sec.title
 
 				#github_avatar
