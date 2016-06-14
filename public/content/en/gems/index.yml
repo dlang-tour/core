@@ -12,4 +12,5 @@ ordering:
 - attributes
 - opdispatch-opapply
 - documentation
+- traits
 - template-meta-programming
