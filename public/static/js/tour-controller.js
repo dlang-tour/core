@@ -1,12 +1,16 @@
 var dlangTourApp = angular.module('DlangTourApp', ['ui.codemirror', 'cfp.hotkeys']);
 
-dlangTourApp.controller('DlangTourAppCtrl', [ '$scope', '$http', 'hotkeys', function($scope, $http, hotkeys) {
+dlangTourApp.controller('DlangTourAppCtrl',
+	['$scope', '$http', 'hotkeys', '$window',
+	function($scope, $http, hotkeys, $window) {
 	$scope.programOutput = "";
 	$scope.warnings = [];
 	$scope.errors = [];
 	$scope.showContent = true;
 	$scope.showProgramOutput = false;
 	$scope.editor = null;
+	$scope.githubRepo = "stonemaster/dlang-tour";
+	$scope.language = "en";
 	$scope.chapterId = null;
 	$scope.section = null;
 	$scope.prevPage = null;
@@ -141,6 +145,12 @@ dlangTourApp.controller('DlangTourAppCtrl', [ '$scope', '$http', 'hotkeys', func
 	function nextPage()
 	{
 		window.location.href = $scope.nextPage;
+	}
+
+	$scope.editOnGithub = function() {
+		var url = 'https://github.com/' + $scope.githubRepo + '/edit/master/public/content/';
+		url += $scope.language + '/' + $scope.chapterId + '/' + $scope.section + '.md';
+		$window.open(url, '_blank');
 	}
 
 	detectswipe(document.getElementById('tour-content'), function(el, direction, e) {
