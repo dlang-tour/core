@@ -34,7 +34,7 @@
 	font-family: monospace;
 }
 
-.CodeMirror {
+body .CodeMirror {
 	height: auto;
 }
 
