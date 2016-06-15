@@ -152,26 +152,15 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		url += $scope.language + '/' + $scope.chapterId + '/' + $scope.section + '.md';
 		$window.open(url, '_blank');
 	}
-
-	/**
-	 * Swiping is temporarily disabled due to false positives
-	detectswipe(document.getElementById('tour-content'), function(el, direction, e) {
-		if (direction == "r") {
-			prevPage();
-			e.preventDefault();
-		} else if (direction == "l") {
-			nextPage();
-			e.preventDefault();
-		}
-	});
-	*/
 }]);
 
 // use CodeMirror to highlight pre
-$(document).ready(function() {
-	$('code').each(function(i, block) {
+function start() {
+	document.querySelectorAll('code').forEach(function(i, block) {
 	    var val = block.textContent || "";
 		CodeMirror.runMode(val, "text/x-d", block);
 		block.className += "cm-s-elegant";
 	});
-});
+}
+
+document.addEventListener('DOMContentLoaded', start);
