@@ -1,4 +1,4 @@
-# Controlling flow
+# Control flow
 
 Sometimes you have to control your application's flow
 depending on input parameters. `if` and `else` are
@@ -51,9 +51,10 @@ import std.stdio;
 
 void main()
 {
+    if (1 == 1)
+        writeln("You can trust math in D");
+
     int c = 5;
-    // This is EVIL but works
-    if (c >= 0 && c < 11)
     switch(c) {
         case 0: .. case 9:
             writeln(c, " is within 0-9");
