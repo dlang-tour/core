@@ -153,6 +153,8 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		$window.open(url, '_blank');
 	}
 
+	/**
+	 * Swiping is temporarily disabled due to false positives
 	detectswipe(document.getElementById('tour-content'), function(el, direction, e) {
 		if (direction == "r") {
 			prevPage();
@@ -162,6 +164,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 			e.preventDefault();
 		}
 	});
+	*/
 }]);
 
 // use CodeMirror to highlight pre
