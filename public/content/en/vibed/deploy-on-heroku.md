@@ -1,31 +1,17 @@
-# Deploy Vibe.d on production
+# Deploy on heroku
 
+### Pre-requirements
 
-To deploy Vibe.d application you have several choices. If you have access to your own machine you could directly 
-upload the source code on the machine, compile the code and run it. 
-
-But the are few other solutions that are more interesting. 
-
-
-## Using Heroku
-
-
-The most basic solution is to deploy using Heroku on a free dyno. 
-
-
-### Requirements
-
-- You must have an account on heroku 
-- You should have git installed
-- Your application should using `dub build --build=release`
+- You must have an [account]((https://signup.heroku.com/login)) on heroku
+- You should have [git](https://git-scm.com/) installed
+- Your application should compile without error using dmd (`dub build --build=release`). 
 
 
 ### 1 : Setup the app
 
-The first thing we need to do before sending our little app to the cloud is bind our app's port to heroku's one. 
-Indeed, heroku will "dynamically" setup a port for the dyno to listen to. Our app should have the same to be able to handle requests. 
+The first thing we need to do before deploying our app to the cloud is bind our app's port to heroku's one. 
+Heroku sets the PORT variable that you are supposed to bind, and listens on tcp/80.
 
-In the app.d 
 
 ```d
 shared static this() {
@@ -40,10 +26,10 @@ shared static this() {
 You also need to create a Procfile, which is a text file in the root directory of your application, responsible to explicitly declare what command 
 should be executed to start your app.
 
-The Procfile in the example app you deployed looks like this:
+The Procfile in the example app looks like this:
 
 ```
-web: ./my-app
+web: ./hello-world
 ```
 
 ### 2 : Prepare the app 
@@ -89,6 +75,14 @@ As shown in the previous section, our name's app is rocky-hamlet-67506. But chan
 $ heroku git:remote -a rocky-hamlet-67506
 ```
 
+We can see now that the remote is added to our git config
+
+```
+$ git remote -v
+heroku	https://git.heroku.com/rocky-hamlet-67506.git (fetch)
+heroku	https://git.heroku.com/rocky-hamlet-67506.git (push)
+```
+
 ### Adding the buildpack
 
 Buildpacks are responsible for transforming deployed code into a slug, 
@@ -104,15 +98,15 @@ We are going to use this [webpack](https://github.com/skirino/heroku-buildpack-v
 $ heroku buildpacks:set https://github.com/skirino/heroku-buildpack-vibe.d.git#cedar-14
 ```
 
-You should also create a file called `vibed_buildpack.config` in the root of your app :
+You should also create a file called `vibed_buildpack.config` in the root of your app. 
+We are doing this because this buildpack's dependencies are outdated. 
+
+Fortunately we can override them by providing new urls : 
 
 ```
 DMD_ARCHIVE_URL = http://downloads.dlang.org/releases/2016/dmd.2.070.2.zip
 DUB_ARCHIVE_URL = http://code.dlang.org/files/dub-0.9.25-linux-x86_64.tar.gz
 ```
-
-We are doing this because the buildpack dependencies are outdated. 
-Fortunately you can override them by providing a new url using this file.
 
 ### Deploy the code 
 
@@ -120,9 +114,41 @@ Fortunately you can override them by providing a new url using this file.
 $ git add .
 $ git commit -am "make it better"
 $ git push heroku master
+Counting objects: 9, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (9/9), 997 bytes, done.
+Total 9 (delta 0), reused 0 (delta 0)
+
+-----> Fetching custom git buildpack... done
+-----> D (dub package manager) app detected
+-----> Building libevent
+-----> Building libev
+-----> Downloading DMD
+-----> Downloading dub package manager
+-----> Setting PATH:
+-----> Initializing toolchain
+-----> Building app
+       Running dub build ...
+Building configuration "application", build type release
+Running dmd (compile)...
+Compiling diet template 'index.dt' (compat)...
+Linking...
+       Build was successful
+-----> Discovering process types
+       Procfile declares types -> web
+-----> Compiled slug size: 3.5MB
+-----> Launching... done, v4
+       https://rocky-hamlet-67506.herokuapp.com/ deployed to Heroku
+To git@heroku.com:rocky-hamlet-67506.git
+ * [new branch]      master -> master
 ```
 
-Now the buildpack will take the hand and compile our app and launch it using the Procfile. 
+All you need to do now is open the app in the browser
+
+```
+$ heroku open
+```
 
 ### Scale the app 
 
@@ -155,6 +181,3 @@ providing a single channel for all of the events.
 ```
 $ heroku logs --tail
 ```
-
-
-## Using docker
