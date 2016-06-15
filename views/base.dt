@@ -40,7 +40,6 @@ body(ng-app="DlangTourApp", class="ng-cloak")
 
 	block content
 
-	script(src="//code.jquery.com/jquery-1.12.0.min.js")
 	script(type="application/javascript", src="/static/js/menu.js")
 	script.
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
