@@ -1,4 +1,4 @@
-# Deploy on heroku
+# Deploy on Heroku
 
 ### Pre-requirements
 
@@ -64,17 +64,17 @@ The app's name here is rocky-hamlet-67506.
 
 ### Deploy using git 
 
-To deploy your app you will use git and push your code to heroku as if you were pushing on your git repo. 
+
+You can deploy your app directly from `git` - it will be in a separate git remote endpoint to which new releases can be pushed.
 
 You need to add the git remote with the name of your app. 
-
 As shown in the previous section, our name's app is rocky-hamlet-67506. But change it to yours. 
 
 ```
 $ heroku git:remote -a rocky-hamlet-67506
 ```
 
-We can see now that the remote is added to our git config
+You can see now that the remote endpoint is added to our git config
 
 ```
 $ git remote -v
@@ -89,9 +89,9 @@ which can then be executed on a dyno. Buildpacks are composed of a set of script
 and depending on the programming language, the scripts will retrieve dependencies, 
 output generated assets or compiled code, and more.
 
-[More information](https://devcenter.heroku.com/articles/buildpacks)
+For more information you can browse the [Heroku documentation](https://devcenter.heroku.com/articles/buildpacks)
 
-We are going to use this [webpack](https://github.com/skirino/heroku-buildpack-vibe.d) it uses dmd by default. 
+We are going to use this [webpack](https://github.com/skirino/heroku-buildpack-vibe.d), the heroku-buildpack-vibe.d that uses dmd by default. 
 
 ```
 $ heroku buildpacks:set https://github.com/skirino/heroku-buildpack-vibe.d.git#cedar-14
@@ -103,15 +103,19 @@ We are doing this because this buildpack's dependencies are outdated.
 Fortunately we can override them by providing new urls : 
 
 ```
-DMD_ARCHIVE_URL = http://downloads.dlang.org/releases/2016/dmd.2.070.2.zip
+DMD_ARCHIVE_URL = http://downloads.dlang.org/releases/2016/dmd.2.071.2.zip
 DUB_ARCHIVE_URL = http://code.dlang.org/files/dub-0.9.25-linux-x86_64.tar.gz
 ```
 
 ### Deploy the code 
 
+You can proceed in your usual git habit and write awesome code. 
+
+Once you want to release a new version, you just push the newest version to the heroku endpoint.
+
 ```
 $ git add .
-$ git commit -am "make it better"
+$ git commit -am "My first vibe.d release"
 $ git push heroku master
 Counting objects: 9, done.
 Delta compression using up to 2 threads.
@@ -143,7 +147,7 @@ To git@heroku.com:rocky-hamlet-67506.git
  * [new branch]      master -> master
 ```
 
-All you need to do now is open the app in the browser
+All you need to do now is open the app in the browser.
 
 ```
 $ heroku open
@@ -181,3 +185,14 @@ providing a single channel for all of the events.
 ```
 $ heroku logs --tail
 ```
+
+
+## More informations 
+
+After deploying your app to Heroku you can make it more awesome by using add-ons.
+
+- [Postgresql](https://elements.heroku.com/addons/heroku-postgresql)
+- [MongoDb](https://elements.heroku.com/addons/mongohq)
+- [Logging](https://elements.heroku.com/addons#logging)
+- [Caching](https://elements.heroku.com/addons#caching)
+- [Error and exceptions](https://elements.heroku.com/addons#errors-exceptions)
