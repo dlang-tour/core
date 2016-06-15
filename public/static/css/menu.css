@@ -229,9 +229,7 @@ the home page, intro pitch and your-code-here layed out vertically */
     }
     #top a.hamburger::after
     {
-        /*content: "\f0c9"; [> bars <]*/
-        /*font-family: FontAwesome;*/
-        font-family: 'Glyphicons Halflings';
-        content: "\e236";
+		content: "\f0c9";
+		font-family: FontAwesome;
     }
 }
