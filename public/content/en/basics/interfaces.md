@@ -18,7 +18,7 @@ function in a base class.
             ...
         }
     }
-    
+
     auto dog = new Animal;
     Animal animal = dog; // implicit cast to interface
     dog.makeNoise();
@@ -42,6 +42,7 @@ functions.
 
 ### In-depth
 
+- [Interfaces in _Programming in D_](http://ddili.org/ders/d.en/interface.html)
 - [Interfaces in D](https://dlang.org/spec/interface.html)
 
 ## {SourceCode}
@@ -55,7 +56,7 @@ interface Animal {
     void makeNoise();
 
     // NVI pattern. Uses makeNoise internally
-    // to customoze behaviour in inheriting
+    // to customoze behaviour inheriting
     // classes.
     final void multipleNoise(int n) {
         for(int i = 0; i < n; ++i) {

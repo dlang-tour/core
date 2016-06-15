@@ -21,6 +21,10 @@ UFCS is especially important when dealing with
 together to perform complex operations, still allowing
 to write clear and manageable code.
 
+### In-depth
+
+- [UFCS in _Programming in D_](http://ddili.org/ders/d.en/ufcs.html)
+
 ## {SourceCode}
 
 ```d

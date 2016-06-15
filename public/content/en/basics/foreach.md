@@ -31,6 +31,11 @@ large types. To prevent copying or enable *in-place
         e = 10; // overwrite value
     }
 
+### In-depth
+
+- [`foreach` in _Programming in D_](http://ddili.org/ders/d.en/foreach.html)
+- [`foreach` with Structs and Classes  _Programming in D_](http://ddili.org/ders/d.en/foreach_opapply.html)
+
 ## {SourceCode}
 
 ```d

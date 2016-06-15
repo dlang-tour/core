@@ -27,7 +27,7 @@ is defined through a `this(...)` member function:
             this.ageXHeight = cast(float)age * height;
         }
             ...
-    
+
     Person p(30, 180);
 
 A `struct` might contain any number of member functions. Those
@@ -41,7 +41,7 @@ module.
             ...
         private void privateStuff() {
             ...
-    
+
     p.doStuff(); // call method doStuff
     p.privateStuff(); // forbidden
 
@@ -75,6 +75,7 @@ polymorphic inheritance.
 
 ### In-depth
 
+- [Structs in _Programming in D_](http://ddili.org/ders/d.en/struct.html)
 - [In detail](https://dlang.org/spec/struct.html)
 
 ### Exercise

@@ -39,6 +39,7 @@ one past the slice's end and thus would generate a `RangeError`
 ### In-depth
 
 - [Introduction to Slices in D](http://dlang.org/d-array-article.html)
+- [Slices in _Programming in D_](http://ddili.org/ders/d.en/slices.html)
 
 ## {SourceCode}
 

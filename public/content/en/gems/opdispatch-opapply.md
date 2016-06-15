@@ -63,6 +63,8 @@ must be stopped.
 
 ### In-depth
 
+- [Operator overloading in _Programming in D_](http://ddili.org/ders/d.en/operator_overloading.html)
+- [`opApply` in _Programming in D_](http://ddili.org/ders/d.en/foreach_opapply.html)
 - [Operator overloading in D](https://dlang.org/spec/operatoroverloading.html)
 
 ## {SourceCode}

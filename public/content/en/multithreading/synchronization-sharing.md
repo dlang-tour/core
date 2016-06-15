@@ -46,6 +46,10 @@ helper:
     shared int test = 5;
     test.atomicOp!"+="(4);
 
+### In-depth
+
+- [Data Sharing Concurrency in _Programming in D_](http://ddili.org/ders/d.en/concurrency_shared.html)
+
 ## {SourceCode}
 
 ```d

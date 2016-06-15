@@ -45,6 +45,10 @@ types too.
 ### In-depth
 
 - [Tutorial to D Templates](https://github.com/PhilippeSigaud/D-templates-tutorial)
+- [Templates in _Programming in D_](http://ddili.org/ders/d.en/templates.html)
+
+#### Advanced
+
 - [D Templates spec](https://dlang.org/spec/template.html)
 - [Templates Revisited](http://dlang.org/templates-revisited.html):  Walter Bright writes about how D improves upon C++ templates.
 - [Variadic templates](http://dlang.org/variadic-function-templates.html): Articles about the D idiom of implementing variadic functions with variadic templates

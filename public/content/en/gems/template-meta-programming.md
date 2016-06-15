@@ -66,11 +66,19 @@ the `[]` operator.
 
 ### In-depth
 
-- [Conditional compilation](https://dlang.org/spec/version.html)
+### Basics references
+
+- [Tutorial to D Templates](https://github.com/PhilippeSigaud/D-templates-tutorial)
+- [Conditional compilation](http://ddili.org/ders/d.en/cond_comp.html
 - [std.traits](https://dlang.org/phobos/std_traits.html)
+- [More templates  _Programming in D_](http://ddili.org/ders/d.en/templates_more.html)
+- [Mixins in  _Programming in D_](http://ddili.org/ders/d.en/mixin.html)
+
+### Advanced references
+
+- [Conditional compilation](https://dlang.org/spec/version.html)
 - [Traits](https://dlang.org/spec/traits.html)
 - [Mixin templates](https://dlang.org/spec/template-mixin.html)
-- [Tutorial to D Templates](https://github.com/PhilippeSigaud/D-templates-tutorial)
 - [D Templates spec](https://dlang.org/spec/template.html)
 
 ## {SourceCode}

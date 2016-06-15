@@ -52,7 +52,10 @@ state during its whole lifetime:
 
 ### In-depth
 
-- [Contract programming in D](https://dlang.org/spec/contracts.html)
+- [`assert` and `enforce` in _Programming in D_](http://ddili.org/ders/d.en/assert.html)
+- [Contract programming in _Programming in D_](http://ddili.org/ders/d.en/contracts.html)
+- [Contract Programming for Structs and Classes in _Programming in D_](http://ddili.org/ders/d.en/invariant.html)
+- [Contract programming in D spec](https://dlang.org/spec/contracts.html)
 
 ## {SourceCode:incomplete}
 

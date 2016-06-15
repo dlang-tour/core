@@ -42,6 +42,13 @@ Both `immutable` and `const` are transitive which ensures that once
 
 ### In-depth
 
+#### Basic references
+
+- [Immutable in _Programming in D_](http://ddili.org/ders/d.en/const_and_immutable.html)
+- [Scopes in _Programming in D_](http://ddili.org/ders/d.en/name_space.html)
+
+#### Advanced references
+
 - [const(FAQ)](https://dlang.org/const-faq.html)
 - [Type qualifiers D](https://dlang.org/spec/const3.html)
 

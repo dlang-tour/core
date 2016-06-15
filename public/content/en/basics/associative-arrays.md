@@ -33,6 +33,7 @@ the special `.byKeys` and `.byValues` ranges.
 
 ### In-depth
 
+- [Associative arrays in _Programming in D_](http://ddili.org/ders/d.en/aa.html)
 - [Associative arrays spec](https://dlang.org/spec/hash-map.html)
 - [byPair](http://dlang.org/phobos/std_array.html#.byPair)
 

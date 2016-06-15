@@ -40,6 +40,10 @@ non-blocking (or asynchronous) I/O operations
 in terms of fibers leading to a much cleaner
 code.
 
+### In-depth
+
+- [Fibers in _Programming in D_](http://ddili.org/ders/d.en/fibers.html)
+
 ## {SourceCode}
 
 ```d

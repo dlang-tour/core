@@ -29,6 +29,11 @@ the parent's scope
         }
         ...
 
+### In-depth
+
+- [Functions in _Programming in D_](http://ddili.org/ders/d.en/functions.html)
+- [Function parameters in _Programming in D_](http://ddili.org/ders/d.en/function_parameters.html)
+
 ## {SourceCode}
 
 ```d

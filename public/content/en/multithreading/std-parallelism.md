@@ -71,6 +71,11 @@ on it. It will block until the reuslt is available.
 
     auto fileData = t.yieldForce;
 
+### In-depth
+
+- [Parallelism in _Programming in D_](http://ddili.org/ders/d.en/parallelism.html)
+- [`std.parallelism](http://dlang.org/phobos/std_parallelism.html)
+
 ## {SourceCode}
 
 ```d
