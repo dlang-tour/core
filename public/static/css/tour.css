@@ -54,6 +54,7 @@ pre, pre.prettyprint, div.prototype
 	line-height: normal;
 	border: 1px solid #ccc;
 	width: auto;
+	font-size: 14px;
 }
 pre
 {
