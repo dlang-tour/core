@@ -12,7 +12,6 @@
 The first thing we need to do before deploying our app to the cloud is binding our app's port to heroku's one. 
 Heroku sets the `PORT` variable that you are supposed to bind, and listens on tcp/80.
 
-
 ```d
 shared static this() {
   // ...
@@ -153,6 +152,7 @@ $ heroku open
 ### Openning dynos to request 
 
 Right now, our app is running on a web dyno. Think of a dyno as a lightweight container that runs the command specified in the Procfile.
+
 You can check how many dynos are running using the ps command:
 
 ```
