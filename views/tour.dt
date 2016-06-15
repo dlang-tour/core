@@ -1,19 +1,11 @@
 extends base
 
 block head
-	script(src="/static/js/tour-controller.js")
-	script(src="/static/js/swipe.js")
-	link(rel="stylesheet", href="/static/lib/codemirror/lib/codemirror.min.css")
-	script(src="/static/lib/codemirror/lib/codemirror.min.js")
-	script(src="/static/lib/codemirror/mode/d/d.min.js")
-	script(src="/static/lib/codemirror/addon/lint/lint.min.js")
-	script(src="/static/lib/codemirror/addon/runmode.js")
-	link(rel="stylesheet", href="/static/lib/codemirror/addon/lint/lint.min.css")
-	link(rel="stylesheet", href="/static/lib/codemirror/theme/elegant.css")
-	script(src="/static/lib/ui-codemirror.min.js")
-	script(src="/static/lib/hotkeys.min.js")
 	link(rel="stylesheet", href="/static/lib/hotkeys.min.css")
 	link(rel="stylesheet", href="/static/css/tour.css")
+	link(rel="stylesheet", href="/static/lib/codemirror/lib/codemirror.min.css")
+	link(rel="stylesheet", href="/static/lib/codemirror/addon/lint/lint.min.css")
+	link(rel="stylesheet", href="/static/lib/codemirror/theme/elegant.css")
 	link(rel="stylesheet", href="/static/lib/grid12.min.css")
 	link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css")
 
@@ -61,3 +53,13 @@ block content
 			p.text-muted.text-center
 				kbd ?
 				| Keyboard shortcuts
+
+block js
+	script(src="/static/js/tour-controller.js")
+	script(src="/static/js/swipe.js")
+	script(src="/static/lib/codemirror/lib/codemirror.min.js")
+	script(src="/static/lib/codemirror/mode/d/d.min.js")
+	script(src="/static/lib/codemirror/addon/lint/lint.min.js")
+	script(src="/static/lib/codemirror/addon/runmode.js")
+	script(src="/static/lib/ui-codemirror.min.js")
+	script(src="/static/lib/hotkeys.min.js")
