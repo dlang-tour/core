@@ -6,4 +6,4 @@ ordering:
 - diet-templates
 - json-rest-interface
 - database-connectivity
-- deploy-on-production
+- deploy-on-heroku
