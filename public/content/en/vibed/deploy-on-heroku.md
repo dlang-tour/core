@@ -96,16 +96,10 @@ We are going to use this [webpack](https://github.com/MartinNowak/heroku-buildpa
 ```
 $ heroku buildpacks:set https://github.com/MartinNowak/heroku-buildpack-d
 ```
-
-You should also create a file called `vibed_buildpack.config` in the root of your app. 
-We are doing this because this buildpack's dependencies are outdated. 
-
-Fortunately we can override them by providing new urls : 
-
-```
-DMD_ARCHIVE_URL = http://downloads.dlang.org/releases/2016/dmd.2.071.2.zip
-DUB_ARCHIVE_URL = http://code.dlang.org/files/dub-0.9.25-linux-x86_64.tar.gz
-```
+By default the buildpack uses the latest dmd compiler. 
+It is possible to use gdc or ldc and to choose a specific compiler versions by adding a .d-compiler file to your project. 
+Use dmd, ldc, or gdc to select the latest or dmd-2.068.2, ldc-0.16.0, or gdc-4.9.2 to 
+select a specific version of a compiler.
 
 ### Deploy the code 
 
