@@ -91,10 +91,10 @@ output generated assets or compiled code, and more.
 
 For more information you can browse the [Heroku documentation](https://devcenter.heroku.com/articles/buildpacks)
 
-We are going to use this [webpack](https://github.com/skirino/heroku-buildpack-vibe.d), the heroku-buildpack-vibe.d that uses dmd by default. 
+We are going to use this [webpack](https://github.com/MartinNowak/heroku-buildpack-d), the heroku-buildpack-vibe.d. 
 
 ```
-$ heroku buildpacks:set https://github.com/skirino/heroku-buildpack-vibe.d.git#cedar-14
+$ heroku buildpacks:set https://github.com/MartinNowak/heroku-buildpack-d
 ```
 
 You should also create a file called `vibed_buildpack.config` in the root of your app. 
