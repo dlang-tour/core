@@ -1,15 +1,16 @@
 import yaml;
+import vibe.d;
 
 /++
 	Maps values of config.yml to properties.
 +/
 class Config
 {
-	private ushort port_;
-	private string[] bindAddresses_;
-	private string execProvider_;
+	private ushort port_ = 8080;
+	private string[] bindAddresses_ = [ "127.0.0.1" ];
+	private string execProvider_ = "stupidlocal";
 	private bool enableExecCache_;
-	private string publicDir_;
+	private string publicDir_ = "public";
 	private string googleAnalyticsId_;
 
 	private struct DockerConfig {
@@ -46,17 +47,22 @@ class Config
 	
 	this(string configFile)
 	{
-		auto root = Loader(configFile).load();
-		port_ = root["port"].as!ushort();
-		foreach (string address; root["listen"])
-			bindAddresses_ ~= address;
-		execProvider_ = root["exec"]["driver"].as!string();
-		enableExecCache_ = root["exec"]["cache"].as!bool();
-		publicDir_ = root["public_dir"].as!string();
-		googleAnalyticsId_ = root["google_analytics_id"].as!string();
+		try {
+			auto root = Loader(configFile).load();
+			port_ = root["port"].as!ushort();
+			foreach (string address; root["listen"])
+				bindAddresses_ ~= address;
+			execProvider_ = root["exec"]["driver"].as!string();
+			enableExecCache_ = root["exec"]["cache"].as!bool();
+			publicDir_ = root["public_dir"].as!string();
+			googleAnalyticsId_ = root["google_analytics_id"].as!string();
 
-		if (execProvider_ == "docker") {
-			dockerConfig_ = DockerConfig(root["exec"]["config"]);
+			if (execProvider_ == "docker") {
+				dockerConfig_ = DockerConfig(root["exec"]["config"]);
+			}
+		} catch (Exception e) {
+			logError("Error loading config file '%s'. Falling back to defaults: %s",
+				configFile, e);
 		}
 	}
 }
