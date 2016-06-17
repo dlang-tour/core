@@ -1,14 +1,20 @@
 var dlangTourApp = angular.module('DlangTourApp', ['ui.codemirror', 'cfp.hotkeys']);
 
-dlangTourApp.controller('DlangTourAppCtrl', [ '$scope', '$http', 'hotkeys', function($scope, $http, hotkeys) {
+dlangTourApp.controller('DlangTourAppCtrl',
+	['$scope', '$http', 'hotkeys', '$window',
+	function($scope, $http, hotkeys, $window) {
 	$scope.programOutput = "";
 	$scope.warnings = [];
 	$scope.errors = [];
 	$scope.showContent = true;
 	$scope.showProgramOutput = false;
 	$scope.editor = null;
+	$scope.githubRepo = "stonemaster/dlang-tour";
+	$scope.language = "en";
 	$scope.chapterId = null;
 	$scope.section = null;
+	$scope.prevPage = null;
+	$scope.nextPage = null;
 
 	$scope.updateErrorsAndWarnings = function(doc, options, editor) {
 		var lintings = [];
@@ -57,9 +63,11 @@ dlangTourApp.controller('DlangTourAppCtrl', [ '$scope', '$http', 'hotkeys', func
 		}
 	};
 
-	$scope.init = function(chapterId, section, hasSourceCode) {
+	$scope.init = function(chapterId, section, hasSourceCode, prevPage, nextPage) {
 		$scope.chapterId = chapterId;
 		$scope.section = section;
+		$scope.prevPage = prevPage;
+		$scope.nextPage = nextPage;
 		$http.get('/api/v1/source/' + chapterId + "/" + section)
 			.success(function(data) {
 				$scope.resetCode = data.sourceCode;
@@ -106,22 +114,12 @@ dlangTourApp.controller('DlangTourAppCtrl', [ '$scope', '$http', 'hotkeys', func
 	hotkeys.add({
 		combo: 'left',
 		description: 'Go to previous section',
-		callback: function() {
-			$http.get('/previous-section/' + $scope.chapterId + '/' + $scope.section)
-				.success(function(data) {
-					window.location.href = data.location;
-				});
-		}
+		callback: prevPage
 	});
 	hotkeys.add({
 		combo: 'right',
 		description: 'Go to next section',
-		callback: function() {
-			$http.get('/next-section/' + $scope.chapterId + '/' + $scope.section)
-				.success(function(data) {
-					window.location.href = data.location;
-				});
-		}
+		callback: nextPage
 	});
 	hotkeys.add({
 		combo: 'ctrl+enter',
@@ -138,4 +136,31 @@ dlangTourApp.controller('DlangTourAppCtrl', [ '$scope', '$http', 'hotkeys', func
 			e.preventDefault();
 		}
 	});
+
+	function prevPage()
+	{
+		window.location.href = $scope.prevPage;
+	};
+
+	function nextPage()
+	{
+		window.location.href = $scope.nextPage;
+	}
+
+	$scope.editOnGithub = function() {
+		var url = 'https://github.com/' + $scope.githubRepo + '/edit/master/public/content/';
+		url += $scope.language + '/' + $scope.chapterId + '/' + $scope.section + '.md';
+		$window.open(url, '_blank');
+	}
 }]);
+
+// use CodeMirror to highlight pre
+function start() {
+	document.querySelectorAll('code').forEach(function(i, block) {
+	    var val = block.textContent || "";
+		CodeMirror.runMode(val, "text/x-d", block);
+		block.className += "cm-s-elegant";
+	});
+}
+
+document.addEventListener('DOMContentLoaded', start);

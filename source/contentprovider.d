@@ -8,6 +8,9 @@ import std.string: split, strip;
 import std.typecons: Tuple;
 import std.exception: enforce;
 import std.string: format;
+import std.path: buildPath;
+
+import yaml;
 
 /++
 	Manages the mark down files found in public/content
@@ -25,16 +28,6 @@ class ContentProvider
 		"{SourceCode:incomplete}";
 	private immutable SourceCodeMaxCharsPerLine = 48;
 
-	/// Determines ordering of chapters as displayed
-	/// in TOC
-	private immutable ChapterOrdering = [
-		"welcome",
-		"basics",
-		"gems",
-		"multithreading",
-		"vibed",
-	];
-
 	private {
 		struct Content {
 			string sourceCode;
@@ -45,16 +38,22 @@ class ContentProvider
 			string html;
 			string title;
 			string language;
+			size_t _id;
 		}
 
 		/// language, chapter, section
-		Content[int][string][string] content_;
-		/// overall chapter title indexed by language and internal chapter name
-		string[string][string] chapterTitle_;
+		Content[string][string][string] content_;
+
+		struct ChapterMeta {
+			size_t id;
+			string title;
+		}
+		/// chapter ordering: language, chapter
+		ChapterMeta[string][string] chapter_;
 	}
 
 	/// Create or update Content structure
-	private Content* updateContent(string language, string chapter, int section)
+	private Content* updateContent(string language, string chapter, string section)
 	{
 		Content* content;
 		if (auto l = language in content_) {
@@ -78,56 +77,81 @@ class ContentProvider
 			auto parts = filename[contentDirectory.length .. $]
 					.split('/').filter!(x => !x.empty)
 					.array;
-			logInfo("Found content file '%s'", parts);
-
-			// ignore README's and hidden files
-			if (parts[$ - 1] == "README.md" || parts[$ - 1][0] == '.')
+			// search for language-specific root file
+			auto language = parts[0];
+			if (parts[1] != "index.yml")
 				continue;
-			enforce(parts.length == 2,
-					new Exception("Content has wrong structure (language/chapter.md): %s".format(filename)));
-
-			auto chapterFile = parts[1].split('.');
-			enforce(chapterFile.length == 2 && chapterFile[1] == MarkdownExtension,
-				new Exception("Chapter file invalid: %s".format(parts[1])));
-
-			auto language = parts[0], chapter = chapterFile[0];
-			auto currentSection = 0;
-			foreach (ref section; splitMarkdownBySection(readText(filename))) {
-				if (section.title == SourceCodeSectionTitle ||
-					section.title == SourceCodeDisabledSectionTitle ||
-					section.title == SourceCodeIncompleteSectionTitle) {
-					enforce(section.level == 2, new Exception("%s: %s section expected to be on 2nd level"
-								.format(filename, SourceCodeSectionTitle)));
-					auto content = updateContent(language, chapter, currentSection);
-					enforce(!content.html.empty, new Exception("%s: %s section must be within existing section."
-								.format(filename, SourceCodeSectionTitle)));
-					enforce(content.sourceCode.empty, new Exception("%s: Double %s section in '%s'"
-								.format(filename, SourceCodeSectionTitle, content.title)));
-					content.sourceCode = section.bodyOnly;
-					content.sourceCodeEnabled = section.title != SourceCodeDisabledSectionTitle;
-					content.sourceCodeIncomplete = section.title == SourceCodeIncompleteSectionTitle;
-					checkSourceCodeLineWidth(content.sourceCode, content.title);
-				} else if (section.level == 1) {
-					if (section.bodyOnly.empty) {
-						enforce(null is (language in chapterTitle_) || null is (chapter in chapterTitle_[language]),
-								new Exception("%s: Just one empty chapter title allowed: %s".format(filename, section.title)));
-						chapterTitle_[language][chapter] = section.title;
-					} else {
-						auto content = updateContent(language, chapter, ++currentSection);
-						content.title = section.title;
-						content.html = filterMarkdown(section.content,
-							MarkdownFlags.backtickCodeBlocks | MarkdownFlags.vanillaMarkdown);
-					}
-				} else if (section.level >= 3) {
-					enforce(currentSection != 0, new Exception("%s: level 3 section can't be first (%s)".format(filename, section.title)));
-					auto content = updateContent(language, chapter, currentSection);
-					content.html ~= filterMarkdown(section.content,
-							MarkdownFlags.backtickCodeBlocks | MarkdownFlags.vanillaMarkdown);
-				} else {
-					throw new Exception("%s: Illegal section %s".format(filename, section.title));
-				}
+			auto root = Loader(filename).load();
+		    auto i = 0;
+			foreach (string chapter; root["ordering"])
+			{
+				auto chapterDir = buildPath(filename[0 .. contentDirectory.length],
+											language, chapter);
+				chapter_[language][chapter] = ChapterMeta(i++, "");
+				addChapter(chapter, chapterDir, language);
 			}
 		}
+	}
+
+	private void addChapter(string chapter, string chapterDir, string language)
+	{
+		auto configFile = buildPath(chapterDir, "index.yml");
+		auto root = Loader(configFile).load();
+		// TODO: add title
+		enforce("title" in root, "title required for chapter");
+		chapter_[language][chapter].title = root["title"].as!string;
+
+		auto i = 0;
+		foreach (string section; root["ordering"])
+		{
+			auto filename = buildPath(chapterDir, section ~ ".md");
+			Content* content = addSection(filename, chapter, section, language);
+			content._id = i++;
+		}
+	}
+
+	private Content* addSection(string filename, string chapter, string currentSection, string language)
+	{
+		Content* content = updateContent(language, chapter, currentSection);
+		enforce(exists(filename), "couldn't find " ~ filename);
+		foreach (ref section; splitMarkdownBySection(readText(filename))) {
+			if (section.title == SourceCodeSectionTitle ||
+				section.title == SourceCodeDisabledSectionTitle ||
+				section.title == SourceCodeIncompleteSectionTitle) {
+				enforce(section.level == 2, new Exception("%s: %s section expected to be on 2nd level"
+							.format(filename, SourceCodeSectionTitle)));
+				enforce(!content.html.empty, new Exception("%s: %s section must be within existing section."
+							.format(filename, SourceCodeSectionTitle)));
+				enforce(content.sourceCode.empty, new Exception("%s: Double %s section in '%s'"
+							.format(filename, SourceCodeSectionTitle, content.title)));
+				content.sourceCode = section.bodyOnly;
+				// ignore markdown code blocks
+				if (content.sourceCode[0..3] == "```")
+				{
+                    // allow additional code language specifiers
+					auto startPos = content.sourceCode.countUntil("\n");
+					assert(content.sourceCode.length > 10, "source code file too small");
+	                // remove three first and last backticks
+					content.sourceCode = content.sourceCode[startPos + 1 .. $ - 4];
+				}
+				content.sourceCodeEnabled = section.title != SourceCodeDisabledSectionTitle;
+				content.sourceCodeIncomplete = section.title == SourceCodeIncompleteSectionTitle;
+				checkSourceCodeLineWidth(content.sourceCode, content.title);
+			} else if (section.level == 1) {
+					enforce(content.title.length == 0,
+							new Exception("%s: Just one chapter title allowed: %s".format(filename, section.title)));
+					content.title = section.title;
+					content.html = filterMarkdown(section.content,
+						MarkdownFlags.backtickCodeBlocks | MarkdownFlags.vanillaMarkdown);
+			} else if (section.level >= 2) {
+				enforce(content.title.length != 0, new Exception("%s: level 3 section can't be first (%s)".format(filename, section.title)));
+				content.html ~= filterMarkdown(section.content,
+						MarkdownFlags.backtickCodeBlocks | MarkdownFlags.vanillaMarkdown);
+			} else {
+				throw new Exception("%s: Illegal section %s".format(filename, section.title));
+			}
+		}
+		return content;
 	}
 
 	/++
@@ -155,7 +179,7 @@ class ContentProvider
 		- $(D content) pointer if found
 		- $(D sectionCount)
 	+/
-	auto getContent(string language, string chapter, int section)
+	auto getContent(string language, string chapter, string section)
 	{
 		struct Result {
 			Content* content;
@@ -176,7 +200,7 @@ class ContentProvider
 	}
 
 	/++
-		Returns logical structure of chapters and sections. Ordering definied in ContentProvider
+		Returns logical structure of chapters and sections. Ordering defined in ContentProvider
 		is adhered to.
 
 		Returns:
@@ -192,28 +216,22 @@ class ContentProvider
 	+/
 	auto getTOC(string language) const
 	{
-		auto chapterTitles = language in chapterTitle_;
-		enforce(chapterTitles !is null, new Exception("%s not known.".format(language)));
-		enforce(ChapterOrdering.length == content_[language].length,
-				new Exception("Chapter ordering doesn't match chapters on disk!"));
-
 		struct Chapter {
 			string title;
 			string chapterId;
-			Tuple!(string, "title", int, "sectionId")[] sections;
+			Tuple!(string, "title", string, "sectionId")[] sections;
 		}
-		
-		auto toc = new Chapter[content_[language].length];
-		
+		auto chapterMeta = language in chapter_;
+		enforce(chapterMeta !is null, new Exception("%s not known.".format(language)));
+		Chapter[] toc = new Chapter[content_[language].length];
+
 		foreach (chapterId, sections; content_[language]) {
-			auto idx = ChapterOrdering.countUntil(chapterId);
-			enforce(idx != -1, new Exception("%s chapter not in included in ordering.".format(chapterId)));
-			auto chapter = &toc[idx];
+			Chapter* chapter = &toc[(*chapterMeta)[chapterId].id];
 			chapter.chapterId = chapterId;
-			chapter.title = (*chapterTitles)[chapterId];
+			chapter.title = (*chapterMeta)[chapterId].title;
 			chapter.sections.length = sections.length;
 			foreach(sectionIdx, ref content; sections) {
-				auto section = &chapter.sections[sectionIdx - 1];
+				auto section = &chapter.sections[content._id];
 				section.title = content.title;
 				section.sectionId = sectionIdx;
 			}
@@ -250,7 +268,7 @@ class ContentProvider
 
 /++
 	Splits markdown file by sections.
-	
+
 	Returns: an array which contains information objects
 	for each section with the following properties:
 		- string content: the full mark down content of the section (will be stripped)

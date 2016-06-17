@@ -1,0 +1,15 @@
+title: D's Gems
+ordering:
+- uniform-function-call-syntax-ufcs
+- scope-guards
+- range-algorithms
+- unittesting
+- string-mixins
+- compile-time-function-evaluation-ctfe
+- functional-programming
+- contract-programming
+- subtyping
+- attributes
+- opdispatch-opapply
+- documentation
+- template-meta-programming
