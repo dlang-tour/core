@@ -50,6 +50,7 @@ class Config
 		try {
 			auto root = Loader(configFile).load();
 			port_ = root["port"].as!ushort();
+			bindAddresses_ = [];
 			foreach (string address; root["listen"])
 				bindAddresses_ ~= address;
 			execProvider_ = root["exec"]["driver"].as!string();
