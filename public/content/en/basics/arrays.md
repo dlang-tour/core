@@ -34,8 +34,18 @@ arrays can be created easily using the `auto arr = new int[3][3]` syntax.
 #### Array operations and properties
 
 Arrays can be concatenated using the `~` operator which
-will create a new dynamic array. Mathematical operations can
-be applied to whole arrays using the `c[] = a[] + b[]` syntax.
+will create a new dynamic array.
+
+Mathematical operations can
+be applied to whole arrays using the `c[] = a[] + b[]` syntax,
+which for example adds all elements of `a` and `b` so that
+`c[0] = a[0] + b[0]`. `c[1] = a[1] + b[1]` etc. It is also possible
+to perform operations on a whole array with a single
+value:
+
+    a[] *= 2; // multiple all elements by 2
+    a[] %= 26; // calculate the modulo by 26 for all a's
+
 Those operations might be optimized
 by the compiler to use special processors instructions that
 do the operations in one go.
