@@ -51,7 +51,7 @@ void main()
     // and their clean up code next to each
     // other
     import core.stdc.stdlib;
-    int* p = malloc(int.sizeof);
+    int* p = cast(int*)malloc(int.sizeof);
     scope(exit) free(p);
 }
 ```
