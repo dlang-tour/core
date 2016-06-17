@@ -83,7 +83,8 @@ private void doSanityCheck(ContentProvider contentProvider, IExecProvider execPr
 				section.language, section.title);
 		auto result = execProvider.compileAndExecute(section.sourceCode);
 		enforce(result.success,
-			"[%s] Sanity check: Source code for section '%s' doesn't compile!".format(section.language, section.title));
+			"[%s] Sanity check: Source code for section '%s' doesn't compile:\n%s"
+			.format(section.language, section.title, result.output));
 	}
 }
 
