@@ -103,7 +103,8 @@ class WebInterface
 
 	void index(HTTPServerRequest req, HTTPServerResponse res)
 	{
-		getTour(req, res, "welcome", "welcome-to-d");
+		auto startPoint = contentProvider_.getMeta("en").start;
+		getTour(req, res, startPoint.chapter, startPoint.section);
 	}
 
 	/+

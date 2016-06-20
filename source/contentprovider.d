@@ -50,6 +50,24 @@ class ContentProvider
 		}
 		/// chapter ordering: language, chapter
 		ChapterMeta[string][string] chapter_;
+
+		struct ChapterAndSection {
+			string chapter;
+			string section;
+			this(string s)
+			{
+				auto arr = s.split("/");
+				enforce(arr.length == 2, "Invalid start page given");
+				chapter = arr[0];
+				section = arr[1];
+			}
+		}
+		struct LanguageMeta {
+			ChapterAndSection start;
+			string title;
+		}
+		/// general language-wide information
+		LanguageMeta[string] language_;
 	}
 
 	/// Create or update Content structure
@@ -82,6 +100,15 @@ class ContentProvider
 			if (parts[1] != "index.yml")
 				continue;
 			auto root = Loader(filename).load();
+
+			// language meta information
+			enforce("start" in root, "'start' point required in language-specific yaml");
+			import std.algorithm.searching : count;
+			enforce(root["start"].as!string.count("/") == 1, "The start page must be formatted as chapter/section");
+
+			enforce("title" in root, "'title' point required in language-specific yaml");
+			language_[language] = LanguageMeta(ChapterAndSection(root["start"].as!string), root["title"].as!string);
+
 		    auto i = 0;
 			foreach (string chapter; root["ordering"])
 			{
@@ -243,6 +270,17 @@ class ContentProvider
 	string[] getLanguages() const
 	{
 		return content_.byKey().array;
+	}
+
+	/++
+	Returns: range that allows iterating
+	  over the whole content, regardless of language. Content
+	  doesn't guarantee any order.
+	+/
+	LanguageMeta getMeta(string language) const
+	{
+		enforce(language in language_, "Invalid language");
+		return language_[language];
 	}
 
 	/++
