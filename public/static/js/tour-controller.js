@@ -63,15 +63,16 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		}
 	};
 
-	$scope.init = function(chapterId, section, hasSourceCode, prevPage, nextPage) {
+	$scope.init = function(language, chapterId, section, hasSourceCode, prevPage, nextPage) {
+		$scope.language = language;
 		$scope.chapterId = chapterId;
 		$scope.section = section;
 		$scope.prevPage = prevPage;
 		$scope.nextPage = nextPage;
-		$http.get('/api/v1/source/' + chapterId + "/" + section)
+		$http.get('/api/v1/source/' + language + "/" + chapterId + "/" + section)
 			.success(function(data) {
 				$scope.resetCode = data.sourceCode;
-				$scope.sourceCodeKey = "sourcecode_" + chapterId + "_" + section;
+				$scope.sourceCodeKey = "sourcecode_" + language + "_" + chapterId + "_" + section;
 
 				var sessionSC = sessionStorage.getItem($scope.sourceCodeKey)
 				if (sessionSC) {
