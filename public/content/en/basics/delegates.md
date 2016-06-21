@@ -14,8 +14,8 @@ A function can also be a parameter to another function:
 
 The above example uses the `function` type which is
 a pointer to a global function. As soon as a member
-function or a local function is referenced we'll have
-to use the type `delegate`. It's a function pointer
+function or a local function is referenced, `delegate`'s
+have to be used. It's a function pointer
 that additionally contains information about its
 context - or *enclosure*, thus also called **closure**
 in other languages. For example a `delegate`
@@ -46,14 +46,15 @@ Nameless function which are called *lambdas* can be defined in two ways:
     auto f = (int lhs, int rhs) {
         return lhs + rhs;
     };
-    auto f = (lhs, rhs) => lhs + rhs;
+    auto f = (int lhs, int rhs) => lhs + rhs;
 
 The second form is a shorthand form for lambdas that consist
-of just one line.
+of just one line. Moreover if the type(s) of the lambda parameters
+can be inferred by the context, they can be omitted too.
 
 ### In-depth
 
-- [Delegate's specification](https://dlang.org/spec/function.html#closures)
+- [Delegate specification](https://dlang.org/spec/function.html#closures)
 
 ## {SourceCode}
 
