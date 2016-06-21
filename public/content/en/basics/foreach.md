@@ -1,18 +1,17 @@
 # Foreach
 
-D features a `foreach` loop which makes iterating
-through data less error-prone and easier to read.
+D features a `foreach` loop which allows
+less error-prone and better readable iterations.
 
 Given an array `arr` of type `int[]` it is possible to
-iterate through the elements using this `foreach` loop:
+iterate through the elements using a `foreach` loop:
 
     foreach (int e; arr) {
         writeln(e);
     }
 
 The first field in the `foreach` definition is the variable
-name used in the loop iteration. Its type can be omitted
-and is then induced automatically:
+name used in the loop iteration. Its type is induced automatically:
 
     foreach (e; arr) {
         // typoef(e) is int
@@ -22,10 +21,10 @@ and is then induced automatically:
 The second field must be an array - or a special iterable
 object called a **range** which will be introduced in the next section.
 
-Elements will be copied from the array or range during iteration -
-this is okay for basic types but might be a problem for
-large types. To prevent copying or enable *in-place
-*mutation, use `ref`:
+Elements will be copied from the array or range during iteration.
+This is acceptable for basic types, but might be a problem for
+large types. To prevent copying or to enable *in-place
+*mutation, `ref` can be used:
 
     foreach (ref e; arr) {
         e = 10; // overwrite value
@@ -35,6 +34,7 @@ large types. To prevent copying or enable *in-place
 
 - [`foreach` in _Programming in D_](http://ddili.org/ders/d.en/foreach.html)
 - [`foreach` with Structs and Classes  _Programming in D_](http://ddili.org/ders/d.en/foreach_opapply.html)
+- [`foreach` specification](https://dlang.org/spec/statement.html#ForeachStatement)
 
 ## {SourceCode}
 
