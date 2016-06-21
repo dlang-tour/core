@@ -5,7 +5,7 @@ size **regardless** of the platform - the only exception
 is the `real` type which provides the highest possible floating point
 precision. There is no difference
 between the size of an integer regardless whether the application
-is compiled for 32bit or 64bit systems.
+is compiled for 32-bit or 64-bit systems.
 
 <table class="table table-hover">
 <tr><td width="250px"><code class="prettyprint">bool</code></td> <td>8-bit</td></tr>
@@ -20,7 +20,7 @@ is compiled for 32bit or 64bit systems.
 <table class="table table-hover">
 <tr><td width="250px"><code class="prettyprint">float</code></td> <td>32-bit</td></tr>
 <tr><td><code class="prettyprint">double</code></td> <td>64-bit</td></tr>
-<tr><td><code class="prettyprint">real</code></td> <td>depending on platform, 80 bit on Intel x86 32-bit</td></tr>
+<tr><td><code class="prettyprint">real</code></td> <td>depending on platform, 80-bit on Intel x86 32-bit</td></tr>
 </table>
 
 The prefix `u` denotes *unsigned* types. `char` translates to
@@ -47,10 +47,19 @@ All data types have a property `.init` to which they are initialized.
 For all integers this is `0` and for floating points it is `NaN` (*not a number*).
 Integral and floating point types have a `.min` and `.max` property for the lowest
 and highest value they can represent. Floating point values have more properties 
-`.nan` (NaN-value), `.infinity` (Infinity value), `.dig` (number of
+`.nan` (NaN-value), `.infinity` (infinity value), `.dig` (number of
 decimal digits of precisions), `.mant_dig` (number of bits in mantissa) and more.
 
 Every type also has a `.stringof` property which yields its name as a string.
+
+### Indexes in D
+
+In D indexes have usually the alias type `size_t` as it is a type that
+is large enough to represent an offset into all addressible memory - that is
+`uint` for 32-bit and `ulong` for 64-bit architectures.
+
+`assert` is compiler built-in which verifies conditions in debug mode and aborts
+with an `AssertionError` if it fails.
 
 ### In-depth
 
@@ -67,13 +76,6 @@ Every type also has a `.stringof` property which yields its name as a string.
 - [Overview of all basic data types in D](https://dlang.org/spec/type.html)
 - [`auto` and `typeof` in _Programming in D_](http://ddili.org/ders/d.en/auto_and_typeof.html)
 - [Type properties](https://dlang.org/spec/property.html)
-
-In D indexes have usually the alias type `size_t` as it is a type that
-is large enough to represent an offset into all addressible memory - that is
-`uint` for 32-bit and `ulong` for 64-bit architectures.
-
-`assert` is compiler built-in which verifies conditions in debug mode and aborts
-with an `AssertionError` if it fails.
 
 ## {SourceCode}
 
