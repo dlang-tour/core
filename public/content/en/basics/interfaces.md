@@ -1,7 +1,7 @@
 # Interfaces
 
 D allows defining `interface`s which are technically like
-`class` types but whose member functions must be implemented
+`class` types, but whose member functions must be implemented
 by any class inheriting from the `interface`.
 
     interface Animal {
@@ -10,7 +10,7 @@ by any class inheriting from the `interface`.
 
 The `makeNoise` member function has to be implemented
 by `Dog` because it inherits from the `Animal` interface.
-Technically `makeNoise` behaves like an `abstract` member
+Essentially `makeNoise` behaves like an `abstract` member
 function in a base class.
 
     class Dog: Animal {
@@ -23,8 +23,8 @@ function in a base class.
     Animal animal = dog; // implicit cast to interface
     dog.makeNoise();
 
-A `class` type can inherit from as many `interface`s it wishes
-but just from *one* base class.
+The number of `interface`s a `class` can implement isn't limited,
+but it can inherit from only *one* base class.
 
 D easily enables the **NVI - non virtual interface** idiom by
 allowing the definition of `final` functions in an `interface`
