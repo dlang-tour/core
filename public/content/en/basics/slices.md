@@ -11,13 +11,14 @@ length of the slice:
     T* ptr;
     size_t length; // unsigned 32 bit on 32bit, unsigned 64 bit on 64bit
 
-If a new dynamic array is created, we get a slice to that freshly
-allocated memory:
+If a new dynamic array is created, a slice to this freshly
+allocated memory is returned:
 
     auto arr = new int[5];
     assert(arr.length == 5); // memory referenced in arr.ptr
 
-Using the `[Start .. End]` syntax a sub-slice is constructed from an existing
+Using the `[start .. end]` syntax a sub-slice, which contains all elements
+from `start` to the element _before_ `end`, is constructed from an existing
 slice:
 
     auto newArr = arr[1 .. 4]; // index 4 ist NOT included
@@ -32,9 +33,9 @@ Using slices it's possible to write very efficient code for e.g. parsers
 that just operate on one memory block and just slice the parts they really need
 to work on - no need allocating new memory blocks.
 
-As seen in the previous section the `[$]` expression indexes the element
-one past the slice's end and thus would generate a `RangeError`
-(if bounds-checking hasn't been disabled).
+As seen in the previous section the `[$]` expression is a shorthand form for
+`arr.length`. Hence `arr[$]` indexes the element one past the slice's end and
+thus would generate a `RangeError` (if bounds-checking hasn't been disabled).
 
 ### In-depth
 
