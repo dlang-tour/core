@@ -15,7 +15,7 @@ D is the culmination of _decades of experience implementing compilers_
 for many diverse languages and has a large number of
 [unique features](http://dlang.org/overview.html):
 
-<img src="static/img/dman.png" class="img-left hidden-xs" id="dman-front-desktop" />
+<img src="/static/img/dman.png" class="img-left hidden-xs" id="dman-front-desktop" />
 
 - _high level_ constructs for great modeling power
 - _high performance_, compiled language
