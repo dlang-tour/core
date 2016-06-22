@@ -8,14 +8,14 @@ the last cycles out of their binary.
 
 #### Static arrays
 
-*Static arrays are stored on the stack if defined inside a function
+Static arrays are stored on the stack if defined inside a function
 or in static memory otherwise.  They have a fixed,
 compile-time known length. A static array's type includes
 the fixed size:
 
     int[8] arr;
 
-`arr`s type is `int[8]`. Note that the size of the array is denoted
+`arr`'s type is `int[8]`. Note that the size of the array is denoted
 near the type and not after the variable name like in C/C++.
 
 #### Dynamic arrays
@@ -70,6 +70,7 @@ which should make things easier.
 ### In-depth
 
 - [Arrays in _Programming in D_](http://ddili.org/ders/d.en/arrays.html)
+- [Array specification](https://dlang.org/spec/arrays.html)
 
 ## {SourceCode:incomplete}
 
