@@ -2,12 +2,10 @@ extends base
 
 block head
 	link(rel="stylesheet", href="/static/lib/hotkeys.min.css")
-	link(rel="stylesheet", href="/static/css/tour.css")
 	link(rel="stylesheet", href="/static/lib/codemirror/lib/codemirror.min.css")
 	link(rel="stylesheet", href="/static/lib/codemirror/addon/lint/lint.min.css")
 	link(rel="stylesheet", href="/static/lib/codemirror/theme/elegant.css")
 	link(rel="stylesheet", href="/static/lib/grid12.min.css")
-	link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css")
 
 block content
 	.row(ng-controller="DlangTourAppCtrl as ctrl", ng-init="init('#{language}', '#{chapterId}', '#{section}', #{hasSourceCode}, '#{previousSection.link}', '#{nextSection.link}')")

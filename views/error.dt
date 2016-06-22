@@ -1,0 +1,9 @@
+extends base
+
+block js
+	:javascript
+		var dlangTourApp = angular.module('DlangTourApp', []);
+
+block content
+	div(style="padding: 20px")
+		h2 #{error.message}

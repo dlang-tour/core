@@ -113,6 +113,15 @@ shared static this()
 	settings.port = config.port;
 	settings.bindAddresses = config.bindAddresses;
 	settings.useCompressionIfPossible = true;
+	settings.errorPageHandler = (HTTPServerRequest req, HTTPServerResponse res, HTTPServerErrorInfo error) {
+		auto t = contentProvider.getTOC("en");
+		auto toc = &t;
+		auto googleAnalyticsId = config.googleAnalyticsId;
+		auto chapterId = "";
+		auto language = "en";
+		res.render!("error.dt", req, error, language, googleAnalyticsId, chapterId, toc)();
+		res.finalize();
+	};
 
 	auto urlRouter = new URLRouter;
 	auto fsettings = new HTTPFileServerSettings;
