@@ -32,7 +32,7 @@ evaluated for the first time.
 
 #### 4) `foreach`
 
-The `foreach` loop which will be introduced in the
+The [`foreach` loop](basics/foreach) which will be introduced in the
 next section.
 
 #### Special keywords and labels

@@ -168,17 +168,31 @@ class ContentProvider
 					enforce(content.title.length == 0,
 							new Exception("%s: Just one chapter title allowed: %s".format(filename, section.title)));
 					content.title = section.title;
-					content.html = filterMarkdown(section.content,
-						MarkdownFlags.backtickCodeBlocks | MarkdownFlags.vanillaMarkdown);
+					content.html = processMarkdown(section.content, language);
 			} else if (section.level >= 2) {
 				enforce(content.title.length != 0, new Exception("%s: level 3 section can't be first (%s)".format(filename, section.title)));
-				content.html ~= filterMarkdown(section.content,
-						MarkdownFlags.backtickCodeBlocks | MarkdownFlags.vanillaMarkdown);
+				content.html ~= processMarkdown(section.content, language);
 			} else {
 				throw new Exception("%s: Illegal section %s".format(filename, section.title));
 			}
 		}
 		return content;
+	}
+
+	/++
+		Parses the given markdown and adds content filters
+
+		Returns:
+			Processed markdown in form of HTML
+	+/
+	string processMarkdown(string content, string language)
+	{
+		auto settings = new MarkdownSettings;
+		settings.flags = MarkdownFlags.backtickCodeBlocks | MarkdownFlags.vanillaMarkdown;
+		settings.urlFilter = (string link, bool) {
+			return "/tour/%s/%s".format(language, link);
+		};
+		return filterMarkdown(content, settings);
 	}
 
 	/++
