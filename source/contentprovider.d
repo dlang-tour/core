@@ -29,6 +29,9 @@ class ContentProvider
 	private immutable SourceCodeMaxCharsPerLine = 48;
 
 	private {
+		/// root content directory
+		string contentDirectory;
+
 		struct Content {
 			string sourceCode;
 			bool sourceCodeEnabled = true;
@@ -87,8 +90,23 @@ class ContentProvider
 		return content;
 	}
 
+	private bool isValidLink(string link, string language)
+	{
+		import std.algorithm.searching : count;
+		if (link.count("/") != 1)
+			return false;
+
+		// check for existence in file system
+		import std.array : split;
+		auto parts = link.split("/");
+		string fileName = buildPath(contentDirectory, language, parts[0], parts[1] ~ ".md");
+		import std.stdio;
+		return exists(fileName);
+	}
+
 	this(string contentDirectory)
 	{
+		this.contentDirectory = contentDirectory;
 		foreach(string filename; dirEntries(contentDirectory, SpanMode.depth)) {
 			if (isDir(filename))
 				continue;
@@ -103,8 +121,7 @@ class ContentProvider
 
 			// language meta information
 			enforce("start" in root, "'start' point required in language-specific yaml");
-			import std.algorithm.searching : count;
-			enforce(root["start"].as!string.count("/") == 1, "The start page must be formatted as chapter/section");
+			enforce(isValidLink(root["start"].as!string, language), "The start page must be formatted as chapter/section");
 
 			enforce("title" in root, "'title' point required in language-specific yaml");
 			language_[language] = LanguageMeta(ChapterAndSection(root["start"].as!string), root["title"].as!string);
@@ -190,6 +207,9 @@ class ContentProvider
 		auto settings = new MarkdownSettings;
 		settings.flags = MarkdownFlags.backtickCodeBlocks | MarkdownFlags.vanillaMarkdown;
 		settings.urlFilter = (string link, bool) {
+			import std.algorithm.searching : startsWith;
+			if (!(link.startsWith("http") || link.startsWith("https" || link[0] != '/')))
+				enforce(isValidLink(link, language), "Invalid link given: " ~ link);
 			return "/tour/%s/%s".format(language, link);
 		};
 		return filterMarkdown(content, settings);
