@@ -13,9 +13,9 @@ ordering:
 - loops
 - foreach
 - ranges
+- delegates
 - associative-arrays
 - classes
 - interfaces
-- delegates
 - templates
 - further-reading
