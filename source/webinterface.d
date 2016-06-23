@@ -80,7 +80,7 @@ class WebInterface
 					return R("", "");
 			} else if (sectionIdx >= toc[chapterIdx].sections.length) {
 				if (++chapterIdx < toc.length)
-					sectionIdx = 1;
+					sectionIdx = 0;
 				else
 					return R("", "");
 			}
