@@ -208,9 +208,13 @@ class ContentProvider
 		settings.flags = MarkdownFlags.backtickCodeBlocks | MarkdownFlags.vanillaMarkdown;
 		settings.urlFilter = (string link, bool) {
 			import std.algorithm.searching : startsWith;
-			if (!(link.startsWith("http") || link.startsWith("https" || link[0] != '/')))
+			if (link.startsWith("http") || link.startsWith("https" || link[0] != '/'))
+				return link;
+			else
+			{
 				enforce(isValidLink(link, language), "Invalid link given: " ~ link);
-			return "/tour/%s/%s".format(language, link);
+				return "/tour/%s/%s".format(language, link);
+			}
 		};
 		return filterMarkdown(content, settings);
 	}
