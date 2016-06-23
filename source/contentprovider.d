@@ -208,7 +208,7 @@ class ContentProvider
 		settings.flags = MarkdownFlags.backtickCodeBlocks | MarkdownFlags.vanillaMarkdown;
 		settings.urlFilter = (string link, bool) {
 			import std.algorithm.searching : startsWith;
-			if (link.startsWith("http") || link.startsWith("https" || link[0] != '/'))
+			if (link.startsWith("http") || link.startsWith("https") || link.startsWith("irc") || link[0] != '/')
 				return link;
 			else
 			{
