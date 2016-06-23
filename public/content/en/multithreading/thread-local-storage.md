@@ -56,9 +56,9 @@ void worker(bool firstTime)
     // able to access it. Note that it
     // is initialized only the first time
     // the line is executed.
-    static int theStatic = 0;
+    static int threadState = 0;
     writeln("Thread ", thisTid,
-        ": My static = ", theStatic++);
+        ": My state = ", threadState++);
     if (firstTime)
         worker(false);
 }

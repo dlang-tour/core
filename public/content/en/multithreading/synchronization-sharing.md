@@ -49,6 +49,11 @@ helper:
 ### In-depth
 
 - [Data Sharing Concurrency in _Programming in D_](http://ddili.org/ders/d.en/concurrency_shared.html)
+- [`shared` type qualifier](http://www.informit.com/articles/article.aspx?p=1609144&seqNum=11)
+- [Lock-Based Synchronization with `synchronized`](http://www.informit.com/articles/article.aspx?p=1609144&seqNum=13)
+- [Deadlocks and `synchronized`](http://www.informit.com/articles/article.aspx?p=1609144&seqNum=15)
+- [`synchronized` specification](https://dlang.org/spec/statement.html#SynchronizedStatement)
+- [Implicit conversions with `shared` data types](https://dlang.org/spec/const3.html#implicit_conversions)
 
 ## {SourceCode}
 

@@ -50,7 +50,13 @@ has been sent to the thread's mailbox.
 
 ### In-depth
 
+- [Exchanging Messages between Threads](http://www.informit.com/articles/article.aspx?p=1609144&seqNum=5)
 - [Messaging passing concurrency](http://ddili.org/ders/d.en/concurrency.html)
+- [Pattern Matching with receive](http://www.informit.com/articles/article.aspx?p=1609144&seqNum=6)
+- [Multi-threaded file copying](http://www.informit.com/articles/article.aspx?p=1609144&seqNum=7)
+- [Thread Termination](http://www.informit.com/articles/article.aspx?p=1609144&seqNum=8)
+- [Out-of-Band Communication](http://www.informit.com/articles/article.aspx?p=1609144&seqNum=9)
+- [Mailbox crowding](http://www.informit.com/articles/article.aspx?p=1609144&seqNum=10)
 
 ## {SourceCode}
 
