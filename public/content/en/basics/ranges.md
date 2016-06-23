@@ -23,8 +23,8 @@ The functions in `std.range` and `std.algorithm` provide
 building blocks that make use of this interface. Ranges allow
 to compose complex algorithms behind an object that
 can be iterated with ease. Furthermore ranges allow to create **lazy**
-objects that just perform a calculation when it's really needed
-in an iteration e.g. when a range's element is used.
+objects that only perform a calculation when it's really needed
+in an iteration e.g. when the next range's element is accessed.
 
 ### Exercise
 
@@ -32,6 +32,11 @@ Complete the source code to create the `FibonacciRange` range
 that returns numbers of the
 [Fibonacci sequence](https://en.wikipedia.org/wiki/Fibonacci_number).
 Don't fool yourself into deleting the `assert`ions!
+
+### In-depth
+
+- [`std.algorithm`](http://dlang.org/phobos/std_algorithm.html)
+- [`std.range`](http://dlang.org/phobos/std_range.html)
 
 ## {SourceCode:incomplete}
 
