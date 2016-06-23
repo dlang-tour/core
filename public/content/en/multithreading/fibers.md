@@ -2,7 +2,7 @@
 
 **Fibers** are a way to implemented concurrency
 in a *cooperative* fashion. The class `Fiber`
-is defined in the module `core.thread`.
+is defined in the module [`core.thread`](https://dlang.org/phobos/core_thread.html).
 
 The basic idea is that when a fiber
 has nothing to do or waits for more input, it
@@ -26,11 +26,7 @@ it called `Fiber.yield()`. Magic? Yes.
 
 This feature can be used to implement concurrency
 where multiple fibers cooperatively share a single
-core. If a fiber has been paused with `yield` it can
-even be passed to another thread and resume operation
-there.
-
-The advantage of fibers compared to threads is
+core. The advantage of fibers compared to threads is
 that there resource usage is lower because
 no context switching is involved.
 
@@ -43,6 +39,7 @@ code.
 ### In-depth
 
 - [Fibers in _Programming in D_](http://ddili.org/ders/d.en/fibers.html)
+- [Documentation of core.thread.Fiber](https://dlang.org/library/core/thread/fiber.html)
 
 ## {SourceCode}
 
@@ -54,7 +51,7 @@ import std.range: iota;
 /**
  * Iterates over $(D range) and applies
  * the function $(D Fnc) to each element x
- * and returns it in $(D result). Fiber yields 
+ * and returns it in $(D result). Fiber yields
  * after each application.
  */
 void fiberedRange(alias Fnc, R, T)(
