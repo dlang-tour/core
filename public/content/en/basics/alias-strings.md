@@ -34,7 +34,7 @@ for UTF strings so in that case use the function `std.utf.count`.
 
 To create multi-line strings use the
 `string str = q{ ... }` syntax. For raw strings you can either use
-backticks `` ` "unescaped string"` ``
+backticks `` `"unescaped string"` ``
 or the r-prefix `r"string that "doesn't" need to be escaped"`.
 
 ### In-depth
