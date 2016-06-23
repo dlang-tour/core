@@ -26,7 +26,7 @@ The folder structure is very simple:
 
 Each language folder contains chapters which in turn contain the individual
 section files. The special `index.yml` files allow configuration of the content
-like specifiying the title and the orderin of the individual sections and chapters.
+like specifiying the title and the ordering of the individual sections and chapters.
 A chapter is prominently shown in the navigation bar of the D tour.
 A chapter consists of a number of sections where each section might
 contain a source code subsection that will be used for the online code
@@ -59,3 +59,13 @@ are just ignored.
 * To prevent dynamic word wrap of code examples on mobile
   devices make sure to have a line length for source code of 48
   characters.
+
+### Writing style guide
+
+* Use the _present_ tense (except for historic facts)
+* Use a _neutral_ tone (No strong narrator = no first-person ("I", "we") nor second-person ("you"))
+* Use a _formal_ (No slang)
+* Provide many references and links
+* Pay attention to spelling
+
+See also the [Wikipedia guide on writing better articles](https://en.wikipedia.org/wiki/Wikipedia:Writing_better_articles).
