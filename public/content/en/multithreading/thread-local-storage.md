@@ -1,9 +1,9 @@
 # Thread local storage
 
 The storage class `static` allows declaring objects
-which are initialized just once. If the same
+which are initialized only once. If the same
 line is executed a second time, the initialization
-is just omitted.
+will be omitted.
 Every thread will get its own
 `static` object (*TLS - thread local storage*)
 and won't be able to read or modify another thread's
@@ -19,10 +19,9 @@ in multi-threaded applications.
 
 The value assigned to a `static` variable must
 be evaluable at compile-time. It mustn't have
-runtime dependencies! It's possible to runtime
-initialize `static`s using a `static this()` module
-constructor or `static this()` one-time constructor
-for structs and classes.
+runtime dependencies! It's possible to initialize
+`static` variables at runtime using a `static this()`
+one-time constructor for structs, classes, and modules.
 
     static int b = 42;
     // b is just intialized once!
@@ -31,17 +30,21 @@ for structs and classes.
     // "own" b without interference from
     // other threds.
 
-If you want to declare a "classic" global variable that
+Moreover for declaration of a "classic" global variable that
 every thread can see and modify,
 use the storage class `__gshared` which is equivalent
 to C's `static`.
-The ugly name is just a friendly reminder to use it rarely.
+Its ugly name is a friendly reminder to use it rarely.
 
     __gshared int b = 50;
     // Also intialized just once!
     // A truly global b which every thread
     // can read - and making it dangerous -
     // modify!
+
+### In-depth
+
+- [Thread-local storage on Wikipedia](https://en.wikipedia.org/wiki/Thread-local_storage)
 
 ## {SourceCode}
 
