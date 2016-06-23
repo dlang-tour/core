@@ -173,9 +173,10 @@ class WebInterface
 		auto previousSection = sec.linkCache.previousSection;
 		auto nextSection = sec.linkCache.nextSection;
 		auto googleAnalyticsId = googleAnalyticsId_;
+		auto title = sec.tourData.content.title ~ " - " ~ contentProvider_.getMeta(_language).title;
 		render!("tour.dt", htmlContent, language, section, sectionId,
 				sectionCount, chapterId, hasSourceCode, sourceCodeEnabled,
 				nextSection, previousSection, googleAnalyticsId,
-				toc)();
+				toc, title)();
 	}
 }

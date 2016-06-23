@@ -114,12 +114,13 @@ shared static this()
 	settings.bindAddresses = config.bindAddresses;
 	settings.useCompressionIfPossible = true;
 	settings.errorPageHandler = (HTTPServerRequest req, HTTPServerResponse res, HTTPServerErrorInfo error) {
+		auto title = "Page not found";
 		auto t = contentProvider.getTOC("en");
 		auto toc = &t;
 		auto googleAnalyticsId = config.googleAnalyticsId;
 		auto chapterId = "";
 		auto language = "en";
-		res.render!("error.dt", req, error, language, googleAnalyticsId, chapterId, toc)();
+		res.render!("error.dt", req, error, language, googleAnalyticsId, chapterId, toc, title)();
 		res.finalize();
 	};
 
