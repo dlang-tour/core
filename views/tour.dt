@@ -11,11 +11,12 @@ block content
 	.row(ng-controller="DlangTourAppCtrl as ctrl", ng-init="init('#{language}', '#{chapterId}', '#{section}', #{hasSourceCode}, '#{previousSection.link}', '#{nextSection.link}')")
 		div#tour-content(ng-show="showContent", ng-class="{'col-md-12': !showSourceCode, 'col-md-6 col-sm-12': showSourceCode}")
 			div(ng-hide="showProgramOutput")
-				.content-command-box(class="hidden-xs hidden-sm")
-					button.btn.btn-default.btn-sm(ng-click="showSourceCode = !showSourceCode", ng-class="{active: showSourceCode}")
-						code { code }
+				.content-command-box
 					button.btn.btn-default(ng-click="editOnGithub()")
-						span.fa.fa-edit(ng-show="showContent")
+						.fa.fa-edit
+					span.hidden-xs.hidden-sm
+						button.btn.btn-default.btn-sm(ng-click="showSourceCode = true", ng-hide="showSourceCode")
+							fa.fa-eye
 				|!= htmlContent
 			div(ng-show="showProgramOutput")
 				.content-command-box
@@ -28,6 +29,8 @@ block content
 				button.btn.btn-default(ng-click="showContent = !showContent")
 					i.fa.fa-expand(ng-show="showContent",aria-hidden="true")
 					i.fa.fa-compress(ng-hide="showContent",aria-hidden="true")
+				button.btn.btn-default.btn-sm.hidden-xs.hidden-sm(ng-click="showSourceCode = false")
+					fa.fa-eye-slash
 				- if (sourceCodeEnabled)
 					button.btn.btn-primary(ng-click="run()")
 						i.fa.fa-play(aria-hidden="true")
