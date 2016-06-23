@@ -6,7 +6,7 @@ head
 	link(rel="shortcut icon", href="/static/img/favicon.ico")
 	link(rel="stylesheet", type="text/css", href="/static/css/menu.css")
 	meta(name="viewport",content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0")
-	title The Dlang Tour
+	title #{title}
 	link(rel="stylesheet", href="/static/css/tour.css")
 	link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css")
 	block head
@@ -50,5 +50,5 @@ body(ng-app="DlangTourApp", class="ng-cloak")
 		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 		ga('create', '#{googleAnalyticsId}', 'auto');
 		ga('send', 'pageview');
-	
+
 	block js
