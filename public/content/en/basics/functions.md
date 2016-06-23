@@ -1,26 +1,32 @@
 # Functions
 
-You've seen one function already: `main()` - the starting point of every
-D program. A function may return something - or be declared with
-`void` if nothing is returned - and an arbitrary number of parameters.
+One function has already been introduced: `main()` - the starting point of every
+D program. A function may return a value - or be declared with
+`void` if nothing is returned - and accept an arbitrary number of arguments:
 
     int add(int lhs, int rhs) {
         return lhs + rhs;
     }
 
-If the return type is defined as `auto` the D compiler infers the return
-type automatically. If the types of different `return` statements within
-the function's body don't match the compiler will certainly make you
-aware of that.
+If the return type is defined as `auto`, the D compiler infers the return
+type automatically. Hence multiple `return` statements must return values with
+compatible types.
 
     auto add(int lhs, int rhs) { // returns `int`
         return lhs + rhs;
     }
 
+    auto lessOrEqual(int lhs, int rhs) { // returns `double`
+        if (lhs <= rhs)
+            return 0;
+        else
+            return 1.0;
+    }
+
 Functions might even be declared inside others functions where they may be
 used locally and aren't visible to the outside world.
 These function can even have access to objects local to
-the parent's scope
+the parent's scope:
 
     void fun() {
         int local = 10;
@@ -29,10 +35,14 @@ the parent's scope
         }
         ...
 
+Such nested functions are called delegates and will be explained in more depth
+[soon](basics/delegates).
+
 ### In-depth
 
 - [Functions in _Programming in D_](http://ddili.org/ders/d.en/functions.html)
 - [Function parameters in _Programming in D_](http://ddili.org/ders/d.en/function_parameters.html)
+- [Function specification](https://dlang.org/spec/function.html)
 
 ## {SourceCode}
 
