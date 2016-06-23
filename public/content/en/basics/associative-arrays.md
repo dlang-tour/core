@@ -61,15 +61,7 @@ int[string] wordCount(string text)
     // Indexed by words and returning the count
     int[string] words;
 
-    // Define a predicate to use for splitting
-    // the string.
-    alias pred = c => c == ' ' || c == '.'
-      || c == ',' || c == '\n';
-
-    // The parameter we pass behind ! is an
-    // expression that marks the condition when
-    // to split text
-    foreach(word; splitter!pred(text.toLower()))
+    foreach(word; splitter(text.toLower(), " "))
     {
         // Increment word count if word
         // has been found.
@@ -82,10 +74,7 @@ int[string] wordCount(string text)
 
 void main()
 {
-    string text = q{This tour will give you an
-overview of this powerful and expressive systems
-programming language which compiles directly
-to efficient, *native* machine code.};
+    string text = "D is a lot of fun";
 
     writeln("Word counts: ", wordCount(text));
 }
