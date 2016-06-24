@@ -2,15 +2,14 @@
 
 ### Pre-requirements
 
-- You must have an [account]((https://signup.heroku.com/login)) on heroku
-- You should have [git](https://git-scm.com/) installed
+- Heroku [account]((https://signup.heroku.com/login))
+- [Git](https://git-scm.com/) installed
 - Your application should compile without error using dmd (`dub build --build=release`). 
-
 
 ### 1 : Setup the app
 
-The first thing we need to do before deploying our app to the cloud is binding our app's port to heroku's one. 
-Heroku sets the `PORT` variable that you are supposed to bind, and listens on tcp/80.
+The first thing to do before deploying is binding the app's port to heroku's one. 
+Heroku sets the `PORT` variable that you are supposed to bind, and listens on port 80 by default.
 
 ```d
 shared static this() {
@@ -22,8 +21,8 @@ shared static this() {
 }
 ```
 
-You also need to create a `Procfile`, which is a text file in the root directory of your application, in which you explicitly declare what command 
-should be executed to start your app.
+Also create a `Procfile`, which is a text file in the root directory of the application, which explicitly declare what command 
+should be executed to start the app.
 
 The Procfile in the example app looks like this:
 
@@ -33,13 +32,13 @@ web: ./hello-world
 
 ### 2 : Prepare the app 
 
-Before going further you should login to the heroku cli.
+Before going further login to the heroku cli.
 
-To login you have to use the [heroku toolbelt](https://toolbelt.heroku.com/standalone).
+To login use the [heroku toolbelt](https://toolbelt.heroku.com/standalone).
 
-This provides you access to the Heroku Command Line Interface (CLI), which can be used for managing and scaling your applications and add-ons.
+This provides access to the Heroku Command Line Interface (CLI), which can be used for managing and scaling your applications and add-ons.
 
-After installing the toolbet just run 
+After installing the toolbet just run the following
 
 ```
 $ heroku login
@@ -47,10 +46,8 @@ $ heroku login
 
 ### 3 : Create the app 
 
-To do so you can go on the [heroku dashboard](https://dashboard.heroku.com) and create a new app. 
-After doing so memorize the name of your app, you will use it later. 
-
-
+To do so, go on the [heroku dashboard](https://dashboard.heroku.com) and create a new app. 
+After doing this memorize the name of the created app, it will be useful later. 
 
 or use the command line like this 
 
@@ -60,21 +57,19 @@ Creating app... done, ⬢ rocky-hamlet-67506
 https://rocky-hamlet-67506.herokuapp.com/ | https://git.heroku.com/rocky-hamlet-67506.git
 ```
 
-The app's name here is rocky-hamlet-67506. 
+The app's name here is *rocky-hamlet-67506*. 
 
 ### Deploy using git 
 
+To deploy the app directly use `git` commands. A separate git remote endpoint should be added to which new releases can be pushed.
 
-You can deploy your app directly from `git` - it will be in a separate git remote endpoint to which new releases can be pushed.
-
-You need to add the git remote with the name of your app. 
 As shown in the previous section, our name's app is rocky-hamlet-67506. But change it to yours. 
 
 ```
 $ heroku git:remote -a rocky-hamlet-67506
 ```
 
-You can see now that the remote endpoint is added to our git config
+Notice the remote endpoint is added to the git config
 
 ```
 $ git remote -v
@@ -89,9 +84,9 @@ which can then be executed on a dyno. Buildpacks are composed of a set of script
 and depending on the programming language, the scripts will retrieve dependencies, 
 output generated assets or compiled code, and more.
 
-For more information you can browse the [Heroku documentation](https://devcenter.heroku.com/articles/buildpacks)
+For more information browse the [Heroku documentation](https://devcenter.heroku.com/articles/buildpacks)
 
-We are going to use this [webpack](https://github.com/MartinNowak/heroku-buildpack-d), the heroku-buildpack-vibe.d. 
+To deploy we are using this [webpack](https://github.com/MartinNowak/heroku-buildpack-d), the heroku-buildpack-vibe.d. 
 
 ```
 $ heroku buildpacks:set https://github.com/MartinNowak/heroku-buildpack-d
@@ -103,9 +98,9 @@ select a specific version of a compiler.
 
 ### Deploy the code 
 
-You can proceed in your usual git habit and write awesome code. 
+Proceed in your usual git habit and write awesome code. 
 
-Once you want to release a new version, you just push the newest version to the heroku endpoint.
+To release a new version, just push the newest version to the heroku endpoint.
 
 ```
 $ git add .
@@ -141,7 +136,7 @@ To git@heroku.com:rocky-hamlet-67506.git
  * [new branch]      master -> master
 ```
 
-All you need to do now is open the app in the browser.
+Open the app in the browser with the following
 
 ```
 $ heroku open
@@ -149,9 +144,10 @@ $ heroku open
 
 ### Openning dynos to request 
 
-Right now, our app is running on a web dyno. Think of a dyno as a lightweight container that runs the command specified in the Procfile.
+After deploying, the app is running on a web dyno. 
+Think of a dyno as a lightweight container that runs the command specified in the Procfile.
 
-You can check how many dynos are running using the ps command:
+To check how many dynos are running using the ps command:
 
 ```
 $ heroku ps
@@ -162,10 +158,10 @@ https://devcenter.heroku.com/articles/dyno-sleeping
 No dynos on ⬢ rocky-hamlet-67506
 ```
 
-By default, your app is deployed on a free dyno which can't access request. 
-Free dynos will sleep after a half hour of inactivity (if they don’t receive any traffic). This causes a delay of a few seconds for the first request upon waking. 
+By default, the app is deployed on a free dyno which doesn't access request. 
+Free dynos will sleep after a half hour of inactivity. This causes a delay of a few seconds for the first request upon waking. 
 
-To make it work you should open it up using 
+To start the dyno run the following
 
 ```
 $ heroku ps:scale web=1
@@ -183,7 +179,7 @@ $ heroku logs --tail
 
 ## More informations 
 
-After deploying your app to Heroku you can make it more awesome by using add-ons.
+After deploying your the to Heroku you can make it more awesome by using add-ons.
 
 - [Postgresql](https://elements.heroku.com/addons/heroku-postgresql)
 - [MongoDb](https://elements.heroku.com/addons/mongohq)
