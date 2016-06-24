@@ -1,8 +1,7 @@
-# Compile Time Function Evaluation - CTFE
+# Compile Time Function Evaluation (CTFE)
 
-*Compile Time Function Evaluation (CTFE)* is a mechanism
-which allows the compiler to execute functions
-at **compile time**. There is no special set of the D
+CTFE is a mechanism which allows the compiler to execute
+functions at **compile time**. There is no special set of the D
 language necessary to use this feature - whenever
 a function just depends on compile time known values
 the D compiler might decide to interpret
