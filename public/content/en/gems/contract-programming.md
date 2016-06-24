@@ -5,8 +5,9 @@ that allow increasing the code quality by implementing
 sanity checks that make sure that the code base
 behaves as intended. Contracts are only available in
 **debug** mode and won't be run in release mode.
+Therefore they shouldn't be used to validate user input.
 
-#### `assert`
+### `assert`
 
 The simplest form of contract programming in D is
 the `assert(...)` expression that checks that a certain
@@ -17,7 +18,7 @@ an `AssertionError` otherwise.
     // optional custom assertion error message
     assert(sqrt(16) == 4, "sqrt is broken!");
 
-#### Function contracts
+### Function contracts
 
 `in` and `out` allow to formalize contracts for input
 parameters and return values of functions.
@@ -38,7 +39,7 @@ this way. In the `out` block the function's return
 value can be captured with `out(result)` and
 verified accordingly.
 
-#### Invariant checking
+### Invariant checking
 
 `invariant()` is a special member function of `struct`
 and `class` types that allows sanity checking an object's
@@ -50,18 +51,29 @@ state during its whole lifetime:
 * `invariant()` is called after exiting a member
   function.
 
+### Validating user input
+
+As all contracts will be removed in the release build, user input should not
+be checked using contracts. Moreover `assert`s can still be used be in
+`nothrow` functions, because they throw fatal `Errors`.
+The runtime analog to `assert` is [`std.exception.enforce`](https://dlang.org/phobos/std_exception.html#.enforce),
+which will throw catchable `Exceptions`.
+
 ### In-depth
 
 - [`assert` and `enforce` in _Programming in D_](http://ddili.org/ders/d.en/assert.html)
 - [Contract programming in _Programming in D_](http://ddili.org/ders/d.en/contracts.html)
 - [Contract Programming for Structs and Classes in _Programming in D_](http://ddili.org/ders/d.en/invariant.html)
 - [Contract programming in D spec](https://dlang.org/spec/contracts.html)
+- [`std.exception`](https://dlang.org/phobos/std_exception.html)
 
 ## {SourceCode:incomplete}
 
 ```d
-// Very simple Date type with a lot of
-// flaws. Hint: don't use it!
+import std.stdio: writeln;
+
+// Simplified Date type
+// Use std.datetime instead
 struct Date {
     private {
         int year;
@@ -69,24 +81,25 @@ struct Date {
         int day;
     }
 
-    void setDate(int year, int month, int day) {
+    this(int year, int month, int day) {
         this.year = year;
         this.month = month;
         this.day = day;
     }
 
     invariant() {
-        assert(year >= 0);
+        assert(year >= 1900);
         assert(month >= 1 && month <= 12);
         assert(day >= 1 && day <= 31);
     }
 
-    // Initializes Date object from a
+    // Serializes Date object from a
     // YYYY-MM-DD string.
     void fromString(string date)
     in {
         assert(date.length == 10);
-    } body {
+    }
+    body {
         import std.format: formattedRead;
         // formattedRead parses the format
         // given and writes the result to the
@@ -96,17 +109,37 @@ struct Date {
             &this.month,
             &this.day);
     }
+
+    // Serializes Date object to YYYY-MM-DD
+    string toString() const
+    out (result) {
+        import std.algorithm: all, count,
+                              equal, map;
+        import std.string: isNumeric;
+        import std.array: split;
+
+        // verify we return YYYY-MM-DD
+        assert(result.count("-") == 2);
+        auto parts = result.split("-");
+        assert(parts.map!`a.length`
+                    .equal([4, 2, 2]));
+        assert(parts.all!isNumeric);
+    }
+    body {
+        import std.format : format;
+        return format("%.4d-%.2d-%.2d",
+                      year, month, day);
+    }
 }
 
 void main() {
-    Date date;
-    // invariant will not fail.
-    date.setDate(2016, 2, 7);
+    auto date = Date(2016, 2, 7);
+
     // This will make invariant fail.
-    // Of course this should not be validated
-    // inside a invariant! External data needs
-    // to be checked in release mode too, and
-    // be propgated through e.g. exceptions.
+    // Don't validate user input with contracts,
+    // throw exceptions instead.
     date.fromString("2016-13-7");
+
+    date.writeln;
 }
 ```
