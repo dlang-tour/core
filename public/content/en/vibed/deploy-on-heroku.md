@@ -8,8 +8,10 @@
 
 ### 1 : Setup the app
 
-The first thing to do before deploying is binding the app's port to heroku's one. 
-Heroku sets the `PORT` variable that you are supposed to bind, and listens on port 80 by default.
+Heroku needs to know how to communicate with a deployed application. 
+Hence a global `PORT` environment variable is provided which needs to be injected into an application and 
+it should bind and listen to this port. 
+For development a default port (here __8080__) should be set:
 
 ```d
 shared static this() {
@@ -21,10 +23,10 @@ shared static this() {
 }
 ```
 
-Also create a `Procfile`, which is a text file in the root directory of the application, which explicitly declare what command 
+Additionally create a `Procfile`, which is a text file in the root directory of the application, which explicitly declare what command 
 should be executed to start the app.
 
-The Procfile in the example app looks like this:
+The `Procfile` in the example app looks like this:
 
 ```
 web: ./hello-world
@@ -32,13 +34,11 @@ web: ./hello-world
 
 ### 2 : Prepare the app 
 
-Before going further login to the heroku cli.
+Before going further login to the Heroku Command Line by using the [Heroku Toolbelt](https://toolbelt.heroku.com/standalone).
 
-To login use the [heroku toolbelt](https://toolbelt.heroku.com/standalone).
+This provides access to the Heroku Command-Line Interface (CLI), which can be used for managing and scaling your applications and add-ons.
 
-This provides access to the Heroku Command Line Interface (CLI), which can be used for managing and scaling your applications and add-ons.
-
-After installing the toolbet just run the following
+After installing the toolbet run the following
 
 ```
 $ heroku login
@@ -46,10 +46,10 @@ $ heroku login
 
 ### 3 : Create the app 
 
-To do so, go on the [heroku dashboard](https://dashboard.heroku.com) and create a new app. 
+Go on the [heroku dashboard](https://dashboard.heroku.com) and create a new app. 
 After doing this memorize the name of the created app, it will be useful later. 
 
-or use the command line like this 
+or use the Command-Line like this 
 
 ```
 $ heroku create
