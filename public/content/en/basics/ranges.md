@@ -25,6 +25,8 @@ to compose complex algorithms behind an object that
 can be iterated with ease. Furthermore ranges allow to create **lazy**
 objects that only perform a calculation when it's really needed
 in an iteration e.g. when the next range's element is accessed.
+Special range algorithm will be presented later in the
+[D's Gems](gems/range-algorithms) section.
 
 ### Exercise
 
