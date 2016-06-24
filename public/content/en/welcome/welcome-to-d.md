@@ -2,12 +2,12 @@
 
 Welcome to the online tour of the *D Programming language*.
 
-<img src="static/img/dman.png" class="img-left visible-xs" id="dman-front-mobile" />
+{{#dmanmobile}}
 
 This tour will give you an overview of this __powerful__ and __expressive__
 language which compiles directly to __efficient__, __native__ machine code.
 
-<div class="clear visible-xs"></div>
+{{/dmanmobile}}
 
 ### What is D?
 
@@ -15,7 +15,7 @@ D is the culmination of _decades of experience implementing compilers_
 for many diverse languages and has a large number of
 [unique features](http://dlang.org/overview.html):
 
-<img src="/static/img/dman.png" class="img-left hidden-xs" id="dman-front-desktop" />
+{{#dmandesktop}}
 
 - _high level_ constructs for great modeling power
 - _high performance_, compiled language
@@ -32,7 +32,7 @@ for many diverse languages and has a large number of
 
 ... and many more [features](http://dlang.org/overview.html).
 
-<div class="clear hidden-xs"></div>
+{{/dmandesktop}}
 
 ### About the tour
 
