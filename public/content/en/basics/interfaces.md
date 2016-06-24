@@ -26,7 +26,10 @@ function in a base class.
 The number of `interface`s a `class` can implement isn't limited,
 but it can inherit from only *one* base class.
 
-D easily enables the **NVI - non virtual interface** idiom by
+The [**NVI (non virtual interface)**](https://en.wikipedia.org/wiki/Non-virtual_interface_pattern)
+pattern prevents the violation of a common execution pattern by allowing _non virtual_ methods
+for a common interface.
+D easily enables the NVI pattern by
 allowing the definition of `final` functions in an `interface`
 that aren't allowed to be overridden. This enforces specific
 behaviours customized by overriding the other `interface`
@@ -34,7 +37,8 @@ functions.
 
     interface Animal {
         void makeNoise();
-        final doubleNoise() /* NVI pattern */ {
+        final doubleNoise() // NVI pattern
+        {
             makeNoise();
             makeNoise();
         }
