@@ -69,7 +69,7 @@ the `[]` operator.
 ### Basics references
 
 - [Tutorial to D Templates](https://github.com/PhilippeSigaud/D-templates-tutorial)
-- [Conditional compilation](http://ddili.org/ders/d.en/cond_comp.html
+- [Conditional compilation](http://ddili.org/ders/d.en/cond_comp.html)
 - [std.traits](https://dlang.org/phobos/std_traits.html)
 - [More templates  _Programming in D_](http://ddili.org/ders/d.en/templates_more.html)
 - [Mixins in  _Programming in D_](http://ddili.org/ders/d.en/mixin.html)
