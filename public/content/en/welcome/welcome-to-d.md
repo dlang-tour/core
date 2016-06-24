@@ -51,7 +51,8 @@ and we are glad about pull requests making this tour even better.
 import std.stdio;
 
 // Let's get going!
-void main() {
+void main()
+{
     writeln("Hello World!");
 }
 ```
