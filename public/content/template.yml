@@ -1,0 +1,14 @@
+# Please see CONTRIBUTING.md for a description
+# of this file.
+
+#variables:
+#    test: test
+wrappers:
+    dmanmobile: |
+        <img src="static/img/dman.png" class="img-left visible-xs" id="dman-front-mobile" />
+        {{content}}
+        <div class="clear visible-xs"></div>
+    dmandesktop: |
+        <img src="/static/img/dman.png" class="img-left hidden-xs" id="dman-front-desktop" />
+        {{content}}
+        <div class="clear hidden-xs"></div>
