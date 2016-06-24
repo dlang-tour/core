@@ -1,5 +1,7 @@
 # Delegates
 
+### Functions as arguments
+
 A function can also be a parameter to another function:
 
     void doSomething(int function(int, int) doer) {
@@ -11,6 +13,8 @@ A function can also be a parameter to another function:
                       // add must have 2 int parameters
 
 `doer` can then be called like any other normal function.
+
+### Local functions with context
 
 The above example uses the `function` type which is
 a pointer to a global function. As soon as a member
@@ -41,16 +45,25 @@ standard function
 [`std.functional.toDelegate`](https://dlang.org/phobos/std_functional.html#.toDelegate)
 converts a `function` to a `delegate`.
 
-Nameless function which are called *lambdas* can be defined in two ways:
+### Anonymous functions & Lambdas
+
+As functions can be saved as variables and passed to other functions,
+it is laborious to give them an own name and to define them. Hence D allows
+nameless functions and one-line _lambdas_.
 
     auto f = (int lhs, int rhs) {
         return lhs + rhs;
     };
-    auto f = (int lhs, int rhs) => lhs + rhs;
+    auto f = (int lhs, int rhs) => lhs + rhs; // Lambda - internally converted to the above
 
-The second form is a shorthand form for lambdas that consist
-of just one line. Moreover if the type(s) of the lambda parameters
-can be inferred by the context, they can be omitted too.
+It is also possible to pass-in strings as template argument to functional parts
+of D's standard library. For example they offer a convenient way
+to define a folding (aka reducer):
+
+    [1, 2, 3].reduce!`a + b`; // 6
+
+String functions are only possible for _one or two_ arguments and then use `a`
+as first and `b` as second argument.
 
 ### In-depth
 
