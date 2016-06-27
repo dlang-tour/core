@@ -133,6 +133,18 @@ pre, code, .tt, .d_inlinecode, td.param_id, .CodeMirror pre, .d_decl {
     width: 170px;
 }
 
+.img-right {
+    float: right;
+    max-width: 200px;
+    padding-bottom: 15px;
+}
+
+@media only screen and (max-width: 600px) {
+	.img-right {
+		max-width: 120px;
+	}
+}
+
 .clear {
     clear: both;
 }

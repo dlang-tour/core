@@ -1,5 +1,7 @@
 # Foreach
 
+{{#img-right}}dman-teacher-foreach.jpg{{/img-right}}
+
 D features a `foreach` loop which allows
 less error-prone and better readable iterations.
 
