@@ -4,7 +4,7 @@
 
 - Heroku [account]((https://signup.heroku.com/login))
 - [Git](https://git-scm.com/) installed
-- Your application should compile without error using dmd (`dub build --build=release`). 
+- Your application should compile without error using dmd (`dub build`). 
 
 ### 1 : Setup the app
 
@@ -62,8 +62,8 @@ The app's name here is *rocky-hamlet-67506*.
 ### Deploy using git 
 
 To deploy the app directly use `git` commands. A separate git remote endpoint should be added to which new releases can be pushed.
-
-As shown in the previous section, our name's app is rocky-hamlet-67506. But change it to yours. 
+Thus the name of the newly created application 
+in the previous chapter needs to be passed as argument .(here it is rocky-hamlet-67506):
 
 ```
 $ heroku git:remote -a rocky-hamlet-67506
@@ -79,28 +79,25 @@ heroku	https://git.heroku.com/rocky-hamlet-67506.git (push)
 
 ### Adding the buildpack
 
-Buildpacks are responsible for transforming deployed code into a slug, 
-which can then be executed on a dyno. Buildpacks are composed of a set of scripts, 
-and depending on the programming language, the scripts will retrieve dependencies, 
-output generated assets or compiled code, and more.
+Buildpacks are responsible for generate assets or compiled code.
 
 For more information browse the [Heroku documentation](https://devcenter.heroku.com/articles/buildpacks)
 
-To deploy we are using this [webpack](https://github.com/MartinNowak/heroku-buildpack-d), the heroku-buildpack-vibe.d. 
+For deployement the [Vibe.d buildpack](https://github.com/MartinNowak/heroku-buildpack-d) can be used : 
 
 ```
 $ heroku buildpacks:set https://github.com/MartinNowak/heroku-buildpack-d
 ```
 By default the buildpack uses the latest dmd compiler. 
-It is possible to use gdc or ldc and to choose a specific compiler versions by adding a .d-compiler file to your project. 
-Use dmd, ldc, or gdc to select the latest or dmd-2.068.2, ldc-0.16.0, or gdc-4.9.2 to 
+It is possible to use gdc or ldc and to choose a specific compiler versions by adding a `.d-compiler` file to your project. 
+Use `dmd`, `ldc`, or `gdc` to select the latest or dmd-2.068.2, ldc-0.16.0, or gdc-4.9.2 to 
 select a specific version of a compiler.
 
 ### Deploy the code 
 
 Proceed in your usual git habit and write awesome code. 
 
-To release a new version, just push the newest version to the heroku endpoint.
+To release a new version, just push the newest version to the Heroku endpoint.
 
 ```
 $ git add .
@@ -136,13 +133,13 @@ To git@heroku.com:rocky-hamlet-67506.git
  * [new branch]      master -> master
 ```
 
-Open the app in the browser with the following
+Open the app in the browser with the following command
 
 ```
 $ heroku open
 ```
 
-### Openning dynos to request 
+### Scaling dynos containers 
 
 After deploying, the app is running on a web dyno. 
 Think of a dyno as a lightweight container that runs the command specified in the Procfile.
@@ -179,7 +176,7 @@ $ heroku logs --tail
 
 ## More informations 
 
-After deploying your the to Heroku you can make it more awesome by using add-ons.
+After deploying your the to Heroku you can make it more awesome by using add-ons. For example :
 
 - [Postgresql](https://elements.heroku.com/addons/heroku-postgresql)
 - [MongoDb](https://elements.heroku.com/addons/mongohq)
