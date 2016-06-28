@@ -177,7 +177,7 @@ $ heroku logs --tail
 
 ## More informations 
 
-After deploying your the to Heroku you can make it more awesome by using add-ons. For example :
+After deploying the app to Heroku you can make it more awesome by using add-ons. For example :
 
 - [Postgresql](https://elements.heroku.com/addons/heroku-postgresql)
 - [MongoDb](https://elements.heroku.com/addons/mongohq)
