@@ -89,7 +89,8 @@ For deployement the [Vibe.d buildpack](https://github.com/MartinNowak/heroku-bui
 $ heroku buildpacks:set https://github.com/MartinNowak/heroku-buildpack-d
 ```
 By default the buildpack uses the latest dmd compiler. 
-It is possible to use gdc or ldc and to choose a specific compiler versions by adding a `.d-compiler` file to your project. 
+It is possible to use GDC or LDC and to choose a specific compiler versions by adding a `.d-compiler` file to your project. 
+
 Use `dmd`, `ldc`, or `gdc` to select the latest or dmd-2.068.2, ldc-0.16.0, or gdc-4.9.2 to 
 select a specific version of a compiler.
 
