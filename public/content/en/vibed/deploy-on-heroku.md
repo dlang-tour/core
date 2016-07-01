@@ -23,7 +23,7 @@ shared static this() {
 }
 ```
 
-Additionally create a `Procfile`, which is a text file in the root directory of the application, which explicitly declare what command 
+Additionally create a `Procfile`, which is a text file in the root directory of the application, which explicitly declares what command 
 should be executed to start the app.
 
 The `Procfile` in the example app looks like this:
@@ -38,7 +38,7 @@ Before going further login to the Heroku Command Line by using the [Heroku Toolb
 
 This provides access to the Heroku Command-Line Interface (CLI), which can be used for managing and scaling your applications and add-ons.
 
-After installing the toolbet run the following
+After installing the toolbet run the following:
 
 ```
 $ heroku login
@@ -46,10 +46,10 @@ $ heroku login
 
 ### 3 : Create the app 
 
-Go on the [heroku dashboard](https://dashboard.heroku.com) and create a new app. 
+Go to the [heroku dashboard](https://dashboard.heroku.com) and create a new app. 
 After doing this memorize the name of the created app, it will be useful later. 
 
-or use the Command-Line like this 
+Or use the Command-Line like this:
 
 ```
 $ heroku create
@@ -63,13 +63,13 @@ The app's name here is *rocky-hamlet-67506*.
 
 To deploy the app directly use `git` commands. A separate git remote endpoint should be added to which new releases can be pushed.
 Thus the name of the newly created application 
-in the previous chapter needs to be passed as argument .(here it is rocky-hamlet-67506):
+in the previous chapter needs to be passed as argument - here it is *rocky-hamlet-67506*.
 
 ```
 $ heroku git:remote -a rocky-hamlet-67506
 ```
 
-Notice the remote endpoint is added to the git config
+Notice the remote endpoint is added to the git config:
 
 ```
 $ git remote -v
@@ -79,19 +79,19 @@ heroku	https://git.heroku.com/rocky-hamlet-67506.git (push)
 
 ### Adding the buildpack
 
-Buildpacks are responsible for generate assets or compiled code.
+Buildpacks are responsible for generating assets or compiled code.
 
 For more information browse the [Heroku documentation](https://devcenter.heroku.com/articles/buildpacks)
 
-For deployement the [Vibe.d buildpack](https://github.com/MartinNowak/heroku-buildpack-d) can be used : 
+For deployement the [Vibe.d buildpack](https://github.com/MartinNowak/heroku-buildpack-d) can be used: 
 
 ```
 $ heroku buildpacks:set https://github.com/MartinNowak/heroku-buildpack-d
 ```
-By default the buildpack uses the latest dmd compiler. 
+By default the buildpack uses the latest `dmd` compiler. 
 It is possible to use GDC or LDC and to choose a specific compiler versions by adding a `.d-compiler` file to your project. 
 
-Use `dmd`, `ldc`, or `gdc` to select the latest or dmd-2.068.2, ldc-0.16.0, or gdc-4.9.2 to 
+Use `dmd`, `ldc`, or `gdc` to select the latest or `dmd-2.0xxx`, `ldc-1.0xxx`, or `gdc-4.9xxx` to 
 select a specific version of a compiler.
 
 ### Deploy the code 
@@ -145,7 +145,7 @@ $ heroku open
 After deploying, the app is running on a web dyno. 
 Think of a dyno as a lightweight container that runs the command specified in the Procfile.
 
-To check how many dynos are running using the ps command:
+Using the `ps` command allows checking how many dynos are running:
 
 ```
 $ heroku ps
@@ -159,7 +159,7 @@ No dynos on ⬢ rocky-hamlet-67506
 By default, the app is deployed on a free dyno which doesn't access request. 
 Free dynos will sleep after a half hour of inactivity. This causes a delay of a few seconds for the first request upon waking. 
 
-To start the dyno run the following
+To start the dyno run the following:
 
 ```
 $ heroku ps:scale web=1
