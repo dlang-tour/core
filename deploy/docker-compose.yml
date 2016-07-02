@@ -2,10 +2,14 @@ tour:
   image: stonemaster/dlang-tour
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
+    - /etc/letsencrypt:/etc/letsencrypt
   ports:
     - "80:8080"
+    - "443:8443"
   environment:
     - GOOGLE_ANALYTICS_ID=
+    - TLS_CA_CHAIN_FILE=/etc/letsencrypt/live/tour.dlang.io/cert.pem
+    - TLS_PRIVATE_KEY_FILE=/etc/letsencrypt/live/tour.dlang.io/privkey.pem
   restart: always
 watchtower:
   image: centurylink/watchtower

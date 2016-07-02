@@ -124,6 +124,19 @@ shared static this()
 		res.finalize();
 	};
 
+	auto httpsSettings = settings.dup;
+	import std.file: exists;
+	auto startHTTPS = exists(config.tlsCaChainFile) && exists(config.tlsPrivateKeyFile);
+	if (startHTTPS) {
+		httpsSettings.port = config.tlsPort;
+		httpsSettings.tlsContext = createTLSContext(TLSContextKind.server);
+		httpsSettings.tlsContext.useCertificateChainFile(config.tlsCaChainFile);
+		httpsSettings.tlsContext.usePrivateKeyFile(config.tlsPrivateKeyFile);
+		logInfo("Starting HTTPs server.");
+	} else {
+		logInfo("NOT starting HTTPs server because no valid TLS files given.");
+	}
+
 	auto urlRouter = new URLRouter;
 	auto fsettings = new HTTPFileServerSettings;
 	fsettings.serverPathPrefix = "/static";
@@ -133,4 +146,5 @@ shared static this()
 		.get("/static/*", serveStaticFiles(config.publicDir ~ "/static/", fsettings));
 
 	listenHTTP(settings, urlRouter);
+	listenHTTP(httpsSettings, urlRouter);
 }
