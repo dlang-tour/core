@@ -117,3 +117,34 @@ a:hover, .question:hover, .expand-toggle:hover
 pre, code, .tt, .d_inlinecode, td.param_id, .CodeMirror pre, .d_decl {
 	font-family: Consolas, "Bitstream Vera Sans Mono", "Andale Mono", Monaco, "DejaVu Sans Mono", "Lucida Console", monospace;
 }
+
+.img-left {
+    float: left;
+    padding-right: 30px;
+    padding-bottom: 15px;
+}
+
+#dman-front-mobile {
+    max-width: 80px;
+    padding-right: 15px;
+}
+
+#dman-front-desktop {
+    width: 170px;
+}
+
+.img-right {
+    float: right;
+    max-width: 200px;
+    padding-bottom: 15px;
+}
+
+@media only screen and (max-width: 600px) {
+	.img-right {
+		max-width: 120px;
+	}
+}
+
+.clear {
+    clear: both;
+}

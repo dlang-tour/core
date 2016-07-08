@@ -12,11 +12,11 @@ its content will never change again. And actually this is the second
 introduction: welcome UTF-8 `string`!
 
 Due to their immutablility `string`s can perfectly be shared among
-different threads. Being a slice parts can be taken out of it without
+different threads. As `string` is a slice, parts can be taken out of it without
 allocating memory. The standard function `std.algorithm.splitter`
 for example splits a string by newline without any memory allocations.
 
-Beside the UTF-8 `string` there are two more:
+Beside the UTF-8 `string` there are two more types:
 
     alias wstring = immutable(dchar)[]; // UTF-16
     alias dstring = immutable(wchar)[]; // UTF-32
@@ -25,22 +25,38 @@ The variants are most easily converted between each other using
 the `to` method from `std.conv`:
 
     dstring myDstring = to!dstring(myString);
-    string myString = to!string(myDstring);
+    string myString   = to!string(myDstring);
 
-Because `string`s are arrays the same operations apply to them
-e.g. strings might be concatenated using the `~` operator for example.
-The property `.length` isn't necessarily the number of characters
-for UTF strings so in that case use the function `std.utf.count`.
+Since `string`s are arrays, the same operations apply to them.
+For example strings might be concatenated using the `~` operator.
+In non-ASCII strings a character might be represented with multiple bytes,
+hence e.g. the property `.length` does not yield the
+number of character for encoded UTF (UCS Transformation Format) strings.
+Therefore for encoded strings instead of `.length`,
+[`std.utf.count`](http://dlang.org/phobos/std_utf.html#.count) needs to be used.
+As dealing with encoded UTF strings can be tedious,
+[`std.utf`](http://dlang.org/phobos/std_utf.html) provides further
+methods that help dealing with decoding UTF strings. Unicode algorithms
+can utilize [`std.uni`](http://dlang.org/phobos/std_uni.html).
 
-To create multi-line strings use the
-`string str = q{ ... }` syntax. For raw strings you can either use
-backticks `` ` "unescaped string"` ``
-or the r-prefix `r"string that "doesn't" need to be escaped"`.
+To create multi-line strings use the `string str = q{ ... }` syntax.
+Raw strings that don't require laborious escaping, can be declared using
+either backticks (`` ` ... ` ``)
+or the r(aw)-prefix (`r" ... "`).
+
+    string multiline = q{ This
+        may be a
+        long document
+    };
+    string raw  =  `raw "string"`; \\ raw "string"
+    string raw2 = r"raw "string""; \\ raw "string"
 
 ### In-depth
 
 - [Characters in _Programming in D_](http://ddili.org/ders/d.en/characters.html)
 - [Strings in _Programming in D_](http://ddili.org/ders/d.en/strings.html)
+- [std.utf](http://dlang.org/phobos/std_utf.html) - UTF en-/decoding algorithms
+- [std.uni](http://dlang.org/phobos/std_uni.html) - Unicode algorithms
 
 ## {SourceCode}
 

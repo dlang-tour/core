@@ -51,6 +51,6 @@ interface IApiV1
 		string sourceCode;
 	}
 	@method(HTTPMethod.GET)
-	@path("/api/v1/source/:chapter/:section")
-	SourceOutput getSource(string _chapter, string _section);
+	@path("/api/v1/source/:language/:chapter/:section")
+	SourceOutput getSource(string _language, string _chapter, string _section);
 }

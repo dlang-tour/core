@@ -1,5 +1,7 @@
 # The Dlang Online Tour
 
+[![Join the chat at https://gitter.im/stonemaster/dlang-tour](https://badges.gitter.im/stonemaster/dlang-tour.svg)](https://gitter.im/stonemaster/dlang-tour?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Build Status](https://travis-ci.org/stonemaster/dlang-tour.svg?branch=master)](https://travis-ci.org/stonemaster/dlang-tour)
 
 This is the [D language](https://dlang.org) online tour which

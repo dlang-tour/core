@@ -3,6 +3,10 @@ public_dir: "public"
 listen:
     - 0.0.0.0
 google_analytics_id: "%GOOGLE_ANALYTICS_ID%"
+tls:
+    caChainFile: "%TLS_CA_CHAIN_FILE%"
+    privateKeyFile: "%TLS_PRIVATE_KEY_FILE%"
+    port: 8443
 exec:
     driver: "docker"
     # For docker driver

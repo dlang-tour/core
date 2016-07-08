@@ -35,6 +35,10 @@ Using `@safe`, a subset of D can be forced to prevent memory bugs by design.
 `@trusted` functions are manually verified functions and allow to bridge the
 world between SafeD and the underlying dirty low-level world.
 
+### In-depth
+
+* [SafeD](https://dlang.org/safed.html)
+
 ## {SourceCode}
 
 ```d

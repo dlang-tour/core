@@ -83,7 +83,8 @@ private void doSanityCheck(ContentProvider contentProvider, IExecProvider execPr
 				section.language, section.title);
 		auto result = execProvider.compileAndExecute(section.sourceCode);
 		enforce(result.success,
-			"[%s] Sanity check: Source code for section '%s' doesn't compile!".format(section.language, section.title));
+			"[%s] Sanity check: Source code for section '%s' doesn't compile:\n%s"
+			.format(section.language, section.title, result.output));
 	}
 }
 
@@ -112,6 +113,29 @@ shared static this()
 	settings.port = config.port;
 	settings.bindAddresses = config.bindAddresses;
 	settings.useCompressionIfPossible = true;
+	settings.errorPageHandler = (HTTPServerRequest req, HTTPServerResponse res, HTTPServerErrorInfo error) {
+		auto title = "Page not found";
+		auto t = contentProvider.getTOC("en");
+		auto toc = &t;
+		auto googleAnalyticsId = config.googleAnalyticsId;
+		auto chapterId = "";
+		auto language = "en";
+		res.render!("error.dt", req, error, language, googleAnalyticsId, chapterId, toc, title)();
+		res.finalize();
+	};
+
+	auto httpsSettings = settings.dup;
+	import std.file: exists;
+	auto startHTTPS = exists(config.tlsCaChainFile) && exists(config.tlsPrivateKeyFile);
+	if (startHTTPS) {
+		httpsSettings.port = config.tlsPort;
+		httpsSettings.tlsContext = createTLSContext(TLSContextKind.server);
+		httpsSettings.tlsContext.useCertificateChainFile(config.tlsCaChainFile);
+		httpsSettings.tlsContext.usePrivateKeyFile(config.tlsPrivateKeyFile);
+		logInfo("Starting HTTPs server.");
+	} else {
+		logInfo("NOT starting HTTPs server because no valid TLS files given.");
+	}
 
 	auto urlRouter = new URLRouter;
 	auto fsettings = new HTTPFileServerSettings;
@@ -122,4 +146,5 @@ shared static this()
 		.get("/static/*", serveStaticFiles(config.publicDir ~ "/static/", fsettings));
 
 	listenHTTP(settings, urlRouter);
+	listenHTTP(httpsSettings, urlRouter);
 }

@@ -4,14 +4,14 @@ If a `foreach` is encountered by the compiler
 
     foreach(element; range) {
 
-.. it's rewritten to something equivalent to the following internally:
+it's internally rewritten similar to the following:
 
     for (; !range.empty; range.popFront()) {
         auto element = range.front;
         ...
 
 Any object which fulfills the above interface is called a **range**
-and is thus something that can be iterated over:
+and is thus a type that can be iterated over:
 
     struct Range {
         @property empty() const;
@@ -19,13 +19,14 @@ and is thus something that can be iterated over:
         T front();
     }
 
-The functions that are in the `std.range` and `std.algorithm` modules also provide
+The functions in `std.range` and `std.algorithm` provide
 building blocks that make use of this interface. Ranges allow
 to compose complex algorithms behind an object that
-can be iterated with ease. And ranges allows to create **lazy**
-objects that actually just perform a calculation when this
-is really needed in an iteration e.g. when a range's
-element is used.
+can be iterated with ease. Furthermore ranges allow to create **lazy**
+objects that only perform a calculation when it's really needed
+in an iteration e.g. when the next range's element is accessed.
+Special range algorithm will be presented later in the
+[D's Gems](gems/range-algorithms) section.
 
 ### Exercise
 
@@ -33,6 +34,11 @@ Complete the source code to create the `FibonacciRange` range
 that returns numbers of the
 [Fibonacci sequence](https://en.wikipedia.org/wiki/Fibonacci_number).
 Don't fool yourself into deleting the `assert`ions!
+
+### In-depth
+
+- [`std.algorithm`](http://dlang.org/phobos/std_algorithm.html)
+- [`std.range`](http://dlang.org/phobos/std_range.html)
 
 ## {SourceCode:incomplete}
 

@@ -1,8 +1,7 @@
-# Controlling flow
+# Control flow
 
-Sometimes you have to control your application's flow
-depending on input parameters. `if` and `else` are
-your friends:
+The application's flow can be controlled conditionally with `if` and `else`
+statements:
 
     if (a == 5) {
         writeln("Condition is met");
@@ -16,7 +15,7 @@ When an `if` or `else` block just contains one statement
 the braces can be omitted.
 
 D provides the same operators as C/C++ and Java for testing
-variables for equality or compare them otherwise:
+variables for equality or comparing them:
 
 * `==` and `!=` for testing equality and inequality
 * `<`, `<=`, `>` and `>=` for testing less (- or equal) and greater (- or equal)
@@ -24,8 +23,8 @@ variables for equality or compare them otherwise:
 For combining multiple conditions the `||` operator represents
 the logical *OR*, and `&&` the logical *AND*.
 
-D also defines a `switch`..`case` statement which lets you take
-action depending on the value of *one* variable. `switch`
+D also defines a `switch`..`case` statement which executes one case
+depending on the value of *one* variable. `switch`
 works with all basic types as well as strings!
 It's even possible to define ranges for integral types
 using the `case START: .. case END:` syntax. Make sure to
@@ -43,6 +42,7 @@ take a look at the source code example.
 #### Advanced references
 
 - [Expressions in detail](https://dlang.org/spec/expression.html)
+- [If Statement specification](https://dlang.org/spec/statement.html#if-statement)
 
 ## {SourceCode}
 
@@ -51,9 +51,10 @@ import std.stdio;
 
 void main()
 {
+    if (1 == 1)
+        writeln("You can trust math in D");
+
     int c = 5;
-    // This is EVIL but works
-    if (c >= 0 && c < 11)
     switch(c) {
         case 0: .. case 9:
             writeln(c, " is within 0-9");
