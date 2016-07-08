@@ -2,8 +2,7 @@
 
 D provides support for classes and interfaces like in Java or C++.
 
-Any `class` type inherits from `Object` implicitely. D classes can only
-inherit from one class.
+Any `class` type inherits from [`Object`](https://dlang.org/phobos/object.html) implicitely.
 
     class Foo { } // inherits from Object
     class Bar: Foo { } // Bar is a Foo too
@@ -18,7 +17,7 @@ copied by value.
     Bar bar = foo; // bar points to foo
 
 The garbage collector will make sure the memory is freed
-after nobody references the object anymore.
+when no references to an object exist anymore.
 
 #### Inheritance
 
@@ -29,13 +28,15 @@ overriding of functions.
     class Bar: Foo {
         override functionFromFoo() {}
     }
-    
+
+In D, classes can only inherit from one class.
+
 #### Final and abstract member functions
 
 A function can be marked `final` in a base class to disallow overriding
 it. A function can be declared as `abstract` to force base classes to override
 it. A whole class can be declared as `abstract` to make sure
-that it isn't instantiated. To access the base class
+that it isn't instantiated. To access the base class,
 use the special keyword `super`.
 
 ### In-depth

@@ -39,11 +39,19 @@ void main()
         writeln("\t<head>");
         scope(exit) writeln("\t</head>");
         "\t<title>%s</title>".writefln("Hello");
-    }
+    } // the scope(exit) on the previous line
+      // is executed here
 
     writeln("\t<body>");
     scope(exit) writeln("\t</body>");
 
     writeln("\t\t<h1>Hello World!</h1>");
+
+    // scope guards allow placing allocations
+    // and their clean up code next to each
+    // other
+    import core.stdc.stdlib;
+    int* p = cast(int*)malloc(int.sizeof);
+    scope(exit) free(p);
 }
 ```

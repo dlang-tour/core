@@ -1,0 +1,12 @@
+extends base
+
+block js
+	:javascript
+		var dlangTourApp = angular.module('DlangTourApp', []);
+
+block content
+	div(style="padding: 20px")
+		h2 #{error.message}
+		p This is not the webpage you are looking for.
+		p
+		p Do you want to go back to the <a href="/">start page</a>?

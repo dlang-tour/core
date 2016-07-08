@@ -2,7 +2,7 @@
 
 D provides four loop constructs.
 
-#### 1) Classical `for` loop
+### 1) Classical `for` loop
 
 The classical `for` loop known from C/C++ or Java
 with _initiliazer_, _loop condition_ and _loop statement_:
@@ -10,7 +10,7 @@ with _initiliazer_, _loop condition_ and _loop statement_:
     for (int i = 0; i < arr.length; ++i) {
         ...
 
-#### 2) `while`
+### 2) `while`
 
 `while`  loops execute the given code block
 while a certain condition is met:
@@ -19,7 +19,7 @@ while a certain condition is met:
         foo();
     }
 
-#### 3) `do ... while`
+### 3) `do ... while`
 
 The `do .. while` loops execute the given code block
 while a certain condition is met, but in contrast to `while`
@@ -32,13 +32,13 @@ evaluated for the first time.
 
 #### 4) `foreach`
 
-The `foreach` loop which will be introduced in the
+The [`foreach` loop](basics/foreach) which will be introduced in the
 next section.
 
-#### Special keywords
+#### Special keywords and labels
 
 The special keyword `break` will immediately abort the current loop.
-If we are in a nested loop a label can be used to break any outer loop:
+In a nested loop a _label_ can be used to break of any outer loop:
 
     outer: for (int i = 0; i < 10; ++i) {
         for (int j = 0; j < 5; ++j) {
@@ -49,9 +49,9 @@ The keyword `continue` starts with the next loop iteration.
 
 ### In-depth
 
-- [`for` Loop in _Programming in D_](http://ddili.org/ders/d.en/for.html)
-- [`while` Loop in _Programming in D_](http://ddili.org/ders/d.en/while.html)
-- [`do while` Loop in _Programming in D_](http://ddili.org/ders/d.en/do_while.html)
+- `for` loop in [_Programming in D_](http://ddili.org/ders/d.en/for.html), [specification](https://dlang.org/spec/statement.html#ForStatement)
+- `while` loop in [_Programming in D_](http://ddili.org/ders/d.en/while.html), [specification](https://dlang.org/spec/statement.html#WhileStatement)
+- `do while` loop in [_Programming in D_](http://ddili.org/ders/d.en/do_while.html), [specification](https://dlang.org/spec/statement.html#do-statement)
 
 ## {SourceCode}
 

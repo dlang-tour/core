@@ -17,8 +17,9 @@ as parameters to function calls.
     auto t = p; // copy
 
 When a new object of a `struct` type is created its members can be initialized
-in the order they are defined in the `struct`. A custom constructor
-is defined through a `this(...)` member function:
+in the order they are defined in the `struct`. A custom constructor can be defined through
+a `this(...)` member function. If needed to avoid name conflicts, the current instance
+can be explicitely accessed with `this`:
 
     struct Person {
         this(int age, int height) {
@@ -28,7 +29,8 @@ is defined through a `this(...)` member function:
         }
             ...
 
-    Person p(30, 180);
+    Person p(30, 180); // initialization
+    p = Person(30, 180);  // assignment to new instance
 
 A `struct` might contain any number of member functions. Those
 are per default `public` and accessible from the outside. They might
@@ -50,20 +52,19 @@ module.
 If a member function is declared with `const`, it won't be allowed
 to modify any of its members. This is enforced by the compiler.
 Making a member function `const` makes it callable on any `const`
-or `immutable` object, but also helps callers reason about the
-code by offering a guarantee that the member function will never
-change the state of the object.
+or `immutable` object, but also guarantee callers that
+the member function will never change the state of the object.
 
 ### Static member functions
 
 If a member function is declared as `static`, it will be callable
 without an instantiated object e.g. `Person.myStatic()` but
-isn't allowed to access any non-`static` members.  Use a `static`
-member function when you want to work with all instances of a given
-`struct`, rather than with one instance in particular, or when the
+isn't allowed to access any non-`static` members.  A `static`
+member function can be used you to work to give access to all instances of a
+`struct`, rather than the current instance, or when the
 member function must be usable by callers that don't have an instance
-available.  For example, a function that asked how many instances
-existed would probably be `static`.
+available.  For example, Singleton's (only one instance is allowed)
+use `static`.
 
 ### Inheritance
 
@@ -76,19 +77,20 @@ polymorphic inheritance.
 ### In-depth
 
 - [Structs in _Programming in D_](http://ddili.org/ders/d.en/struct.html)
-- [In detail](https://dlang.org/spec/struct.html)
+- [Struct specification](https://dlang.org/spec/struct.html)
 
 ### Exercise
 
 Given the `struct Vector3` implement the following functions and make
-the example application successfully run:
+the example application run successfully:
 
-* `length()` which returns the vector's length
-* `dot(Vector3)` which returns the dot product of two vectors
-* `toString()` which returns a string representation of this vector.
-  We don't know strings yet but the function `std.string.format`
-  conveniently returns a string using `printf`-like syntax:
-  `format("MyInt = %d", myInt)`.
+* `length()` - returns the vector's length
+* `dot(Vector3)` - returns the dot product of two vectors
+* `toString()` - returns a string representation of this vector.
+  The function [`std.string.format`](https://dlang.org/phobos/std_format.html)
+  returns a string using `printf`-like syntax:
+  `format("MyInt = %d", myInt)`. Strings will be explained in detailed in a later
+  section.
 
 ## {SourceCode:incomplete}
 
@@ -137,7 +139,6 @@ void main() {
 
     // Test the functionality for dot product
     assert(vec1.dot(vec2) == 0.0);
-
 
     // Thanks to toString() we can now just
     // output our vector's with writeln

@@ -1,8 +1,8 @@
 # Templates
 
-Like in C++ **D** allows defining templated functions which is a means
-to define **generic** functions which work for any type
-that compiles with the statements within the function's body:
+**D** allows defining templated functions similar to C++ and Java
+which is a mean to define **generic** functions or objects which work
+for any type that compiles with the statements within the function's body:
 
     auto add(T)(T lhs, T rhs) {
         return lhs + rhs;
@@ -18,7 +18,8 @@ the function using the `!` operator:
     add!Animal(dog, cat); // won't compile; Animal doesn't implement +
 
 If no template parameter is given for a templated function the compiler
-tries to deduce the type using the parameters the function is fed:
+tries to deduce the type using the input parameters with which the function
+is called:
 
     int a = 5; int b = 10;
     add(a, b); // T is to deduced to `int`

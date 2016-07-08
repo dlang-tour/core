@@ -1,7 +1,10 @@
 # Uniform Function Call Syntax (UFCS)
 
-**UFCS** is a special feature of D. It allows that any call to a free function
-`fun(a)` can be also be be written as `a.fun()`.
+**UFCS** is a key feature of D and enables code reusability
+and scalability through well-defined encapsulation.
+
+UFCS allows that any call to a free function
+`fun(a)` can be written as member function call `a.fun()`.
 
 If `a.fun()` is seen by the compiler and the type doesn't
 have a member function called `fun()`, it tries to find a
@@ -16,14 +19,28 @@ It is possible to write
 
     a.bar().foo()
 
+Moreover in D it is not necessary to use parenthesis for functions
+without arguments, which means that _any_ function can be used
+like a property:
+
+    import std.uni : toLower;
+    "D rocks".toLower; // "d rocks"
+
 UFCS is especially important when dealing with
 *ranges* where several algorithms can be put
 together to perform complex operations, still allowing
 to write clear and manageable code.
 
+    import std.algorithm : group;
+    import std.range : chain, retro, front, retro;
+    [1, 2].chain([3, 4]).retro; // 4, 3, 2, 1
+    [1, 1, 2, 2, 2].group.dropOne.front; // tuple(2, 3u)
+
 ### In-depth
 
 - [UFCS in _Programming in D_](http://ddili.org/ders/d.en/ufcs.html)
+- [_Uniform Function Call Syntax_](http://www.drdobbs.com/cpp/uniform-function-call-syntax/232700394) by Walter Bright
+- [`std.range`](http://dlang.org/phobos/std_range.html)
 
 ## {SourceCode}
 

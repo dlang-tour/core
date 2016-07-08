@@ -11,6 +11,9 @@ import std.string: format;
 import std.path: buildPath;
 
 import yaml;
+import mustache;
+
+alias MustacheEngine!(string) Mustache;
 
 /++
 	Manages the mark down files found in public/content
@@ -29,6 +32,9 @@ class ContentProvider
 	private immutable SourceCodeMaxCharsPerLine = 48;
 
 	private {
+		/// root content directory
+		string contentDirectory;
+
 		struct Content {
 			string sourceCode;
 			bool sourceCodeEnabled = true;
@@ -50,6 +56,26 @@ class ContentProvider
 		}
 		/// chapter ordering: language, chapter
 		ChapterMeta[string][string] chapter_;
+
+		struct ChapterAndSection {
+			string chapter;
+			string section;
+			this(string s)
+			{
+				auto arr = s.split("/");
+				enforce(arr.length == 2, "Invalid start page given");
+				chapter = arr[0];
+				section = arr[1];
+			}
+		}
+		struct LanguageMeta {
+			ChapterAndSection start;
+			string title;
+		}
+		/// general language-wide information
+		LanguageMeta[string] language_;
+
+		auto mustacheContext_ = new Mustache.Context;
 	}
 
 	/// Create or update Content structure
@@ -69,24 +95,56 @@ class ContentProvider
 		return content;
 	}
 
+	private bool isValidLink(string link, string language)
+	{
+		import std.algorithm.searching : count;
+		if (link.count("/") != 1)
+			return false;
+
+		// check for existence in file system
+		import std.array : split;
+		auto parts = link.split("/");
+		string fileName = buildPath(contentDirectory, language, parts[0], parts[1] ~ ".md");
+		import std.stdio;
+		return exists(fileName);
+	}
+
 	this(string contentDirectory)
 	{
+		this.contentDirectory = contentDirectory;
+		// parse mustache template file
+		setupMustacheMacros(readText(buildPath(contentDirectory, "template.yml")),
+			mustacheContext_);
 		foreach(string filename; dirEntries(contentDirectory, SpanMode.depth)) {
 			if (isDir(filename))
 				continue;
 			auto parts = filename[contentDirectory.length .. $]
 					.split('/').filter!(x => !x.empty)
 					.array;
+
+			// ignore any top level files
+			if (parts.length == 1) {
+				continue;
+			}
+
 			// search for language-specific root file
 			auto language = parts[0];
 			if (parts[1] != "index.yml")
 				continue;
 			auto root = Loader(filename).load();
+
+			// language meta information
+			enforce("start" in root, "'start' point required in language-specific yaml");
+			enforce(isValidLink(root["start"].as!string, language), "The start page must be formatted as chapter/section");
+
+			enforce("title" in root, "'title' point required in language-specific yaml");
+			language_[language] = LanguageMeta(ChapterAndSection(root["start"].as!string), root["title"].as!string);
+
 		    auto i = 0;
 			foreach (string chapter; root["ordering"])
 			{
 				auto chapterDir = buildPath(filename[0 .. contentDirectory.length],
-											language, chapter);
+					language, chapter);
 				chapter_[language][chapter] = ChapterMeta(i++, "");
 				addChapter(chapter, chapterDir, language);
 			}
@@ -141,17 +199,41 @@ class ContentProvider
 					enforce(content.title.length == 0,
 							new Exception("%s: Just one chapter title allowed: %s".format(filename, section.title)));
 					content.title = section.title;
-					content.html = filterMarkdown(section.content,
-						MarkdownFlags.backtickCodeBlocks | MarkdownFlags.vanillaMarkdown);
+					content.html = processMarkdown(section.content, language);
 			} else if (section.level >= 2) {
 				enforce(content.title.length != 0, new Exception("%s: level 3 section can't be first (%s)".format(filename, section.title)));
-				content.html ~= filterMarkdown(section.content,
-						MarkdownFlags.backtickCodeBlocks | MarkdownFlags.vanillaMarkdown);
+				content.html ~= processMarkdown(section.content, language);
 			} else {
 				throw new Exception("%s: Illegal section %s".format(filename, section.title));
 			}
 		}
 		return content;
+	}
+
+
+
+	/++
+		Parses the given markdown and adds content filters
+
+		Returns:
+			Processed markdown in form of HTML
+	+/
+	private string processMarkdown(string content, string language)
+	{
+		auto processed = expandMacros(content, mustacheContext_);
+		auto settings = new MarkdownSettings;
+		settings.flags = MarkdownFlags.backtickCodeBlocks | MarkdownFlags.vanillaMarkdown;
+		settings.urlFilter = (string link, bool) {
+			import std.algorithm.searching : startsWith;
+			if (link.startsWith("http") || link.startsWith("https") || link.startsWith("irc") || link[0] != '/')
+				return link;
+			else
+			{
+				enforce(isValidLink(link, language), "Invalid link given: " ~ link);
+				return "/tour/%s/%s".format(language, link);
+			}
+		};
+		return filterMarkdown(processed, settings);
 	}
 
 	/++
@@ -243,6 +325,17 @@ class ContentProvider
 	string[] getLanguages() const
 	{
 		return content_.byKey().array;
+	}
+
+	/++
+	Returns: range that allows iterating
+	  over the whole content, regardless of language. Content
+	  doesn't guarantee any order.
+	+/
+	LanguageMeta getMeta(string language) const
+	{
+		enforce(language in language_, "Invalid language");
+		return language_[language];
 	}
 
 	/++
@@ -360,4 +453,140 @@ Hello
 	assert(sections[4].bodyOnly.empty);
 }
 
+
+/++
+	Process all mustache definitions that are defined in the YAML
+	declaration in $(D ymlDescription)
+
+	The file must have the following format:
+	``
+	variables:
+		var1: "hello world"
+	functions:
+		func1: |
+			<h1>{{content}}</h1>
+	``
+
+	Variables are one by one replacements of the given
+	text. Functions have a pre-defined variable {{content}}
+	that is replaced by the contents of that macro block.
+
+	The mustache replacements follow the standard
+	mustache patterns.
++/
+private void setupMustacheMacros(string ymlDescription, Mustache.Context context)
+{
+	auto reserved =  [ "content": 1 ];
+
+	auto root = Loader.fromString(cast(char[])ymlDescription.dup).load();
+	if ("variables" in root) {
+		foreach (string tag, string content; root["variables"]) {
+			enforce(tag !in reserved, "tag '" ~ tag ~ "' is reserved as a variable name");
+			context[tag] = content;
+		}
+	}
+	if ("wrappers" in root) {
+		foreach (string tag, string content; root["wrappers"]) {
+			enforce(tag !in reserved, "tag '" ~ tag ~ "' is reserved as a wrapper name");
+			context[tag] = (string inner) {
+				Mustache mustache;
+				context["content"] = inner;
+				return mustache.renderString(content, context);
+			};
+		}
+	}
+}
+
+/++
+	Processes the passed $(D content) using the mustache
+	template engine.
+
+	See $(D setupMustacheMacros) for description of the required
+	format and the possibilites used here for text replacement.
++/
+private string expandMacros(string content, Mustache.Context context)
+{
+	Mustache.Option options;
+	options.handler = (string tag) {
+		throw new Exception("Unknown template tag " ~ tag);
+	};
+	auto mustache = Mustache(options);
+	return mustache.renderString(content, context);
+}
+
+unittest
+{
+	Mustache mustache;
+
+	// test case 0 (must throw)
+	{
+		auto context = new Mustache.Context;
+		try {
+			expandMacros("{{unknown}}", context);
+			assert(false, "Unknown tag was ignored.");
+		}
+		catch (Exception) {
+			assert(true);
+		}
+	}
+
+	// test case 1 (variables)
+	{
+		string description = q{
+variables:
+    test: "test 123"
+};
+
+
+		auto context = new Mustache.Context;
+		setupMustacheMacros(description, context);
+		auto expand = expandMacros("{{test}}", context);
+		assert(expand == "test 123", "test case 1 failure: '" ~ expand ~ "'");
+	}
+
+	// test case 2 (variables)
+	{
+		string description = q{
+variables:
+   one: hello
+   two: world
+};
+
+		auto context = new Mustache.Context;
+		setupMustacheMacros(description, context);
+		auto expand = expandMacros("{{one}} {{two}}", context);
+		assert(expand == "hello world", "test case 2 failure: '" ~ expand ~ "'");
+	}
+
+	// test case 3 (wrappers)
+	{
+		string description = q{
+wrappers:
+   wrap: "<h1>{{content}}</h1>"
+};
+
+		auto context = new Mustache.Context;
+		setupMustacheMacros(description, context);
+		auto expand = expandMacros("{{#wrap}}hello{{/wrap}}", context);
+		assert(expand == "<h1>hello</h1>", "test case 3 failure: '" ~ expand ~ "'");
+	}
+
+	// test case 4 (wrappers)
+	{
+		string description = q{
+variables:
+   test: hello
+wrappers:
+   complex: |
+      <div>
+      {{test}} {{content}}
+      </div>
+};
+
+		auto context = new Mustache.Context;
+		setupMustacheMacros(description, context);
+		auto expand = expandMacros("{{#complex}}world{{/complex}}", context);
+		assert(expand == "<div>\nhello world\n</div>\n", "test case 4 failure: '" ~ expand ~ "'");
+	}
+}
 

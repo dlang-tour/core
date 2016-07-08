@@ -1,6 +1,6 @@
 # Arrays
 
-The are two types of Arrays in D: **static** and **dynamic**
+There are two types of Arrays in D: **static** and **dynamic**
 arrays. Access to arrays of any kind is always bounds checked -
 a failed range check yields a `RangeError` which aborts the application.
 The brave can disable this with the compiler flag `-boundschecks=off` to squeeze
@@ -8,14 +8,14 @@ the last cycles out of their binary.
 
 #### Static arrays
 
-*Static arrays are stored on the stack if defined inside a function
+Static arrays are stored on the stack if defined inside a function
 or in static memory otherwise.  They have a fixed,
 compile-time known length. A static array's type includes
 the fixed size:
 
     int[8] arr;
 
-`arr`s type is `int[8]`. Note that the size of the array is denoted
+`arr`'s type is `int[8]`. Note that the size of the array is denoted
 near the type and not after the variable name like in C/C++.
 
 #### Dynamic arrays
@@ -34,8 +34,18 @@ arrays can be created easily using the `auto arr = new int[3][3]` syntax.
 #### Array operations and properties
 
 Arrays can be concatenated using the `~` operator which
-will create a new dynamic array. Mathematical operations can
-be applied to whole arrays using the `c[] = a[] + b[]` syntax.
+will create a new dynamic array.
+
+Mathematical operations can
+be applied to whole arrays using the `c[] = a[] + b[]` syntax,
+which for example adds all elements of `a` and `b` so that
+`c[0] = a[0] + b[0]`. `c[1] = a[1] + b[1]` etc. It is also possible
+to perform operations on a whole array with a single
+value:
+
+    a[] *= 2; // multiple all elements by 2
+    a[] %= 26; // calculate the modulo by 26 for all a's
+
 Those operations might be optimized
 by the compiler to use special processors instructions that
 do the operations in one go.
@@ -60,6 +70,7 @@ which should make things easier.
 ### In-depth
 
 - [Arrays in _Programming in D_](http://ddili.org/ders/d.en/arrays.html)
+- [Array specification](https://dlang.org/spec/arrays.html)
 
 ## {SourceCode:incomplete}
 
