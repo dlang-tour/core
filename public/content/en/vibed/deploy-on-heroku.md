@@ -4,26 +4,26 @@
 
 - Heroku [account]((https://signup.heroku.com/login))
 - [Git](https://git-scm.com/) installed
-- Your application should compile without error using dmd (`dub build`). 
+- Your application should compile without error using dmd (`dub build`).
 
 ### 1 : Setup the app
 
-Heroku needs to know how to communicate with a deployed application. 
-Hence a global `PORT` environment variable is provided which needs to be injected into an application and 
-it should bind and listen to this port. 
+Heroku needs to know how to communicate with a deployed application.
+Hence a global `PORT` environment variable is provided which needs to be injected into an application and
+it should bind and listen to this port.
 For development a default port (here __8080__) should be set:
 
 ```d
 shared static this() {
   // ...
   auto settings = new HTTPServerSettings;
-  // Provide a default port in case of the $PORT variable isn't set.  
+  // Provide a default port in case of the $PORT variable isn't set.
   settings.port = environment.get("PORT", "8080").to!ushort;
   listenHTTP(settings, router);
 }
 ```
 
-Additionally create a `Procfile`, which is a text file in the root directory of the application, which explicitly declares what command 
+Additionally create a `Procfile`, which is a text file in the root directory of the application, which explicitly declares what command
 should be executed to start the app.
 
 The `Procfile` in the example app looks like this:
@@ -32,7 +32,7 @@ The `Procfile` in the example app looks like this:
 web: ./hello-world
 ```
 
-### 2 : Prepare the app 
+### 2 : Prepare the app
 
 Before going further login to the Heroku Command Line by using the [Heroku Toolbelt](https://toolbelt.heroku.com/standalone).
 
@@ -44,10 +44,10 @@ After installing the toolbet run the following:
 $ heroku login
 ```
 
-### 3 : Create the app 
+### 3 : Create the app
 
-Go to the [heroku dashboard](https://dashboard.heroku.com) and create a new app. 
-After doing this memorize the name of the created app, it will be useful later. 
+Go to the [heroku dashboard](https://dashboard.heroku.com) and create a new app.
+After doing this memorize the name of the created app, it will be useful later.
 
 Or use the Command-Line like this:
 
@@ -57,12 +57,12 @@ Creating app... done, ⬢ rocky-hamlet-67506
 https://rocky-hamlet-67506.herokuapp.com/ | https://git.heroku.com/rocky-hamlet-67506.git
 ```
 
-The app's name here is *rocky-hamlet-67506*. 
+The app's name here is *rocky-hamlet-67506*.
 
-### Deploy using git 
+### Deploy using git
 
 To deploy the app directly use `git` commands. A separate git remote endpoint should be added to which new releases can be pushed.
-Thus the name of the newly created application 
+Thus the name of the newly created application
 in the previous chapter needs to be passed as argument - here it is *rocky-hamlet-67506*.
 
 ```
@@ -83,20 +83,20 @@ Buildpacks are responsible for generating assets or compiled code.
 
 For more information browse the [Heroku documentation](https://devcenter.heroku.com/articles/buildpacks)
 
-For deployement the [Vibe.d buildpack](https://github.com/MartinNowak/heroku-buildpack-d) can be used: 
+For deployement the [Vibe.d buildpack](https://github.com/MartinNowak/heroku-buildpack-d) can be used:
 
 ```
 $ heroku buildpacks:set https://github.com/MartinNowak/heroku-buildpack-d
 ```
-By default the buildpack uses the latest `dmd` compiler. 
-It is possible to use GDC or LDC and to choose a specific compiler versions by adding a `.d-compiler` file to your project. 
+By default the buildpack uses the latest `dmd` compiler.
+It is possible to use GDC or LDC and to choose a specific compiler versions by adding a `.d-compiler` file to your project.
 
-Use `dmd`, `ldc`, or `gdc` to select the latest or `dmd-2.0xxx`, `ldc-1.0xxx`, or `gdc-4.9xxx` to 
+Use `dmd`, `ldc`, or `gdc` to select the latest or `dmd-2.0xxx`, `ldc-1.0xxx`, or `gdc-4.9xxx` to
 select a specific version of a compiler.
 
-### Deploy the code 
+### Deploy the code
 
-Proceed in your usual git habit and write awesome code. 
+Proceed in your usual git habit and write awesome code.
 
 To release a new version, just push the newest version to the Heroku endpoint.
 
@@ -140,9 +140,9 @@ Open the app in the browser with the following command
 $ heroku open
 ```
 
-### Scaling dynos containers 
+### Scaling dynos containers
 
-After deploying, the app is running on a web dyno. 
+After deploying, the app is running on a web dyno.
 Think of a dyno as a lightweight container that runs the command specified in the Procfile.
 
 Using the `ps` command allows checking how many dynos are running:
@@ -156,18 +156,18 @@ https://devcenter.heroku.com/articles/dyno-sleeping
 No dynos on ⬢ rocky-hamlet-67506
 ```
 
-By default, the app is deployed on a free dyno which doesn't access request. 
-Free dynos will sleep after a half hour of inactivity. This causes a delay of a few seconds for the first request upon waking. 
+By default, the app is deployed on a free dyno which doesn't accept requests by default.
+Free dynos will sleep after a half hour of inactivity. This causes a delay of a few seconds for the first request upon waking.
 
 To start the dyno run the following:
 
 ```
 $ heroku ps:scale web=1
 ```
- 
-### See the logs 
 
-Heroku treats logs as streams of time-ordered events aggregated from the output streams of all your app and Heroku components, 
+### See the logs
+
+Heroku treats logs as streams of time-ordered events aggregated from the output streams of all your app and Heroku components,
 providing a single channel for all of the events.
 
 ```
@@ -175,7 +175,7 @@ $ heroku logs --tail
 ```
 
 
-## More informations 
+## More informations
 
 After deploying the app to Heroku you can make it more awesome by using add-ons. For example :
 
