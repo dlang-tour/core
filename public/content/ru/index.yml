@@ -1,0 +1,8 @@
+title: Dlang Tour
+start: welcome/welcome-to-d
+ordering:
+- welcome
+- basics
+- gems
+- multithreading
+- vibed
