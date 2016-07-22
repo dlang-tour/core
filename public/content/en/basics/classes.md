@@ -2,7 +2,7 @@
 
 D provides support for classes and interfaces like in Java or C++.
 
-Any `class` type inherits from [`Object`](https://dlang.org/phobos/object.html) implicitely.
+Any `class` type inherits from [`Object`](https://dlang.org/phobos/object.html) implicitly.
 
     class Foo { } // inherits from Object
     class Bar: Foo { } // Bar is a Foo too
