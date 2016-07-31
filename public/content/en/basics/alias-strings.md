@@ -18,8 +18,8 @@ for example splits a string by newline without any memory allocations.
 
 Beside the UTF-8 `string` there are two more types:
 
-    alias wstring = immutable(dchar)[]; // UTF-16
-    alias dstring = immutable(wchar)[]; // UTF-32
+    alias wstring = immutable(wchar)[]; // UTF-16
+    alias dstring = immutable(dchar)[]; // UTF-32
 
 The variants are most easily converted between each other using
 the `to` method from `std.conv`:
