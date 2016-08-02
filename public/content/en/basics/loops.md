@@ -5,7 +5,7 @@ D provides four loop constructs.
 ### 1) Classical `for` loop
 
 The classical `for` loop known from C/C++ or Java
-with _initiliazer_, _loop condition_ and _loop statement_:
+with _initializer_, _loop condition_ and _loop statement_:
 
     for (int i = 0; i < arr.length; ++i) {
         ...
