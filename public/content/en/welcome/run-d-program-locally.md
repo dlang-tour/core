@@ -30,7 +30,7 @@ Browse the [online documentation](https://dlang.org/rdmd.html) or run `rdmd --he
 ### Package manager `dub`
 
 D's standard package manager is [dub](http://code.dlang.org). When dub is
-installed locally, a new project `test` can be created using
+installed locally, a new project `hello` can be created using
 the command line:
 
     dub init hello
