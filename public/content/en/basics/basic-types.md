@@ -33,7 +33,8 @@ between floating point types (e.g `double` to `float`)
 is allowed though.
 
 A conversion to another type may be forced by using the
-`cast(TYPE) var` expression.
+`cast(TYPE) var` expression. It needs to be used with great care though
+as `cast` expression is allowed to break the type system.
 
 The special keyword `auto` creates a variable and infers its
 type from the right hand side of the expression. `auto var = 7`
@@ -46,7 +47,7 @@ variable with an explicitly given type.
 All data types have a property `.init` to which they are initialized.
 For all integers this is `0` and for floating points it is `NaN` (*not a number*).
 Integral and floating point types have a `.min` and `.max` property for the lowest
-and highest value they can represent. Floating point values have more properties 
+and highest value they can represent. Floating point values have more properties
 `.nan` (NaN-value), `.infinity` (infinity value), `.dig` (number of
 decimal digits of precisions), `.mant_dig` (number of bits in mantissa) and more.
 
