@@ -71,7 +71,7 @@ are just ignored.
 
 * Use the _present_ tense (except for historic facts)
 * Use a _neutral_ tone (No strong narrator = no first-person ("I", "we") nor second-person ("you"))
-* Use a _formal_ (No slang)
+* Use a _formal_ style (No slang)
 * Provide many references and links
 * Pay attention to spelling
 
