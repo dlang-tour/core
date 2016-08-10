@@ -76,6 +76,12 @@ void main()
 {
     string text = "D is a lot of fun";
 
-    writeln("Word counts: ", wordCount(text));
+    auto wc = wordCount(text);
+    writeln("Word counts: ", wc);
+
+    // possible iterations:
+    // byKey, byValue, byKeyValue
+    foreach (word; wc.byValue)
+        writeln(word);
 }
 ```
