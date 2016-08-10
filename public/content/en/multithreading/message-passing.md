@@ -36,7 +36,7 @@ value's type.
 To send a message to a specific thread use the function `send`
 and its id:
 
-    send(42, threadId);
+    send(threadId, 42);
 
 `receiveOnly` can be used to just receive a specified
 type:

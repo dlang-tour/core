@@ -18,7 +18,7 @@ The first field in the `foreach` definition is the variable
 name used in the loop iteration. Its type is induced automatically:
 
     foreach (e; arr) {
-        // typoef(e) is int
+        // typeof(e) is int
         writeln(e);
     }
 

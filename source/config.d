@@ -11,6 +11,9 @@ class Config
 	private bool enableExecCache_;
 	private string publicDir_;
 	private string googleAnalyticsId_;
+	private string tlsCaChainFile_;
+	private string tlsPrivateKeyFile_;
+	private ushort tlsPort_;
 
 	private struct DockerConfig {
 		private int memoryLimit_;
@@ -43,6 +46,9 @@ class Config
 	@property bool enableExecCache() { return enableExecCache_; }
 	@property string publicDir() { return publicDir_; }
 	@property string googleAnalyticsId() { return googleAnalyticsId_; }
+	@property string tlsCaChainFile() { return tlsCaChainFile_; }
+	@property string tlsPrivateKeyFile() { return tlsPrivateKeyFile_; }
+	@property ushort tlsPort() { return tlsPort_; }
 	
 	this(string configFile)
 	{
@@ -54,6 +60,11 @@ class Config
 		enableExecCache_ = root["exec"]["cache"].as!bool();
 		publicDir_ = root["public_dir"].as!string();
 		googleAnalyticsId_ = root["google_analytics_id"].as!string();
+		if ("tls" in root) {
+			tlsCaChainFile_ = root["tls"]["caChainFile"].as!string;
+			tlsPrivateKeyFile_ = root["tls"]["privateKeyFile"].as!string;
+			tlsPort_ = root["tls"]["port"].as!ushort;
+		}
 
 		if (execProvider_ == "docker") {
 			dockerConfig_ = DockerConfig(root["exec"]["config"]);

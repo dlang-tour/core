@@ -14,7 +14,7 @@ the already short compile time of D source code.
 
     import std.stdio: writeln, writefln;
 
-An import statement need not appear at the top a source file.
+An import statement does not need to appear at the top a source file.
 It can also be used locally within functions.
 
 ## {SourceCode}

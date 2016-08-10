@@ -3,6 +3,10 @@ public_dir: "public"
 listen:
     - 127.0.0.1
 google_analytics_id: ""
+tls:
+    caChainFile: "server.crt"
+    privateKeyFile: "server.pem"
+    port: 8443
 exec:
     driver: "stupidlocal"
     # driver: "off"

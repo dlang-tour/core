@@ -18,8 +18,8 @@ for example splits a string by newline without any memory allocations.
 
 Beside the UTF-8 `string` there are two more types:
 
-    alias wstring = immutable(dchar)[]; // UTF-16
-    alias dstring = immutable(wchar)[]; // UTF-32
+    alias wstring = immutable(wchar)[]; // UTF-16
+    alias dstring = immutable(dchar)[]; // UTF-32
 
 The variants are most easily converted between each other using
 the `to` method from `std.conv`:
@@ -27,17 +27,42 @@ the `to` method from `std.conv`:
     dstring myDstring = to!dstring(myString);
     string myString   = to!string(myDstring);
 
-Since `string`s are arrays, the same operations apply to them.
-For example strings might be concatenated using the `~` operator.
-In non-ASCII strings a character might be represented with multiple bytes,
-hence e.g. the property `.length` does not yield the
-number of character for encoded UTF (UCS Transformation Format) strings.
-Therefore for encoded strings instead of `.length`,
-[`std.utf.count`](http://dlang.org/phobos/std_utf.html#.count) needs to be used.
-As dealing with encoded UTF strings can be tedious,
-[`std.utf`](http://dlang.org/phobos/std_utf.html) provides further
-methods that help dealing with decoding UTF strings. Unicode algorithms
-can utilize [`std.uni`](http://dlang.org/phobos/std_uni.html).
+This means that plain `string` is defined as an array of 8-bit Unicode [code
+units](http://unicode.org/glossary/#code_unit). All array operations can be
+used with it but they will work on code unit level, not on character level. At
+the same time standard library algorithms will interpret `string`s as sequences
+of [code points](http://unicode.org/glossary/#code_point) and there is also an
+option to treat the them as sequence of
+[graphemes](http://unicode.org/glossary/#grapheme) by explicit usage of
+[`std.uni.byGrapheme`](https://dlang.org/library/std/uni/by_grapheme.html).
+
+This small example illustrates the difference in interpretation:
+
+    string s = "\u0041\u0308"; // Ä
+
+    writeln(s.length); // 3
+
+    import std.range : walkLength;
+    writeln(s.walkLength); // 2
+
+    import std.uni : byGrapheme;
+    writeln(s.byGrapheme.walkLength); // 1
+
+Here actual array length of `s` is 3 because it contains one 3 code units -
+`0x41`, `0x03` and `0x08`. Of those latter two define single code point
+(combining diacritics character) and
+[`walkLength`](https://dlang.org/library/std/range/primitives/walk_length.html)
+(standard library function to calculate arbitrary range length) counts two code
+points total. Finally, `byGrapheme` performs rather expensive calculations
+to recognize that these two code points combine into single displayed
+character.
+
+Correct processing of Unicode can be very complicated but for most time D
+developers can simply consider `string` variables as magical byte arrays and
+rely on standard library algorithms to do the right job. Most of Unicode
+functionality is provided by
+[`std.uni`](https://dlang.org/library/std/uni.html) module with some more basic
+primitives available in [`std.utf`](https://dlang.org/library/std/utf.html).
 
 To create multi-line strings use the `string str = q{ ... }` syntax.
 Raw strings that don't require laborious escaping, can be declared using
@@ -62,7 +87,8 @@ or the r(aw)-prefix (`r" ... "`).
 
 ```d
 import std.stdio;
-import std.utf: count;
+import std.range: walkLength;
+import std.uni : byGrapheme;
 import std.string: format;
 
 void main() {
@@ -72,10 +98,13 @@ void main() {
     string str = format("%s %s", "Hellö",
         "Wörld");
     writeln("My string: ", str);
-    writeln("Array length of string: ",
-        str.length);
-    writeln("Character length of string: ",
-        count(str));
+    writeln("Array length (code unit count)"
+        ~ " of string: ", str.length);
+    writeln("Range length (code point count)"
+        ~ " of string: ", str.walkLength);
+    writeln("Character length (grapheme count)"
+        ~ " of string: ",
+        str.byGrapheme.walkLength);
 
     // Strings are just normal arrays, so any
     // operation that works on arrays works here

@@ -246,10 +246,12 @@ class ContentProvider
 	private void checkSourceCodeLineWidth(string sourceCode, string sectionTitle)
 	{
 		import std.algorithm: all;
+		import std.range.primitives : walkLength;
+		import std.uni : byGrapheme;
 		auto lineNo = 0;
 		foreach (line; splitter(sourceCode, '\n')) {
 			++lineNo;
-			if (line.length > SourceCodeMaxCharsPerLine) {
+			if (line.byGrapheme.walkLength(SourceCodeMaxCharsPerLine + 1) > SourceCodeMaxCharsPerLine) {
 				throw new Exception("Source code line length exceeds %d limit in '%s': %s"
 						.format(SourceCodeMaxCharsPerLine, sectionTitle, line));
 			}

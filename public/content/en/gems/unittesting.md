@@ -22,6 +22,15 @@ are typically located near the definition of a function
 which might be at the top level of the source, or even
 within classes or structs.
 
+As the compiler is able to infer attributes for templated code
+automatically, it is a common pattern to add annotated unittests
+to ensure such attributes for the tested code:
+
+    unittest @safe @nogc nothrow pure
+    {
+        assert(myAbs() == 1);
+    }
+
 ### In-depth
 
 - [Unit Testing in _Programming in D_](http://ddili.org/ders/d.en/unit_testing.html)
