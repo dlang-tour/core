@@ -9,6 +9,10 @@ d:
   - dmd
   - ldc
 
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y libevent-dev
+
 script:
   # Compile & test with DMD
   - if [[ "${DC}" == "dmd" ]]; then  dub test --compiler=${DC};            fi
