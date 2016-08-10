@@ -18,4 +18,5 @@ ordering:
 - interfaces
 - templates
 - delegates
+- exceptions
 - further-reading
