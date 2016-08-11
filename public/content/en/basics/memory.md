@@ -8,7 +8,7 @@ D provides pointer types `T*` like in C:
 
     int a;
     int* b = &a; // b contains address of a
-    auto c = &a // c is int* and contains address of a
+    auto c = &a; // c is int* and contains address of a
 
 A new memory block on the heap is allocated using the
 `new` expression, which returns a pointer to the managed
