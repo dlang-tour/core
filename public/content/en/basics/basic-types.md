@@ -33,12 +33,12 @@ between floating point types (e.g `double` to `float`)
 is allowed though.
 
 A conversion to another type may be forced by using the
-`cast(TYPE) var` expression. It needs to be used with great care though
+`cast(TYPE) <var>` expression. It needs to be used with great care though
 as `cast` expression is allowed to break the type system.
 
 The special keyword `auto` creates a variable and infers its
-type from the right hand side of the expression. `auto var = 7`
-will deduce the type `int` for `var`. Note that the type is still
+type from the right hand side of the expression. `auto i = 7`
+will deduce the type `int` for `i`. Note that the type is still
 set at compile-time and can't be changed - just like with any other
 variable with an explicitly given type.
 
