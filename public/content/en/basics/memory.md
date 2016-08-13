@@ -1,8 +1,8 @@
 # Memory
 
 D is a system programming language and thus allows you to manually
-manage and mess up your memory. Nevertheless, D uses a
-*garbage collector* per default to free unused memory.
+manage. However manual memory management is very error-prone and thus
+D uses a *garbage collector* per default to free unused memory.
 
 D provides pointer types `T*` like in C:
 
