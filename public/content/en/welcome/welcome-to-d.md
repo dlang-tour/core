@@ -42,7 +42,7 @@ Click the run button (or `Ctrl-enter`) to compile and run it.
 
 ### Contributing
 
-This tour is [open source](https://github.com/stonemaster/dlang-tour/tree/master/public/content/en)
+This tour is [open source](https://github.com/stonemaster/dlang-tour)
 and we are glad about pull requests making this tour even better.
 
 ## {SourceCode}
