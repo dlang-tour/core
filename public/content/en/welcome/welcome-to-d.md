@@ -24,7 +24,7 @@ for many diverse languages and has a large number of
 - direct interface to the operating system API's and hardware
 - blazingly fast compile-times
 - allow memory-safe programming (SafeD)
-- _maintainable_, _easy to understand_ code.
+- _maintainable_, _easy to understand_ code
 - short learning curve (C-like syntax, similar to Java and others)
 - compatible with C application binary interface
 - multi-paradigm (imperative, structured, object oriented, generic, functional programming purity, and even assembly)
