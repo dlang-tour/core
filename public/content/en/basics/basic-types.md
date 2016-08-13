@@ -45,7 +45,7 @@ variable with an explicitly given type.
 ### Type properties
 
 All data types have a property `.init` to which they are initialized.
-For all integers this is `0` and for floating points it is `NaN` (*not a number*).
+For all integers this is `0` and for floating points it is `nan` (*not a number*).
 Integral and floating point types have a `.min` and `.max` property for the lowest
 and highest value they can represent. Floating point values have more properties
 `.nan` (NaN-value), `.infinity` (infinity value), `.dig` (number of
