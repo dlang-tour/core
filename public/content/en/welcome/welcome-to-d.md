@@ -1,6 +1,6 @@
 # Welcome to D
 
-Welcome to the online tour of the *D Programming language*.
+Welcome to the interactive tour of the *D Programming language*.
 
 {{#dmanmobile}}
 
