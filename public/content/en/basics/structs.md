@@ -19,7 +19,7 @@ as parameters to function calls.
 When a new object of a `struct` type is created its members can be initialized
 in the order they are defined in the `struct`. A custom constructor can be defined through
 a `this(...)` member function. If needed to avoid name conflicts, the current instance
-can be explicitely accessed with `this`:
+can be explicitly accessed with `this`:
 
     struct Person {
         this(int age, int height) {
@@ -126,25 +126,32 @@ struct Vector3 {
 }
 
 void main() {
-    auto vec1 = Vector3(10.0, 0.0, 0.0);
+    auto vec1 = Vector3(10, 0, 0);
     Vector3 vec2;
-    vec2.x = 0.0;
-    vec2.y = 20.0;
-    vec2.z = 0.0;
+    vec2.x = 0;
+    vec2.y = 20;
+    vec2.z = 0;
 
     // If a member function has no parameters,
-    // the calling braces () might be omitted
-    assert(vec1.length == 10.0);
-    assert(vec2.length == 20.0);
+    // the calling braces () may be omitted
+    assert(vec1.length == 10);
+    assert(vec2.length == 20);
 
     // Test the functionality for dot product
-    assert(vec1.dot(vec2) == 0.0);
+    assert(vec1.dot(vec2) == 0);
+
+    // 1 * 1 + 2 * 1 + 3 * 1
+    auto vec3 = Vector3(1, 2, 3);
+    assert(vec3.dot(Vector3(1, 1, 1) == 6);
+
+    // 1 * 3 + 2 * 2 + 3 * 1
+    assert(vec3.dot(Vector3(3, 2, 1) == 10);
 
     // Thanks to toString() we can now just
     // output our vector's with writeln
     import std.stdio: writeln, writefln;
-    writeln("My vec1 = ", vec1);
-    writefln("My vec2 = %s", vec2);
+    writeln("vec1 = ", vec1);
+    writefln("vec2 = %s", vec2);
 
     // Check the string representation
     assert(vec1.toString() ==
