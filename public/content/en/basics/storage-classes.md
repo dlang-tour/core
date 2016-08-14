@@ -16,7 +16,7 @@ be initialized once and then isn't
 allowed to change.
 
     immutable int err = 5;
-    // or: immutable arr = 5 and int is inferred.
+    // or: immutable err = 5 and int is inferred.
     err = 5; // won't compile
 
 `immutable` objects can thus safely be shared among different threads
