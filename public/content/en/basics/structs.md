@@ -133,7 +133,7 @@ void main() {
     vec2.z = 0;
 
     // If a member function has no parameters,
-    // the calling braces () might be omitted
+    // the calling braces () may be omitted
     assert(vec1.length == 10);
     assert(vec2.length == 20);
 
