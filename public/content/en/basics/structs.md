@@ -19,7 +19,7 @@ as parameters to function calls.
 When a new object of a `struct` type is created its members can be initialized
 in the order they are defined in the `struct`. A custom constructor can be defined through
 a `this(...)` member function. If needed to avoid name conflicts, the current instance
-can be explicitely accessed with `this`:
+can be explicitly accessed with `this`:
 
     struct Person {
         this(int age, int height) {
