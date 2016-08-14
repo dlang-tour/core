@@ -4,7 +4,7 @@ Welcome to the interactive tour of the *D Programming language*.
 
 {{#dmanmobile}}
 
-This tour will give you an overview of this __powerful__ and __expressive__
+This tour gives an overview of this __powerful__ and __expressive__
 language which compiles directly to __efficient__, __native__ machine code.
 
 {{/dmanmobile}}
