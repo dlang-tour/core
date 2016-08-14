@@ -113,7 +113,7 @@ To test whether an exception is thrown in tests, use `assertThrown`.
 
 ## {SourceCode}
 
-```
+```d
 import std.file;
 import std.stdio;
 
