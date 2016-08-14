@@ -58,9 +58,10 @@ private IExecProvider createExecProvider(Config config,
 private void doSanityCheck(ContentProvider contentProvider, IExecProvider execProvider)
 {
 	import std.exception: enforce;
+	import std.parallelism : parallel;
 
 	auto content = contentProvider.getContent();
-	foreach (section; content) {
+	foreach (section; parallel(content)) {
 		if (section.sourceCode.empty) {
 			logInfo("[%s] Sanity check: Ignoring source code for section '%s' because it is empty.",
 					section.language, section.title);

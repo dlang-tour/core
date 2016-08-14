@@ -3,7 +3,7 @@
 D is a statically typed language: once a variable has been declared,
 its type can't be changed from that point onwards. This allows
 the compiler to prevent bugs early and enforce restrictions
-at compile time.  Good type-safety gives you the support you need
+at compile time.  Good type-safety gives the support one needs
 to make large programs safer and more maintainable.
 
 ### `immutable`
@@ -16,7 +16,7 @@ be initialized once and then isn't
 allowed to change.
 
     immutable int err = 5;
-    // or: immutable arr = 5 and int is inferred.
+    // or: immutable err = 5 and int is inferred.
     err = 5; // won't compile
 
 `immutable` objects can thus safely be shared among different threads
