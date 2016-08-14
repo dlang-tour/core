@@ -4,7 +4,7 @@ Welcome to the interactive tour of the *D Programming language*.
 
 {{#dmanmobile}}
 
-This tour will give you an overview of this __powerful__ and __expressive__
+This tour gives an overview of this __powerful__ and __expressive__
 language which compiles directly to __efficient__, __native__ machine code.
 
 {{/dmanmobile}}
@@ -42,7 +42,7 @@ Click the run button (or `Ctrl-enter`) to compile and run it.
 
 ### Contributing
 
-This tour is [open source](https://github.com/stonemaster/dlang-tour/tree/master/public/content/en)
+This tour is [open source](https://github.com/stonemaster/dlang-tour)
 and we are glad about pull requests making this tour even better.
 
 ## {SourceCode}
