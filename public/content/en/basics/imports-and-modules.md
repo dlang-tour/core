@@ -8,13 +8,13 @@ The standard library, called [Phobos](https://dlang.org/phobos/),
 is located under the **package** `std`
 and those modules are referenced through `import std.MODULE`.
 
-The import statement can also be used to selectively
+The `import` statement can also be used to selectively
 import certain symbols of a module. This improves
 the already short compile time of D source code.
 
     import std.stdio: writeln, writefln;
 
-An import statement does not need to appear at the top a source file.
+An `import` statement does not need to appear at the top a source file.
 It can also be used locally within functions.
 
 ## {SourceCode}
