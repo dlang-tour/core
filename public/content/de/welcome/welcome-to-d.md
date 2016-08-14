@@ -11,7 +11,7 @@ Sprache, welche direkt zu __effizientem__, __nativem__ Maschinencode kompiliert.
 
 ### Was ist D?
 
-D ist die Akkumulation von Jahrzehnten an Erfahrung im Bau von Compiler
+D ist die Akkumulation von Jahrzehnten an Erfahrung im Compilerbau
 für viele verschiedene Sprachen und D hat eine Vielzahl an einzigartigen
 [Fähigkeiten](http://dlang.org/overview.html):
 
@@ -27,7 +27,7 @@ für viele verschiedene Sprachen und D hat eine Vielzahl an einzigartigen
 - _wartbarer_, _einfach zu verstehender_ Code
 - geringe Lernkurve (sehr änhliche Syntax zu C, C++, Java u.a.)
 - kompatibel mit der C Binärschnittstelle
-- verschiedene Paradigmen (imperativ, strukturiert, Objektorientiert, generisch, funktional and selbst Assembler)
+- verschiedene Paradigmen (imperativ, strukturiert, objektorientiert, generisch, funktional and selbst Assembler)
 - eingebaute Fehlerkorrektur (Verträge, Unittests)
 
 ... und [viele weitere Besonderheiten](http://dlang.org/overview.html).
