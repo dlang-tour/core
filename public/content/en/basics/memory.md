@@ -30,7 +30,7 @@ code that is marked as @safe.
     }
 
 Unless specified otherwise the default is `@system`.
-Using `@safe`, a subset of D can be forced to prevent memory bugs by design.
+D has a `@safe` subset that prevents memory bugs by design.
 `@safe` code can only call other `@safe` or `@trusted` functions.
 `@trusted` functions are manually verified functions and allow to bridge the
 world between SafeD and the underlying dirty low-level world.
