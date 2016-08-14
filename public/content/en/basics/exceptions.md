@@ -9,7 +9,7 @@ A common case for exceptions is to validate potentially invalid user input.
 Once an exception is thrown, the stack will be unwound until the first matching exception
 handler is found.
 
-```
+```d
 try
 {
     readText("dummyFile");
@@ -23,7 +23,7 @@ catch (FileException e)
 You can also have multiple `catch` blocks and a `finally` block that is executed
 regardless of whether an error occurred. Exceptions are thrown with `throw`.
 
-```
+```d
 try
 {
     throw new StringException("You shall not pass.");
@@ -49,7 +49,7 @@ pattern.
 
 One can easily inherit from `Exception` and create custom exceptions:
 
-```
+```d
 class UserNotFoundException : Exception
 {
     this(string msg, string file = __FILE__, size_t line = __LINE__) {
@@ -65,7 +65,7 @@ The D compiler can ensure that a function can't cause catastrophic side-effects.
 Such functions can be annotated with the `nothrow` keyword. The D compiler
 statically forbids throwing exceptions in `nothrow` functions.
 
-```
+```d
 bool lessThan(int a, int b) nothrow
 {
     writeln("unsafe world"); // output can throw exceptions, thus this is forbidden
@@ -83,7 +83,7 @@ are removed when compiled in release mode. For convenience `std.exception` provi
 `enforce` that can be used like `assert`, but throws `Exceptions`
 instead of an `AssertError`.
 
-```
+```d
 import std.exception: enforce;
 float magic = 1_000_000_000;
 enforce(magic + 42 - magic == 42, "Floating-point math is fun");
@@ -95,7 +95,7 @@ enforce!StringException('a' != 'A', "Case-sensitive algorithm");
 However there's more in `std.exception`. For example when the error might not be
 fatal, one can opt-in to `collect` it:
 
-```
+```d
 import std.exception: collectException;
 auto e = collectException(aDangerousOperation());
 if (e)
@@ -113,6 +113,7 @@ To test whether an exception is thrown in tests, use `assertThrown`.
 
 ## {SourceCode}
 
+```
 import std.file;
 import std.stdio;
 
@@ -133,3 +134,4 @@ void main()
 		// writeln(e);
     }
 }
+```
