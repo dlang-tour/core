@@ -1,23 +1,23 @@
 # Välkommen till D
 
-Välkommen till den interaktiva rundtur av *Programmings språket D*.
+Välkommen till den interaktiva rundturen av *Programmings språket D*.
 
 {{#dmanmobile}}
 
-Denna rundtud ger en överblick av detta __kraftfulla__ och __målande__
-språk vilket kompilerar direkt till __effektiv__, __nativ__ maskin kod.
+Denna rundtur ger en överblick av detta __kraftfulla__ och __målande__
+språk vilket kompilerar direkt till __effektiv__, __ren__ maskin kod.
 
 {{/dmanmobile}}
 
 ### Vad är D?
 
-D är höjdpunkten utav __decennier av erfarenhet innom att implementera kompilatorer__
+D är höjdpunkten utav __decennier av erfarenhet inom att implementera kompilatorer__
 för många diverse språk och har en stort antal [unika funktioner](http://dlang.org/overview.html):
 
 {{#dmandesktop}}
 
 - _hög nivå_ begrepp för fantastiskt modellerings kraft
-- _hög presterande_, kompilerat språk
+- _högt presterande_, kompilerat språk
 - statisk typning
 - evolutionen av C++ (utan dess misstag)
 - direkt gränssnitt till operativ systemets API:n och hårdvara
