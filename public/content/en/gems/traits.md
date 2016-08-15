@@ -9,7 +9,7 @@ heavy optimizations can be achieved.
 Traits allow to specify explicitly what input is accepted.
 For example `splitIntoWords` can operate on any arbitrary string type:
 
-```
+```d
 S[] splitIntoWord(S)(S input)
 if (isSomeString!S)
 ```
@@ -17,7 +17,7 @@ if (isSomeString!S)
 This applies to template parameters as well and `myWrapper` can ensure that the
 passed-in symbol is a callable function:
 
-```
+```d
 void myWrapper(alias f)
 if (isCallable!f)
 ```
@@ -26,7 +26,7 @@ As a simple example, [`commonPrefix`](https://dlang.org/phobos/std_algorithm_sea
 from `std.algorithm.searching`, which returns the common prefix of two ranges,
 will be analyzed:
 
-```
+```d
 auto commonPrefix(alias pred = "a == b", R1, R2)(R1 r1, R2 r2)
 if (isForwardRange!R1
     isInputRange!R2 &&
@@ -53,7 +53,7 @@ of a stream or list before walking through it.
 Hence a simple implementation of the `std.range` method `walkLength`
 which generalizes for any iterable type would be:
 
-```
+```d
 static if (hasMember!(r, "length"))
     return r.length; // O(1)
 else
@@ -73,7 +73,7 @@ between positions and thus speed-up the algorithm.
 D's [traits](https://dlang.org/spec/traits.html) except for some like
 `compiles` that can't be wrapped as it would lead to an immediate compile error:
 
-```
+```d
 __traits(compiles, obvious error - $%42); // false
 ```
 
@@ -81,7 +81,7 @@ __traits(compiles, obvious error - $%42); // false
 
 Additionally for debugging purposes D provides a couple of special keywords:
 
-```
+```d
 void test(string file = __FILE__, size_t line = __LINE__, string mod = __MODULE__,
           string func = __FUNCTION__, string pretty = __PRETTY_FUNCTION__)
 {
@@ -92,7 +92,7 @@ void test(string file = __FILE__, size_t line = __LINE__, string mod = __MODULE_
 
 With D's CLI evaluation one doesn't even need `time` - CTFE can be used!
 
-```
+```d
 rdmd --force --eval='pragma(msg, __TIMESTAMP__);'
 ```
 
@@ -105,6 +105,7 @@ rdmd --force --eval='pragma(msg, __TIMESTAMP__);'
 
 ## {SourceCode}
 
+```d
 import std.functional: binaryFun;
 import std.range;
 import std.stdio;
@@ -167,3 +168,4 @@ void main()
     writeln(commonPrefix("hello, world"d,
                          "hello, there"d));
 }
+```

@@ -20,7 +20,7 @@ A common example for bit manipulation is to read the value of a bit.
 D provides `core.bitop.bt` for most common tasks, however to get used to bit
 manipulation, let's start with a verbose implementation of testing a bit:
 
-```
+```d
 enum posA = 1;
 enum maskA = (1 << posA);
 bool getFieldA()
@@ -33,7 +33,7 @@ A generalization is to test for blocks that are longer than 1. Hence
 a special read mask with the length of the block is needed
 and the data block is shifted accordingly before applying the mask:
 
-```
+```d
 enum posA = 1;
 enum lenA = 3;
 enum maskA = (1 << lenA) - 1; // ...0111
@@ -46,7 +46,7 @@ uint getFieldA()
 Setting such a block can equivalently be defined by negating the mask and thus
 only allowing writes within the specified block:
 
-```
+```d
 void setFieldA(bool b);
 {
     return (_data & ~maskAWrite) | ((b << aPos) & maskAWrite);
@@ -80,6 +80,7 @@ to start with fields of high alignments.
 
 ## {SourceCode}
 
+```d
 struct BitVector
 {
     import std.bitmanip : bitfields;
@@ -119,3 +120,4 @@ void main()
 	// 4 bytes are used for each field
 	writeln(BadVector.sizeof);
 }
+```

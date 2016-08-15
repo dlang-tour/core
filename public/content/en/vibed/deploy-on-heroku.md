@@ -174,7 +174,6 @@ providing a single channel for all of the events.
 $ heroku logs --tail
 ```
 
-
 ## More informations
 
 After deploying the app to Heroku you can make it more awesome by using add-ons. For example :
