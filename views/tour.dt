@@ -16,7 +16,7 @@ block content
 						.fa.fa-edit
 					span.hidden-xs.hidden-sm
 						button.btn.btn-default.btn-sm(ng-click="showSourceCode = true", ng-hide="showSourceCode")
-							fa.fa-eye
+							.fa.fa-eye
 				|!= htmlContent
 			div(ng-show="showProgramOutput")
 				.content-command-box
@@ -30,7 +30,7 @@ block content
 					i.fa.fa-expand(ng-show="showContent",aria-hidden="true")
 					i.fa.fa-compress(ng-hide="showContent",aria-hidden="true")
 				button.btn.btn-default.btn-sm.hidden-xs.hidden-sm(ng-click="showSourceCode = false")
-					fa.fa-eye-slash
+					.fa.fa-eye-slash
 				- if (sourceCodeEnabled)
 					button.btn.btn-primary(ng-click="run()")
 						i.fa.fa-play(aria-hidden="true")
