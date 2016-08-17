@@ -1,10 +1,10 @@
 # Speicher
 
-D ist eine Systemprogrammiersprache und erlaubt daher manuellen Zugriff. Manueller
-Zugriff impliziert jedoch das Fehler sehr leicht entstehen können, daher
-verwendet D per Default einen *Garbage Collector* um Speicher freizugeben.
+D ist eine Systemprogrammiersprache und erlaubt daher manuellen Zugriff auf den Systemspeicher.
+Manueller Zugriff impliziert jedoch das Fehler sehr leicht entstehen können, daher
+verwendet D standardmäßig einen *Garbage Collector* um Speicher freizugeben.
 
-D verfügt über Adressstypen `T*` wie in C:
+D verfügt über Adressstypen (aka Pointer) `T*` wie in C:
 
     int a;
     int* b = &a; // b beinhaltet die Adresse zu a
@@ -16,7 +16,7 @@ werden. Der `new` Ausdruck gibt einen Pointer zu den allozierten Speicher zurüc
     int* a = new int;
 
 Sobald der Speicher, welcher durch `a` adressierbar ist, nicht mehr durch ein
-einzige Variable in dem Program referenziert wird, wird der Garabage Collector den
+einzige Variable in dem Program referenziert wird, wird der Garbage Collector den
 Speicher freigeben.
 
 D erlaubt auch Adressarithmetik, außer in Code der als `@safe` markiert wurde:
@@ -28,7 +28,7 @@ D erlaubt auch Adressarithmetik, außer in Code der als `@safe` markiert wurde:
     }
 
 Außer explizit angeben, haben Funktionen die `@system` Annotation.
-`@safe` ist ein Subset von D, welches _per Definition_ Memoryfehler verhindert.
+`@safe` ist ein Subset von D, welches _per Definition_ Speicherfehler verhindert.
 `@safe` Code kann nur andere `@safe` Funktionen oder Funktionen, denen explizit
 mit `@trusted` vertraut wird, aufrufen.
 `@trusted` Funktionen müssen manuell verifiziert werden und erlauben die Brücke
