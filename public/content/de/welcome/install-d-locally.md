@@ -32,7 +32,7 @@ Für viele Distributionen werden auch Pakete angeboten:
 ### Andere Kompiler
 
 Neben dem DMD-Referenzkompiler, der sein eigenes Backend verwendet, gibt es noch
-zwei weitere Kompiler, die über den Downloadbereich auf [dlang.org](https://dlang.org)
+zwei weitere Kompiler, die über den Downloadbereich auf [dlang.org](https://dlang.org/download.html)
 heruntergeladen werden können:
 
 * [**GDC**](http://gdcproject.org/downloads) - basierend auf dem GCC-Backend
