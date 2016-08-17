@@ -103,9 +103,9 @@ void main()
     // eines Ausdruckes
     writeln("Typ von f ist:  ", typeid(f));
     double pi = f; // größerer Typ
-    // Für Gleitkommazhalen ist
-    // implizite Umwandlung in Typen
-    // mit geringer Präzision erlaubt
+    // Für Gleitkommazahlen ist
+    // eine implizite Umwandlung in Typen
+    // mit geringerer Präzision erlaubt
     float demoted = pi;
 
     // Zugriff auf die Eigenschaften eines Types
