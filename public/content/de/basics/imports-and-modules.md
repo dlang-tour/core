@@ -1,7 +1,8 @@
 # Imports und Module
 
 Für ein einfaches "Hallo Welt" Programm in D werden Imports benötigt.
-Mit `import` werden alle öffentlichen Funktionen und Typen des __Modules__ verfügbar.
+Mit `import` werden alle öffentlichen Funktionen und Typen des importierten
+__Modules__ verfügbar.
 
 Die Standardbibliothek [Phobos](https://dlang.org/phobos/) ist unter
 dem **Packet** `std` vorhanden. Die einzelnen Module können per `import std.MODULE`
