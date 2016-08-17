@@ -18,7 +18,7 @@ versionen av referens kompilatorn **DMD** (Digital Mars D)
 
 ### Linux / FreeBSD
 
-För att snabbt installera dmd i användar katalogen, kör `curl -fsS
+För att snabbt installera dmd i användarens hemmapp, kör `curl -fsS
 https://dlang.org/install.sh | bash -s dmd`
 
 Paket för flera distributioner är:
@@ -33,11 +33,11 @@ Paket för flera distributioner är:
 
 Förutom DMD referens kompilatorn vilket använder sitt egna 'backend', finns
 det två andra kompilatorer som kan hämtas via [dlang.org](https://dlang.org)
-nedladdnings sektion:
+nedladdningssektion:
 * [**GDC**](http://gdcproject.org/downloads) vilket använder sig av GCCs 'backend'
 * [**LDC**](https://github.com/ldc-developers/ldc#installation) baserat på LLVMs 'backend'
 
 GDC och LDC är inte alltid vid den senaste DMDs 'frontend' version, men
-ger bättre optimisering nivåer samt stöd för andra platformer, exempelvid ARM.
+ger bättre optimisering nivåer samt stöd för andra platformer, exempelvis ARM.
 
 Se wiki för [mer information](https://wiki.dlang.org/Compilers)
