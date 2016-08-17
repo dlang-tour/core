@@ -19,7 +19,7 @@ angeboten und kann wie folgt installiert werden:
 ### Linux / FreeBSD
 
 DMD kann am schnellsten durch Ausführen von `curl -fsS https://dlang.org/install.sh | bash -s dmd`
-in dem Benutzerverzeichnis installiert werden.
+im Benutzerverzeichnis installiert werden.
 
 Für viele Distributionen werden auch Pakete angeboten:
 
@@ -31,15 +31,15 @@ Für viele Distributionen werden auch Pakete angeboten:
 
 ### Andere Kompiler
 
-Neben dem DMD Referenzkompiler, der sein eigenes Backend verwendet, gibt es noch
-zwei weitere Kompiler die über die Downloadsektion auf [dlang.org](https://dlang.org)
+Neben dem DMD-Referenzkompiler, der sein eigenes Backend verwendet, gibt es noch
+zwei weitere Kompiler, die über den Downloadbereich auf [dlang.org](https://dlang.org)
 heruntergeladen werden können:
 
-* [**GDC**](http://gdcproject.org/downloads) - basierend auf dem GCC backend
-* [**LDC**](https://github.com/ldc-developers/ldc#installation) - basierend auf dem LLVM backend
+* [**GDC**](http://gdcproject.org/downloads) - basierend auf dem GCC-Backend
+* [**LDC**](https://github.com/ldc-developers/ldc#installation) - basierend auf dem LLVM-Backend
 
-GDC und LDC verwenden nicht immer das neuste DMD Frontend, aber dafür
-ermöglichen sie bessere Optimierung oder Unterstützungen für weitere Platformen
+GDC und LDC verwenden nicht immer das neuste DMD-Frontend, aber dafür
+ermöglichen sie bessere Optimierung und unterstützen weitere Platformen
 wie zum Beispiel ARM.
 
 Weitere Informationen bietet das [DWiki](https://wiki.dlang.org/Compilers).
