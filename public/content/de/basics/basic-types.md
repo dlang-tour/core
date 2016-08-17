@@ -1,11 +1,11 @@
 # Elementare Datentypen
 
-D bietet eine Vielzahl an elementaren Datentypen die immer die gleiche Größe haben -
+D bietet eine Vielzahl an elementaren Datentypen, die immer die gleiche Größe haben -
 **unabhängig** von der Platform.
 Die einzige Ausnahme ist der Typ `real` für welchen der Kompiler
 die höchstmöglichste Genauigkeit für Gleitkommazahlen wählt.
 Es besteht kein Unterschied zwischen der Große einer Ganzzahl - unabhängig davon
-ob die Anwendung für ein 32-bit oder 64-bit Architektur kompiliert wird.
+ob die Anwendung für eine 32-bit oder 64-bit Architektur kompiliert wird.
 
 <table class="table table-hover">
 <tr><td width="250px"><code class="prettyprint">bool</code></td> <td>8-bit</td></tr>
@@ -33,20 +33,20 @@ erlaubt ist.
 
 Eine Umwandlung zu einem anderen Typ kann durch den Ausdruck
 `cast(TYPE) <varName>` erzwungen werden. Dieser Ausdruck sollte aber mit großer
-Vorsicht verwenden werden, da mit `cast` Ausdrücke das Typsystem ausgeschaltet
+Vorsicht verwenden werden, da mit `cast` Ausdrücken das Typsystem ausgeschaltet
 wird.
 
 Das spezielle Schlüsselwort `auto` erzeugt eine Variable und inferiert ihren Typ
 automatisch an Hand des Ausdruck of the rechten Seite. Zum Beispiel wird
-`auto i = 7` den Typ `int` deduzieren. Beachte, dass `auto` Typen trotzdem
-statisch während der Kompilerphase festgelegt werden und nicht den Typ ändern können
-- wie für jede andere Variable mit explizitem Typ.
+`auto i = 7` den Typ `int` deduzieren. Es sollte beachtet werden, dass `auto` Typen trotzdem
+statisch während der Kompilierphase festgelegt werden und nicht den Typ nachträglich
+ändern können, wie für jede andere Variable mit explizitem Typ.
 
-### Eigenschaften eines Types
+### Eigenschaften eines Typen
 
 Alle Datentypen haben die Eigenschaft `.init`, welche dem Initialwert gleicht.
 Für alle Ganzzahlen ist dies `0` und für Gleitkommazahlen ist es `nan` (vom Englischen
-"not a number"). Sowohl Ganzzahl als auch Gleitkommatypen haben eine `.min` und
+"not a number"). Sowohl Ganzzahl- als auch Gleitkommatypen haben eine `.min` und
 `.max` Eigenschaft für die kleinste und größte Zahl, die der Typ darstellen kann.
 Gleitkommazahlen besitzen noch weitere Eigenschaften: `nan` (der invalide Zustand),
 `infinity` (unendlich), `.dig` (Anzahl der dezimalen Stellen der Präzision) und
@@ -77,9 +77,9 @@ liefert.
 
 #### Weitergehende Referenzen
 
-- [Übersicht über alle elementaren Datentypen in D](https://dlang.org/spec/type.html)
+- [Übersicht aller elementaren Datentypen in D](https://dlang.org/spec/type.html)
 - [`auto` und `typeof` in _Programmieren in D_](http://ddili.org/ders/d.en/auto_and_typeof.html)
-- [Eigenschaften eines Types](https://dlang.org/spec/property.html)
+- [Eigenschaften eines Typen](https://dlang.org/spec/property.html)
 
 ## {SourceCode}
 
