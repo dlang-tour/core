@@ -11,7 +11,7 @@ viele Argumente akzeptieren:
 
 ### `auto` Rückgabetyp
 
-Wenn der Rückgabetyp als `auto` definiert wird, versucht der D Kompiler den
+Wenn der Rückgabetyp als `auto` definiert wird, versucht der D Compiler den
 Rückgabetyp automatisch zu inferieren. Falls mehrere `return` Anweisungen
 verwendet werden, müssen diese Ausdrücke kompatible Typen haben.
 
@@ -108,7 +108,7 @@ void zufallsGenerator()
             writeln(dividiere(a, b));
             break;
         default:
-            // Spezieller code für
+            // Spezielle Anweisung für
             // UNEREICHBAREN code
             assert(0);
     }
