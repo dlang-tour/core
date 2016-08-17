@@ -3,7 +3,7 @@
 Unter anderem beinhaltet D den Compiler `dmd`, ein Skripttool `rdmd` und den
 Packetmanager `dub`.
 
-### DMD Kompiler
+### DMD Compiler
 
 Der *DMD* Compiler kompiliert D Dateien und erstellt eine Binärdatei.
 Auf der Kommandozeile kann *DMD* mit dem Dateinamen aufgerufen werden:
