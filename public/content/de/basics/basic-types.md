@@ -48,7 +48,7 @@ Alle Datentypen haben die Eigenschaft `.init`, welche dem Initialwert gleicht.
 Für alle Ganzzahlen ist dies `0` und für Gleitkommazahlen ist es `nan` (vom Englischen
 "not a number"). Sowohl Ganzzahl- als auch Gleitkommatypen haben eine `.min` und
 `.max` Eigenschaft für die kleinste und größte Zahl, die der Typ darstellen kann.
-Gleitkommazahlen besitzen noch weitere Eigenschaften: `nan` (der invalide Zustand),
+Gleitkommatypen besitzen noch weitere Eigenschaften: `nan` (der invalide Zustand),
 `infinity` (unendlich), `.dig` (Anzahl der dezimalen Stellen der Präzision) und
 `.mant_dig` (Anzahl an Bits der Mantisse) und Weitere.
 
