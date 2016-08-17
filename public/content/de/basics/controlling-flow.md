@@ -18,15 +18,15 @@ D bietet die gleichen Operatoren wie in C/C++ und Java für das Testen der Gleic
 oder den Vergleich von Variablen:
 
 * `==` und `!=` für Gleichheit- und Ungleichheittests
-* `<`, `<=`, `>` and `>=` für Vergleiche mit kleiner (- oder gleich) und größer (- oder gleich)
+* `<`, `<=`, `>` and `>=` für Vergleiche mit kleiner (oder gleich) und größer (oder gleich)
 
 Für das Kombinieren mehrerer Bedingungen stehen die logischen Operatoren
 `||`, das logische *OR*, und `&&`, das logische *UND* zur Verfügung.
 
-D besitzt auch eine `switch` .. `case` Anweisung welche einen Fall abhängig
+D besitzt auch eine `switch` .. `case` Anweisung, welche einen Fall abhängig
 von einer Variable ausführt. `switch` funktioniert mit allen grundlegenden Typen
 und auch strings!
-Es ist sogar möglich Bereiche für Ganzzahlen mit der `case ANFANG: .. case END:` Syntax
+Es ist sogar möglich Bereiche für Ganzzahlen mit der `case ANFANG: .. case ENDE:` Syntax
 zu definieren, dies wird am besten durch das Beispiel gezeigt.
 
 ### In-depth
