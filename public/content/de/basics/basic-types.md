@@ -37,7 +37,7 @@ Vorsicht verwenden werden, da mit dem `cast` Ausdruck das Typsystem ausgeschalte
 wird.
 
 Das spezielle Schlüsselwort `auto` erzeugt eine Variable und inferiert ihren Typ
-automatisch an Hand des Ausdruck of the rechten Seite. Zum Beispiel wird
+automatisch anhand des Ausdruck of der rechten Seite. Zum Beispiel wird
 `auto i = 7` den Typ `int` deduzieren. Es sollte beachtet werden, dass `auto` Typen trotzdem
 statisch während der Kompilierphase festgelegt werden und den Typ nachträglich nicht
 ändern können, wie für jede andere Variable mit explizitem Typ.
@@ -62,7 +62,7 @@ Speicherzellen adressieren zu können, d.h. für ein 32-bit System `uint` und f�
 ein 64-bit System `ulong`.
 
 `assert` ist eine eingebaute Anweisung welche Ausdrücke im Debugmodus validiert
-und einen `AssertionError` wirft, wenn die Evaluation des Ausdruck `false`
+und einen `AssertionError` wirft, wenn die Evaluation des Ausdruckes `false`
 liefert.
 
 ### In der Tiefe
