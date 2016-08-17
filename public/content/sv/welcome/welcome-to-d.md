@@ -12,7 +12,7 @@ språk vilket kompilerar direkt till __effektiv__, __ren__ maskin kod.
 ### Vad är D?
 
 D är höjdpunkten utav __decennier av erfarenhet inom att implementera kompilatorer__
-för många diverse språk och har en stort antal [unika funktioner](http://dlang.org/overview.html):
+för många diverse språk och har ett stort antal [unika funktioner](http://dlang.org/overview.html):
 
 {{#dmandesktop}}
 
@@ -20,29 +20,28 @@ för många diverse språk och har en stort antal [unika funktioner](http://dlan
 - _högt presterande_, kompilerat språk
 - statisk typning
 - evolutionen av C++ (utan dess misstag)
-- direkt gränssnitt till operativ systemets API:n och hårdvara
+- direkt gränssnitt till operativsystemets API:n och hårdvara
 - supersnabb kompilerings tid
-- tillåter minnes-säker programmering (SafeD)
+- tillåter minnessäker programmering (SafeD)
 - _underhållbart_, _enkelt att förstå_ kod
-- kort inlärningskurva (C-likt syntax, likt Java och andra språk)
-- kompatibel med C applikationers binära gränssnitt
-- multi-paradigm (imperative, structured, object oriented, generic, functional programming purity, and even assembly) //TODO: Translate to Swedish
+- kort inlärningskurva (C-lik syntax, likt Java och andra språk)
+- kompatibel med C-applikationers binära gränssnitt (ABI)
+- multi-paradigm (imperativ, strukturerad, objekt-orienterad, generisk, funktionell programmerings renhet (i betydelsen kontroll över funktioners sidoeffekter), och även assembler) //TODO: Translate to Swedish
 - inbyggt fel hinder (kontrakt, unitttest)
 
-... och många mer [funktioner](http://dlang.org/overview.html).
+... och många fler [funktioner](http://dlang.org/overview.html).
 
 {{/dmandesktop}}
 
 ### Om rundturen
 
-Varje sektion kommer med ett kod exempel som kan modifieras och användas med för
-att experimentera med Ds språk funktioner.
+Varje sektion kommer med ett kod exempel som kan modifieras och användas till att experimentera med Ds språk funktioner.
 Klicka på kör knappen (eller `Ctrl+enter`) för att kompilera och köra koden.
 
 ### Bidra
 
 Denna rundtur är [öppen källkod](https://github.com/stonemaster/dlang-tour)
-och vi är glada i 'pull requests' som gör denna rundtur ännu bättre.
+och vi tar varmt emot 'pull requests' från vem som helst som vill göra denna rundtur ännu bättre.
 
 ## {SourceCode}
 
