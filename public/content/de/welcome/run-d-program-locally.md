@@ -16,7 +16,7 @@ oder führe `dmd --help` aus um einen Überblick über alle vorhandenen Optionen
 
 ### Fliegende Kompilierung mit `rdmd`
 
-Das Programm `rdmd`, welches zusammen mit dem DMD Kompiler angeboten wird,
+Das Programm `rdmd`, welches zusammen mit dem DMD Compiler angeboten wird,
 sorgt dafür, dass alle Abhängigkeiten kompiliert sind und führt die kompilierte
 Datei automatisch aus:
 
