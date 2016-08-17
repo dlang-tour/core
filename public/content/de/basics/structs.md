@@ -1,7 +1,7 @@
 # Strukturen
 
 Ein Weg einen Verbundtyp oder eigenen Typ in D zu definieren ist durch Strukturen,
-welche mit `struct` eröffnet werden:
+welche mit der Anweisung `struct` definiert werden:
 
     struct Person {
         int alter;
@@ -9,7 +9,7 @@ welche mit `struct` eröffnet werden:
         float alterXGroeese;
     }
 
-Strukturen werden immer auf den Stack alloziert (außer wenn explizit mit `new` erzeugt)
+Strukturen werden immer auf den Stack alloziert (außer wenn sie explizit mit `new` erzeugt werden)
 und werden bei Zuweisungen oder Parametern in Funktionsaufrufen immer **kopiert**.
 
     auto p = Person(30, 180, 3.1415);
@@ -47,7 +47,7 @@ im gleichen Modul erreichbar:
     p.erledigeAufgaben(); // Aufruf der Methode
     p.geheimeAufgabe(); // FEHLER
 
-### Konstakte Elementfunktionen
+### Konstante Elementfunktionen
 
 Wenn eine Elementfunktion mitn `const` deklariert wird, ist es ihr nicht
 erlaubt Inhalte der Struktur zu verändern. Dies prüft der Compiler.
@@ -61,12 +61,12 @@ Wenn eine Elementfunktion als `static` (statisch) deklariert wird, ist sie
 auch ohne eine Objektinstanz aufrufbar, z.B. `Person.statischeAufgabe` kann direkt
 aufgerufen werden, jedoch haben statische Elementfunktionen keinen Zugriff
 auf nicht-statische Elemente. Eine statische Elementfunktion kann zum Beispiel
-den Zugriff auf alle Instanzen ermöglichen oder das bekannte _Singleton_
+den Zugriff auf alle Instanzen ermöglichen. Das bekannte _Singleton_
 Entwurfsmuster verwendet ebenso `static`.
 
 ### Vererbung
 
-Beachte, dass ein `struct` nicht von einem anderen `struct` erben kann.
+Es sollte beachtet werden, dass ein `struct` nicht von einem anderen `struct` erben kann.
 Hierarchien von Typen können nur mit Klassen konstruiert werden, welche in der
 folgenden Lektion vorgestellt werden. Es ist jedoch möglich mit `alias this`
 oder `mixins` polymorphe Vererbung zu erreichen.
@@ -101,7 +101,7 @@ struct Vector3 {
         return 0.0;
     }
 
-    // rhs will be copied
+    // rechts beinhaltet eine Kopie
     double skalar(Vector3 rechts) const {
         return 0.0;
     }
@@ -115,8 +115,8 @@ struct Vector3 {
     string toString() const {
         import std.string: format;
         // Tip: Schlage in der Dokumentation
-        // von std.format nach
-        // Gleitkommazahlen haben einen eigenes
+        // von std.format nach.
+        // Gleitkommazahlen haben einen eigenen
         // Spezifikator
         return format("");
     }
