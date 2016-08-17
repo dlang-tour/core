@@ -6,14 +6,14 @@ angeboten und kann wie folgt installiert werden:
 
 ### Windows
 
-* [Installer](http://downloads.dlang.org/releases/2.x/2.071.0/dmd-2.071.0.exe)
-* oder: [Archive](http://downloads.dlang.org/releases/2.x/2.071.0/dmd.2.071.0.windows.7z)
+* [Installer](http://downloads.dlang.org/releases/2.x/{{latest-release}}/dmd-{{latest-release}}.exe)
+* oder: [Archive](http://downloads.dlang.org/releases/2.x/{{latest-release}}/dmd.{{latest-release}}.windows.7z)
 * mit [chocolatey](https://chocolatey.org/packages/dmd): `choco install dmd`
 
 ### Mac OS X
 
-* `.dmg` [package](http://downloads.dlang.org/releases/2.x/2.071.0/dmd.2.071.0.dmg)
-* oder: [Archive](http://downloads.dlang.org/releases/2.x/2.071.0/dmd.2.071.0.osx.tar.xz)
+* `.dmg` [package](http://downloads.dlang.org/releases/2.x/{{latest-release}}/dmd.{{latest-release}}.dmg)
+* oder: [Archive](http://downloads.dlang.org/releases/2.x/{{latest-release}}/dmd.{{latest-release}}.osx.tar.xz)
 * mit [Homebrew](http://brew.sh): `brew install dmd`
 
 ### Linux / FreeBSD
