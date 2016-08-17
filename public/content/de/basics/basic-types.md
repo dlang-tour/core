@@ -4,7 +4,7 @@ D bietet eine Vielzahl an elementaren Datentypen, die immer die gleiche Größe 
 **unabhängig** von der Platform.
 Die einzige Ausnahme ist der Typ `real` für welchen der Kompiler
 die höchstmöglichste Genauigkeit für Gleitkommazahlen wählt.
-Es besteht kein Unterschied zwischen der Große einer Ganzzahl - unabhängig davon
+Es besteht kein Unterschied zwischen der Große eines Ganzzahltypen - unabhängig davon
 ob die Anwendung für eine 32-bit oder 64-bit Architektur kompiliert wird.
 
 <table class="table table-hover">
@@ -33,7 +33,7 @@ erlaubt ist.
 
 Eine Umwandlung zu einem anderen Typ kann durch den Ausdruck
 `cast(TYPE) <varName>` erzwungen werden. Dieser Ausdruck sollte aber mit großer
-Vorsicht verwenden werden, da mit `cast` Ausdrücken das Typsystem ausgeschaltet
+Vorsicht verwenden werden, da mit dem `cast` Ausdruck das Typsystem ausgeschaltet
 wird.
 
 Das spezielle Schlüsselwort `auto` erzeugt eine Variable und inferiert ihren Typ
@@ -57,12 +57,12 @@ String zurückgibt.
 
 ### Indizes in D
 
-In D haben Indizes den Aliasnamen `size_t` welcher groß genug ist um den alle
+In D haben Indizes den Aliasnamen `size_t` welcher groß genug ist um alle
 Speicherzellen adressieren zu können, d.h. für ein 32-bit System `uint` und für
 ein 64-bit System `ulong`.
 
 `assert` ist eine eingebaute Anweisung welche Ausdrücke im Debugmodus validiert
-und mit einen `AssertionError` wirft, wenn die Evaluation des Ausdruck `false`
+und einen `AssertionError` wirft, wenn die Evaluation des Ausdruck `false`
 liefert.
 
 ### In der Tiefe
