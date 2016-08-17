@@ -4,7 +4,7 @@ Välkommen till den interaktiva rundturen av *Programmings språket D*.
 
 {{#dmanmobile}}
 
-Denna rundtur ger en överblick av detta __kraftfulla__ och __målande__
+Denna rundtur ger en överblick av detta __kraftfulla__ och __uttrycksfulla__
 språk vilket kompilerar direkt till __effektiv__, __ren__ maskin kod.
 
 {{/dmanmobile}}
