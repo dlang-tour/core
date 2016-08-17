@@ -97,7 +97,7 @@ void main()
     int g;
     assert(g == 0);
 
-    auto f = 3.1415f; // .f steht für float
+    auto f = 3.1415f; // f steht für float
 
     // typeid(VAR) liefert die Typinformation
     // eines Ausdruckes
