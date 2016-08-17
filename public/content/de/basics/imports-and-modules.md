@@ -1,6 +1,6 @@
 # Imports und Module
 
-Für ein einfaches "Hallo Welt" Program in D werden Imports benötigt.
+Für ein einfaches "Hallo Welt" Programm in D werden Imports benötigt.
 Mit `import` werden alle öffentlichen Funktionen und Typen des __Modules__ verfügbar.
 
 Die Standardbibliothek [Phobos](https://dlang.org/phobos/) ist unter
