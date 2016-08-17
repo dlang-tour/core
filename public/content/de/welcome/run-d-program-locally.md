@@ -1,30 +1,30 @@
 # D Programme lokal ausführen
 
-Unter anderem beinhaltet D den Kompiler `dmd`, ein Skripttool `rdmd` und den
+Unter anderem beinhaltet D den Compiler `dmd`, ein Skripttool `rdmd` und den
 Packetmanager `dub`.
 
 ### DMD Kompiler
 
-Der *DMD* Kompiler kompiliert D Dateien und erstellt eine Binärdatei.
+Der *DMD* Compiler kompiliert D Dateien und erstellt eine Binärdatei.
 Auf der Kommandozeile kann *DMD* mit dem Dateinamen aufgerufen werden:
 
     dmd hallo.d
 
-Es gibt viele Optionen, die das Verhalten des *DMD* Kompilers verändern.
+Es gibt viele Optionen, die das Verhalten des *DMD* Compilers verändern.
 Durchstöbere die [Online-Dokumentation](https://dlang.org/dmd.html#switches)
 oder führe `dmd --help` aus um einen Überblick über alle vorhandenen Optionen zu erlangen.
 
 ### Fliegende Kompilierung mit `rdmd`
 
-Das Hilfstool `rdmd`, welches zusammen mit dem DMD Kompiler angeboten wird,
-trägt dafür Sorge dass alle Abhängigkeiten kompiliert sind und führt die kompilierte
+Das Programm `rdmd`, welches zusammen mit dem DMD Kompiler angeboten wird,
+sorgt dafür, dass alle Abhängigkeiten kompiliert sind und führt die kompilierte
 Datei automatisch aus:
 
     rdmd hallo.d
 
 Auf UNIX System kann das Shebangkommando `#!/usr/bin/env rdmd` als erste Zeile
-in aus D File mit Ausführberechtigungen eingefügt werden und erlaubt eine Ausführung
-der Datei analog zu Skriptsprachen.
+in einer D-Quelldatei mit Ausführberechtigungen eingefügt werden und erlaubt eine
+Ausführung der Datei analog zu Skriptsprachen.
 
 Durchstöbere die [Online-Dokumentation](https://dlang.org/rdmd.html)
 oder führe `rdmd --help` aus um einen Überblick über alle vorhandenen Optionen zu erlangen.
