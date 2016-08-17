@@ -6,14 +6,14 @@ versionen av referens kompilatorn **DMD** (Digital Mars D)
 
 ### Windows
 
-* [Installerare](http://downloads.dlang.org/releases/2.x/2.071.1/dmd-2.071.1.exe)
-* eller: [Arkiv](http://downloads.dlang.org/releases/2.x/2.071.0/dmd.2.071.0.windows.7z)
+* [Installerare](http://downloads.dlang.org/releases/2.x/{{latest-release}}/dmd-{{latest-release}}.exe)
+* eller: [Arkiv](http://downloads.dlang.org/releases/2.x/{{latest-release}}/dmd.{{latest-release}}.windows.7z)
 * genom [chocolatey](https://chocolatey.org/packages/dmd): `choco install dmd`
 
 ### Mac OS X
 
-* `.dmg` [fil](http://downloads.dlang.org/releases/2.x/2.071.0/dmd.2.071.0.dmg)
-* eller: [Arkiv](http://downloads.dlang.org/releases/2.x/2.071.0/dmd.2.071.0.osx.tar.xz)
+* `.dmg` [fil](http://downloads.dlang.org/releases/2.x/{{latest-release}}/dmd.{{latest-release}}.dmg)
+* eller: [Arkiv](http://downloads.dlang.org/releases/2.x/{{latest-release}}/dmd.{{latest-release}}.osx.tar.xz)
 * genom [Homebrew](http://brew.sh): `brew install dmd`
 
 ### Linux / FreeBSD
