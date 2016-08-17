@@ -6,14 +6,14 @@ can be [downloaded](http://dlang.org/download.html) and installed:
 
 ### Windows
 
-* [Installer](http://downloads.dlang.org/releases/2.x/2.071.0/dmd-2.071.0.exe)
-* or: [Archive](http://downloads.dlang.org/releases/2.x/2.071.0/dmd.2.071.0.windows.7z)
+* [Installer](http://downloads.dlang.org/releases/2.x/{{latest-release}}/dmd-{{latest-release}}.exe)
+* or: [Archive](http://downloads.dlang.org/releases/2.x/{{latest-release}}/dmd.{{latest-release}}.windows.7z)
 * using [chocolatey](https://chocolatey.org/packages/dmd): `choco install dmd`
 
 ### Mac OS X
 
-* `.dmg` [package](http://downloads.dlang.org/releases/2.x/2.071.0/dmd.2.071.0.dmg)
-* or: [Archive](http://downloads.dlang.org/releases/2.x/2.071.0/dmd.2.071.0.osx.tar.xz)
+* `.dmg` [package](http://downloads.dlang.org/releases/2.x/{{latest-release}}/dmd.{{latest-release}}.dmg)
+* or: [Archive](http://downloads.dlang.org/releases/2.x/{{latest-release}}/dmd.{{latest-release}}.osx.tar.xz)
 * using [Homebrew](http://brew.sh): `brew install dmd`
 
 ### Linux / FreeBSD
@@ -37,7 +37,7 @@ two other compilers that can be fetched through the
 * [**GDC**](http://gdcproject.org/downloads) which uses the GCC backend
 * [**LDC**](https://github.com/ldc-developers/ldc#installation) based on the LLVM backend
 
-GDC and LDC aren't always at the most recent DMD frontend's versions, 
+GDC and LDC aren't always at the most recent DMD frontend's versions,
 but provide better optimization levels as well as support
 for other platforms like e.g. ARM.
 
