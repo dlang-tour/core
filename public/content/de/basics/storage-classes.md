@@ -1,6 +1,6 @@
 # Speicherklassen
 
-D besitzt statische Typisierung. Wenn eine Variable deklariert wurde, kann der
+D besitzt eine statische Typisierung. Wenn eine Variable deklariert wurde, kann der
 Typ nicht mehr verändert werden. Dies erlaubt dem Kompiler viele Fehler früh
 zu erkennen und Restriktionen können schon während der Kompilierung erkannt werden.
 Ein gutes Typsystem leistet die benötigte Unterstützung um große Programme
@@ -9,7 +9,7 @@ sicher und leichter zu warten zu machen.
 ### `immutable`
 
 Zusätzlich zu der statischen Typisierung, stellt D Speicherklassen bereit
-welche weitere Beschränkungen erlauben. Zum Beispiel kann ein  `immutable` (unveränderbar)
+welche weitere Beschränkungen erlauben. Zum Beispiel kann ein `immutable` (unveränderbares)
 Objekt nur einmal initialisiert werden und kann danach nicht mehr verändert werden.
 
     immutable int err = 5;
@@ -23,9 +23,9 @@ gecacht werden können.
 ### `const`
 
 `const` Objekte können ebenfalls nicht verändert werden. Diese Restriktion ist
-jedoch nut gültig für den aktuellen Geltungsbereich. Ein `const` Zeiger
+jedoch nur für den aktuellen Geltungsbereich gültig. Ein `const` Zeiger
 kann von sowohl einem `immutable` als auch _veränderbaren_ Objekt erzeugt werden.
-Das bedeutet das die Restriktion nur für den aktuellen Bereich gilt, die Variable
+Das bedeutet, dass die Restriktion nur für den aktuellen Bereich gilt. Die Variable
 aber in der Zukunft verändert werden könnte. Nur mit `immutable` ist garantiert
 das der Wert sich niemals ändern kann. Es ist typisch für APIs `const` Objekte
 zu akzeptieren, da so garantiert wird, dass keine Modifikation stattfindet.
@@ -43,13 +43,13 @@ sobald ein Typ `const` ist alle Subkomponenten dieses Types ebenfalls `const` si
 
 #### Grundlegende Referenzen
 
-- [Immutable in _Programming in D_](http://ddili.org/ders/d.en/const_and_immutable.html)
-- [Bereiche in _Programming in D_](http://ddili.org/ders/d.en/name_space.html)
+- [Immutable in _Programmieren in D_](http://ddili.org/ders/d.en/const_and_immutable.html)
+- [Bereiche in _Programmieren in D_](http://ddili.org/ders/d.en/name_space.html)
 
 #### Weiterführende Referenzen
 
 - [const(FAQ)](https://dlang.org/const-faq.html)
-- [Typqualifizer in D](https://dlang.org/spec/const3.html)
+- [Typqualifizierer in D](https://dlang.org/spec/const3.html)
 
 ## {SourceCode}
 
@@ -73,7 +73,7 @@ void main()
     int mutable = 100;
     writeln("veraenderbar: ",
         typeof(veraenderbar).stringof);
-    veraenderbar = 10; // Fine
+    veraenderbar = 10; // OK
     const int* cVeraenderbar = &veraenderbar; // OK
     // FEHLER:
     // *cVeranderbar = 100;
