@@ -39,7 +39,7 @@ wird.
 Das spezielle Schlüsselwort `auto` erzeugt eine Variable und inferiert ihren Typ
 automatisch an Hand des Ausdruck of the rechten Seite. Zum Beispiel wird
 `auto i = 7` den Typ `int` deduzieren. Es sollte beachtet werden, dass `auto` Typen trotzdem
-statisch während der Kompilierphase festgelegt werden und nicht den Typ nachträglich
+statisch während der Kompilierphase festgelegt werden und den Typ nachträglich nicht
 ändern können, wie für jede andere Variable mit explizitem Typ.
 
 ### Eigenschaften eines Typen
