@@ -94,7 +94,7 @@ void main()
     int g;
     assert(g == 0);
 
-    auto f = 3.1415f; // .f denotes a float
+    auto f = 3.1415f; // f denotes a float
 
     // typeid(VAR) returns the type information
     // of an expression.
