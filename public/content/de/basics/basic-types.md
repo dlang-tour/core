@@ -61,7 +61,7 @@ In D haben Indizes den Aliasnamen `size_t` welcher groß genug ist um den alle
 Speicherzellen adressieren zu können, d.h. für ein 32-bit System `uint` und für
 ein 64-bit System `ulong`.
 
-`assert` ist eine eingebaute Anweisung welche Ausdrücke im Testmodus validiert
+`assert` ist eine eingebaute Anweisung welche Ausdrücke im Debugmodus validiert
 und mit einen `AssertionError` wirft, wenn die Evaluation des Ausdruck `false`
 liefert.
 
