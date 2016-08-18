@@ -18,7 +18,7 @@ werden. Der `new` Ausdruck gibt einen Pointer zu den allozierten Speicher zurüc
 Sobald der Speicher, welcher durch `a` adressiert wird, von keiner Variable des Programmes mehr referenziert wird,
 wird der Speicher durch den Garbage Collector freigegeben.
 
-In D gibt es drei Sicherheitsstufen für Funktionen: `@system`, `@safe` und `@trusted`.
+In D gibt es drei Sicherheitsstufen für Funktionen: `@system`, `@trusted` und `@safe`.
 Außer explizit angeben, werden Funktionen als `@system` behandelt.
 `@safe` ist ein Subset von D, welches _per Definition_ Speicherfehler verhindert.
 `@safe` Code kann nur andere `@safe` Funktionen oder Funktionen denen explizit
