@@ -19,7 +19,12 @@ Sobald der Speicher, welcher durch `a` adressierbar ist, nicht mehr durch ein
 einzige Variable in dem Program referenziert wird, wird der Garbage Collector den
 Speicher freigeben.
 
-D erlaubt auch Adressarithmetik, außer in Code der als `@safe` markiert wurde:
+In D gibt es drei Sicherheitsstufen für Funktionen: `@system`, `@safe` und `@trusted`.
+Außer explizit angeben, haben Funktionen die `@system` Annotation.
+`@safe` ist ein Subset von D, welches _per Definition_ Speicherfehler verhindert.
+`@safe` Code kann nur andere `@safe` Funktionen oder Funktionen, denen explizit
+mit `@trusted` vertraut wird, aufrufen. Manuelle Adressarithmetik ist in `@safe`
+Code verboten.
 
     void main() @safe {
         int a = 5;
@@ -27,10 +32,6 @@ D erlaubt auch Adressarithmetik, außer in Code der als `@safe` markiert wurde:
         int* c = p + 5; // Fehler
     }
 
-Außer explizit angeben, haben Funktionen die `@system` Annotation.
-`@safe` ist ein Subset von D, welches _per Definition_ Speicherfehler verhindert.
-`@safe` Code kann nur andere `@safe` Funktionen oder Funktionen, denen explizit
-mit `@trusted` vertraut wird, aufrufen.
 `@trusted` Funktionen müssen manuell verifiziert werden und erlauben die Brücke
 zwischen SafeD und der zugrundeliegenden unsichere, low-level Welt.
 
