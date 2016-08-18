@@ -157,7 +157,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 
 // use CodeMirror to highlight pre
 function start() {
-	document.querySelectorAll('code').forEach(function(block) {
+	[].forEach.call(document.querySelectorAll('code'), function(block) {
 	    var val = block.textContent || "";
 		CodeMirror.runMode(val, "text/x-d", block);
 		block.className += "cm-s-elegant";
