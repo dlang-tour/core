@@ -12,6 +12,6 @@ Efter att ha avslutat rundturen, kan du kolla in några av de följande länkarn
 
 ### Hjälp
 
-* Fråga frågor på [#d](irc://irc.freenode.net/d) IRC kanalen på freenode ([webb gränssnitt](https://kiwiirc.com/client/irc.freenode.net/d))
+* Fråga frågor på [#d](irc://irc.freenode.net/d) IRC kanalen på freenode ([webbgränssnitt](https://kiwiirc.com/client/irc.freenode.net/d))
 * Få hjälp på [D.learn](http://forum.dlang.org/group/learn)
-* Öppna en 'issue' [i D bugg trackern](https://issues.dlang.org)
+* Öppna en 'issue' [i Ds felspårningssystem](https://issues.dlang.org)
