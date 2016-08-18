@@ -10,13 +10,13 @@ versionen av referens kompilatorn **DMD** (Digital Mars D)
 * [Arkiv](http://downloads.dlang.org/releases/2.x/{{latest-release}}/dmd.{{latest-release}}.windows.7z)
 * [chocolatey](https://chocolatey.org/packages/dmd): `choco install dmd`
 
-### OS X
+### macOS
 
 * [Installationsfil](http://downloads.dlang.org/releases/2.x/{{latest-release}}/dmd.{{latest-release}}.dmg)
 * [Arkiv](http://downloads.dlang.org/releases/2.x/{{latest-release}}/dmd.{{latest-release}}.osx.tar.xz)
 * [Homebrew](http://brew.sh): `brew install dmd`
 
-### Linux / FreeBSD
+### Linux / FreeBSD / macOS
 
 För att snabbt installera DMD i användarens hemkatalog, kör `curl -fsS
 https://dlang.org/install.sh | bash -s dmd`
