@@ -2,7 +2,7 @@
 # Köra D program lokalt
 
 D kommer med kompilatorn `dmd`, ett skript-liknande verktyg `rdmd`
-och en pakethanterare `dub`.
+och pakethanteraren `dub`.
 
 ### DMD Kompilatorn
 
@@ -13,7 +13,7 @@ På kommandoraden kan *DMD* anropas med ett filnamn:
 
 
 Det finns många inställningar vilket tillåter att ändra beteendet av *DMD* kompilatorn.
-Granska [online dokumentationen](https://dlang.org/dmd.html#switches) eller kör `dmd --help` för en överblick av tillgängliga flaggor.
+Granska [online dokumentationen](https://dlang.org/dmd.html#switches) eller kör `dmd --help` för att få en överblick av tillgängliga flaggor.
 
 ### "On-the-fly" kompilering med `rdmd`
 
@@ -24,24 +24,23 @@ kommer kompilera alla beroenden och automatiskt köra applikationen.
     rdmd hello.d
 
 
-På UNIX system kommer 'shebang' raden `#!/usr/bin/env rdmd` på första raden av en körbar D fil att tillåta
+På UNIX system kommer 'shebang'-raden `#!/usr/bin/env rdmd` på första raden av en D-källkodsfil att tillåta
 skript liknande användning.
 
-Granska [online dokumentationen](https://dlang.org/rdmd.html) eller kör `rdmd --help` för en överblick av tillgängliga flaggor.
+Granska [online dokumentationen](https://dlang.org/rdmd.html) eller kör `rdmd --help` för att få en överblick av tillgängliga flaggor.
 
 ### Pakethanteraren `dub`
 
 
-Ds standard pakethanterare är [`dub`](http://code.dlang.org). När `dub` är installerat
-lokalt, kan ett nytt projekt `hello` skapas med kommandot:
+Ds officiella pakethanterare är [`dub`](http://code.dlang.org). När `dub` är installerat
+lokalt, kan ett nytt projekt, exempelvis kallat `hello`, skapas med kommandot:
 
     dub init hello
 
-Köra `dub` i denna mapp kommer hämta alla beroenden, kompilera applikationen
-och klra den.
-`dub build` kommer kompilera projektet.
+Exekvering av kommandot `dub` i denna mapp kommer hämta alla beroenden, kompilera applikationen
+och köra den.
+`dub build` kommer bygga (kompilera och länka) projektet.
 
-Browse the [online documentation](https://code.dlang.org/docs/commandline) or run `dub help` for an overview of available commands and features.
-Granska [online dokumentationen](https://code.dlang.org/docs/commandline) eller kör `dub help` för en överblick av tillgängliga kommandon och funktioner.
+Granska [online dokumentationen](https://code.dlang.org/docs/commandline) eller kör `dub help` för att få en överblick av tillgängliga kommandon och funktioner.
 
-Alla tillgängliga dub paket kan granskas via dubs [webb gränssnitt](https://code.dlang.org).
+Alla tillgängliga DUB-paket kan granskas via dubs [webbgränssnitt](https://code.dlang.org).
