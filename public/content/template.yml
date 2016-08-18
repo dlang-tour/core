@@ -1,8 +1,8 @@
 # Please see CONTRIBUTING.md for a description
 # of this file.
 
-#variables:
-#    test: test
+variables:
+    latest-release: 2.071.1
 wrappers:
     dmanmobile: |
         <img src="static/img/tour/dman.png" class="img-left visible-xs" id="dman-front-mobile" />
