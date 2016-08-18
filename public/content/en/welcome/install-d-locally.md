@@ -10,13 +10,13 @@ can be [downloaded](http://dlang.org/download.html) and installed:
 * or: [Archive](http://downloads.dlang.org/releases/2.x/{{latest-release}}/dmd.{{latest-release}}.windows.7z)
 * using [chocolatey](https://chocolatey.org/packages/dmd): `choco install dmd`
 
-### Mac OS X
+### macOS
 
 * `.dmg` [package](http://downloads.dlang.org/releases/2.x/{{latest-release}}/dmd.{{latest-release}}.dmg)
 * or: [Archive](http://downloads.dlang.org/releases/2.x/{{latest-release}}/dmd.{{latest-release}}.osx.tar.xz)
 * using [Homebrew](http://brew.sh): `brew install dmd`
 
-### Linux / FreeBSD
+### Linux / FreeBSD / macOS
 
 To quickly install dmd within your user directory, run: `curl -fsS https://dlang.org/install.sh | bash -s dmd`
 
