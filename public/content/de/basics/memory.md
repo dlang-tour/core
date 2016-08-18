@@ -18,7 +18,7 @@ werden. Der `new` Ausdruck gibt einen Pointer zu den allozierten Speicher zurüc
 Sobald der Speicher, welcher durch `a` adressiert wird, von keiner Variable des Programmes mehr referenziert wird,
 wird der Speicher durch den Garbage Collector freigegeben.
 
-D erlaubt auch Adressarithmetik (`@system` Annotation), außer in Code der als `@safe` markiert wurde:
+D erlaubt auch Adressarithmetik, außer in Code der als `@safe` markiert wurde:
 
     void main() @safe {
         int a = 5;
