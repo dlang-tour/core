@@ -26,7 +26,7 @@ för många diverse språk och har ett stort antal [unika funktioner](http://dla
 - _underhållbart_, _enkelt att förstå_ kod
 - kort inlärningskurva (C-lik syntax, likt Java och andra språk)
 - kompatibel med C-applikationers binära gränssnitt (ABI)
-- multi-paradigm (imperativ, strukturerad, objekt-orienterad, generisk, funktionell programmerings renhet (i betydelsen kontroll över funktioners sidoeffekter), och även assembler) //TODO: Translate to Swedish
+- multi-paradigm (imperativ, strukturerad, objekt-orienterad, generisk, funktionell programmerings renhet (i betydelsen kontroll över funktioners sidoeffekter), och även assembler)
 - inbyggt fel hinder (kontrakt, unitttest)
 
 ... och många fler [funktioner](http://dlang.org/overview.html).
