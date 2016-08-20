@@ -1,3 +1,6 @@
 [submodule "public/content/en"]
 	path = public/content/en
 	url = https://github.com/dlang-tour/english
+[submodule "public/content/de"]
+	path = public/content/de
+	url = https://github.com/dlang-tour/german
