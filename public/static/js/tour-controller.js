@@ -9,7 +9,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 	$scope.showContent = true;
 	$scope.showProgramOutput = false;
 	$scope.editor = null;
-	$scope.githubRepo = "stonemaster/dlang-tour";
+	$scope.githubRepo = null;
 	$scope.language = "en";
 	$scope.chapterId = null;
 	$scope.section = null;
@@ -63,8 +63,9 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		}
 	};
 
-	$scope.init = function(language, chapterId, section, hasSourceCode, prevPage, nextPage) {
+	$scope.init = function(language, githubRepo, chapterId, section, hasSourceCode, prevPage, nextPage) {
 		$scope.language = language;
+		$scope.githubRepo = githubRepo;
 		$scope.chapterId = chapterId;
 		$scope.section = section;
 		$scope.prevPage = prevPage;
@@ -149,8 +150,8 @@ dlangTourApp.controller('DlangTourAppCtrl',
 	}
 
 	$scope.editOnGithub = function() {
-		var url = 'https://github.com/' + $scope.githubRepo + '/edit/master/public/content/';
-		url += $scope.language + '/' + $scope.chapterId + '/' + $scope.section + '.md';
+		var url = 'https://github.com/' + $scope.githubRepo + '/edit/master/';
+		url += $scope.chapterId + '/' + $scope.section + '.md';
 		$window.open(url, '_blank');
 	}
 }]);
