@@ -71,6 +71,7 @@ class ContentProvider
 		struct LanguageMeta {
 			ChapterAndSection start;
 			string title;
+			string repo;
 		}
 		/// general language-wide information
 		LanguageMeta[string] language_;
@@ -137,8 +138,16 @@ class ContentProvider
 			enforce("start" in root, "'start' point required in language-specific yaml");
 			enforce(isValidLink(root["start"].as!string, language), "The start page must be formatted as chapter/section");
 
-			enforce("title" in root, "'title' point required in language-specific yaml");
-			language_[language] = LanguageMeta(ChapterAndSection(root["start"].as!string), root["title"].as!string);
+			LanguageMeta langMeta;
+			langMeta.start = ChapterAndSection(root["start"].as!string);
+
+			import std.meta : AliasSeq;
+			foreach (attr; AliasSeq!("title", "repo"))
+			{
+				enforce(attr in root, "'" ~ attr ~ "' point required in language-specific yaml");
+				 mixin("langMeta." ~ attr ~ " = root[attr].as!string;");
+			}
+			language_[language] = langMeta;
 
 		    auto i = 0;
 			foreach (string chapter; root["ordering"])
