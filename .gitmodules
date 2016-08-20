@@ -1,0 +1,3 @@
+[submodule "public/content/en"]
+	path = public/content/en
+	url = https://github.com/dlang-tour/english
