@@ -2,7 +2,7 @@
 
 D bietet eine Vielzahl an elementaren Datentypen, die immer die gleiche Größe haben -
 **unabhängig** von der Platform.
-Die einzige Ausnahme ist der Typ `real` für welchen der Kompiler
+Die einzige Ausnahme ist der Typ `real` für welchen der Compiler
 die höchstmöglichste Genauigkeit für Gleitkommazahlen wählt.
 Es besteht kein Unterschied zwischen der Größe eines Ganzzahltypen - unabhängig davon
 ob die Anwendung für eine 32-bit oder 64-bit Architektur kompiliert wird.
