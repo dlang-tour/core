@@ -1,0 +1,43 @@
+#top {
+	left: 0;
+	width: 250px;
+	display: inline-block;
+	height: 100vh;
+	overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#top #cssmenu > ul > li {
+	 float: none;
+}
+
+body .row {
+	display: inline-block;
+	position: absolute;
+}
+
+#top #cssmenu .expand-container > * {
+	display: block;
+}
+
+#top #cssmenu > ul > li > ul {
+	position: inherit;
+	border: none;
+	background: none;
+	-webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+
+#top > .helper {
+	 padding-left: 5px;
+	 padding-right: 5px;
+}
+
+#top a:hover, #top #cssmenu li.open > a, #top #cssmenu li.active > a {
+	 background: inherit;
+}
+
+.expand-content li {
+	padding-left: 5px;
+}
