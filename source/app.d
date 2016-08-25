@@ -91,14 +91,21 @@ private void doSanityCheck(ContentProvider contentProvider, IExecProvider execPr
 
 shared static this()
 {
-	string configFile = "config.yml";
+	import std.file : thisExePath;
+	import std.path : buildPath, dirName, isAbsolute;
+
+	string rootDir = thisExePath.dirName;
+
+	string configFile = buildPath(rootDir, "config.yml");
 	readOption("c|config", &configFile, "Configuration file");
 	bool sanityCheck = false;
 	readOption("sanitycheck", &sanityCheck,
 		"Runs sanity check before starting that checks whether all source code examples actually compile; doesn't start the service");
 	auto config = new Config(configFile);
 
-	auto contentProvider = new ContentProvider(config.publicDir ~ "/content");
+	string publicDir = config.publicDir.isAbsolute ? config.publicDir : rootDir.buildPath(config.publicDir);
+
+	auto contentProvider = new ContentProvider(publicDir.buildPath("content"));
 	auto execProvider = createExecProvider(config, contentProvider);
 
 	if (sanityCheck) {
@@ -144,7 +151,7 @@ shared static this()
 	urlRouter
 		.registerWebInterface(new WebInterface(contentProvider, config.googleAnalyticsId))
 		.registerRestInterface(new ApiV1(execProvider, contentProvider))
-		.get("/static/*", serveStaticFiles(config.publicDir ~ "/static/", fsettings));
+		.get("/static/*", serveStaticFiles(publicDir.buildPath("static"), fsettings));
 
 	listenHTTP(settings, urlRouter);
 	listenHTTP(httpsSettings, urlRouter);
