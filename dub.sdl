@@ -1,6 +1,6 @@
 name "dlang-tour"
 description "The Dlang Tour"
-copyright "Copyright © 2015, André Stein"
+copyright "Copyright © 2016, André Stein"
 authors "André Stein" "Sebastian Wilzbach"
 homepage "http://tour.dlang.org"
 license "Boost"
