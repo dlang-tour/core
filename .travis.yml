@@ -21,6 +21,9 @@ before_install:
   - sudo apt-get install -y libevent-dev
 
 script:
+  # Update all language repos to their latest content
+  - git pull --recurse-submodules
+  - git submodule update --remote --recursive
   # Compile & test with DMD
   - if [[ "${DC}" == "dmd" ]]; then  dub test --compiler=${DC};             fi
   - if [[ "${DC}" == "dmd" ]]; then  dub --compiler=${DC} -- --sanitycheck; fi
