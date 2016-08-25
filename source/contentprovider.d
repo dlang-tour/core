@@ -245,7 +245,7 @@ class ContentProvider
 		settings.flags = MarkdownFlags.backtickCodeBlocks | MarkdownFlags.vanillaMarkdown | MarkdownFlags.tables;
 		settings.urlFilter = (string link, bool) {
 			import std.algorithm.searching : startsWith;
-			if (link.startsWith("http") || link.startsWith("https") || link.startsWith("irc") || link[0] != '/')
+			if (link.startsWith("http", "https", "irc", "/"))
 				return link;
 			else
 			{
@@ -254,6 +254,18 @@ class ContentProvider
 			}
 		};
 		return filterMarkdown(processed, settings);
+	}
+
+	unittest
+	{
+		import std.stdio;
+		import std.algorithm;
+		string contentDir = "public/content";
+		auto cp = new ContentProvider(contentDir);
+		cp.addLanguage(contentDir.buildPath("en"));
+
+		assert(cp.processMarkdown("[foo](welcome/welcome-to-d)", "en") == "<p><a href=\"/tour/en/welcome/welcome-to-d\">foo</a>\n</p>\n");
+		assert(cp.processMarkdown("[foo](http://dlang.org)", "en") == "<p><a href=\"http://dlang.org\">foo</a>\n</p>\n");
 	}
 
 	/++
