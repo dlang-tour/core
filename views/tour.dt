@@ -50,7 +50,7 @@ block content
 			a(href="#{nextSection.link}", ng-show="'' != '#{nextSection.link}'")
 				span.h4 #{nextSection.title}
 				| >
-		.container
+		.container.hidden-xs.hidden-sm
 			p.text-muted.text-center
 				kbd ?
 				| Keyboard shortcuts
