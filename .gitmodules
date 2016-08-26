@@ -13,3 +13,6 @@
 [submodule "public/content/ja"]
 	path = public/content/ja
 	url = https://github.com/dlang-tour/japanese
+[submodule "public/content/tr"]
+	path = public/content/tr
+	url = https://github.com/dlang-tour/turkish
