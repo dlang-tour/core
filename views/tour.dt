@@ -24,7 +24,7 @@ block content
 						span.fa.fa-close
 				h2.program-output-title rdmd playground.d
 				pre#program-output {{programOutput}}
-		div(ng-class="{'col-md-6 col-sm-12': showContent, 'col-md-12': !showContent}", ng-show="showSourceCode", style="padding-left: 0px; padding-right: 0px")
+		div#tour-code(ng-class="{'col-md-6 col-sm-12': showContent, 'col-md-12': !showContent}", ng-show="showSourceCode", style="padding-left: 0px; padding-right: 0px")
 			div#command-box.text-right
 				button.btn.btn-default(ng-click="showContent = !showContent")
 					i.fa.fa-expand(ng-show="showContent",aria-hidden="true")
@@ -40,20 +40,20 @@ block content
 						span Reset
 			ui-codemirror(ui-codemirror-opts="editorOptions", ui-codemirror="{ onLoad : codemirrorLoaded }", ng-model="sourceCode")
 
-	nav.navbar.navbar-bottom
-		.container.text-center.h1
-			a(href="#{previousSection.link}", ng-show="'' != '#{previousSection.link}'")
-				| <
-				span.h4 #{previousSection.title}
-			| #{sectionId + 1} /
-			span.small #{sectionCount}
-			a(href="#{nextSection.link}", ng-show="'' != '#{nextSection.link}'")
-				span.h4 #{nextSection.title}
-				| >
-		.container.hidden-xs.hidden-sm
-			p.text-muted.text-center
-				kbd ?
-				| Keyboard shortcuts
+	//-nav.navbar.navbar-bottom
+		//-.container.text-center.h1
+			//-a(href="#{previousSection.link}", ng-show="'' != '#{previousSection.link}'")
+				//-| <
+				//-span.h4 #{previousSection.title}
+			//-| #{sectionId + 1} /
+			//-span.small #{sectionCount}
+			//-a(href="#{nextSection.link}", ng-show="'' != '#{nextSection.link}'")
+				//-span.h4 #{nextSection.title}
+				//-| >
+		// .container.hidden-xs.hidden-sm
+			//-p.text-muted.text-center
+				//-kbd ?
+				//-| Keyboard shortcuts
 
 block js
 	script(src="/static/js/tour-controller.js")
