@@ -52,12 +52,12 @@ body .row {
         width: calc(100% - 250px);
     }
 	#tour-content {
-	    height: 100vh;
+	    height: calc(100vh - 52px);
 	    overflow-y: auto;
 	}
 
 	#tour-code {
-	    height: 100vh;
+	    height: calc(100vh - 52px);
 	    overflow-y: auto;
 	}
 }
@@ -74,4 +74,9 @@ body .row {
 	#top a.hamburger {
 		margin: 0.15em;
 	}
+}
+
+.navbar .h1 {
+    margin-top: 0px;
+    margin-bottom: 0px;
 }

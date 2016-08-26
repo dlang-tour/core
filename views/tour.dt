@@ -9,6 +9,7 @@ block head
 
 block content
 	.row(ng-controller="DlangTourAppCtrl as ctrl", ng-init="init('#{language}', '#{githubRepo}', '#{chapterId}', '#{section}', #{hasSourceCode}, '#{previousSection.link}', '#{nextSection.link}')")
+
 		div#tour-content(ng-show="showContent", ng-class="{'col-md-12': !showSourceCode, 'col-md-6 col-sm-12': showSourceCode}")
 			div(ng-hide="showProgramOutput")
 				.content-command-box
@@ -40,20 +41,21 @@ block content
 						span Reset
 			ui-codemirror(ui-codemirror-opts="editorOptions", ui-codemirror="{ onLoad : codemirrorLoaded }", ng-model="sourceCode")
 
-	//-nav.navbar.navbar-bottom
-		//-.container.text-center.h1
-			//-a(href="#{previousSection.link}", ng-show="'' != '#{previousSection.link}'")
-				//-| <
-				//-span.h4 #{previousSection.title}
-			//-| #{sectionId + 1} /
-			//-span.small #{sectionCount}
-			//-a(href="#{nextSection.link}", ng-show="'' != '#{nextSection.link}'")
-				//-span.h4 #{nextSection.title}
-				//-| >
-		// .container.hidden-xs.hidden-sm
-			//-p.text-muted.text-center
-				//-kbd ?
-				//-| Keyboard shortcuts
+		nav.navbar.navbar-bottom
+			.container.text-center.h1
+				a(href="#{previousSection.link}", ng-show="'' != '#{previousSection.link}'")
+					| <
+					span.h4 #{previousSection.title}
+				//-| #{sectionId + 1} /
+				//-span.small #{sectionCount}
+				span /
+				a(href="#{nextSection.link}", ng-show="'' != '#{nextSection.link}'")
+					span.h4 #{nextSection.title}
+					| >
+			//-.container.hidden-xs.hidden-sm
+				//-p.text-muted.text-center
+					//-kbd ?
+					| Keyboard shortcuts
 
 block js
 	script(src="/static/js/tour-controller.js")
