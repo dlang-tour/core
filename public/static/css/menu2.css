@@ -46,7 +46,11 @@ body .row {
 {
 	#top {
 		height: 99vh;
+		width: 250px;
 	}
+    body .row {
+        width: calc(100% - 250px);
+    }
 	#tour-content {
 	    height: 100vh;
 	    overflow-y: auto;
