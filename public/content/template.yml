@@ -5,7 +5,7 @@ variables:
     latest-release: 2.071.1
 wrappers:
     dmanmobile: |
-        <img src="static/img/tour/dman.png" class="img-left visible-xs" id="dman-front-mobile" />
+        <img src="/static/img/tour/dman.png" class="img-left visible-xs" id="dman-front-mobile" />
         {{content}}
         <div class="clear visible-xs"></div>
     dmandesktop: |
