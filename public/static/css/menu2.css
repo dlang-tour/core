@@ -1,9 +1,7 @@
 #top {
 	left: 0;
 	top: 0;
-	width: 250px;
 	display: inline-block;
-	height: 99vh;
 	overflow-y: auto;
     overflow-x: hidden;
 }
@@ -43,12 +41,34 @@ body .row {
 	padding-left: 5px;
 }
 
-#tour-content {
-    height: 100vh;
-    overflow-y: auto;
+
+@media only screen and (min-width:54.01em)
+{
+	#top {
+		height: 99vh;
+		width: 250px;
+	}
+	#tour-content {
+	    height: 100vh;
+	    overflow-y: auto;
+	}
+
+	#tour-code {
+	    height: 100vh;
+	    overflow-y: auto;
+	}
 }
 
-#tour-code {
-    height: 100vh;
-    overflow-y: auto;
+@media only screen and (max-width:54em)
+{
+	#top {
+		position: absolute;
+		z-index: 3;
+	}
+	#tour-content {
+		padding-top: 15px
+	}
+	#top a.hamburger {
+		margin: 0.15em;
+	}
 }
