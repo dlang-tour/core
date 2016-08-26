@@ -10,3 +10,6 @@
 [submodule "public/content/sv"]
 	path = public/content/sv
 	url = https://github.com/dlang-tour/swedish
+[submodule "public/content/ja"]
+	path = public/content/ja
+	url = https://github.com/dlang-tour/japanese
