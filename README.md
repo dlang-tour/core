@@ -12,8 +12,11 @@ The most recent version of this tour can be seen here: http://tour.dlang.org.
 
 ## Add Content
 
-Please refer to the document [CONTRIBUTING.md](CONTRIBUTING.md)
-for further information on how to add or change existing content.
+This repository contains the application that runs the tour.
+Please refer to [english] content or [another language](https://github.com/dlang-tour).
+
+Further information on how to add or change existing content can also be found
+in the [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Compile & Run
 
@@ -76,6 +79,11 @@ on the host system than within the container.
 
 The Docker container is also the suggested way
 of [dlang-tour's deployment](deploy/README.md).
+
+## Dlang Tour Bot
+
+There is a friendly bot in place that listens to the events of all language repositories and triggers rebuilds and thus automatic deploments on a new change.
+More information about it can be found at it's [repository](https://github.com/dlang-tour/bot).
 
 ### Environment variables
 
