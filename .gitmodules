@@ -16,3 +16,9 @@
 [submodule "public/content/tr"]
 	path = public/content/tr
 	url = https://github.com/dlang-tour/turkish
+[submodule "public/content/zh"]
+	path = public/content/zh
+	url = https://github.com/dlang-tour/chinese
+[submodule "public/content/ru"]
+	path = public/content/ru
+	url = https://github.com/dlang-tour/russian
