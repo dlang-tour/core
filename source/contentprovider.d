@@ -8,7 +8,7 @@ import std.string: split, strip;
 import std.typecons: Tuple;
 import std.exception: enforce;
 import std.string: format;
-import std.path: buildPath;
+import std.path: baseName, buildPath;
 
 import yaml;
 import mustache;
@@ -77,6 +77,9 @@ class ContentProvider
 		LanguageMeta[string] language_;
 
 		auto mustacheContext_ = new Mustache.Context;
+
+		/// maps the loaded languages to their file path
+		string[string] langWithPath;
 	}
 
 	/// Create or update Content structure
@@ -105,7 +108,8 @@ class ContentProvider
 		// check for existence in file system
 		import std.array : split;
 		auto parts = link.split("/");
-		string fileName = buildPath(contentDirectory, language, parts[0], parts[1] ~ ".md");
+		enforce(language in langWithPath, "Language hasn't been seen before.");
+		string fileName = buildPath(langWithPath[language], parts[0], parts[1] ~ ".md");
 		import std.stdio;
 		return exists(fileName);
 	}
@@ -113,50 +117,54 @@ class ContentProvider
 	this(string contentDirectory)
 	{
 		this.contentDirectory = contentDirectory;
+
 		// parse mustache template file
 		setupMustacheMacros(readText(buildPath(contentDirectory, "template.yml")),
 			mustacheContext_);
-		foreach(string filename; dirEntries(contentDirectory, SpanMode.depth)) {
-			if (isDir(filename))
-				continue;
-			auto parts = filename[contentDirectory.length .. $]
-					.split('/').filter!(x => !x.empty)
-					.array;
+	}
 
-			// ignore any top level files
-			if (parts.length == 1) {
-				continue;
-			}
+	public void addLanguages(string directory)
+	{
+		foreach(string filename; dirEntries(directory, SpanMode.shallow))
+			addLanguage(filename);
+	}
 
-			// search for language-specific root file
-			auto language = parts[0];
-			if (parts[1] != "index.yml")
-				continue;
-			auto root = Loader(filename).load();
+	public void addLanguage(string langDirectory)
+	{
+		if (!langDirectory.isDir)
+			return;
 
-			// language meta information
-			enforce("start" in root, "'start' point required in language-specific yaml");
-			enforce(isValidLink(root["start"].as!string, language), "The start page must be formatted as chapter/section");
+		auto configFile = langDirectory.buildPath("index.yml");
+		if (!configFile.exists)
+			logInfo("Missing index.yml for %s", langDirectory);
 
-			LanguageMeta langMeta;
-			langMeta.start = ChapterAndSection(root["start"].as!string);
+		auto language = langDirectory.baseName;
+		auto root = Loader(configFile).load();
 
-			import std.meta : AliasSeq;
-			foreach (attr; AliasSeq!("title", "repo"))
-			{
-				enforce(attr in root, "'" ~ attr ~ "' point required in language-specific yaml");
-				 mixin("langMeta." ~ attr ~ " = root[attr].as!string;");
-			}
-			language_[language] = langMeta;
+		// store the directory to be able to link to other requests
+		langWithPath[language] = langDirectory;
 
-		    auto i = 0;
-			foreach (string chapter; root["ordering"])
-			{
-				auto chapterDir = buildPath(filename[0 .. contentDirectory.length],
-					language, chapter);
-				chapter_[language][chapter] = ChapterMeta(i++, "");
-				addChapter(chapter, chapterDir, language);
-			}
+		// language meta information
+		enforce("start" in root, "'start' point required in language-specific yaml");
+		enforce(isValidLink(root["start"].as!string, language), "The start page must be formatted as chapter/section");
+
+		LanguageMeta langMeta;
+		langMeta.start = ChapterAndSection(root["start"].as!string);
+
+		import std.meta : AliasSeq;
+		foreach (attr; AliasSeq!("title", "repo"))
+		{
+			enforce(attr in root, "'" ~ attr ~ "' point required in language-specific yaml");
+			 mixin("langMeta." ~ attr ~ " = root[attr].as!string;");
+		}
+		language_[language] = langMeta;
+
+		auto i = 0;
+		foreach (string chapter; root["ordering"])
+		{
+			auto chapterDir = buildPath(langDirectory, chapter);
+			chapter_[language][chapter] = ChapterMeta(i++, "");
+			addChapter(chapter, chapterDir, language);
 		}
 	}
 

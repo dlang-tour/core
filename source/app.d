@@ -92,20 +92,35 @@ private void doSanityCheck(ContentProvider contentProvider, IExecProvider execPr
 shared static this()
 {
 	import std.file : thisExePath;
-	import std.path : buildPath, dirName, isAbsolute;
+	import std.path;
 
 	string rootDir = thisExePath.dirName;
-
 	string configFile = buildPath(rootDir, "config.yml");
-	readOption("c|config", &configFile, "Configuration file");
 	bool sanityCheck = false;
+	string customLangDirectory;
+	string defaultLang = "en";
+
+	readOption("c|config", &configFile, "Configuration file");
 	readOption("sanitycheck", &sanityCheck,
-		"Runs sanity check before starting that checks whether all source code examples actually compile; doesn't start the service");
+	    "Runs sanity check before starting that checks whether all source code examples actually compile; doesn't start the service");
+	readOption("lang-dir|l", &customLangDirectory, "Language directory");
+
 	auto config = new Config(configFile);
 
 	string publicDir = config.publicDir.isAbsolute ? config.publicDir : rootDir.buildPath(config.publicDir);
+	string contentDir = publicDir.buildPath("content");
 
-	auto contentProvider = new ContentProvider(publicDir.buildPath("content"));
+	auto contentProvider = new ContentProvider(contentDir);
+	// If the user provides a custom language directory we only add this language to the Tour
+	if (!customLangDirectory.empty)
+	{
+		string langDir = customLangDirectory.absolutePath.buildNormalizedPath;
+		contentProvider.addLanguage(langDir);
+		defaultLang = langDir.baseName;
+	}
+	else
+		contentProvider.addLanguages(contentDir);
+
 	auto execProvider = createExecProvider(config, contentProvider);
 
 	if (sanityCheck) {
@@ -123,7 +138,7 @@ shared static this()
 	settings.useCompressionIfPossible = true;
 	settings.errorPageHandler = (HTTPServerRequest req, HTTPServerResponse res, HTTPServerErrorInfo error) {
 		auto title = "Page not found";
-		auto t = contentProvider.getTOC("en");
+		auto t = contentProvider.getTOC(defaultLang);
 		auto toc = &t;
 		auto googleAnalyticsId = config.googleAnalyticsId;
 		auto chapterId = "";
@@ -149,7 +164,7 @@ shared static this()
 	auto fsettings = new HTTPFileServerSettings;
 	fsettings.serverPathPrefix = "/static";
 	urlRouter
-		.registerWebInterface(new WebInterface(contentProvider, config.googleAnalyticsId))
+		.registerWebInterface(new WebInterface(contentProvider, config.googleAnalyticsId, defaultLang))
 		.registerRestInterface(new ApiV1(execProvider, contentProvider))
 		.get("/static/*", serveStaticFiles(publicDir.buildPath("static"), fsettings));
 

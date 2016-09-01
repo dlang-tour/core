@@ -21,13 +21,16 @@ class WebInterface
 		LinkCache[string][string][string] sectionLinkCache_;
 			///< language, chapter and section indexing
 		string googleAnalyticsId_; ///< ID for google analytics
+		string defaultLang = "en";
 	}
 
 	this(ContentProvider contentProvider,
-		string googleAnalyticsId)
+		string googleAnalyticsId, string defaultLang)
 	{
 		this.contentProvider_ = contentProvider;
 		this.googleAnalyticsId_ = googleAnalyticsId;
+		this.defaultLang = defaultLang;
+
 		// Fetch all table-of-contents for all supported
 		// languages (just 'en' for now) and generate
 		// the previous/next link cache for each tour page.
@@ -104,7 +107,7 @@ class WebInterface
 
 	void index(HTTPServerRequest req, HTTPServerResponse res)
 	{
-		getStart(req, res, "en");
+		getStart(req, res, defaultLang);
 	}
 
 	@path("/tour/:language")
