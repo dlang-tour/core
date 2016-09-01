@@ -136,7 +136,10 @@ class ContentProvider
 
 		auto configFile = langDirectory.buildPath("index.yml");
 		if (!configFile.exists)
+		{
 			logInfo("Missing index.yml for %s", langDirectory);
+			return;
+		}
 
 		auto language = langDirectory.baseName;
 		auto root = Loader(configFile).load();
