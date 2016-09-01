@@ -10,6 +10,22 @@ with examples that can be edited, compiled and run online.
 
 The most recent version of this tour can be seen here: http://tour.dlang.org.
 
+### Running offline
+
+With D's package manager DUB the tour can be downloaded for offline access:
+
+```sh
+dun fetch dlang-tour # only once
+dub run dlang-tour   # to execute the tour
+```
+
+A custom language can be loaded directly using the `-l` / `--lang-dir` option
+with the path to the directoy of the to be loaded language:
+
+```sh
+dub run dlang-tour -- --lang-dir .
+```
+
 ## Add Content
 
 This repository contains the application that runs the tour.
@@ -39,7 +55,7 @@ implemented within the dlang-tour:
  * `stupidlocal`: an unsafe method that just runs `rdmd` on the local host system
    and returns its output. ***Very unsafe*** and musn't ever be used in production!
  * `docker`: runs `rdmd` within a special Docker container ([dlang-tour-rdmd](https://github.com/stonemaster/dlang-tour-rdmd))
-   and returns its output. The driver imposes the Docker container memory and 
+   and returns its output. The driver imposes the Docker container memory and
    execution time limits. Additional configurations options available in `config.yml`.
 
 The execution driver is set in `config.yml`.
