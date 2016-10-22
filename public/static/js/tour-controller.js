@@ -17,6 +17,13 @@ dlangTourApp.controller('DlangTourAppCtrl',
 	$scope.nextPage = null;
 
 	$scope.updateErrorsAndWarnings = function(doc, options, editor) {
+		var hasErrors = $scope.errors.length > 0 || $scope.warnings > 0;
+		if (hasErrors) {
+			$scope.editor.setOption("gutters", ["CodeMirror-lint-markers"]);
+		} else {
+			$scope.editor.setOption("gutters", []);
+		}
+		$scope.editor.setOption("lint", {});
 		var lintings = [];
 		var process = function(arr, severity) {
 			for (var i = 0; i < arr.length; ++i) {
@@ -37,7 +44,6 @@ dlangTourApp.controller('DlangTourAppCtrl',
 
 	$scope.codemirrorLoaded = function(editor) {
 		$scope.editor = editor;
-		$scope.editor.setOption("lint", {});
 		$scope.editor.on("change", function() {
 			sessionStorage.setItem($scope.sourceCodeKey,
 				 $scope.editor.getDoc().getValue());
@@ -51,7 +57,6 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		mode: 'text/x-d',
 		theme: "elegant",
 		viewportMargin: Infinity,
-		gutters: ["CodeMirror-lint-markers"],
 		extraKeys: {
 			// hotkeys within code editor
 			'Ctrl-Enter': function(cm) {
