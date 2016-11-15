@@ -1,4 +1,5 @@
 import vibe.d;
+import std.array: array;
 
 import webinterface;
 import contentprovider;

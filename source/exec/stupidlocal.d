@@ -7,7 +7,7 @@ import core.time : msecs;
 
 import std.process;
 import std.typecons: Tuple;
-import std.file: exists, tempDir;
+import std.file: exists, remove, tempDir;
 import std.stdio: File;
 import std.random: uniform;
 import std.string: format;
@@ -50,7 +50,7 @@ class StupidLocal: IExecProvider
 		typeof(return) result;
 		auto task = runTask(() {
 			auto tmpfile = getTempFile();
-			scope(exit) std.file.remove(tmpfile.name);
+			scope(exit) tmpfile.name.remove;
 
 			tmpfile.write(source);
 			tmpfile.close();
