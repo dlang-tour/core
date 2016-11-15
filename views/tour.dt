@@ -25,7 +25,7 @@ block content
 				h2.program-output-title rdmd playground.d
 				pre#program-output {{programOutput}}
 		div(ng-class="{'col-md-6 col-sm-12': showContent, 'col-md-12': !showContent}", ng-show="showSourceCode", style="padding-left: 0px; padding-right: 0px")
-			.text-right#command-box
+			div#command-box.text-right
 				button.btn.btn-default(ng-click="showContent = !showContent")
 					i.fa.fa-expand(ng-show="showContent",aria-hidden="true")
 					i.fa.fa-compress(ng-hide="showContent",aria-hidden="true")
