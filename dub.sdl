@@ -4,9 +4,9 @@ copyright "Copyright © 2015, André Stein"
 authors "André Stein" "Sebastian Wilzbach"
 homepage "http://tour.dlang.org"
 license "Boost"
-dependency "vibe-d" version="~>0.7.28"
-dependency "dyaml" version="~>0.5.2"
-dependency "mustache-d" version="~>0.1.1"
+dependency "vibe-d" version="~>0.7.30"
+dependency "dyaml-dlang-tour" version="~>0.5.5"
+dependency "mustache-d-dlang-tour" version="~>0.1.2"
 
 copyFiles "config.yml"
 
