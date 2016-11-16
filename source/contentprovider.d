@@ -242,7 +242,7 @@ class ContentProvider
 	{
 		auto processed = expandMacros(content, mustacheContext_);
 		auto settings = new MarkdownSettings;
-		settings.flags = MarkdownFlags.backtickCodeBlocks | MarkdownFlags.vanillaMarkdown;
+		settings.flags = MarkdownFlags.backtickCodeBlocks | MarkdownFlags.vanillaMarkdown | MarkdownFlags.tables;
 		settings.urlFilter = (string link, bool) {
 			import std.algorithm.searching : startsWith;
 			if (link.startsWith("http") || link.startsWith("https") || link.startsWith("irc") || link[0] != '/')
