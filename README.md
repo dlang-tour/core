@@ -15,7 +15,7 @@ The most recent version of this tour can be seen here: http://tour.dlang.org.
 With D's package manager DUB the tour can be downloaded for offline access:
 
 ```sh
-dun fetch dlang-tour # only once
+dub fetch dlang-tour # only once
 dub run dlang-tour   # to execute the tour
 ```
 
