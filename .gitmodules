@@ -25,3 +25,6 @@
 [submodule "public/content/uk"]
 	path = public/content/uk
 	url = https://github.com/dlang-tour/ukrainian
+[submodule "public/content/es"]
+	path = public/content/es
+	url = https://github.com/dlang-tour/spanish
