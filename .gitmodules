@@ -28,3 +28,6 @@
 [submodule "public/content/es"]
 	path = public/content/es
 	url = https://github.com/dlang-tour/spanish
+[submodule "public/content/pt"]
+	path = public/content/pt
+	url = https://github.com/dlang-tour/portuguese
