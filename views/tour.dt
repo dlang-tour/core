@@ -12,6 +12,9 @@ block content
 
 		div#tour-content(ng-show="showContent", ng-class="{'col-md-12': !showSourceCode, 'col-md-6 col-sm-12': showSourceCode}")
 			div(ng-hide="showProgramOutput")
+				.menu-toggle-item.hidden-xs.hidden-sm
+					button.btn.btn-default(ng-click="toggleMenu()")
+						.fa.fa-bars
 				.content-command-box
 					button.btn.btn-default(ng-click="editOnGithub()")
 						.fa.fa-edit

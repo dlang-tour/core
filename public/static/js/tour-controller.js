@@ -159,6 +159,15 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		url += $scope.chapterId + '/' + $scope.section + '.md';
 		$window.open(url, '_blank');
 	}
+
+	$scope.toggleMenu = function() {
+		var el = document.getElementById("top");
+		if (el.style.display === "none") {
+			el.style.display = "inline-block";
+		} else {
+			el.style.display = "none";
+		}
+	}
 }]);
 
 // use CodeMirror to highlight pre
