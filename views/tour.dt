@@ -41,14 +41,16 @@ block content
 						span Reset
 			ui-codemirror(ui-codemirror-opts="editorOptions", ui-codemirror="{ onLoad : codemirrorLoaded }", ng-model="sourceCode")
 
+		.clear
 		nav.navbar.navbar-bottom
-			.container.text-center.h1
+			.text-center.h1
 				a(href="#{previousSection.link}", ng-show="'' != '#{previousSection.link}'")
 					| <
 					span.h4 #{previousSection.title}
 				//-| #{sectionId + 1} /
 				//-span.small #{sectionCount}
-				span /
+				span(ng-show="'' != '#{previousSection.link}'")
+					| /
 				a(href="#{nextSection.link}", ng-show="'' != '#{nextSection.link}'")
 					span.h4 #{nextSection.title}
 					| >

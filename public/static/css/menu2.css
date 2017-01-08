@@ -15,10 +15,7 @@ body .row {
 	position: absolute;
 }
 
-#top #cssmenu .expand-container.active > * {
-	display: block;
-}
-
+/* no shadows or borders in the menu bar */
 #top #cssmenu > ul > li > ul {
 	position: inherit;
 	border: none;
@@ -27,30 +24,49 @@ body .row {
     box-shadow: none;
 }
 
-
+/* less padding in the menu bar */
 #top > .helper {
 	 padding-left: 5px;
 	 padding-right: 5px;
 }
 
+/* no background for menu entries */
 #top a:hover, #top #cssmenu li.open > a, #top #cssmenu li.active > a {
 	 background: inherit;
 }
 
+/* active menu entry */
+#top #cssmenu li.active > a {
+	color: black;
+}
+
+/* menu entries - less padding */
 .expand-content li {
 	padding-left: 5px;
 }
 
-
 @media only screen and (min-width:54.01em)
 {
+	/* left menu has full height and no padding, margin etc. */
 	#top {
-		height: 99vh;
-		width: 250px;
+		height: 100vh;
+		width: auto;
+		padding: 0;
+		margin: 0;
+		border: 0px;
 	}
-    body .row {
-        width: calc(100% - 250px);
-    }
+
+	/* and only minimal padding on the right side */
+	#top #cssmenu > ul > li > ul > li > a {
+		padding-right: 3px;
+	}
+
+	/* required due to weird behavior with display:inline-block */
+	body {
+		overflow-y: hidden;
+	}
+
+	/* auto-scroll for both boxes, but leave enough space for nav bottom */
 	#tour-content {
 	    height: calc(100vh - 52px);
 	    overflow-y: auto;
@@ -64,18 +80,22 @@ body .row {
 
 @media only screen and (max-width:54em)
 {
+	/* display the menu over the content */
 	#top {
 		position: absolute;
 		z-index: 3;
 	}
+	/* no overlap between tour title and hambuger */
 	#tour-content {
 		padding-top: 15px
 	}
+	/* remove weird margin around menu hamburger */
 	#top a.hamburger {
 		margin: 0.15em;
 	}
 }
 
+/* less space for the nav bar */
 .navbar .h1 {
     margin-top: 0px;
     margin-bottom: 0px;
