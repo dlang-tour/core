@@ -45,7 +45,7 @@ body .row {
 	padding-left: 5px;
 }
 
-@media only screen and (min-width:54.01em)
+@media only screen and (min-width:992px)
 {
 	/* left menu has full height and no padding, margin etc. */
 	#top {
@@ -78,7 +78,7 @@ body .row {
 	}
 }
 
-@media only screen and (max-width:54em)
+@media only screen and (max-width:991px)
 {
 	/* display the menu over the content */
 	#top {
@@ -92,6 +92,30 @@ body .row {
 	/* remove weird margin around menu hamburger */
 	#top a.hamburger {
 		margin: 0.15em;
+	}
+	/* show hamburger menu item on larger screens */
+	#top > .helper {
+		padding: 0;
+	}
+	/* use a different width than 54em */
+	#top #cssmenu {
+		display: none;
+	}
+	/* use a different width than 54em */
+	#top a.hamburger {
+		display: inline;
+		float: right;
+		font-size: 2em;
+		line-height: 1;
+	}
+	/* use a different width than 54em */
+	#top a.hamburger::after {
+		content: "\f0c9";
+		font-family: FontAwesome;
+	}
+	/* use a different width than 54em */
+	#top a.hamburger span {
+		display: none;
 	}
 }
 
