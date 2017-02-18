@@ -90,6 +90,7 @@ private void doSanityCheck(ContentProvider contentProvider, IExecProvider execPr
 	}
 }
 
+version(unittest) {} else
 shared static this()
 {
 	import std.file : thisExePath;
