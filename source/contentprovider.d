@@ -1,4 +1,4 @@
-import vibe.core.log: logInfo;
+import vibe.core.log;
 import vibe.textfilter.markdown;
 
 import std.file;
@@ -192,6 +192,7 @@ class ContentProvider
 	{
 		Content* content = updateContent(language, chapter, currentSection);
 		enforce(exists(filename), "couldn't find " ~ filename);
+		scope (failure) logError("lang: %s, chapter: %s, section: %s failed", language, chapter, currentSection);
 		foreach (ref section; splitMarkdownBySection(readText(filename))) {
 			if (section.title == SourceCodeSectionTitle ||
 				section.title == SourceCodeDisabledSectionTitle ||
