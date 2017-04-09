@@ -20,6 +20,7 @@ class Config
 		private int maximumQueueSize_;
 		private int timeLimit_;
 		private int maximumOutputSize_;
+		private string dockerBinaryPath_;
 
 		private this(Node yamlNode)
 		{
@@ -27,12 +28,14 @@ class Config
 			maximumQueueSize_ = yamlNode["maximum_queue_size"].as!int();
 			timeLimit_ = yamlNode["time_limit"].as!int();
 			maximumOutputSize_ = yamlNode["maximum_output_size"].as!int();
+			dockerBinaryPath_ = yamlNode["docker_binary_path"].as!string();
 		}
 
 		@property int memoryLimit() const { return memoryLimit_; }
 		@property int maximumQueueSize() const { return maximumQueueSize_; }
 		@property int timeLimit() const { return timeLimit_; }
 		@property int maximumOutputSize() const { return maximumOutputSize_; }
+		@property string dockerBinaryPath() { return dockerBinaryPath_; }
 	}
 	private DockerConfig dockerConfig_;
 

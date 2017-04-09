@@ -25,15 +25,19 @@ class Docker: IExecProvider
 	private int maximumQueueSize_;
 	private int queueSize_;
 	private int memoryLimitMB_;
+	private string dockerBinaryPath_;
+
 
 	this(int timeLimitInSeconds, int maximumOutputSize,
-			int maximumQueueSize, int memoryLimitMB)
+			int maximumQueueSize, int memoryLimitMB,
+			string dockerBinaryPath)
 	{
 		this.timeLimitInSeconds_ = timeLimitInSeconds;
 		this.maximumOutputSize_ = maximumOutputSize;
 		this.queueSize_ = 0;
 		this.maximumQueueSize_ = maximumQueueSize;
 		this.memoryLimitMB_ = memoryLimitMB;
+		this.dockerBinaryPath_ = dockerBinaryPath;
 
 		logInfo("Initializing Docker driver");
 		logInfo("Time Limit: %d", timeLimitInSeconds_);
@@ -41,15 +45,18 @@ class Docker: IExecProvider
 		logInfo("Memory Limit: %d MB", memoryLimitMB_);
 		logInfo("Output size limit: %d B", maximumQueueSize_);
 		logInfo("Checking whether Docker is functional and updating Docker image '%s'", DockerImage);
+		logInfo("Using docker binary at '%s'", dockerBinaryPath);
 
-		auto docker = execute(["docker", "ps"]);
+		auto docker = execute([this.dockerBinaryPath_, "ps"]);
 		if (docker.status != 0) {
-			throw new Exception("Docker doesn't seem to be functional. Error: " ~ docker.output);
+			throw new Exception("Docker doesn't seem to be functional. Error: '"
+					~ docker.output ~ "'. RC: " ~ to!string(docker.status));
 		}
 
-		auto dockerPull = execute(["docker", "pull", DockerImage]);
+		auto dockerPull = execute([this.dockerBinaryPath_, "pull", DockerImage]);
 		if (docker.status != 0) {
-			throw new Exception("Failed pulling RDMD Docker image. Error: " ~ docker.output);
+			throw new Exception("Failed pulling RDMD Docker image. Error: '" ~ docker.output
+					~ "'. RC: " ~ to!string(docker.status));
 		}
 
 		logInfo("Pulled Docker image '%s'.", DockerImage);
@@ -72,7 +79,7 @@ class Docker: IExecProvider
 			--queueSize_;
 
 		auto encoded = Base64.encode(cast(ubyte[])source);
-		auto docker = pipeProcess(["docker", "run", "--rm",
+		auto docker = pipeProcess([this.dockerBinaryPath_, "run", "--rm",
 				"--net=none", "--memory-swap=-1",
 				"-m", to!string(memoryLimitMB_ * 1024 * 1024),
 				DockerImage, encoded],

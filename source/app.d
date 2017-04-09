@@ -33,7 +33,8 @@ private IExecProvider createExecProvider(Config config,
 			execProvider = new Docker(config.dockerExecConfig.timeLimit,
 					config.dockerExecConfig.maximumOutputSize,
 					config.dockerExecConfig.maximumQueueSize,
-					config.dockerExecConfig.memoryLimit);
+					config.dockerExecConfig.memoryLimit,
+					config.dockerExecConfig.dockerBinaryPath);
 			break;
 		default:
 			throw new Exception("Unknown exec provider %s".format(config.execProvider));
