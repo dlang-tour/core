@@ -4,7 +4,7 @@ copyright "Copyright © 2016, André Stein"
 authors "André Stein" "Sebastian Wilzbach"
 homepage "http://tour.dlang.org"
 license "Boost"
-dependency "vibe-d" version="~>0.7.30"
+dependency "vibe-d" version="~>0.7.31-rc.3"
 dependency "dyaml-dlang-tour" version="~>0.5.5"
 dependency "mustache-d-dlang-tour" version="~>0.1.2"
 
