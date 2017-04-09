@@ -3,12 +3,12 @@
 	"versions": {
 		"diet-ng": "1.1.0",
 		"dyaml-dlang-tour": "0.5.5",
-		"libasync": "0.7.9",
-		"libevent": "2.0.1+2.0.16",
-		"memutils": "0.4.8",
+		"libasync": "0.8.3",
+		"libevent": "2.0.2+2.0.16",
+		"memutils": "0.4.9",
 		"mustache-d-dlang-tour": "0.1.2",
 		"openssl": "1.1.5+1.0.1g",
 		"tinyendian": "0.1.2",
-		"vibe-d": "0.7.30"
+		"vibe-d": "0.7.31-rc.3"
 	}
 }
