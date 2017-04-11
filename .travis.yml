@@ -39,6 +39,7 @@ script:
   # Compile to static binary with ldc
   - if [[ "${DC}" == "ldc2" ]]; then  dub build -c static --compiler=${DC}; fi
   - if [[ "${DC}" == "ldc2" ]]; then docker build -t stonemaster/dlang-tour . ; fi
+  - if [[ "${DC}" == "ldc2" ]]; then docker tag stonemaster/dlang-tour stonemaster/dlang-tour:testing ; fi
   - if [[ "${DC}" == "ldc2" ]]; then docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -ti stonemaster/dlang-tour --sanitycheck ; fi
 
 after_success:
