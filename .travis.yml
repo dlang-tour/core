@@ -43,3 +43,4 @@ script:
 after_success:
   - if [[ "${DC}" == "ldc2" && "${TRAVIS_BRANCH}" == "master" && "${TRAVIS_PULL_REQUEST}" == "false" ]]; then docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"; fi
   - if [[ "${DC}" == "ldc2" && "${TRAVIS_BRANCH}" == "master" && "${TRAVIS_PULL_REQUEST}" == "false" ]]; then docker push stonemaster/dlang-tour       ; fi
+  - if [[ "${DC}" == "ldc2" && "${TRAVIS_BRANCH}" == "testing" ]]; then docker push stonemaster/dlang-tour:testing       ; fi

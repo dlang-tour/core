@@ -1,14 +1,14 @@
-FROM busybox
+FROM ubuntu:16.04
 
 MAINTAINER "André Stein <andre.stein.1985@gmail.com>"
 
 EXPOSE 8080
 
-# Docker version updates here
-ENV DOCKER_VERSION "1.10.3"
+RUN apt-get update && apt-get install -y \
+ docker.io \
+ && rm -rf /var/lib/apt/lists/*
 
-ADD https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION} /usr/local/bin/docker
-RUN chmod +x /usr/local/bin/docker
+RUN docker --version
 
 COPY dlang-tour /dlang-tour
 COPY docker/config.docker.yml /config.yml.tmpl
