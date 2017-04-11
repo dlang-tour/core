@@ -23,6 +23,7 @@ cache:
 branches:
   only:
     - master
+    - testing
 
 before_install:
   - sudo apt-get -qq update
