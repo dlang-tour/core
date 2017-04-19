@@ -30,7 +30,6 @@ body {
     padding: 0.6em 1em;
     position: relative;
     white-space: nowrap;
-    margin-right: 5em;
 }
 
 @media only screen and (max-width: 66em) {

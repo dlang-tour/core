@@ -20,7 +20,7 @@ body(ng-app="DlangTourApp", class="ng-cloak")
 					a(href="https://dlang.org")
 						img(id="logo", alt="DLang Logo", src="/static/img/dlogo.svg")
 					a(href="#{req.rootDir}", id="title")
-						span The DLang Tour
+						span Tour Home
 				a(href="#", title="Menu", class="hamburger expand-toggle")
 					span Menu
 				#cssmenu
