@@ -157,11 +157,13 @@ class WebInterface
 		auto nextSection = sec.linkCache.nextSection;
 		auto googleAnalyticsId = googleAnalyticsId_;
 		auto title = sec.tourData.content.title ~ " - " ~ contentProvider_.getMeta(_language).title;
-		auto githubRepo = contentProvider_.getMeta(_language).repo;
+		auto meta = contentProvider_.getMeta(_language);
+		auto githubRepo = meta.repo;
+		auto translations = meta.translator;
 		render!("tour.dt", htmlContent, language, section, sectionId,
 				sectionCount, chapterId, hasSourceCode, sourceCodeEnabled,
 				nextSection, previousSection, googleAnalyticsId,
-				toc, title, githubRepo)();
+				toc, title, githubRepo, translations)();
 	}
 
 	@path("/editor")

@@ -13,6 +13,8 @@ import std.path: baseName, buildPath;
 import dyaml;
 import mustache;
 
+import translator;
+
 alias MustacheEngine!(string) Mustache;
 
 /++
@@ -72,6 +74,7 @@ class ContentProvider
 			ChapterAndSection start;
 			string title;
 			string repo;
+			Translator translator;
 		}
 		/// general language-wide information
 		LanguageMeta[string] language_;
@@ -153,6 +156,19 @@ class ContentProvider
 
 		LanguageMeta langMeta;
 		langMeta.start = ChapterAndSection(root["start"].as!string);
+
+		if (auto node = "translations" in root)
+		{
+			// YAML-D provides no convenient method to convert a node to a dictionary
+			string[string] translations;
+			foreach (string key, string value; *node)
+				translations[key] = value;
+			langMeta.translator = new Translator(translations);
+		}
+		else
+		{
+			langMeta.translator = new Translator();
+		}
 
 		import std.meta : AliasSeq;
 		foreach (attr; AliasSeq!("title", "repo"))
@@ -367,7 +383,7 @@ class ContentProvider
 	  over the whole content, regardless of language. Content
 	  doesn't guarantee any order.
 	+/
-	LanguageMeta getMeta(string language) const
+	const(LanguageMeta) getMeta(string language) const
 	{
 		enforce(language in language_, "Invalid language");
 		return language_[language];
