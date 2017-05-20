@@ -69,7 +69,7 @@ A Docker image is automatically built by Travis CI and pushed to the repository
 at https://hub.docker.com/r/stonemaster/dlang-tour/. The Dlang-Tour Docker container
 is configured to use Docker itself to compile and run D source code
 in the online editor. For that to work the host system's Docker `/var/run/docker.sock`
-Unix domain socket has to be mounted to work inside the container. Any
+Unix domain socket has to be mounted to work inside the container. A
 **sandbox** for compiling will then be started on the host system actually,
 and not within the Dlang Tour Docker container itself.
 
