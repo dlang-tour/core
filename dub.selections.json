@@ -1,14 +1,15 @@
 {
 	"fileVersion": 1,
 	"versions": {
-		"diet-ng": "1.1.0",
-		"dyaml-dlang-tour": "0.5.5",
+		"diet-ng": "1.2.1",
+		"dyaml": "0.6.1",
 		"libasync": "0.8.3",
 		"libevent": "2.0.2+2.0.16",
 		"memutils": "0.4.9",
+		"mustache-d": "0.1.3",
 		"mustache-d-dlang-tour": "0.1.2",
 		"openssl": "1.1.5+1.0.1g",
 		"tinyendian": "0.1.2",
-		"vibe-d": "0.7.31-rc.3"
+		"vibe-d": "0.7.31"
 	}
 }
