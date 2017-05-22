@@ -171,6 +171,15 @@ shared static this()
 		.registerRestInterface(new ApiV1(execProvider, contentProvider))
 		.get("/static/*", serveStaticFiles(publicDir.buildPath("static"), fsettings));
 
-	listenHTTP(settings, urlRouter);
-	listenHTTP(httpsSettings, urlRouter);
+	if (startHTTPS) {
+		// redirect all HTTP to HTTPS
+		listenHTTP(settings, (req, res) {
+			auto url = req.fullURL;
+			url.schema = "https";
+			res.redirect(url);
+		});
+		listenHTTP(httpsSettings, urlRouter);
+	} else {
+		listenHTTP(settings, urlRouter);
+	}
 }
