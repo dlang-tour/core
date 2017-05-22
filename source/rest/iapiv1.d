@@ -37,6 +37,28 @@ interface IApiV1
 	RunOutput run(string source);
 
 	/+
+		POST /api/v1/format
+		{
+			source: "..."
+		}
+
+		Returns: formatted source code of given D source
+		with success flag
+		{
+			source: "void main() {}",
+			success: true/false
+		}
+	+/
+	struct FormatOutput
+	{
+		string source;
+		bool success;
+	}
+	@method(HTTPMethod.POST)
+	@path("/api/v1/format")
+	FormatOutput format(string source);
+
+	/+
 		GET /api/v1/source/CHAPTER/SECTION
 
 		Returns: source code (or empty if none) for the given

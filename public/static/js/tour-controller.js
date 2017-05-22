@@ -64,6 +64,9 @@ dlangTourApp.controller('DlangTourAppCtrl',
 			},
 			'Ctrl-R': function(cm) {
 				$scope.$apply('reset()');
+			},
+			'Ctrl-F': function(cm) {
+				$scope.$apply('format()');
 			}
 		}
 	};
@@ -117,6 +120,14 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		$scope.sourceCode = $scope.resetCode;
 	}
 
+	$scope.format = function() {
+		$http.post('/api/v1/format', {
+			source: $scope.sourceCode
+		}).success(function(data) {
+			$scope.sourceCode = data.source;
+		});
+	}
+
 	// Add hotkeys
 	hotkeys.add({
 		combo: 'left',
@@ -140,6 +151,14 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		description: 'Reset source code',
 		callback: function(e) {
 			$scope.reset();
+			e.preventDefault();
+		}
+	});
+	hotkeys.add({
+		combo: 'ctrl+f',
+		description: 'Format source code',
+		callback: function(e) {
+			$scope.format();
 			e.preventDefault();
 		}
 	});
