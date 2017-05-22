@@ -14,9 +14,10 @@ block content
 				.content-command-box
 					button.btn.btn-default(ng-click="editOnGithub()")
 						.fa.fa-edit
-					span.hidden-xs.hidden-sm
-						button.btn.btn-default.btn-sm(ng-click="showSourceCode = true", ng-hide="showSourceCode")
-							.fa.fa-eye
+					- if (sourceCodeEnabled)
+						span.hidden-xs.hidden-sm
+							button.btn.btn-default.btn-sm(ng-click="showSourceCode = true", ng-hide="showSourceCode")
+								.fa.fa-eye
 				|!= htmlContent
 			div(ng-show="showProgramOutput")
 				.content-command-box
