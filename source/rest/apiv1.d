@@ -71,6 +71,7 @@ class ApiV1: IApiV1
 		import dfmt.config : Config;
 		import dfmt.formatter : format;
 		import std.array : appender;
+		import std.range.primitives;
 
 		FormatOutput output;
 		ubyte[] buffer;
@@ -81,6 +82,8 @@ class ApiV1: IApiV1
 		auto app = appender!string;
 		format(source, buffer, app, &formatterConfig);
 		output.source = app.data;
+		if (output.source.back == '\n')
+			output.source.popBack;
 		return output;
 	}
 
@@ -89,7 +92,7 @@ unittest
 	string source = `void main() {}`;
 	ApiV1 api = new ApiV1(null, null);
 	auto res = api.format(source);
-	assert(res == FormatOutput("void main()\n{\n}\n", false));
+	assert(res == FormatOutput("void main()\n{\n}", false));
 }
 
 	SourceOutput getSource(string _language, string _chapter, string _section)
