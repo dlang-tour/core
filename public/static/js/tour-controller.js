@@ -65,7 +65,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 			'Ctrl-R': function(cm) {
 				$scope.$apply('reset()');
 			},
-			'Ctrl-F': function(cm) {
+			'Alt-F': function(cm) {
 				$scope.$apply('format()');
 			}
 		}
@@ -155,7 +155,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		}
 	});
 	hotkeys.add({
-		combo: 'ctrl+f',
+		combo: 'alt+f',
 		description: 'Format source code',
 		callback: function(e) {
 			$scope.format();
