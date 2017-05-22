@@ -140,30 +140,9 @@ class WebInterface
 		return Ret(_tourData, _linkCache);
 	}
 
-	// for compatibility with old urls
-	// @@@@DEPRECATED_2016-12@@@ - will be removed in December 2016
-	@path("/tour/:chapter/:section")
-	void getTour(HTTPServerRequest req, HTTPServerResponse res, string _chapter, string _section)
-	{
-		res.redirect("/tour/en/" ~ _chapter ~ "/" ~ _section);
-	}
-
 	@path("/tour/:language/:chapter/:section")
 	void getTour(HTTPServerRequest req, HTTPServerResponse res, string _language, string _chapter, string _section)
 	{
-		// for compatibility with integer-based ids
-		// @@@@DEPRECATED_2016-12@@@ - will be removed in December 2016
-		import std.string : isNumeric;
-		if (_section.isNumeric)
-		{
-			auto nr = _section.to!int;
-			auto chapters = contentProvider_.getTOC(_language);
-			foreach (chapter; chapters)
-			{
-				if (chapter.chapterId == _chapter)
-					_section = chapter.sections[nr].sectionId;
-			}
-		}
 		auto language = _language;
 		auto sec = getTourDataAndValidate(_language, _chapter, _section);
 		auto htmlContent = sec.tourData.content.html;
