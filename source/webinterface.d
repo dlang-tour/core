@@ -169,7 +169,7 @@ class WebInterface
 		auto htmlContent = sec.tourData.content.html;
 		auto chapterId = _chapter;
 		auto hasSourceCode = !sec.tourData.content.sourceCode.empty;
-		auto sourceCodeEnabled = sec.tourData.content.sourceCodeEnabled;
+		auto sourceCodeEnabled = hasSourceCode && sec.tourData.content.sourceCodeEnabled;
 		auto section = _section;
 		auto sectionId =  sec.tourData.content._id;
 		auto sectionCount = sec.tourData.sectionCount;
