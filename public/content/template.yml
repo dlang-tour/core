@@ -2,7 +2,7 @@
 # of this file.
 
 variables:
-    latest-release: 2.072.0
+    latest-release: 2.074.0
 wrappers:
     dmanmobile: |
         <img src="/static/img/tour/dman.png" class="img-left visible-xs" id="dman-front-mobile" />
