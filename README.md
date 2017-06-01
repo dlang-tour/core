@@ -1,8 +1,8 @@
 # The Dlang Online Tour
 
-[![Join the chat at https://gitter.im/stonemaster/dlang-tour](https://badges.gitter.im/stonemaster/dlang-tour.svg)](https://gitter.im/stonemaster/dlang-tour?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/dlang-tour/dlang-tour](https://badges.gitter.im/dlang-tour/dlang-tour.svg)](https://gitter.im/dlang-tour/dlang-tour?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[![Build Status](https://travis-ci.org/stonemaster/dlang-tour.svg?branch=master)](https://travis-ci.org/stonemaster/dlang-tour)
+[![Build Status](https://travis-ci.org/dlang-tour/dlang-tour.svg?branch=master)](https://travis-ci.org/dlang-tour/dlang-tour)
 
 This is the [D language](https://dlang.org) online tour which
 provides an online introduction to this great system programming language
@@ -54,7 +54,7 @@ implemented within the dlang-tour:
    will be returned.
  * `stupidlocal`: an unsafe method that just runs `rdmd` on the local host system
    and returns its output. ***Very unsafe*** and musn't ever be used in production!
- * `docker`: runs `rdmd` within a special Docker container ([dlang-tour-rdmd](https://github.com/stonemaster/dlang-tour-rdmd))
+ * `docker`: runs `rdmd` within a special Docker container ([dlang-tour-rdmd](https://github.com/dlang-tour/dlang-tour-rdmd))
    and returns its output. The driver imposes the Docker container memory and
    execution time limits. Additional configurations options available in `config.yml`.
 
@@ -74,7 +74,7 @@ Unix domain socket has to be mounted to work inside the container. A
 and not within the Dlang Tour Docker container itself.
 
 The code for running RDMD in a Docker sandbox can be found here:
-[dlang-tour-rdmd](https://github.com/stonemaster/dlang-tour-rdmd).
+[dlang-tour-rdmd](https://github.com/dlang-tour/dlang-tour-rdmd).
 
 So to run the latest dlang-tour
 version in a Docker container, run the following command:
