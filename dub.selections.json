@@ -2,7 +2,7 @@
 	"fileVersion": 1,
 	"versions": {
 		"diet-ng": "1.2.1",
-		"dyaml": "0.6.1",
+		"dyaml": "0.6.2",
 		"libasync": "0.8.3",
 		"libevent": "2.0.2+2.0.16",
 		"memutils": "0.4.9",
