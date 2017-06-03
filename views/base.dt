@@ -5,6 +5,7 @@ head
 	link(rel="stylesheet", href="/static/css/common.css")
 	link(rel="shortcut icon", href="/static/img/favicon.ico")
 	link(rel="stylesheet", type="text/css", href="/static/css/menu.css")
+	link(rel="stylesheet", type="text/css", href="/static/css/menu2.css")
 	meta(name="viewport",content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0")
 	title #{title}
 	link(rel="stylesheet", href="/static/css/tour.css")
@@ -17,28 +18,29 @@ body(ng-app="DlangTourApp", class="ng-cloak")
 		.helper
 			.helper.expand-container.active
 				.logo
-					a(href="https://dlang.org")
-						img(id="logo", alt="DLang Logo", src="/static/img/dlogo.svg")
-					a(href="#{req.rootDir}", id="title")
-						span The DLang Tour
+					//-a(href="https://dlang.org")
+						//-img(id="logo", alt="DLang Logo", src="/static/img/dlogo.svg")
+					//-a(href="#{req.rootDir}", id="title")
+						//-span The DLang Tour
 				a(href="#", title="Menu", class="hamburger expand-toggle")
 					span Menu
 				#cssmenu
 					ul
 						- foreach(ref tocItem; *toc)
 							- auto active = chapterId == tocItem.chapterId;
-							li(class=(active ? "expand-container active" : "expand-container"))
+							li(class=(active ? "expand-container open" : "expand-container"))
 								a.expand-toggle(href="#")
 									span=tocItem.title
 								ul.expand-content
 									- foreach(ref sec; tocItem.sections)
-										li(class=(active ? "active" : ""))
+										- auto activeSection = section == sec.sectionId;
+										li(class=(activeSection ? "active" : ""))
 											a(href="/tour/#{language}/#{tocItem.chapterId}/#{sec.sectionId}")
 												span=sec.title
 
-				#github_avatar
-					a(href="https://github.com/stonemaster/dlang-tour")
-						i(class="fa fa-github",aria-hidden="true")
+				//-#github_avatar
+					//-a(href="https://github.com/stonemaster/dlang-tour")
+						//-i(class="fa fa-github",aria-hidden="true")
 
 	block content
 

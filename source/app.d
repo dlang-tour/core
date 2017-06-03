@@ -146,7 +146,8 @@ shared static this()
 		auto googleAnalyticsId = config.googleAnalyticsId;
 		auto chapterId = "";
 		auto language = "en";
-		res.render!("error.dt", req, error, language, googleAnalyticsId, chapterId, toc, title)();
+		auto section = "";
+		res.render!("error.dt", req, error, language, googleAnalyticsId, chapterId, section, toc, title)();
 		res.finalize();
 	};
 
