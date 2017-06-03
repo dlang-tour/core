@@ -146,11 +146,17 @@ dlangTourApp.controller('DlangTourAppCtrl',
 
 	function prevPage()
 	{
+		if (!$scope.prevPage) {
+			return;
+		}
 		window.location.href = $scope.prevPage;
 	};
 
 	function nextPage()
 	{
+		if (!$scope.nextPage) {
+			return;
+		}
 		window.location.href = $scope.nextPage;
 	}
 
