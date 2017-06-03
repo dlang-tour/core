@@ -1,5 +1,12 @@
 var dlangTourApp = angular.module('DlangTourApp', ['ui.codemirror', 'cfp.hotkeys']);
 
+function b64DecodeUnicode(str) {
+    // Going backwards: from bytestream, to percent-encoding, to original string.
+    return decodeURIComponent(atob(str).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+}
+
 dlangTourApp.controller('DlangTourAppCtrl',
 	['$scope', '$http', 'hotkeys', '$window',
 	function($scope, $http, hotkeys, $window) {
@@ -71,7 +78,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		}
 	};
 
-	$scope.init = function(language, githubRepo, chapterId, section, hasSourceCode, prevPage, nextPage) {
+	$scope.initTour = function(language, githubRepo, chapterId, section, hasSourceCode, prevPage, nextPage) {
 		$scope.language = language;
 		$scope.githubRepo = githubRepo;
 		$scope.chapterId = chapterId;
@@ -92,6 +99,11 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		});
 
 		$scope.showSourceCode = hasSourceCode;
+	}
+
+	$scope.initEditor = function(sourceCode) {
+		$scope.resetCode = b64DecodeUnicode(sourceCode);
+		$scope.sourceCode = $scope.resetCode;
 	}
 
 	$scope.run = function() {
@@ -121,6 +133,10 @@ dlangTourApp.controller('DlangTourAppCtrl',
 
 	$scope.reset = function() {
 		$scope.sourceCode = $scope.resetCode;
+	}
+
+	$scope.export = function() {
+		window.location = window.location.origin + "/editor?source=" + encodeURIComponent($scope.sourceCode);
 	}
 
 	$scope.format = function() {

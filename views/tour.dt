@@ -8,7 +8,7 @@ block head
 	link(rel="stylesheet", href="/static/lib/grid12.min.css")
 
 block content
-	.row(ng-controller="DlangTourAppCtrl as ctrl", ng-init="init('#{language}', '#{githubRepo}', '#{chapterId}', '#{section}', #{hasSourceCode}, '#{previousSection.link}', '#{nextSection.link}')")
+	.row(ng-controller="DlangTourAppCtrl as ctrl", ng-init="initTour('#{language}', '#{githubRepo}', '#{chapterId}', '#{section}', #{hasSourceCode}, '#{previousSection.link}', '#{nextSection.link}')")
 		div#tour-content(ng-show="showContent", ng-class="{'col-md-12': !showSourceCode, 'col-md-7 col-sm-12': showSourceCode}")
 			div(ng-hide="showProgramOutput")
 				.content-command-box
@@ -42,6 +42,9 @@ block content
 					button.btn.btn-default(ng-click="reset()")
 						i.fa.fa-undo(aria-hidden="true")
 						span Reset
+					button.btn.btn-default(ng-click="export()")
+						i.fa.fa-share(aria-hidden="true")
+						span Export
 			ui-codemirror(ui-codemirror-opts="editorOptions", ui-codemirror="{ onLoad : codemirrorLoaded }", ng-model="sourceCode")
 
 	nav.navbar.navbar-bottom

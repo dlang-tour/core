@@ -13,32 +13,33 @@ head
 	script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js")
 
 body(ng-app="DlangTourApp", class="ng-cloak")
-	#top
-		.helper
-			.helper.expand-container.active
-				.logo
-					a(href="https://dlang.org")
-						img(id="logo", alt="DLang Logo", src="/static/img/dlogo.svg")
-					a(href="#{req.rootDir}", id="title")
-						span The DLang Tour
-				a(href="#", title="Menu", class="hamburger expand-toggle")
-					span Menu
-				#cssmenu
-					ul
-						- foreach(ref tocItem; toc)
-							- auto active = chapterId == tocItem.chapterId;
-							li(class=(active ? "expand-container active" : "expand-container"))
-								a.expand-toggle(href="#")
-									span=tocItem.title
-								ul.expand-content
-									- foreach(ref sec; tocItem.sections)
-										li(class=(active ? "active" : ""))
-											a(href="/tour/#{language}/#{tocItem.chapterId}/#{sec.sectionId}")
-												span=sec.title
+	- static if (!(is(typeof(toc) == bool)))
+		#top
+			.helper
+				.helper.expand-container.active
+					.logo
+						a(href="https://dlang.org")
+							img(id="logo", alt="DLang Logo", src="/static/img/dlogo.svg")
+						a(href="#{req.rootDir}", id="title")
+							span The DLang Tour
+					a(href="#", title="Menu", class="hamburger expand-toggle")
+						span Menu
+					#cssmenu
+						ul
+							- foreach(ref tocItem; toc)
+								- auto active = chapterId == tocItem.chapterId;
+								li(class=(active ? "expand-container active" : "expand-container"))
+									a.expand-toggle(href="#")
+										span=tocItem.title
+									ul.expand-content
+										- foreach(ref sec; tocItem.sections)
+											li(class=(active ? "active" : ""))
+												a(href="/tour/#{language}/#{tocItem.chapterId}/#{sec.sectionId}")
+													span=sec.title
 
-				#github_avatar
-					a(href="https://github.com/stonemaster/dlang-tour")
-						i(class="fa fa-github",aria-hidden="true")
+					#github_avatar
+						a(href="https://github.com/stonemaster/dlang-tour")
+							i(class="fa fa-github",aria-hidden="true")
 
 	block content
 
