@@ -54,13 +54,13 @@ class StupidLocal: IExecProvider
 
 			tmpfile.write(source);
 			tmpfile.close();
-			auto rdmd = execute(["rdmd", tmpfile.name]);
+			auto rdmd = execute(["dmd", "-run", tmpfile.name]);
 			result.success = rdmd.status == 0;
 			result.output = rdmd.output;
 		});
 
 		while (task.running)
-			sleep(300.msecs);
+			sleep(10.msecs);
 
 		return result;
 	}
