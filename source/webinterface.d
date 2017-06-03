@@ -152,7 +152,7 @@ class WebInterface
 		auto section = _section;
 		auto sectionId =  sec.tourData.content._id;
 		auto sectionCount = sec.tourData.sectionCount;
-		auto toc = &toc_[_language];
+		auto toc = toc_[_language];
 		auto previousSection = sec.linkCache.previousSection;
 		auto nextSection = sec.linkCache.nextSection;
 		auto googleAnalyticsId = googleAnalyticsId_;
