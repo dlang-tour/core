@@ -141,8 +141,7 @@ shared static this()
 	settings.useCompressionIfPossible = true;
 	settings.errorPageHandler = (HTTPServerRequest req, HTTPServerResponse res, HTTPServerErrorInfo error) {
 		auto title = "Page not found";
-		auto t = contentProvider.getTOC(defaultLang);
-		auto toc = &t;
+		auto toc = contentProvider.getTOC(defaultLang);
 		auto googleAnalyticsId = config.googleAnalyticsId;
 		auto chapterId = "";
 		auto language = "en";

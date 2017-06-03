@@ -25,7 +25,7 @@ body(ng-app="DlangTourApp", class="ng-cloak")
 					span Menu
 				#cssmenu
 					ul
-						- foreach(ref tocItem; *toc)
+						- foreach(ref tocItem; toc)
 							- auto active = chapterId == tocItem.chapterId;
 							li(class=(active ? "expand-container active" : "expand-container"))
 								a.expand-toggle(href="#")
