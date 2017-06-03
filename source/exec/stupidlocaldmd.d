@@ -1,4 +1,4 @@
-module exec.stupidlocal;
+module exec.stupidlocaldmd;
 
 import exec.iexecprovider;
 
@@ -37,7 +37,7 @@ private string findDCompiler()
 	Warning:
 		UNSAFE BECUASE CODE IS RUN UNFILTERED AND NOT IN A SANDBOX
 +/
-class StupidLocal: IExecProvider
+class StupidLocalDmd : IExecProvider
 {
 	string dCompiler = "dmd";
 	this() {
