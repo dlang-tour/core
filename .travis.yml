@@ -32,9 +32,9 @@ script:
   # Update all language repos to their latest content
   - git pull --recurse-submodules
   - git submodule update --remote --recursive
-  # Compile & test with DMD
-  - if [[ "${DC}" == "dmd" ]]; then  dub test --compiler=${DC};             fi
-  - if [[ "${DC}" == "dmd" ]]; then  dub --compiler=${DC} -- --sanitycheck; fi
+  # Compile & test with all compilers
+  - dub test --compiler=${DC}
+  - dub --compiler=${DC} -- --sanitycheck
   # Compile to static binary with ldc
   - if [[ "${DC}" == "ldc2" ]]; then  dub build -c static --compiler=${DC}; fi
   - if [[ "${DC}" == "ldc2" ]]; then docker build -t stonemaster/dlang-tour . ; fi
