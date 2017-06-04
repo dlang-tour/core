@@ -12,10 +12,6 @@ d:
   - ldc
   - ldc-beta
 
-matrix:
-  allow_failures:
-   - d: ldc-beta
-
 cache:
   - $HOME/.dub
 
