@@ -1,4 +1,4 @@
-import yaml;
+import dyaml;
 
 /++
 	Maps values of config.yml to properties.

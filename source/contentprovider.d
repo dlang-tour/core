@@ -10,7 +10,7 @@ import std.exception: enforce;
 import std.string: format;
 import std.path: baseName, buildPath;
 
-import yaml;
+import dyaml;
 import mustache;
 
 alias MustacheEngine!(string) Mustache;
