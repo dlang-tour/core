@@ -102,7 +102,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 
 		$http.post('/api/v1/run', {
 			source: $scope.sourceCode
-		}).success(function(data) {
+		}).then(function(data) {
 			$scope.programOutput = data.output;
 			$scope.warnings = data.warnings;
 			$scope.errors = data.errors;
@@ -110,6 +110,9 @@ dlangTourApp.controller('DlangTourAppCtrl',
 			$scope.editor.setOption("lint", {
 				getAnnotations: $scope.updateErrorsAndWarnings
 			});
+		}, function(error) {
+			var msg = (error || {}).statusMessage || "";
+			$scope.programOutput = "Server error: " + msg;
 		});
 	}
 
