@@ -4,6 +4,7 @@ import exec.iexecprovider;
 
 import vibe.core.core: sleep, runTask;
 import core.time : msecs;
+import vibe.core.log : logInfo;
 
 import std.process;
 import std.typecons: Tuple;
@@ -11,6 +12,23 @@ import std.file: exists, remove, tempDir;
 import std.stdio: File;
 import std.random: uniform;
 import std.string: format;
+
+// searches the local system for valid D compilers
+private string findDCompiler()
+{
+	string dCompiler = "dmd";
+	foreach (compiler; ["dmd", "ldmd2", "gdmd"])
+	{
+		try {
+			if (execute([compiler, "--version"]).status == 0)
+			{
+				dCompiler = compiler;
+				break;
+			}
+		} catch (ProcessException) {}
+	}
+	return dCompiler;
+}
 
 /++
 	Stupid local executor which just runs rdmd and passes the source to it
@@ -21,6 +39,12 @@ import std.string: format;
 +/
 class StupidLocal: IExecProvider
 {
+	string dCompiler = "dmd";
+	this() {
+		dCompiler = findDCompiler();
+	    logInfo("Selected %s as D compiler", dCompiler);
+	}
+
 	private File getTempFile()
 	{
 		auto tempdir = tempDir();
@@ -54,7 +78,7 @@ class StupidLocal: IExecProvider
 
 			tmpfile.write(source);
 			tmpfile.close();
-			auto rdmd = execute(["dmd", "-run", tmpfile.name]);
+			auto rdmd = execute([dCompiler, "-run", tmpfile.name]);
 			result.success = rdmd.status == 0;
 			result.output = rdmd.output;
 		});
