@@ -31,3 +31,12 @@
 [submodule "public/content/pt"]
 	path = public/content/pt
 	url = https://github.com/dlang-tour/portuguese
+[submodule "public/content/fr"]
+	path = public/content/fr
+	url = https://github.com/dlang-tour/french
+[submodule "public/content/kr"]
+	path = public/content/kr
+	url = https://github.com/dlang-tour/korean
+[submodule "public/content/sk"]
+	path = public/content/sk
+	url = https://github.com/dlang-tour/slovak
