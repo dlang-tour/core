@@ -47,7 +47,7 @@ private IExecProvider createExecProvider(Config config,
 		auto allowedSources = contentProvider.getContent()
 			.map!(x => x.sourceCode.idup)
 			.array;
-		return new Cache(execProvider, 500, 2000, allowedSources);
+		return new Cache(execProvider, allowedSources);
 	}
 	return execProvider;
 }
