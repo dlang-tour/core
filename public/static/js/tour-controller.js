@@ -117,7 +117,8 @@ dlangTourApp.controller('DlangTourAppCtrl',
 
 		$http.post('/api/v1/run', {
 			source: $scope.sourceCode
-		}).then(function(data) {
+		}).then(function(body) {
+			var data = body.data;
 			$scope.programOutput = data.output;
 			$scope.warnings = data.warnings;
 			$scope.errors = data.errors;
