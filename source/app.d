@@ -175,6 +175,7 @@ shared static this()
 		listenHTTP(settings, (req, res) {
 			auto url = req.fullURL;
 			url.schema = "https";
+			url.port = 443;
 			res.redirect(url);
 		});
 		listenHTTP(httpsSettings, urlRouter);
