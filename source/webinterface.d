@@ -163,4 +163,25 @@ class WebInterface
 				nextSection, previousSection, googleAnalyticsId,
 				toc, title, githubRepo)();
 	}
+
+	@path("/editor")
+	void getEditor(HTTPServerRequest req, HTTPServerResponse res)
+	{
+		import std.base64;
+		auto googleAnalyticsId = googleAnalyticsId_;
+		auto title = "Editor";
+		bool toc;
+		auto chapterId = "";
+		auto language = "en";
+		string sourceCode;
+		if (auto s = "source" in req.query) {
+			sourceCode = Base64.encode(cast(ubyte[]) *s);
+		} else if (auto s = "b64source" in req.query) {
+			sourceCode = *s;
+		} else {
+			auto sourceCodeRaw = "import std.stdio;\nvoid main(string[] args)\n{\n    writeln(\"Hello D\");\n}";
+			sourceCode = Base64.encode(cast(ubyte[]) sourceCodeRaw);
+		}
+		render!("editor.dt", googleAnalyticsId, title, toc, chapterId, language, sourceCode)();
+	}
 }

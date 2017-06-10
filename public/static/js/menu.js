@@ -1,3 +1,4 @@
+(function initMenu() {
 if (typeof cssmenu_no_js === 'undefined') {
     var open_main_item = null;
 
@@ -19,6 +20,9 @@ if (typeof cssmenu_no_js === 'undefined') {
 
     // menu button for mobile devices
     var dom_hamburger = document.body.querySelector(".hamburger.expand-toggle");
+	if (!dom_hamburger) {
+		return;
+	}
     dom_hamburger.addEventListener('click', function(e){
         handleMenuClick(dom_hamburger.parentNode, e, true);
     });
@@ -42,3 +46,4 @@ if (typeof cssmenu_no_js === 'undefined') {
         open_main_item = null;
     });
 }
+})();
