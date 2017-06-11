@@ -20,6 +20,9 @@ block content
 				button.btn.btn-primary(ng-click="run()")
 					i.fa.fa-play(aria-hidden="true")
 					span Run
+				button.btn.btn-primary(ng-click="format()")
+					i.fa.fa-play(aria-hidden="true")
+					span Format
 				button.btn.btn-default(ng-click="reset()")
 					i.fa.fa-undo(aria-hidden="true")
 					span Reset
