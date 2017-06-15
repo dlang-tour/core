@@ -33,6 +33,8 @@ and restarts the `dlang-tour` container when a newer version is available.
   * Change `OPTIONS` in `/etc/sysconfig/docker`: `OPTIONS='--selinux-enabled=false -s overlay'`
   * Run `systemctl daemon-reload`
   * Run `systemctl restart docker`
+* Make sure that `docker-selinux` is installed in an up-to-date
+  version.
 
 ### Installation of dlang-tour
 

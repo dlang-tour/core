@@ -1,5 +1,6 @@
 tour:
-  image: stonemaster/dlang-tour
+  image: stonemaster/dlang-tour:latest
+  container_name: tour
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     - /etc/letsencrypt:/etc/letsencrypt
@@ -7,7 +8,7 @@ tour:
     - "80:8080"
     - "443:8443"
   environment:
-    - GOOGLE_ANALYTICS_ID=
+    - GOOGLE_ANALYTICS_ID=UA-76170840-1
     - TLS_CA_CHAIN_FILE=/etc/letsencrypt/live/tour.dlang.io/cert.pem
     - TLS_PRIVATE_KEY_FILE=/etc/letsencrypt/live/tour.dlang.io/privkey.pem
   restart: always
