@@ -35,13 +35,13 @@ block content
 				- if (sourceCodeEnabled)
 					button.btn.btn-primary(ng-click="run()")
 						i.fa.fa-play(aria-hidden="true")
-						span Run
+						span #{translations["editor.run"]}
 					button.btn.btn-primary(ng-click="format()")
 						i.fa.fa-play(aria-hidden="true")
-						span Format
+						span #{translations["editor.format"]}
 					button.btn.btn-default(ng-click="reset()")
 						i.fa.fa-undo(aria-hidden="true")
-						span Reset
+						span #{translations["editor.reset"]}
 					button.btn.btn-default(ng-click="export()")
 						i.fa.fa-share(aria-hidden="true")
 						span Export
@@ -60,7 +60,7 @@ block content
 		.container.hidden-xs.hidden-sm
 			p.text-muted.text-center
 				kbd ?
-				| Keyboard shortcuts
+				| #{translations["editor.keyboard_shortcuts"]}
 
 block js
 	script(src="/static/js/tour-controller.js")
