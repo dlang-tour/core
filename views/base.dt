@@ -38,7 +38,7 @@ body(ng-app="DlangTourApp", class="ng-cloak")
 													span=sec.title
 
 					#github_avatar
-						a(href="https://github.com/stonemaster/dlang-tour")
+						a(href="https://github.com/dlang-tour/core")
 							i(class="fa fa-github",aria-hidden="true")
 
 	block content

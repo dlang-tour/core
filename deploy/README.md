@@ -19,7 +19,7 @@ and restarts the `dlang-tour` container when a newer version is available.
 
  * Linux with kernel **>= 3.10**.
  * Docker installed on host system: **>= 1.8.3**
- * **Docker compose**: 
+ * **Docker compose**:
    * Install [Docker Compose](https://docs.docker.com/compose/install/)
 
 #### CentOS
@@ -40,8 +40,8 @@ and restarts the `dlang-tour` container when a newer version is available.
 
  * Checkout the repository featuring the latest `docker-compose.yml`:
 ```
-git clone https://github.com/stonemaster/dlang-tour.git
-cd dlang-tour/deploy
+git clone https://github.com/dlang-tour/core.git
+cd core/deploy
 ```
  * Adapt the environment variable `GOOGLE_ANALYTICS_ID` if needed
    in `docker-compose.yml`.
