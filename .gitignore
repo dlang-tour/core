@@ -6,3 +6,5 @@ __dummy.html
 dlang-tour
 __test__library__
 *.swp
+
+dlang-tour-test-library
