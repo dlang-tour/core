@@ -29,7 +29,8 @@ script:
   - git pull --recurse-submodules
   - git submodule update --remote --recursive
   # Compile & test with all compilers
-  - dub test --compiler=${DC}
+  # https://issues.dlang.org/show_bug.cgi?id=13742 + separate linking not implemented for LDC
+  - if [[ "${DC}" == "dmd" ]]; then  dub test --compiler=${DC} --build=unittest-cov --build-mode=singleFile ; else dub test --compiler=${DC} ; fi
   - dub --compiler=${DC} -- --sanitycheck
   # Compile to static binary with ldc
   - if [[ "${DC}" == "ldc2" ]]; then  dub build -c static --compiler=${DC}; fi
@@ -39,3 +40,4 @@ script:
 after_success:
   - if [[ "${DC}" == "ldc2" && "${TRAVIS_BRANCH}" == "master" && "${TRAVIS_PULL_REQUEST}" == "false" ]]; then docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"; fi
   - if [[ "${DC}" == "ldc2" && "${TRAVIS_BRANCH}" == "master" && "${TRAVIS_PULL_REQUEST}" == "false" ]]; then docker push stonemaster/dlang-tour       ; fi
+  - bash <(curl -s https://codecov.io/bash)
