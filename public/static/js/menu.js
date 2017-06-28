@@ -14,6 +14,10 @@ if (typeof cssmenu_no_js === 'undefined') {
         if (!isHamburger) {
             open_main_item = container.classList.contains('open') ? container: null;
         }
+
+		if (container.className.indexOf("expand-container")) {
+			return;
+		}
         e.stopPropagation();
         e.preventDefault();
     }
