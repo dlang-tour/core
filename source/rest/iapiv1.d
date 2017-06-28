@@ -59,6 +59,28 @@ interface IApiV1
 	FormatOutput format(string source);
 
 	/+
+		POST /api/v1/shorten
+		{
+			source: "..."
+		}
+
+		Returns: short url to given D source
+		with success flag
+		{
+			source: "https://is.gd/abc",
+			success: true/false
+		}
+	+/
+	struct ShortenOutput
+	{
+		string url;
+		bool success;
+	}
+	@method(HTTPMethod.POST)
+	@path("/api/v1/shorten")
+	ShortenOutput shorten(string source);
+
+	/+
 		GET /api/v1/source/CHAPTER/SECTION
 
 		Returns: source code (or empty if none) for the given

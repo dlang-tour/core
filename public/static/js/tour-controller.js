@@ -22,6 +22,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 	$scope.section = null;
 	$scope.prevPage = null;
 	$scope.nextPage = null;
+	$scope.shortLinkURL = "";
 
 	$scope.updateErrorsAndWarnings = function(doc, options, editor) {
 		var hasErrors = $scope.errors.length > 0 || $scope.warnings > 0;
@@ -138,6 +139,44 @@ dlangTourApp.controller('DlangTourAppCtrl',
 
 	$scope.export = function() {
 		window.location = window.location.origin + "/editor?source=" + encodeURIComponent($scope.sourceCode);
+	}
+
+	// boostrap copy-to-clipboard buttons (only necessary once)
+	if (typeof(window.Clipboard) !== "undefined") {
+		new window.Clipboard('.copy-btn', {
+			text: function(trigger) {
+				return $scope.shortLinkURL;
+			}
+		});
+	}
+	$scope.shorten = function() {
+		$http.post('/api/v1/shorten', {
+			source: $scope.sourceCode
+		}).then(function(body) {
+			var data = body.data;
+			$scope.shortLinkURL = data.url;
+		}, function(error) {
+			$scope.showContent = true;
+			var msg = (error || {}).statusMessage || "";
+			$scope.programOutput = "Server error: " + msg;
+		});
+	}
+
+	$scope.gist = function() {
+		$http.post('https://api.github.com/gists', {
+			public: true,
+			files: {
+				"main.d": {
+					content: $scope.sourceCode
+				}
+			}
+		}).then(function(body) {
+			var data = body.data;
+			window.open(data.html_url, "_blank");
+		}, function(error) {
+			var msg = (error || {}).statusMessage || "";
+			$scope.programOutput = "Server error: " + msg;
+		});
 	}
 
 	$scope.format = function() {

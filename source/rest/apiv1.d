@@ -87,6 +87,21 @@ class ApiV1: IApiV1
 		return output;
 	}
 
+	ShortenOutput shorten(string source)
+	{
+		import std.format : format;
+		import std.uri : encode;
+
+		ShortenOutput output;
+		auto url = "https://tour.dlang.org/editor?source=%s".format(source.encode);
+		auto isURL= "https://is.gd/create.php?format=simple&url=%s".format(url.encode);
+		output.url = requestHTTP(isURL, (scope req) {
+			req.method = HTTPMethod.POST;
+		}).bodyReader.readAllUTF8;
+		output.success = true;
+		return output;
+	}
+
 unittest
 {
 	string source = `void main() {}`;

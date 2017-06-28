@@ -6,16 +6,17 @@ block head
 	link(rel="stylesheet", href="/static/lib/codemirror/addon/lint/lint.min.css")
 	link(rel="stylesheet", href="/static/lib/codemirror/theme/elegant.css")
 	link(rel="stylesheet", href="/static/lib/grid12.min.css")
+	link(rel="stylesheet", href="/static/css/editor.css")
 
 block content
 	.row(ng-controller="DlangTourAppCtrl as ctrl", ng-init="initEditor('#{sourceCode}')")
-		div#tour-content(ng-show="showProgramOutput", ng-class="{'col-md-12': !showSourceCode, 'col-md-6 col-sm-12': showSourceCode}")
+		div#tour-content(ng-show="showProgramOutput")
 			.content-command-box
 				button.btn.btn-danger.btn-sm(ng-click="showProgramOutput = !showProgramOutput")
 					span.fa.fa-close
 			h2.program-output-title rdmd playground.d
 			pre#program-output {{programOutput}}
-		div(ng-class="{'col-md-6 col-sm-12': showContent, 'col-md-12': !showContent}", style="padding-left: 0px; padding-right: 0px")
+		div(style="padding-left: 0px; padding-right: 0px")
 			div#command-box.text-right
 				button.btn.btn-primary(ng-click="run()")
 					i.fa.fa-play(aria-hidden="true")
@@ -26,9 +27,16 @@ block content
 				button.btn.btn-default(ng-click="reset()")
 					i.fa.fa-undo(aria-hidden="true")
 					span Reset
-				button.btn.btn-default(ng-click="export()")
+				button.btn.btn-default(ng-click="shorten()")
 					i.fa.fa-share(aria-hidden="true")
-					span Export
+					span Shorten
+				button.btn.btn-default(ng-click="gist()")
+					i.fa.fa-share(aria-hidden="true")
+					span Export to Gist
+				div#shortlink-container(ng-show="shortLinkURL.length > 0")
+					input#shortlink-input(ng-value="shortLinkURL", size="16")
+					button.copy-btn(data-clipboard-target="#shortlink-input", data-clipboard-action="copy")
+						img.clipy(src="/static/img/clippy.svg", alt="Copy to clipboard", width="13")
 			ui-codemirror(ui-codemirror-opts="editorOptions", ui-codemirror="{ onLoad : codemirrorLoaded }", ng-model="sourceCode")
 
 block js
@@ -40,3 +48,4 @@ block js
 	script(src="/static/lib/codemirror/addon/runmode.js")
 	script(src="/static/lib/ui-codemirror.min.js")
 	script(src="/static/lib/hotkeys.min.js")
+	script(src="/static/lib/clipboard.min.js")
