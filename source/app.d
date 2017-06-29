@@ -165,7 +165,26 @@ shared static this()
 	auto urlRouter = new URLRouter;
 	auto fsettings = new HTTPFileServerSettings;
 	fsettings.serverPathPrefix = "/static";
+
+	void cors(HTTPServerRequest req, HTTPServerResponse res)
+	{
+		import std.algorithm: among, equal, until;
+		if (req.host.until(":").among!equal("tour.dlang.org", "tour.dlang.io", "dlang.org", "dtest.dlang.io", "127.0.0.1", "localhost"))
+		{
+			res.headers["Access-Control-Allow-Origin"] = "*";
+		}
+		// parse json sent via text/plain to avoid an additional preflight OPTIONS request
+		// https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS#Preflighted_requests
+		if (req.contentType == "text/plain")
+		{
+			req.contentType = "application/json; charset=UTF-8";
+			auto bodyStr = req.bodyReader.readAllUTF8;
+			if (!bodyStr.empty) req.json = parseJson(bodyStr);
+		}
+	}
+
 	urlRouter
+		.any("/api/*", &cors)
 		.registerWebInterface(new WebInterface(contentProvider, config.googleAnalyticsId, defaultLang))
 		.registerRestInterface(new ApiV1(execProvider, contentProvider))
 		.get("/static/*", serveStaticFiles(publicDir.buildPath("static"), fsettings));
