@@ -169,7 +169,8 @@ shared static this()
 	void cors(HTTPServerRequest req, HTTPServerResponse res)
 	{
 		import std.algorithm: among, equal, until;
-		if (req.host.until(":").among!equal("tour.dlang.org", "tour.dlang.io", "dlang.org", "dtest.dlang.io", "127.0.0.1", "localhost"))
+		if (req.host.until(":").among!equal("tour.dlang.org", "tour.dlang.io", "run.dlang.io",
+					"dlang.org", "dtest.dlang.io", "127.0.0.1", "localhost"))
 		{
 			res.headers["Access-Control-Allow-Origin"] = "*";
 		}
