@@ -141,6 +141,15 @@
     padding-bottom: 0.6em;
 }
 
+#top #cssmenu > ul > li .menu-divider {
+    border-top: 1px solid #943029;
+}
+
+.expand-container > .expand-toggle::after {
+    content: " \f0d7";
+    font-family: FontAwesome;
+}
+
 /* Narrow layout stage 2: hamburger menu, forum/twitter widgets disappear from
 the home page, intro pitch and your-code-here layed out vertically */
 @media only screen and (max-width:54em)

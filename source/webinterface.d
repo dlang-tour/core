@@ -166,13 +166,87 @@ class WebInterface
 				toc, title, githubRepo, translations)();
 	}
 
+	private static auto buildDlangToc()
+	{
+		import std.typecons : Flag;
+		alias HasDivider = Flag!"hasDivider";
+		static struct TocSection
+		{
+			string title;
+			string url;
+			HasDivider hasDivider;
+		}
+		struct TocChapter
+		{
+			string title;
+			TocSection[] sections;
+			string url;
+			string chapterId = "not-selected-stub";
+		}
+
+		TocChapter documentation = {
+			title: "Documentation",
+			sections: [
+				TocSection("Language Reference", "https://dlang.org/spec/spec.html"),
+				TocSection("Library Reference", "https://dlang.org/phobos/index.html"),
+				TocSection("Command-line Reference", "https://dlang.org/dmd.html"),
+				TocSection("Feature Overview", "https://dlang.org/comparison.html", HasDivider.yes),
+				TocSection("Articles", "https://dlang.org/articles.html"),
+			]
+		};
+		TocChapter downloads = {
+			title: "Downloads",
+			url: "https://dlang.org/download.html"
+		};
+		TocChapter packages = {
+			title: "Packages",
+			url: "https://code.dlang.org"
+		};
+		TocChapter community = {
+			title: "Community",
+			sections: [
+				TocSection("Blog", "https://dlang.org/blog"),
+				TocSection("Orgs using D", "https://dlang.org/orgs-using-d.html"),
+				TocSection("Twitter", "https://twitter.com/search?q=%23dlang"),
+				TocSection("Forums", "https://forum.dlang.org", HasDivider.yes),
+				TocSection("IRC", "irc://irc.freenode.net/d"),
+				TocSection("Wiki", "https://wiki.dlang.org"),
+				TocSection("GitHub", "https://github.com/dlang", HasDivider.yes),
+				TocSection("Issues", "https://dlang.org/bugstats.php"),
+				TocSection("Foundation", "https://dlang.org/foundation.html", HasDivider.yes),
+				TocSection("Donate", "https://dlang.org/donate.html"),
+			]
+		};
+		TocChapter resources = {
+			title: "Resources",
+			sections: [
+				TocSection("Books", "https://wiki.dlang.org/Books"),
+				TocSection("Tutorials", "https://wiki.dlang.org/Tutorials"),
+				TocSection("Tools", "https://wiki.dlang.org/Development_tools", HasDivider.yes),
+				TocSection("Editors", "https://wiki.dlang.org/Editors"),
+				TocSection("IDEs", "https://wiki.dlang.org/IDEs"),
+				TocSection("VisualD", "http://rainers.github.io/visuald/visuald/StartPage.html"),
+				TocSection("Acknowledgments", "https://dlang.org/acknowledgements.html", HasDivider.yes),
+				TocSection("D Style", "https://dlang.org/dstyle.html"),
+				TocSection("Glossary", "https://dlang.org/glossary.html"),
+				TocSection("Sitemap", "https://dlang.org/sitemap.html"),
+			]
+		};
+		return [
+			documentation,
+			downloads,
+			packages,
+			community,
+			resources,
+		];
+	}
+
 	@path("/editor")
 	void getEditor(HTTPServerRequest req, HTTPServerResponse res)
 	{
 		import std.base64;
 		auto googleAnalyticsId = googleAnalyticsId_;
 		auto title = "Editor";
-		bool toc;
 		auto chapterId = "";
 		auto language = "en";
 		string sourceCode;
@@ -184,6 +258,8 @@ class WebInterface
 			auto sourceCodeRaw = "import std.stdio;\nvoid main(string[] args)\n{\n    writeln(\"Hello D\");\n}";
 			sourceCode = Base64.encode(cast(ubyte[]) sourceCodeRaw);
 		}
+
+		static immutable toc = buildDlangToc();
 		render!("editor.dt", googleAnalyticsId, title, toc, chapterId, language, sourceCode)();
 	}
 }
