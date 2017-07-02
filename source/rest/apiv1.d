@@ -90,11 +90,11 @@ class ApiV1: IApiV1
 	ShortenOutput shorten(string source)
 	{
 		import std.format : format;
-		import std.uri : encode;
+		import std.uri : encodeComponent;
 
 		ShortenOutput output;
-		auto url = "https://tour.dlang.org/editor?source=%s".format(source.encode);
-		auto isURL= "https://is.gd/create.php?format=simple&url=%s".format(url.encode);
+		auto url = "https://tour.dlang.org/editor?source=%s".format(source.encodeComponent);
+		auto isURL= "https://is.gd/create.php?format=simple&url=%s".format(url.encodeComponent);
 		output.url = requestHTTP(isURL, (scope req) {
 			req.method = HTTPMethod.POST;
 		}).bodyReader.readAllUTF8;
