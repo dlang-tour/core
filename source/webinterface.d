@@ -108,7 +108,11 @@ class WebInterface
 
 	void index(HTTPServerRequest req, HTTPServerResponse res)
 	{
-		getStart(req, res, defaultLang);
+		// support "standalone" mode of the editor
+		if (req.host == "run.dlang.io")
+			getEditor(req, res);
+		else
+			getStart(req, res, defaultLang);
 	}
 
 	@path("/tour/:language")

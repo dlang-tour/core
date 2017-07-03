@@ -138,7 +138,12 @@ dlangTourApp.controller('DlangTourAppCtrl',
 	}
 
 	$scope.export = function() {
-		window.location = window.location.origin + "/editor?source=" + encodeURIComponent($scope.sourceCode);
+		var encodedSource = encodeURIComponent($scope.sourceCode);
+		// A local user might be offline, so we don't want to redirect him to the online editor
+		if (location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.hostname === "0.0.0.0")
+			window.location = window.location.origin + "/editor?source=" + encodedSource;
+		else
+			window.location = "https://run.dlang.io?source=" + encodedSource;
 	}
 
 	// boostrap copy-to-clipboard buttons (only necessary once)
