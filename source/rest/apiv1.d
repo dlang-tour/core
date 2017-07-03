@@ -93,7 +93,7 @@ class ApiV1: IApiV1
 		import std.uri : encodeComponent;
 
 		ShortenOutput output;
-		auto url = "https://tour.dlang.org/editor?source=%s".format(source.encodeComponent);
+		auto url = "https://run.dlang.io?source=%s".format(source.encodeComponent);
 		auto isURL= "https://is.gd/create.php?format=simple&url=%s".format(url.encodeComponent);
 		output.url = requestHTTP(isURL, (scope req) {
 			req.method = HTTPMethod.POST;
