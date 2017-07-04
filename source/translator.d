@@ -6,6 +6,7 @@ static this()
 		"editor.reset": "Reset",
 		"editor.format": "Format",
 		"editor.keyboard_shortcuts": "Keyboard Shortcuts",
+		"editor.export": "Export",
 	];
 }
 
