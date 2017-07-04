@@ -46,7 +46,8 @@ body(ng-app="DlangTourApp", class="ng-cloak")
 											- static if (__traits(compiles, sec.url))
 												- auto sectionUrl = sec.url;
 											- else
-												- auto sectionUrl = "/tour/#{language}/#{tocItem.chapterId}/#{sec.sectionId}";
+												- import std.conv : text;
+												- auto sectionUrl = text("/tour/", language, "/", tocItem.chapterId, "/", sec.sectionId);
 											li(class=(sectionClassName))
 												a(href=(sectionUrl))
 													span=sec.title
