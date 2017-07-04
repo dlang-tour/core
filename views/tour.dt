@@ -44,7 +44,7 @@ block content
 						span #{translations["editor.reset"]}
 					button.btn.btn-default(ng-click="export()")
 						i.fa.fa-share(aria-hidden="true")
-						span Export
+						span #{translations["editor.export"]}
 			ui-codemirror(ui-codemirror-opts="editorOptions", ui-codemirror="{ onLoad : codemirrorLoaded }", ng-model="sourceCode")
 
 	nav.navbar.navbar-bottom
