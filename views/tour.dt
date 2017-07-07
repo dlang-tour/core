@@ -36,9 +36,9 @@ block content
 					button.btn.btn-primary(ng-click="run()")
 						span #{translations["editor.run"]}
 						i.fa.fa-play(aria-hidden="true")
-					button.btn.btn-primary(ng-click="format()")
+					button.btn.btn-default(ng-click="format()")
 						span #{translations["editor.format"]}
-						i.fa.fa-play(aria-hidden="true")
+						i.fa.fa-magic(aria-hidden="true")
 					button.btn.btn-default(ng-click="reset()")
 						span #{translations["editor.reset"]}
 						i.fa.fa-undo(aria-hidden="true")
