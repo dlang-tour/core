@@ -63,6 +63,7 @@ interface IApiV1
 		POST /api/v1/shorten
 		{
 			source: "..."
+			compiler: "dmd" (available: ["dmd-nightly", "dmd-beta", "dmd", "ldc-beta", "ldc", "gdc"])
 		}
 
 		Returns: short url to given D source
@@ -79,7 +80,7 @@ interface IApiV1
 	}
 	@method(HTTPMethod.POST)
 	@path("/api/v1/shorten")
-	ShortenOutput shorten(string source);
+	ShortenOutput shorten(string source, string compiler);
 
 	/+
 		GET /api/v1/source/CHAPTER/SECTION
