@@ -8,7 +8,8 @@ import config;
 import rest.apiv1;
 
 import exec.cache;
-import exec.stupidlocal;
+import exec.stupidlocaldmd;
+import exec.stupidlocaldub;
 import exec.iexecprovider;
 import exec.off;
 import exec.docker;
@@ -25,7 +26,11 @@ private IExecProvider createExecProvider(Config config,
 
 	switch (config.execProvider) {
 		case "stupidlocal":
-			execProvider = new StupidLocal;
+		case "stupidlocaldmd":
+			execProvider = new StupidLocalDmd;
+			break;
+		case "stupidlocaldub":
+			execProvider = new StupidLocalDub;
 			break;
 		case "off":
 			return new Off;
