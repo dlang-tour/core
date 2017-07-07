@@ -10,7 +10,8 @@ interface IApiV1
 	/+
 		POST /api/v1/run
 		{
-			source: "..."
+			source: "...",
+			compiler: "dmd" (available: ["dmd-nightly", "dmd-beta", "dmd", "ldc-beta", "ldc", "gdc"])
 		}
 
 		Returns: output of compiled D program with success
