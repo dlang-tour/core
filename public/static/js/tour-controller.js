@@ -23,6 +23,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 	$scope.prevPage = null;
 	$scope.nextPage = null;
 	$scope.shortLinkURL = "";
+	$scope.compiler = "dmd";
 
 	$scope.updateErrorsAndWarnings = function(doc, options, editor) {
 		var hasErrors = $scope.errors.length > 0 || $scope.warnings > 0;
@@ -117,7 +118,8 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		$scope.editor.setOption("lint", {});
 
 		$http.post('/api/v1/run', {
-			source: $scope.sourceCode
+			source: $scope.sourceCode,
+			compiler: $scope.compiler
 		}).then(function(body) {
 			var data = body.data;
 			$scope.programOutput = data.output;

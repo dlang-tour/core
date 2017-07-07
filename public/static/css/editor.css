@@ -26,14 +26,14 @@
 	top: 3px;
 }
 
-#shortlink-container {
+.editor-btn-container {
 	display: inline-block;
 }
 
-#shortlink-container input {
+.editor-btn-container input, .editor-btn-container select {
     min-height: 34px;
     padding: 7px 8px;
-    font-size: 13px;
+    font-size: 14px;
     color: #333;
     vertical-align: middle;
     background-color: #fff;
