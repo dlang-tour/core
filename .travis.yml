@@ -7,7 +7,7 @@ services:
 
 d:
   - dmd
-  - dmd-beta
+  # - dmd-beta (temporary disabled, due to https://issues.dlang.org/show_bug.cgi?id=17614)
   - dmd-nightly
   - ldc
   - ldc-beta
