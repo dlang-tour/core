@@ -25,7 +25,7 @@ class Docker: IExecProvider
 		BaseDockerImage ~ ":dmd-nightly",
 		BaseDockerImage ~ ":ldc",
 		BaseDockerImage ~ ":ldc-beta",
-		BaseDockerImage ~ ":gdc"
+		//BaseDockerImage ~ ":gdc"
 	];
 
 	private int timeLimitInSeconds_;
