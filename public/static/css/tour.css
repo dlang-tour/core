@@ -24,6 +24,10 @@
 	padding: 10px;
 }
 
+#command-box span {
+	padding-right: 5px;
+}
+
 .content-command-box {
 	float: right;
 	text-align: right;

@@ -103,10 +103,6 @@ body {
     border-color: #adadad;
 }
 
-button > i + span {
-	margin-left: 5px;
-}
-
 button, input, optgroup, select {
     font: inherit;
 }
