@@ -34,17 +34,17 @@ block content
 					.fa.fa-eye-slash
 				- if (sourceCodeEnabled)
 					button.btn.btn-primary(ng-click="run()")
-						i.fa.fa-play(aria-hidden="true")
 						span #{translations["editor.run"]}
-					button.btn.btn-primary(ng-click="format()")
 						i.fa.fa-play(aria-hidden="true")
+					button.btn.btn-primary(ng-click="format()")
 						span #{translations["editor.format"]}
+						i.fa.fa-play(aria-hidden="true")
 					button.btn.btn-default(ng-click="reset()")
-						i.fa.fa-undo(aria-hidden="true")
 						span #{translations["editor.reset"]}
+						i.fa.fa-undo(aria-hidden="true")
 					button.btn.btn-default(ng-click="export()")
-						i.fa.fa-share(aria-hidden="true")
 						span #{translations["editor.export"]}
+						i.fa.fa-share(aria-hidden="true")
 			ui-codemirror(ui-codemirror-opts="editorOptions", ui-codemirror="{ onLoad : codemirrorLoaded }", ng-model="sourceCode")
 
 	nav.navbar.navbar-bottom

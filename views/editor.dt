@@ -19,20 +19,20 @@ block content
 		div(style="padding-left: 0px; padding-right: 0px")
 			div#command-box.text-right
 				button.btn.btn-primary(ng-click="run()")
-					i.fa.fa-play(aria-hidden="true")
 					span Run
-				button.btn.btn-primary(ng-click="format()")
 					i.fa.fa-play(aria-hidden="true")
+				button.btn.btn-primary(ng-click="format()")
 					span Format
+					i.fa.fa-play(aria-hidden="true")
 				button.btn.btn-default(ng-click="reset()")
-					i.fa.fa-undo(aria-hidden="true")
 					span Reset
+					i.fa.fa-undo(aria-hidden="true")
 				button.btn.btn-default(ng-click="shorten()")
-					i.fa.fa-share(aria-hidden="true")
 					span Shorten
-				button.btn.btn-default(ng-click="gist()")
 					i.fa.fa-share(aria-hidden="true")
+				button.btn.btn-default(ng-click="gist()")
 					span Export to Gist
+					i.fa.fa-share(aria-hidden="true")
 				div#shortlink-container(ng-show="shortLinkURL.length > 0")
 					input#shortlink-input(ng-value="shortLinkURL", size="16")
 					button.copy-btn(data-clipboard-target="#shortlink-input", data-clipboard-action="copy")
