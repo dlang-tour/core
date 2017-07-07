@@ -44,10 +44,7 @@ private IExecProvider createExecProvider(Config config,
 
 	if (config.enableExecCache) {
 		import std.algorithm: map;
-		auto allowedSources = contentProvider.getContent()
-			.map!(x => x.sourceCode.idup)
-			.array;
-		return new Cache(execProvider, allowedSources);
+		return new Cache(execProvider, 50_000);
 	}
 	return execProvider;
 }

@@ -1,9 +1,10 @@
 module exec.cache;
 
 import exec.iexecprovider;
-import std.typecons: Tuple;
+import std.typecons: Tuple, tuple;
 import std.traits: ReturnType;
-import std.algorithm: sort;
+import std.algorithm: map, sort;
+import std.datetime : Clock, SysTime;
 
 /++
  Execution provider that implements caching
@@ -11,31 +12,27 @@ import std.algorithm: sort;
 +/
 class Cache: IExecProvider
 {
-	private IExecProvider realExecProvider_;
+	private
+	{
+		IExecProvider realExecProvider_;
 
-	private alias ResultTuple = ReturnType!compileAndExecute;
-	private alias HashType = ReturnType!getSourceCodeHash;
-	private ResultTuple[HashType] sourceHashToOutput_;
-	private HashType[] allowedSources_; ///< Hash of allowed source code contents
+		alias ResultTuple = Tuple!(ReturnType!compileAndExecute, "source", SysTime, "time");
+		alias HashType = ReturnType!getSourceCodeHash;
+		ResultTuple[HashType] sourceHashToOutput_;
+
+		size_t maximumCacheSize;
+	}
 
 	/++
 	Params:
 	  realExecProvider = the execution provider if cache
 	                     can't give the answer
-	  sourceCodeWhitelist = raw source code only allowed
-	                        to be cached
+	  maximumCacheSize = maximal elements allowed to be in the cahce
 	+/
-	this(IExecProvider realExecProvider,
-		string[] sourceCodeWhitelist)
+	this(IExecProvider realExecProvider, long maximumCacheSize)
 	{
-		import std.algorithm: map;
-		import std.array: array;
 		this.realExecProvider_ = realExecProvider;
-		this.allowedSources_ = sourceCodeWhitelist
-			.map!(x => x.getSourceCodeHash)
-			.array;
-		sort(this.allowedSources_);
-		assert(sourceCodeWhitelist.length == this.allowedSources_.length);
+		this.maximumCacheSize = maximumCacheSize;
 	}
 
 	Tuple!(string, "output", bool, "success") compileAndExecute(string source)
@@ -44,15 +41,30 @@ class Cache: IExecProvider
 		import std.algorithm: canFind;
 		auto hash = getSourceCodeHash(source);
 
-		if (!assumeSorted(this.allowedSources_).canFind(hash)) {
-			auto result = realExecProvider_.compileAndExecute(source);
-			return result;
-		} else if (auto cache = hash in sourceHashToOutput_) {
-			return *cache;
+		if (auto cache = hash in sourceHashToOutput_) {
+			cache.time = Clock.currTime;
+			return cache.source;
 		} else {
 			auto result = realExecProvider_.compileAndExecute(source);
-			sourceHashToOutput_[hash] = result;
+			sourceHashToOutput_[hash] = ResultTuple(result, Clock.currTime);
+			testCacheSize();
 			return result;
+		}
+	}
+
+	void testCacheSize()
+	{
+		import std.stdio;
+		import std.array : array, byPair;
+		if (sourceHashToOutput_.length > maximumCacheSize)
+		{
+			// throw away the older half
+			foreach (entry; sourceHashToOutput_
+								.byPair
+								.map!(a => tuple!("key", "time")(a[0], a[1].time))
+								.array
+								.sort!((a, b) => a.time < b.time)[0 .. $ / 2])
+				sourceHashToOutput_.remove(entry.key);
 		}
 	}
 }
@@ -69,9 +81,9 @@ private uint getSourceCodeHash(string source)
 
 unittest
 {
-	auto sourceCode1 = "test123";
+	auto sourceCode1 = "void main() {} ";
 	auto sourceCode2 = "void main() {}";
-	auto sourceCode3 = "12838389349493";
+	auto sourceCode3 = "void main()  {}";
 	import std.stdio: writeln;
 	auto hash1 = getSourceCodeHash(sourceCode1);
 	writeln("hash1 = ", hash1);
@@ -83,11 +95,39 @@ unittest
 	assert(hash1 != hash2);
 	assert(hash2 != hash3);
 
-	auto cache = new Cache(null,
-		[ sourceCode1, sourceCode2, sourceCode3 ]);
-	assert(cache.allowedSources_.length == 3);
+	class DummyExecProvider : IExecProvider
+	{
+		alias ResultType = Tuple!(string, "output", bool, "success");
+		ResultType compileAndExecute(string source)
+		{
+			return ResultType(".dummy output.", true);
+		}
+	}
+
+	auto cache = new Cache(new DummyExecProvider(), 2);
+	assert(cache.maximumCacheSize == 2);
 	import std.algorithm: canFind;
-	assert(cache.allowedSources_.canFind(hash1));
-	assert(cache.allowedSources_.canFind(hash2));
-	assert(cache.allowedSources_.canFind(hash3));
+	bool isInCache(uint hash)
+	{
+		return (hash in cache.sourceHashToOutput_) !is null;
+	}
+
+	cache.compileAndExecute(sourceCode1);
+	assert(isInCache(hash1));
+	cache.compileAndExecute(sourceCode2);
+	assert(isInCache(hash2));
+
+	cache.compileAndExecute(sourceCode3);
+	// hash1 got popped from the cache
+	assert(!isInCache(hash1));
+	assert(isInCache(hash2));
+	assert(isInCache(hash3));
+
+	// renew timestamp for hash2
+	cache.compileAndExecute(sourceCode2);
+	cache.compileAndExecute(sourceCode1);
+	assert(isInCache(hash1));
+	assert(isInCache(hash2));
+	// hash3 was the oldest -> removed
+	assert(!isInCache(hash3));
 }
