@@ -38,19 +38,19 @@ class Cache: IExecProvider
 		assert(sourceCodeWhitelist.length == this.allowedSources_.length);
 	}
 
-	Tuple!(string, "output", bool, "success") compileAndExecute(string source)
+	Tuple!(string, "output", bool, "success") compileAndExecute(string source, string compiler = "dmd")
 	{
 		import std.range: assumeSorted;
 		import std.algorithm: canFind;
 		auto hash = getSourceCodeHash(source);
 
 		if (!assumeSorted(this.allowedSources_).canFind(hash)) {
-			auto result = realExecProvider_.compileAndExecute(source);
+			auto result = realExecProvider_.compileAndExecute(source, compiler);
 			return result;
 		} else if (auto cache = hash in sourceHashToOutput_) {
 			return *cache;
 		} else {
-			auto result = realExecProvider_.compileAndExecute(source);
+			auto result = realExecProvider_.compileAndExecute(source, compiler);
 			sourceHashToOutput_[hash] = result;
 			return result;
 		}

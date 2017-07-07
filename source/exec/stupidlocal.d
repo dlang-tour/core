@@ -69,7 +69,7 @@ class StupidLocal: IExecProvider
 		return tempfile;
 	}
 
-	Tuple!(string, "output", bool, "success") compileAndExecute(string source)
+	Tuple!(string, "output", bool, "success") compileAndExecute(string source, string compiler = "dmd")
 	{
 		typeof(return) result;
 		auto task = runTask(() {

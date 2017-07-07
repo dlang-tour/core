@@ -34,7 +34,7 @@ interface IApiV1
 	}
 	@method(HTTPMethod.POST)
 	@path("/api/v1/run")
-	RunOutput run(string source);
+	RunOutput run(string source, string compiler = "dmd");
 
 	/+
 		POST /api/v1/format

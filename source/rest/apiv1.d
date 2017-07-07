@@ -53,13 +53,13 @@ class ApiV1: IApiV1
 		}
 	}
 
-	RunOutput run(string source)
+	RunOutput run(string source, string compiler)
 	{
 		if (source.length > 4 * 1024) {
 			return RunOutput("ERROR: source code size is above limit.", false);
 		}
 
-		auto result = execProvider_.compileAndExecute(source);
+		auto result = execProvider_.compileAndExecute(source, compiler);
 		auto output = RunOutput(result.output, result.success);
 		parseErrorsAndWarnings(output);
 		return output;
