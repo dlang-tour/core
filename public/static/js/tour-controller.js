@@ -7,9 +7,16 @@ function b64DecodeUnicode(str) {
     }).join(''));
 }
 
+dlangTourApp.config(['$locationProvider', function($locationProvider) {
+	$locationProvider.html5Mode({
+		enabled: true,
+		requireBase: false
+	});
+}]);
+
 dlangTourApp.controller('DlangTourAppCtrl',
-	['$scope', '$http', 'hotkeys', '$window',
-	function($scope, $http, hotkeys, $window) {
+	['$scope', '$http', 'hotkeys', '$window', '$location',
+	function($scope, $http, hotkeys, $window, $location) {
 	$scope.programOutput = "";
 	$scope.warnings = [];
 	$scope.errors = [];
@@ -23,7 +30,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 	$scope.prevPage = null;
 	$scope.nextPage = null;
 	$scope.shortLinkURL = "";
-	$scope.compiler = "dmd";
+	$scope.compiler = $location.search().compiler || "dmd";
 
 	$scope.updateErrorsAndWarnings = function(doc, options, editor) {
 		var hasErrors = $scope.errors.length > 0 || $scope.warnings > 0;
@@ -145,7 +152,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		if (location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.hostname === "0.0.0.0")
 			window.location = window.location.origin + "/editor?source=" + encodedSource;
 		else
-			window.location = "https://run.dlang.io?source=" + encodedSource;
+			window.location = "https://run.dlang.io?compiler=" + $scope.compiler + "&source=" + encodedSource;
 	}
 
 	// boostrap copy-to-clipboard buttons (only necessary once)
@@ -158,7 +165,8 @@ dlangTourApp.controller('DlangTourAppCtrl',
 	}
 	$scope.shorten = function() {
 		$http.post('/api/v1/shorten', {
-			source: $scope.sourceCode
+			source: $scope.sourceCode,
+			compiler: $scope.compiler
 		}).then(function(body) {
 			var data = body.data;
 			$scope.shortLinkURL = data.url;
