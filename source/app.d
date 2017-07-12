@@ -63,7 +63,7 @@ private void doSanityCheck(ContentProvider contentProvider, IExecProvider execPr
 	import std.parallelism : parallel;
 
 	auto content = contentProvider.getContent();
-	foreach (section; parallel(content)) {
+	foreach (section; content.parallel(1)) {
 		if (section.sourceCode.empty) {
 			logInfo("[%s] Sanity check: Ignoring source code for section '%s' because it is empty.",
 					section.language, section.title);
