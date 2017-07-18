@@ -53,30 +53,37 @@ class Docker: IExecProvider
 		logInfo("Memory Limit: %d MB", memoryLimitMB_);
 		logInfo("Output size limit: %d B", maximumQueueSize_);
 
-		foreach (dockerImage; DockerImages)
-		{
+		import std.concurrency : spawn;
+		// updating the docker images should happen in the background
+		spawn((string dockerBinaryPath, in string[] dockerImages) {
+			foreach (dockerImage; dockerImages)
+			{
 
-			logInfo("Checking whether Docker is functional and updating Docker image '%s'", dockerImage);
-			logInfo("Using docker binary at '%s'", dockerBinaryPath);
+				logInfo("Checking whether Docker is functional and updating Docker image '%s'", dockerImage);
+				logInfo("Using docker binary at '%s'", dockerBinaryPath);
 
-			auto docker = execute([this.dockerBinaryPath_, "ps"]);
-			if (docker.status != 0) {
-				throw new Exception("Docker doesn't seem to be functional. Error: '"
-						~ docker.output ~ "'. RC: " ~ to!string(docker.status));
+				auto docker = execute([dockerBinaryPath, "ps"]);
+				if (docker.status != 0) {
+					throw new Exception("Docker doesn't seem to be functional. Error: '"
+							~ docker.output ~ "'. RC: " ~ to!string(docker.status));
+				}
+
+				auto dockerPull = execute([dockerBinaryPath, "pull", dockerImage]);
+				if (docker.status != 0) {
+					throw new Exception("Failed pulling RDMD Docker image. Error: '" ~ docker.output
+							~ "'. RC: " ~ to!string(docker.status));
+				}
+
+				logInfo("Pulled Docker image '%s'.", dockerImage);
+				logInfo("Verifying functionality with 'Hello World' program...");
+				// TODO: verify here and send result back
+				//auto result = compileAndExecute(q{void main() { import std.stdio; write("Hello World"); }});
+				//enforce(result.success && result.output == "Hello World",
+						//new Exception("Compiling 'Hello World' wasn't successful: " ~ result.output));
 			}
-
-			auto dockerPull = execute([this.dockerBinaryPath_, "pull", dockerImage]);
-			if (docker.status != 0) {
-				throw new Exception("Failed pulling RDMD Docker image. Error: '" ~ docker.output
-						~ "'. RC: " ~ to!string(docker.status));
-			}
-
-			logInfo("Pulled Docker image '%s'.", dockerImage);
-			logInfo("Verifying functionality with 'Hello World' program...");
-			auto result = compileAndExecute(q{void main() { import std.stdio; write("Hello World"); }});
-			enforce(result.success && result.output == "Hello World",
-					new Exception("Compiling 'Hello World' wasn't successful: " ~ result.output));
-		}
+			// Remove previous, untagged images
+			executeShell("docker images --no-trunc | grep '<none>' | awk '{ print $3 }' | xargs -r docker rmi");
+		}, this.dockerBinaryPath_, DockerImages);
 	}
 
 	Tuple!(string, "output", bool, "success") compileAndExecute(string source, string compiler = "dmd")
