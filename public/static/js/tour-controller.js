@@ -111,7 +111,12 @@ dlangTourApp.controller('DlangTourAppCtrl',
 	}
 
 	$scope.initEditor = function(sourceCode) {
-		$scope.resetCode = b64DecodeUnicode(sourceCode);
+
+		var source = $location.search().source;
+		if (!source) {
+			source = b64DecodeUnicode(sourceCode);
+		}
+		$scope.resetCode = source;
 		$scope.sourceCode = $scope.resetCode;
 	}
 
