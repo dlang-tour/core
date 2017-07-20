@@ -26,6 +26,7 @@ class Docker: IExecProvider
 		BaseDockerImage ~ ":ldc",
 		BaseDockerImage ~ ":ldc-beta",
 		//BaseDockerImage ~ ":gdc"
+		"dlangtour/core-dreg:latest",
 	];
 
 	private int timeLimitInSeconds_;

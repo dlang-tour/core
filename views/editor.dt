@@ -28,6 +28,7 @@ block content
 						option(value="dmd-nightly") dmd-nightly
 						option(value="ldc-beta") ldc-beta
 						option(value="ldc") ldc
+						option(value="dreg") All D compilers
 				button.btn.btn-default(ng-click="format()")
 					span Format
 					i.fa.fa-magic(aria-hidden="true")
