@@ -100,6 +100,8 @@ class Docker: IExecProvider
 		scope(exit)
 			--queueSize_;
 
+		scope(failure) return typeof(return)("Compilation or running program took longer than %d seconds. Aborted!".format(timeLimitInSeconds_), false);
+
 		auto encoded = Base64.encode(cast(ubyte[])source);
 		// try to find the compiler in the available images
 		auto r = DockerImages.find!(d => d.canFind(compiler));
@@ -117,27 +119,38 @@ class Docker: IExecProvider
 
 		bool success;
 		auto startTime = Clock.currTime();
-		// Don't block and give away current time slice
-		// by sleeping for a certain time until child process has finished. Kill process if time limit
-		// has been reached.
-		while (true) {
-			auto result = tryWait(docker.pid);
-			if (Clock.currTime() - startTime > timeLimitInSeconds_.seconds) {
-				// send SIGKILL 9 to process
-				kill(docker.pid, 9);
-				return typeof(return)("Compilation or running program took longer than %d seconds. Aborted!".format(timeLimitInSeconds_),
-						false);
-			}
-			if (result.terminated) {
-				success = result.status == 0;
-				break;
-			}
 
-			sleep(300.msecs);
+		void tryToWait(Pid pid) {
+			// Don't block and give away current time slice
+			// by sleeping for a certain time until child process has finished. Kill process if time limit
+			// has been reached.
+			while (true) {
+				auto result = tryWait(pid);
+				if (Clock.currTime() - startTime > timeLimitInSeconds_.seconds) {
+					// send SIGKILL 9 to process
+					kill(pid, 9);
+					throw new Exception("Timeout exceeded.");
+				}
+				if (result.terminated) {
+					success = result.status == 0;
+					break;
+				}
+
+				sleep(300.msecs);
+			}
 		}
+		tryToWait(docker.pid);
+
+		// remove coloring
+		auto removeColoring = pipeProcess(["sed", "-r", `s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g`], Redirect.stdout | Redirect.stderrToStdout | Redirect.stdin);
+		foreach (chunk; docker.stdout.byChunk(4096))
+			removeColoring.stdin.rawWrite(chunk);
+		removeColoring.stdin.flush();
+		removeColoring.stdin.close();
+		tryToWait(removeColoring.pid);
 
 		string output;
-		foreach (chunk; docker.stdout.byChunk(4096)) {
+		foreach (chunk; removeColoring.stdout.byChunk(4096)) {
 			output ~= chunk;
 			if (output.length > maximumOutputSize_) {
 				return typeof(return)("Program's output exceeds limit of %d bytes.".format(maximumOutputSize_),
