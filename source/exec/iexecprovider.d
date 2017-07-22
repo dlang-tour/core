@@ -8,5 +8,12 @@ import std.typecons: Tuple;
 +/
 interface IExecProvider
 {
-	Tuple!(string, "output", bool, "success") compileAndExecute(string source, string compiler = "dmd");
+	struct RunInput
+	{
+		string source;
+		string compiler = "dmd";
+		string args;
+		string stdin;
+	}
+	Tuple!(string, "output", bool, "success") compileAndExecute(RunInput input);
 }

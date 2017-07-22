@@ -131,7 +131,8 @@ dlangTourApp.controller('DlangTourAppCtrl',
 
 		$http.post('/api/v1/run', {
 			source: $scope.sourceCode,
-			compiler: $scope.compiler
+			compiler: $scope.compiler,
+			args: "-color"
 		}).then(function(body) {
 			var data = body.data;
 			$scope.programOutput = data.output;

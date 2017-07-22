@@ -33,9 +33,20 @@ interface IApiV1
 		Message[] errors;
 		Message[] warnings;
 	}
+
+	struct RunInput
+	{
+		string source;
+		@optional string compiler = "dmd";
+		@optional string stdin;
+		@optional string args;
+	}
+
+
+	@bodyParam("input")
 	@method(HTTPMethod.POST)
 	@path("/api/v1/run")
-	RunOutput run(string source, string compiler = "dmd");
+	RunOutput run(RunInput input);
 
 	/+
 		POST /api/v1/format

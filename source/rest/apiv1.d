@@ -61,13 +61,19 @@ class ApiV1: IApiV1
 	// to be enough for everybody.
 	enum uint maxSourceCodeLength = 64 * 1024;
 
-	RunOutput run(string source, string compiler)
+	RunOutput run(ApiV1.RunInput input)
 	{
-		if (source.length > maxSourceCodeLength) {
+		if (input.source.length > maxSourceCodeLength) {
 			return RunOutput("ERROR: source code size is above limit of 64k bytes.", false);
 		}
 
-		auto result = execProvider_.compileAndExecute(source, compiler);
+		IExecProvider.RunInput runInput = {
+			source: input.source,
+			compiler : input.compiler,
+			args: input.args,
+			stdin: input.stdin,
+		};
+		auto result = execProvider_.compileAndExecute(runInput);
 		auto output = RunOutput(result.output, result.success);
 		parseErrorsAndWarnings(output);
 		return output;

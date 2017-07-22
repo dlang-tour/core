@@ -69,16 +69,21 @@ class StupidLocal: IExecProvider
 		return tempfile;
 	}
 
-	Tuple!(string, "output", bool, "success") compileAndExecute(string source, string compiler = "dmd")
+	Tuple!(string, "output", bool, "success") compileAndExecute(RunInput input)
 	{
+		import std.array : split;
 		typeof(return) result;
 		auto task = runTask(() {
 			auto tmpfile = getTempFile();
 			scope(exit) tmpfile.name.remove;
 
-			tmpfile.write(source);
+			tmpfile.write(input.source);
 			tmpfile.close();
-			auto rdmd = execute([dCompiler, "-run", tmpfile.name]);
+			auto args = [dCompiler];
+			args ~= input.args.split(" ");
+			args ~= "-run";
+			args ~= tmpfile.name;
+			auto rdmd = args.execute;
 			result.success = rdmd.status == 0;
 			result.output = rdmd.output;
 		});
