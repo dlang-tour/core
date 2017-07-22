@@ -39,7 +39,7 @@ class Docker: IExecProvider
 
 	this(int timeLimitInSeconds, int maximumOutputSize,
 			int maximumQueueSize, int memoryLimitMB,
-			string dockerBinaryPath)
+			string dockerBinaryPath, bool waitUntilPulled)
 	{
 		this.timeLimitInSeconds_ = timeLimitInSeconds;
 		this.maximumOutputSize_ = maximumOutputSize;
@@ -54,10 +54,11 @@ class Docker: IExecProvider
 		logInfo("Memory Limit: %d MB", memoryLimitMB_);
 		logInfo("Output size limit: %d B", maximumQueueSize_);
 
-		import std.concurrency : spawn;
+		import std.concurrency : ownerTid, receiveOnly, send, spawn;
+		import std.parallelism : parallel;
 		// updating the docker images should happen in the background
 		spawn((string dockerBinaryPath, in string[] dockerImages) {
-			foreach (dockerImage; dockerImages)
+			foreach (dockerImage; dockerImages.parallel)
 			{
 
 				logInfo("Checking whether Docker is functional and updating Docker image '%s'", dockerImage);
@@ -84,7 +85,10 @@ class Docker: IExecProvider
 			}
 			// Remove previous, untagged images
 			executeShell("docker images --no-trunc | grep '<none>' | awk '{ print $3 }' | xargs -r docker rmi");
+			ownerTid.send(true);
 		}, this.dockerBinaryPath_, DockerImages);
+		if (waitUntilPulled)
+			assert(receiveOnly!bool, "Docker pull failed");
 	}
 
 	Tuple!(string, "output", bool, "success") compileAndExecute(string source, string compiler = "dmd")
