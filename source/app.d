@@ -13,6 +13,8 @@ import exec.iexecprovider;
 import exec.off;
 import exec.docker;
 
+bool waitUntilPulled;
+
 /++ Factory method that returns an execution provider
     depending on the configuration settings.
 +/
@@ -34,7 +36,8 @@ private IExecProvider createExecProvider(Config config,
 					config.dockerExecConfig.maximumOutputSize,
 					config.dockerExecConfig.maximumQueueSize,
 					config.dockerExecConfig.memoryLimit,
-					config.dockerExecConfig.dockerBinaryPath);
+					config.dockerExecConfig.dockerBinaryPath,
+					waitUntilPulled);
 			break;
 		default:
 			throw new Exception("Unknown exec provider %s".format(config.execProvider));
@@ -104,6 +107,7 @@ shared static this()
 	string defaultLang = "en";
 
 	readOption("c|config", &configFile, "Configuration file");
+	readOption("wait-until-pulled", &waitUntilPulled, "Wait until all docker images have been pulled.");
 	readOption("sanitycheck", &sanityCheck,
 	    "Runs sanity check before starting that checks whether all source code examples actually compile; doesn't start the service");
 	readOption("lang-dir|l", &customLangDirectory, "Language directory");

@@ -26,6 +26,7 @@ class Docker: IExecProvider
 		BaseDockerImage ~ ":ldc",
 		BaseDockerImage ~ ":ldc-beta",
 		//BaseDockerImage ~ ":gdc"
+		"dlangtour/core-dreg:latest",
 	];
 
 	private int timeLimitInSeconds_;
@@ -38,7 +39,7 @@ class Docker: IExecProvider
 
 	this(int timeLimitInSeconds, int maximumOutputSize,
 			int maximumQueueSize, int memoryLimitMB,
-			string dockerBinaryPath)
+			string dockerBinaryPath, bool waitUntilPulled)
 	{
 		this.timeLimitInSeconds_ = timeLimitInSeconds;
 		this.maximumOutputSize_ = maximumOutputSize;
@@ -53,10 +54,11 @@ class Docker: IExecProvider
 		logInfo("Memory Limit: %d MB", memoryLimitMB_);
 		logInfo("Output size limit: %d B", maximumQueueSize_);
 
-		import std.concurrency : spawn;
+		import std.concurrency : ownerTid, receiveOnly, send, spawn;
+		import std.parallelism : parallel;
 		// updating the docker images should happen in the background
 		spawn((string dockerBinaryPath, in string[] dockerImages) {
-			foreach (dockerImage; dockerImages)
+			foreach (dockerImage; dockerImages.parallel)
 			{
 
 				logInfo("Checking whether Docker is functional and updating Docker image '%s'", dockerImage);
@@ -83,7 +85,10 @@ class Docker: IExecProvider
 			}
 			// Remove previous, untagged images
 			executeShell("docker images --no-trunc | grep '<none>' | awk '{ print $3 }' | xargs -r docker rmi");
+			ownerTid.send(true);
 		}, this.dockerBinaryPath_, DockerImages);
+		if (waitUntilPulled)
+			assert(receiveOnly!bool, "Docker pull failed");
 	}
 
 	Tuple!(string, "output", bool, "success") compileAndExecute(string source, string compiler = "dmd")
@@ -98,6 +103,8 @@ class Docker: IExecProvider
 		++queueSize_;
 		scope(exit)
 			--queueSize_;
+
+		scope(failure) return typeof(return)("Compilation or running program took longer than %d seconds. Aborted!".format(timeLimitInSeconds_), false);
 
 		auto encoded = Base64.encode(cast(ubyte[])source);
 		// try to find the compiler in the available images
@@ -116,27 +123,38 @@ class Docker: IExecProvider
 
 		bool success;
 		auto startTime = Clock.currTime();
-		// Don't block and give away current time slice
-		// by sleeping for a certain time until child process has finished. Kill process if time limit
-		// has been reached.
-		while (true) {
-			auto result = tryWait(docker.pid);
-			if (Clock.currTime() - startTime > timeLimitInSeconds_.seconds) {
-				// send SIGKILL 9 to process
-				kill(docker.pid, 9);
-				return typeof(return)("Compilation or running program took longer than %d seconds. Aborted!".format(timeLimitInSeconds_),
-						false);
-			}
-			if (result.terminated) {
-				success = result.status == 0;
-				break;
-			}
 
-			sleep(300.msecs);
+		void tryToWait(Pid pid) {
+			// Don't block and give away current time slice
+			// by sleeping for a certain time until child process has finished. Kill process if time limit
+			// has been reached.
+			while (true) {
+				auto result = tryWait(pid);
+				if (Clock.currTime() - startTime > timeLimitInSeconds_.seconds) {
+					// send SIGKILL 9 to process
+					kill(pid, 9);
+					throw new Exception("Timeout exceeded.");
+				}
+				if (result.terminated) {
+					success = result.status == 0;
+					break;
+				}
+
+				sleep(300.msecs);
+			}
 		}
+		tryToWait(docker.pid);
+
+		// remove coloring
+		auto removeColoring = pipeProcess(["sed", "-r", `s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g`], Redirect.stdout | Redirect.stderrToStdout | Redirect.stdin);
+		foreach (chunk; docker.stdout.byChunk(4096))
+			removeColoring.stdin.rawWrite(chunk);
+		removeColoring.stdin.flush();
+		removeColoring.stdin.close();
+		tryToWait(removeColoring.pid);
 
 		string output;
-		foreach (chunk; docker.stdout.byChunk(4096)) {
+		foreach (chunk; removeColoring.stdout.byChunk(4096)) {
 			output ~= chunk;
 			if (output.length > maximumOutputSize_) {
 				return typeof(return)("Program's output exceeds limit of %d bytes.".format(maximumOutputSize_),
