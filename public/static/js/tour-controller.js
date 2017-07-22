@@ -162,11 +162,15 @@ dlangTourApp.controller('DlangTourAppCtrl',
 
 	// boostrap copy-to-clipboard buttons (only necessary once)
 	if (typeof(window.Clipboard) !== "undefined") {
-		new window.Clipboard('.copy-btn', {
+		try {
+			new window.Clipboard('.copy-btn', {
 			text: function(trigger) {
 				return $scope.shortLinkURL;
 			}
 		});
+		} catch(e) {
+			console.log("Creating the copy button failed due to: ", e);
+		}
 	}
 	$scope.shorten = function() {
 		$http.post('/api/v1/shorten', {
