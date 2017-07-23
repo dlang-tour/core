@@ -52,7 +52,7 @@ block content
 		div(ng-show="showProgramOutput", class="col-md-5 hidden-xs")
 			b.program-output-title > rdmd playground.d
 			hr
-			pre#program-output {{programOutput}}
+			pre#program-output(ng-bind-html="programOutput")
 
 block js
 	script(src="/static/js/tour-controller.js")

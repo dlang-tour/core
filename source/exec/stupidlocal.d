@@ -81,6 +81,7 @@ class StupidLocal: IExecProvider
 			tmpfile.close();
 			auto args = [dCompiler];
 			args ~= input.args.split(" ");
+			args ~= "-color=" ~ (input.color ? "on " : "off ");
 			args ~= "-run";
 			args ~= tmpfile.name;
 
@@ -91,7 +92,7 @@ class StupidLocal: IExecProvider
 			];
 			auto fakeTty = `
 faketty () { script -qfc "$(printf "%q " "$@")" /dev/null ; }
-faketty ` ~ args.join(" ") ~  ` | cat`;
+faketty ` ~ args.join(" ") ~  ` | cat | sed 's/\r$//'`;
 
 			auto rdmd = fakeTty.executeShell(env);
 			result.success = rdmd.status == 0;
