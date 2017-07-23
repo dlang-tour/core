@@ -47,9 +47,12 @@ block content
 				button.btn.btn-default(ng-click="shorten()")
 					span Shorten
 					i.fa.fa-share(aria-hidden="true")
+				button.btn.btn-default(ng-click="importFromGist()")
+					span Import Gist
+					i.fa.fa-cloud-download(aria-hidden="true")
 				button.btn.btn-default(ng-click="gist()")
-					span Export to Gist
-					i.fa.fa-share(aria-hidden="true")
+					span Export Gist
+					i.fa.fa-cloud-upload(aria-hidden="true")
 				div.editor-btn-container(ng-show="shortLinkURL.length > 0")
 					input#shortlink-input(ng-value="shortLinkURL", size="16")
 					button.copy-btn(data-clipboard-target="#shortlink-input", data-clipboard-action="copy")

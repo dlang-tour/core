@@ -249,10 +249,6 @@ class WebInterface
 	void getEditor(HTTPServerRequest req, HTTPServerResponse res)
 	{
 		import std.base64;
-		auto googleAnalyticsId = googleAnalyticsId_;
-		auto title = "Editor";
-		auto chapterId = "";
-		auto language = "en";
 		string sourceCode;
 		if (auto s = "source" in req.query) {
 			sourceCode = Base64.encode(cast(ubyte[]) *s);
@@ -262,7 +258,32 @@ class WebInterface
 			auto sourceCodeRaw = "import std.stdio;\nvoid main(string[] args)\n{\n    writeln(\"Hello D\");\n}";
 			sourceCode = Base64.encode(cast(ubyte[]) sourceCodeRaw);
 		}
+		auto googleAnalyticsId = googleAnalyticsId_;
+        showEditor(sourceCode);
+	}
 
+	@path("/editor/gist/:gist")
+	void getGist(string _gist)
+	{
+	    getGist("anonymous", _gist);
+	}
+
+	@path("/editor/gist/:user/:gist")
+	void getGist(string _user, string _gist)
+	{
+	    import std.stdio;
+		import std.base64;
+	    auto sourceCode = requestHTTP("https://gist.githubusercontent.com/%s/%s/raw".format(_user, _gist))
+	                .bodyReader
+	                .readAllUTF8;
+        showEditor(Base64.encode(sourceCode.representation));
+	}
+
+	void showEditor(string sourceCode) {
+	    string googleAnalyticsId = googleAnalyticsId_;
+		auto title = "Editor";
+		auto chapterId = "";
+		auto language = "en";
 		static immutable toc = buildDlangToc();
 		render!("editor.dt", googleAnalyticsId, title, toc, chapterId, language, sourceCode)();
 	}
