@@ -84,7 +84,7 @@ class Docker: IExecProvider
 						//new Exception("Compiling 'Hello World' wasn't successful: " ~ result.output));
 			}
 			// Remove previous, untagged images
-			executeShell("docker images --no-trunc | grep '<none>' | awk '{ print $3 }' | xargs -r docker rmi");
+			//executeShell("docker images --no-trunc | grep '<none>' | awk '{ print $3 }' | xargs -r docker rmi");
 			ownerTid.send(true);
 		}, this.dockerBinaryPath_, DockerImages);
 		if (waitUntilPulled)
