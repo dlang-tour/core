@@ -31,6 +31,12 @@ block content
 						option(value="ldc-beta") ldc-beta
 						option(value="ldc") ldc
 						option(value="dreg") All D compilers
+				div#add-library
+					button.btn.btn-default(ng-click="addLibrary()")
+						span Add library
+						i.fa.fa-plus(aria-hidden="true")
+					select#add-library-select(ng-model="availableLibrary", name="availableLibrary", ng-change="onAddLibrary()", ng-blur="onBlurLibrary()")
+						option(ng-repeat="lib in availableLibraries", ng-value="lib.name + ' ' + lib.version") {{ lib.name }} {{ lib.version }}
 				button.btn.btn-default(ng-click="format()")
 					span Format
 					i.fa.fa-magic(aria-hidden="true")

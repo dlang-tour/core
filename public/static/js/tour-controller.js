@@ -124,7 +124,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 	var nanobar = new Nanobar({
 		target: document.getElementById('nanobar'),
 	});
-	
+
 	var ansi_up = new AnsiUp;
 	ansi_up.use_classes = true;
 
@@ -228,6 +228,41 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		}).success(function(data) {
 			$scope.sourceCode = data.source;
 		});
+	}
+
+	function addLibrary(name, version) {
+		// check for the header
+		if (!($scope.sourceCode.indexOf("dub.sdl:") >= 0 || $scope.sourceCode.indexOf("dub.json:") >= 0)) {
+			$scope.sourceCode = '/+dub.sdl:\nname "foo"\n+//**/\n' + $scope.sourceCode;
+		}
+		var parts = $scope.sourceCode.split("+/");
+		var after = parts.slice(1);
+		after.unshift(parts[0] + 'dependency "' + name + '" version="~>' + version + '"\n');
+		$scope.sourceCode = after.join("+/");
+	}
+
+	$scope.availableLibraries = [
+		{name: "mir", version:"1.1.1"},
+		{name: "mir-algorithm", version:"0.6.7"},
+		{name: "vibe-d", version:"0.8.0"},
+		{name: "libdparse", version:"0.7.0"}
+	];
+	$scope.showAvailableLibraries = false;
+	$scope.availableLibrary = "";
+	var addLibrarySelect = document.getElementById("add-library-select");
+
+	$scope.addLibrary = function() {
+		$scope.showAvailableLibraries = true;
+		addLibrarySelect.focus();
+		addLibrarySelect.style.opacity = 1;
+	}
+	$scope.onAddLibrary = function() {
+		var parts = $scope.availableLibrary.split(" ");
+		addLibrary(parts[0], parts[1]);
+		addLibrarySelect.style.opacity = 0;
+	}
+	$scope.onBlurLibrary = function() {
+		addLibrarySelect.style.opacity = 0;
 	}
 
 	// Add hotkeys
