@@ -171,13 +171,23 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		$scope.sourceCode = $scope.resetCode;
 	}
 
-	$scope.export = function() {
-		var encodedSource = encodeURIComponent($scope.sourceCode);
+	function editorHost() {
+		var url;
 		// A local user might be offline, so we don't want to redirect him to the online editor
 		if (location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.hostname === "0.0.0.0")
-			window.location = window.location.origin + "/editor?source=" + encodedSource;
+			url = window.location.origin + "/editor";
 		else
-			window.location = "https://run.dlang.io?compiler=" + $scope.compiler + "&source=" + encodedSource;
+			url = "https://run.dlang.io";
+		return url;
+	}
+
+	function editorParams() {
+		return "?compiler=" + $scope.compiler;
+	}
+
+	$scope.export = function() {
+		var encodedSource = encodeURIComponent($scope.sourceCode);
+		window.location = editorHost() + editorParams() + "&source=" + encodedSource;
 	}
 
 	// boostrap copy-to-clipboard buttons (only necessary once)
@@ -206,6 +216,10 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		});
 	}
 
+	function gistURLToId(url) {
+		return url.replace("https://gist.github.com/", "").replace("anonymous/", "");
+	}
+
 	$scope.gist = function() {
 		$http.post('https://api.github.com/gists', {
 			public: true,
@@ -217,10 +231,17 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		}).then(function(body) {
 			var data = body.data;
 			window.open(data.html_url, "_blank");
+			$scope.shortLinkURL = editorHost() + "/gist/" + gistURLToId(data.html_url);
 		}, function(error) {
 			var msg = (error || {}).statusMessage || "";
 			$scope.programOutput = "Server error: " + msg;
 		});
+	}
+
+	$scope.importFromGist = function() {
+		var url = prompt("Please enter Gist URL or id", "");
+		if (!url) return;
+		window.location.href = "https://run.dlang.io/gist/" + gistURLToId(url);
 	}
 
 	$scope.format = function() {
