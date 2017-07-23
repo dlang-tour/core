@@ -44,3 +44,17 @@
     outline: none;
     box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
 }
+
+#add-library {
+	display: inline-block;
+}
+
+#add-library-select {
+	display: block;
+	position: absolute;
+	z-index: 2;
+	margin-top: -35px;
+	opacity: 0;
+	width: 115px;
+	height: 34px;
+}
