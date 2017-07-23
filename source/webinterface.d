@@ -287,4 +287,10 @@ class WebInterface
 		static immutable toc = buildDlangToc();
 		render!("editor.dt", googleAnalyticsId, title, toc, chapterId, language, sourceCode)();
 	}
+
+	@path("/is/:id")
+	void getEditor(string _id, HTTPServerRequest req, HTTPServerResponse res)
+	{
+		res.redirect("https://is.gd/" ~ _id);
+	}
 }

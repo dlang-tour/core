@@ -121,7 +121,7 @@ class ApiV1: IApiV1
 		auto isURL= "https://is.gd/create.php?format=simple&url=%s".format(url.encodeComponent);
 		output.url = requestHTTP(isURL, (scope req) {
 			req.method = HTTPMethod.POST;
-		}).bodyReader.readAllUTF8;
+		}).bodyReader.readAllUTF8.replace("https://is.gd/", "https://run.dlang.io/is/");
 		output.success = true;
 		return output;
 	}
