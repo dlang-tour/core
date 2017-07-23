@@ -53,10 +53,18 @@ class ApiV1: IApiV1
 		}
 	}
 
+	// --- Argumentation for the chosen limit ---
+	// The average line length of Phobos std/ is about 30 characters,
+	// while on average files are 1800 lines long. The average file
+	// size is 62391 bytes.
+	// We pick a rather generous limit of 64k (64 * 1024) which ought
+	// to be enough for everybody.
+	enum uint maxSourceCodeLength = 64 * 1024;
+
 	RunOutput run(string source, string compiler)
 	{
-		if (source.length > 4 * 1024) {
-			return RunOutput("ERROR: source code size is above limit.", false);
+		if (source.length > maxSourceCodeLength) {
+			return RunOutput("ERROR: source code size is above limit of 64k bytes.", false);
 		}
 
 		auto result = execProvider_.compileAndExecute(source, compiler);
