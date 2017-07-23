@@ -24,6 +24,7 @@ block content
 					button.btn.btn-danger.btn-sm(ng-click="showProgramOutput = !showProgramOutput")
 						span.fa.fa-close
 				h2.program-output-title rdmd playground.d
+				div#nanobar(ng-show="inProgress")
 				pre#program-output {{programOutput}}
 		div(ng-class="{'col-md-5 col-sm-12': showContent, 'col-md-12': !showContent}", ng-show="showSourceCode", style="padding-left: 0px; padding-right: 0px")
 			div#command-box.text-right
@@ -71,3 +72,4 @@ block js
 	script(src="/static/lib/codemirror/addon/runmode.js")
 	script(src="/static/lib/ui-codemirror.min.js")
 	script(src="/static/lib/hotkeys.min.js")
+	script(src="/static/lib/nanobar.min.js")
