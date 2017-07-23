@@ -59,6 +59,7 @@ block content
 		div(ng-show="showProgramOutput", class="col-md-5 hidden-xs")
 			b.program-output-title > rdmd playground.d
 			hr
+			div#nanobar2(ng-show="inProgress")
 			pre#program-output(ng-bind-html="programOutput")
 
 block js
