@@ -32,7 +32,7 @@ class Docker: IExecProvider
 	private int timeLimitInSeconds_;
 	private int maximumOutputSize_;
 	private int maximumQueueSize_;
-	private int queueSize_;
+	private shared int queueSize_;
 	private int memoryLimitMB_;
 	private string dockerBinaryPath_;
 
@@ -56,6 +56,10 @@ class Docker: IExecProvider
 
 		import std.concurrency : ownerTid, receiveOnly, send, spawn;
 		import std.parallelism : parallel;
+
+		// Temporarily share the DockerExecProvider across all threads
+		__gshared typeof(this) inst;
+		inst = this;
 		// updating the docker images should happen in the background
 		spawn((string dockerBinaryPath, in string[] dockerImages) {
 			foreach (dockerImage; dockerImages.parallel)
@@ -75,13 +79,15 @@ class Docker: IExecProvider
 					throw new Exception("Failed pulling RDMD Docker image. Error: '" ~ docker.output
 							~ "'. RC: " ~ to!string(docker.status));
 				}
-
 				logInfo("Pulled Docker image '%s'.", dockerImage);
+
 				logInfo("Verifying functionality with 'Hello World' program...");
-				// TODO: verify here and send result back
-				//auto result = compileAndExecute(q{void main() { import std.stdio; write("Hello World"); }});
-				//enforce(result.success && result.output == "Hello World",
-						//new Exception("Compiling 'Hello World' wasn't successful: " ~ result.output));
+				RunInput input = {
+					source: q{void main() { import std.stdio; write("Hello World"); }}
+				};
+				auto result = inst.compileAndExecute(input);
+				enforce(result.success && result.output == "Hello World",
+						new Exception("Compiling 'Hello World' wasn't successful: " ~ result.output));
 			}
 			// Remove previous, untagged images
 			//executeShell("docker images --no-trunc | grep '<none>' | awk '{ print $3 }' | xargs -r docker rmi");
@@ -100,9 +106,9 @@ class Docker: IExecProvider
 			return typeof(return)("Maximum number of parallel compiles has been exceeded. Try again later.", false);
 		}
 
-		++queueSize_;
-		scope(exit)
-			--queueSize_;
+		import core.atomic : atomicOp;
+		atomicOp!"+="(queueSize_, 1);
+		scope(exit) atomicOp!"-="(queueSize_, 1);
 
 
 		auto encoded = Base64.encode(cast(ubyte[]) input.source);
