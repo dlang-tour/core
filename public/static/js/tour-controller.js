@@ -15,8 +15,8 @@ dlangTourApp.config(['$locationProvider', function($locationProvider) {
 }]);
 
 dlangTourApp.controller('DlangTourAppCtrl',
-	['$scope', '$http', 'hotkeys', '$window', '$location',
-	function($scope, $http, hotkeys, $window, $location) {
+	['$scope', '$http', 'hotkeys', '$window', '$location', '$sce',
+	function($scope, $http, hotkeys, $window, $location, $sce) {
 	$scope.programOutput = "";
 	$scope.warnings = [];
 	$scope.errors = [];
@@ -121,7 +121,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 	}
 
 	$scope.run = function() {
-		$scope.programOutput = "... Waiting for remote service ...";
+		$scope.programOutput = $sce.trustAsHtml("... Waiting for remote service ...");
 		$scope.showProgramOutput = true;
 		$scope.showContent = true;
 		$scope.warnings = [];
@@ -131,10 +131,17 @@ dlangTourApp.controller('DlangTourAppCtrl',
 
 		$http.post('/api/v1/run', {
 			source: $scope.sourceCode,
-			compiler: $scope.compiler
+			compiler: $scope.compiler,
+			args: "-color"
 		}).then(function(body) {
 			var data = body.data;
-			$scope.programOutput = data.output;
+			if (typeof AnsiUp !== "undefined") {
+				var ansi_up = new AnsiUp;
+				ansi_up.use_classes = true;
+				$scope.programOutput = $sce.trustAsHtml(ansi_up.ansi_to_html(data.output));
+			} else {
+				$scope.programOutput = data.output;
+			}
 			$scope.warnings = data.warnings;
 			$scope.errors = data.errors;
 			// Enable linting

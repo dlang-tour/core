@@ -6,7 +6,7 @@ import std.typecons: Tuple;
 
 class Off: IExecProvider
 {
-	Tuple!(string, "output", bool, "success") compileAndExecute(string source, string compiler = "dmd")
+	Tuple!(string, "output", bool, "success") compileAndExecute(RunInput input)
 	{
 		return typeof(return)("Service currently unavailable", false);
 	}

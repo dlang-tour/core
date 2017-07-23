@@ -87,7 +87,11 @@ private void doSanityCheck(ContentProvider contentProvider, IExecProvider execPr
 
 		logInfo("[%s] Doing sanity check for section '%s'...",
 				section.language, section.title);
-		auto result = execProvider.compileAndExecute(section.sourceCode);
+
+		IExecProvider.RunInput input = {
+			source: section.sourceCode
+		};
+		auto result = execProvider.compileAndExecute(input);
 		enforce(result.success,
 			"[%s] Sanity check: Source code for section '%s' doesn't compile:\n%s"
 			.format(section.language, section.title, result.output));
