@@ -36,6 +36,7 @@ block content
 						span Add library
 						i.fa.fa-plus(aria-hidden="true")
 					select#add-library-select(ng-model="availableLibrary", name="availableLibrary", ng-change="onAddLibrary()", ng-blur="onBlurLibrary()")
+						option(value="none") None
 						option(ng-repeat="lib in availableLibraries", ng-value="lib.name + ' ' + lib.version") {{ lib.name }} {{ lib.version }}
 				button.btn.btn-default(ng-click="format()")
 					span Format

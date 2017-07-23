@@ -248,7 +248,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		{name: "libdparse", version:"0.7.0"}
 	];
 	$scope.showAvailableLibraries = false;
-	$scope.availableLibrary = "";
+	$scope.availableLibrary = "none";
 	var addLibrarySelect = document.getElementById("add-library-select");
 
 	$scope.addLibrary = function() {
@@ -257,9 +257,12 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		addLibrarySelect.style.opacity = 1;
 	}
 	$scope.onAddLibrary = function() {
-		var parts = $scope.availableLibrary.split(" ");
-		addLibrary(parts[0], parts[1]);
+		if ($scope.availableLibrary !== "none") {
+			var parts = $scope.availableLibrary.split(" ");
+			addLibrary(parts[0], parts[1]);
+		}
 		addLibrarySelect.style.opacity = 0;
+		$scope.availableLibrary = "none";
 	}
 	$scope.onBlurLibrary = function() {
 		addLibrarySelect.style.opacity = 0;
