@@ -11,7 +11,7 @@ block head
 
 block content
 	.row(ng-controller="DlangTourAppCtrl as ctrl", ng-init="initEditor('#{sourceCode}')")
-		div#tour-content(ng-show="showProgramOutput")
+		div#tour-content(ng-show="showProgramOutput", class="visible-xs-block")
 			.content-command-box
 				button.btn.btn-danger.btn-sm(ng-click="showProgramOutput = !showProgramOutput")
 					span.fa.fa-close
@@ -46,7 +46,12 @@ block content
 					input#shortlink-input(ng-value="shortLinkURL", size="16")
 					button.copy-btn(data-clipboard-target="#shortlink-input", data-clipboard-action="copy")
 						img.clipy(src="/static/img/clippy.svg", alt="Copy to clipboard", width="13")
+		div(class="col-md-7 col-sm-12': showContent", style="padding-left: 0px; padding-right: 0px")
 			ui-codemirror(ui-codemirror-opts="editorOptions", ui-codemirror="{ onLoad : codemirrorLoaded }", ng-model="sourceCode")
+		div(ng-show="showProgramOutput", class="col-md-5 hidden-xs")
+			b.program-output-title > rdmd playground.d
+			hr
+			pre#program-output {{programOutput}}
 
 block js
 	script(src="/static/js/tour-controller.js")
