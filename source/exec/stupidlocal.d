@@ -71,7 +71,7 @@ class StupidLocal: IExecProvider
 
 	Tuple!(string, "output", bool, "success") compileAndExecute(RunInput input)
 	{
-		import std.array : split;
+		import std.array : join, split;
 		typeof(return) result;
 		auto task = runTask(() {
 			auto tmpfile = getTempFile();
@@ -83,7 +83,17 @@ class StupidLocal: IExecProvider
 			args ~= input.args.split(" ");
 			args ~= "-run";
 			args ~= tmpfile.name;
-			auto rdmd = args.execute;
+
+			// DMD requires a TTY for colored output
+			//auto rdmd = args.execute;
+			auto env = [
+				"TERM": "dtour"
+			];
+			auto fakeTty = `
+faketty () { script -qfc "$(printf "%q " "$@")" /dev/null ; }
+faketty ` ~ args.join(" ") ~  ` | cat`;
+
+			auto rdmd = fakeTty.executeShell(env);
 			result.success = rdmd.status == 0;
 			result.output = rdmd.output;
 		});
