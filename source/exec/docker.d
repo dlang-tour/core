@@ -117,11 +117,17 @@ class Docker: IExecProvider
 		// use dmd as fallback
 		const dockerImage = (r.length > 0) ? r[0] : DockerImages[0];
 
+        auto env = [
+            "DOCKER_ARGS": input.args,
+            "DOCKER_COLOR": input.color ? "on" : "off",
+        ];
 		auto docker = pipeProcess([this.dockerBinaryPath_, "run", "--rm",
+		        "-e", "DOCKER_COLOR",
+		        "-e", "DOCKER_ARGS",
 				"--net=none", "--memory-swap=-1",
 				"-m", to!string(memoryLimitMB_ * 1024 * 1024),
 				dockerImage, encoded],
-				Redirect.stdout | Redirect.stderrToStdout | Redirect.stdin);
+				Redirect.stdout | Redirect.stderrToStdout | Redirect.stdin, env);
 		docker.stdin.write(encoded);
 		docker.stdin.flush();
 		docker.stdin.close();

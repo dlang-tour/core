@@ -14,6 +14,7 @@ interface IExecProvider
 		string compiler = "dmd";
 		string args;
 		string stdin;
+		bool color;
 	}
 	Tuple!(string, "output", bool, "success") compileAndExecute(RunInput input);
 }

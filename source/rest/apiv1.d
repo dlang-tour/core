@@ -28,11 +28,19 @@ class ApiV1: IApiV1
 		import std.regex;
 		import std.algorithm: splitter;
 		import std.conv: to;
+		import std.process : pipeProcess, Redirect, wait;
+
+        // TODO: do this purely in D
+		auto removeColoring = pipeProcess(["sed", "-r", `s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g`], Redirect.stdout | Redirect.stderrToStdout | Redirect.stdin);
+		removeColoring.stdin.rawWrite(output.output);
+		removeColoring.stdin.flush();
+		removeColoring.stdin.close();
+		removeColoring.pid.wait;
 
 		static ctr = ctRegex!
 			`^[^(]+\(([0-9]+)(,[0-9]+)?\): ([a-zA-Z]+): (.*)$`;
 
-		foreach(line; splitter(output.output, '\n')) {
+        foreach(line; removeColoring.stdout.byLineCopy) {
 			auto m = line.matchFirst(ctr);
 			if (m.empty)
 				continue;
@@ -67,11 +75,13 @@ class ApiV1: IApiV1
 			return RunOutput("ERROR: source code size is above limit of 64k bytes.", false);
 		}
 
+		// Be explicit here, in case the exec API and the REST API change
 		IExecProvider.RunInput runInput = {
 			source: input.source,
 			compiler : input.compiler,
 			args: input.args,
 			stdin: input.stdin,
+			color: input.color,
 		};
 		auto result = execProvider_.compileAndExecute(runInput);
 		auto output = RunOutput(result.output, result.success);

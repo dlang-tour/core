@@ -6,6 +6,7 @@ block head
 	link(rel="stylesheet", href="/static/lib/codemirror/addon/lint/lint.min.css")
 	link(rel="stylesheet", href="/static/lib/codemirror/theme/elegant.css")
 	link(rel="stylesheet", href="/static/lib/grid12.min.css")
+	link(rel="stylesheet", href="/static/css/ansi.css")
 
 block content
 	.row(ng-controller="DlangTourAppCtrl as ctrl", ng-init="initTour('#{language}', '#{githubRepo}', '#{chapterId}', '#{section}', #{hasSourceCode}, '#{previousSection.link}', '#{nextSection.link}')")
@@ -25,7 +26,7 @@ block content
 						span.fa.fa-close
 				h2.program-output-title rdmd playground.d
 				div#nanobar(ng-show="inProgress")
-				pre#program-output {{programOutput}}
+				pre#program-output(ng-bind-html="programOutput")
 		div(ng-class="{'col-md-5 col-sm-12': showContent, 'col-md-12': !showContent}", ng-show="showSourceCode", style="padding-left: 0px; padding-right: 0px")
 			div#command-box.text-right
 				button.btn.btn-default(ng-click="showContent = !showContent")
@@ -73,3 +74,4 @@ block js
 	script(src="/static/lib/ui-codemirror.min.js")
 	script(src="/static/lib/hotkeys.min.js")
 	script(src="/static/lib/nanobar.min.js")
+	script(src="/static/lib/ansi_up.min.js")

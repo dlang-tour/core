@@ -124,6 +124,10 @@ dlangTourApp.controller('DlangTourAppCtrl',
 	var nanobar = new Nanobar({
 		target: document.getElementById('nanobar'),
 	});
+	
+	var ansi_up = new AnsiUp;
+	ansi_up.use_classes = true;
+
 	$scope.run = function() {
 		$scope.programOutput = $sce.trustAsHtml("... Waiting for remote service ...");
 		$scope.inProgress = true;
@@ -143,16 +147,10 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		$http.post('/api/v1/run', {
 			source: $scope.sourceCode,
 			compiler: $scope.compiler,
-			args: "-color"
+			color: true
 		}).then(function(body) {
 			var data = body.data;
-			if (typeof AnsiUp !== "undefined") {
-				var ansi_up = new AnsiUp;
-				ansi_up.use_classes = true;
-				$scope.programOutput = $sce.trustAsHtml(ansi_up.ansi_to_html(data.output));
-			} else {
-				$scope.programOutput = data.output;
-			}
+			$scope.programOutput = $sce.trustAsHtml(ansi_up.ansi_to_html(data.output));
 			$scope.warnings = data.warnings;
 			$scope.errors = data.errors;
 			// Enable linting
@@ -161,7 +159,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 			});
 		}, function(error) {
 			var msg = (error || {}).statusMessage || "";
-			$scope.programOutput = "Server error: " + msg;
+			$scope.programOutput = $sce.trustAsHtml("Server error: " + msg);
 		}).finally(function(){
 			clearInterval(progressInterval);
 			$scope.inProgress = false;
