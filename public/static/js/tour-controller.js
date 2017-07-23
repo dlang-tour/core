@@ -31,6 +31,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 	$scope.nextPage = null;
 	$scope.shortLinkURL = "";
 	$scope.compiler = $location.search().compiler || "dmd";
+	$scope.inProgress = false;
 
 	$scope.updateErrorsAndWarnings = function(doc, options, editor) {
 		var hasErrors = $scope.errors.length > 0 || $scope.warnings > 0;
@@ -120,8 +121,18 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		$scope.sourceCode = $scope.resetCode;
 	}
 
+	var nanobar = new Nanobar({
+		target: document.getElementById('nanobar'),
+	});
 	$scope.run = function() {
 		$scope.programOutput = $sce.trustAsHtml("... Waiting for remote service ...");
+		$scope.inProgress = true;
+		var currentNanobarValue = 0;
+		var progressInterval = setInterval(function(){
+			currentNanobarValue = (currentNanobarValue + 1) % 100;
+			nanobar.go(currentNanobarValue);
+		}, 100);
+
 		$scope.showProgramOutput = true;
 		$scope.showContent = true;
 		$scope.warnings = [];
@@ -151,6 +162,9 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		}, function(error) {
 			var msg = (error || {}).statusMessage || "";
 			$scope.programOutput = "Server error: " + msg;
+		}).finally(function(){
+			clearInterval(progressInterval);
+			$scope.inProgress = false;
 		});
 	}
 
