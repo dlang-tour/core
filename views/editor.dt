@@ -30,7 +30,7 @@ block content
 						option(value="dmd-nightly") dmd-nightly
 						option(value="ldc-beta") ldc-beta
 						option(value="ldc") ldc
-						option(value="dreg") All D compilers
+						option(value="dreg") All
 				div#add-library
 					button.btn.btn-default(ng-click="addLibrary()")
 						span Add library
