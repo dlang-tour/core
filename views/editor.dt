@@ -7,6 +7,7 @@ block head
 	link(rel="stylesheet", href="/static/lib/codemirror/theme/elegant.css")
 	link(rel="stylesheet", href="/static/lib/grid12.min.css")
 	link(rel="stylesheet", href="/static/css/editor.css")
+	link(rel="stylesheet", href="/static/css/ansi.css")
 
 block content
 	.row(ng-controller="DlangTourAppCtrl as ctrl", ng-init="initEditor('#{sourceCode}')")
@@ -15,7 +16,7 @@ block content
 				button.btn.btn-danger.btn-sm(ng-click="showProgramOutput = !showProgramOutput")
 					span.fa.fa-close
 			h2.program-output-title rdmd playground.d
-			pre#program-output {{programOutput}}
+			pre#program-output(ng-bind-html="programOutput")
 		div(style="padding-left: 0px; padding-right: 0px")
 			div#command-box.text-right
 				button.btn.btn-primary(ng-click="run()")
@@ -57,3 +58,4 @@ block js
 	script(src="/static/lib/ui-codemirror.min.js")
 	script(src="/static/lib/hotkeys.min.js")
 	script(src="/static/lib/clipboard.min.js")
+	script(src="/static/lib/ansi_up.min.js")
