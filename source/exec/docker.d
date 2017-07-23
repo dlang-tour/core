@@ -54,6 +54,7 @@ class Docker: IExecProvider
 		logInfo("Memory Limit: %d MB", memoryLimitMB_);
 		logInfo("Output size limit: %d B", maximumQueueSize_);
 
+		import std.algorithm.iteration : filter;
 		import std.concurrency : ownerTid, receiveOnly, send, spawn;
 		import std.parallelism : parallel;
 
@@ -62,7 +63,9 @@ class Docker: IExecProvider
 		inst = this;
 		// updating the docker images should happen in the background
 		spawn((string dockerBinaryPath, in string[] dockerImages) {
-			foreach (dockerImage; dockerImages.parallel)
+			// core-dreg is a very large Docker image (> 3 GB)
+			// Thus constantly pulling it on every CI build is problematic
+			foreach (dockerImage; dockerImages.filter!(a => a != "dlangtour/core-dreg:latest").parallel)
 			{
 
 				logInfo("Checking whether Docker is functional and updating Docker image '%s'", dockerImage);
