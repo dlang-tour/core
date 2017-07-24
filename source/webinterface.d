@@ -262,13 +262,13 @@ class WebInterface
         showEditor(sourceCode);
 	}
 
-	@path("/editor/gist/:gist")
+	@path("/gist/:gist")
 	void getGist(string _gist)
 	{
 	    getGist("anonymous", _gist);
 	}
 
-	@path("/editor/gist/:user/:gist")
+	@path("/gist/:user/:gist")
 	void getGist(string _user, string _gist)
 	{
 	    import std.stdio;

@@ -231,7 +231,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		}).then(function(body) {
 			var data = body.data;
 			window.open(data.html_url, "_blank");
-			$scope.shortLinkURL = editorHost() + "/gist/" + gistURLToId(data.html_url);
+			$scope.shortLinkURL = window.location.origin + "/gist/" + gistURLToId(data.html_url) + editorParams();
 		}, function(error) {
 			var msg = (error || {}).statusMessage || "";
 			$scope.programOutput = "Server error: " + msg;
@@ -241,7 +241,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 	$scope.importFromGist = function() {
 		var url = prompt("Please enter Gist URL or id", "");
 		if (!url) return;
-		window.location.href = "https://run.dlang.io/gist/" + gistURLToId(url);
+		window.location.href = window.location.origin + "/gist/" + gistURLToId(url) + editorParams();
 	}
 
 	$scope.format = function() {
