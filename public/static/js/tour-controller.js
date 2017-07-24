@@ -7,12 +7,15 @@ function b64DecodeUnicode(str) {
     }).join(''));
 }
 
-dlangTourApp.config(['$locationProvider', function($locationProvider) {
-	$locationProvider.html5Mode({
-		enabled: true,
-		requireBase: false
-	});
-}]);
+// Only enable HTML5 for the editor (for now)
+if (location.origin.indexOf("run.dlang.io") >= 0 || location.pathname.startswith("/editor")) {
+	dlangTourApp.config(['$locationProvider', function($locationProvider) {
+		$locationProvider.html5Mode({
+			enabled: true,
+			requireBase: false
+		});
+	}]);
+}
 
 dlangTourApp.controller('DlangTourAppCtrl',
 	['$scope', '$http', 'hotkeys', '$window', '$location', '$sce',
