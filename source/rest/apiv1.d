@@ -75,6 +75,9 @@ class ApiV1: IApiV1
 			return RunOutput("ERROR: source code size is above limit of 64k bytes.", false);
 		}
 
+		// sanitize input and remove weird unicode characters
+		input.source = input.source.removeUnicodeSpaces;
+
 		// Be explicit here, in case the exec API and the REST API change
 		IExecProvider.RunInput runInput = {
 			source: input.source,
@@ -173,4 +176,23 @@ Failed: ["dmd", "-v", "-o-", "onlineapp.d", "-I."]`;
 	assert(test3.warnings[1].line == 21);
 	assert(test3.warnings[2].line == 679);
 	assert(test3.warnings[3].line == 171);
+}
+
+// remove weird unicode spaces
+private string removeUnicodeSpaces(S)(S input) {
+	import std.algorithm.iteration : map;
+	import std.array : array;
+	import std.uni : isSpace;
+	// selective import will trigger false-positive deprecation warning
+	import std.utf;
+	return (cast(dstring) input.map!(c => c.isSpace ? ' ' : c).array).toUTF8;
+}
+
+// weird 0xa0 unicode space tokens on android
+unittest {
+	import std.string : representation;
+	ubyte[] helloWorldNormal = [10, 32, 32, 32, 32, 32, 32, 119, 114, 105];
+	ubyte[] helloWorldAndroid = [10, 32, 194, 160, 32, 194, 160, 32, 32, 119, 114, 105];
+	string res = cast(string) helloWorldAndroid;
+	assert(res.removeUnicodeSpaces.representation == helloWorldNormal);
 }
