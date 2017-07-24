@@ -17,6 +17,11 @@ if (location.origin.indexOf("run.dlang.io") >= 0 || location.pathname.startsWith
 	}]);
 }
 
+dlangTourApp.config(function(hotkeysProvider) {
+	hotkeysProvider.templateTitle = translations["hotkeys.help_title"] + ":";
+	hotkeysProvider.cheatSheetDescription = translations["hotkeys.show_hide_help"];
+});
+
 dlangTourApp.controller('DlangTourAppCtrl',
 	['$scope', '$http', 'hotkeys', '$window', '$location', '$sce',
 	function($scope, $http, hotkeys, $window, $location, $sce) {
@@ -302,24 +307,24 @@ dlangTourApp.controller('DlangTourAppCtrl',
 	// Add hotkeys
 	hotkeys.add({
 		combo: 'left',
-		description: 'Go to previous section',
+		description: translations["hotkeys.previous_section"],
 		callback: prevPage
 	});
 	hotkeys.add({
 		combo: 'right',
-		description: 'Go to next section',
+		description: translations["hotkeys.next_section"],
 		callback: nextPage
 	});
 	hotkeys.add({
 		combo: 'ctrl+enter',
-		description: 'Run source code',
+		description: translations["hotkeys.run_source_code"],
 		callback: function() {
 			$scope.run();
 		}
 	});
 	hotkeys.add({
 		combo: 'ctrl+r',
-		description: 'Reset source code',
+		description: translations["hotkeys.reset_source_code"],
 		callback: function(e) {
 			$scope.reset();
 			e.preventDefault();
@@ -327,7 +332,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 	});
 	hotkeys.add({
 		combo: 'alt+f',
-		description: 'Format source code',
+		description: translations["hotkeys.format_source_code"],
 		callback: function(e) {
 			$scope.format();
 			e.preventDefault();
