@@ -123,7 +123,11 @@ dlangTourApp.controller('DlangTourAppCtrl',
 
 	// we have at most two nanobars on the screen
 	var nanobar = new Nanobar({target: document.getElementById('nanobar')});
-	var nanobar2 = new Nanobar({target: document.getElementById('nanobar2')});
+	// currently nanobar2 is solely used as a workaround on the editor page
+	var nanobar2 = document.getElementById('nanobar2');
+	if (!!nanobar2) {
+		nanobar2 = new Nanobar({target: nanobar2});
+	}
 
 	var ansi_up = new AnsiUp;
 	ansi_up.use_classes = true;
@@ -135,7 +139,9 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		var progressInterval = setInterval(function(){
 			currentNanobarValue = (currentNanobarValue + 1) % 100;
 			nanobar.go(currentNanobarValue);
-			nanobar2.go(currentNanobarValue);
+			if (nanobar2) {
+				nanobar2.go(currentNanobarValue);
+			}
 		}, 100);
 
 		$scope.showProgramOutput = true;
