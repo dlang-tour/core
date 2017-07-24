@@ -255,7 +255,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 	function addLibrary(name, version) {
 		// check for the header
 		if (!($scope.sourceCode.indexOf("dub.sdl:") >= 0 || $scope.sourceCode.indexOf("dub.json:") >= 0)) {
-			$scope.sourceCode = '/+dub.sdl:\nname "foo"\n+//**/\n' + $scope.sourceCode;
+			$scope.sourceCode = '/+dub.sdl:\nname "foo"\n+/\n' + $scope.sourceCode;
 		}
 		var parts = $scope.sourceCode.split("+/");
 		var after = parts.slice(1);
