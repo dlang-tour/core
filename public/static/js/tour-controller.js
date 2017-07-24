@@ -8,7 +8,7 @@ function b64DecodeUnicode(str) {
 }
 
 // Only enable HTML5 for the editor (for now)
-if (location.origin.indexOf("run.dlang.io") >= 0 || location.pathname.startswith("/editor")) {
+if (location.origin.indexOf("run.dlang.io") >= 0 || location.pathname.startsWith("/editor")) {
 	dlangTourApp.config(['$locationProvider', function($locationProvider) {
 		$locationProvider.html5Mode({
 			enabled: true,
