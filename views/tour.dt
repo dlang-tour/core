@@ -51,12 +51,12 @@ block content
 
 	nav.navbar.navbar-bottom
 		.container.text-center.h1
-			a(href="#{previousSection.link}", ng-show="'' != '#{previousSection.link}'")
+			a(href="#{previousSection.link}", ng-show="'' != '#{previousSection.link}'", target="_self")
 				| <
 				span.h4 #{previousSection.title}
 			| #{sectionId + 1} /
 			span.small #{sectionCount}
-			a(href="#{nextSection.link}", ng-show="'' != '#{nextSection.link}'")
+			a(href="#{nextSection.link}", ng-show="'' != '#{nextSection.link}'", target="_self")
 				span.h4 #{nextSection.title}
 				| >
 		.container.hidden-xs.hidden-sm
