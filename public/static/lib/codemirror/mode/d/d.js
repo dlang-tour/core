@@ -44,7 +44,7 @@ CodeMirror.defineMode("d", function(config, parserConfig) {
     }
     if (ch == "/") {
       if (stream.eat("+")) {
-        state.tokenize = tokenComment;
+        state.tokenize = tokenNestedComment;
         return tokenNestedComment(stream, state);
       }
       if (stream.eat("*")) {
@@ -94,7 +94,7 @@ CodeMirror.defineMode("d", function(config, parserConfig) {
         state.tokenize = null;
         break;
       }
-      maybeEnd = (ch == "*");
+      maybeEnd = (ch === "*");
     }
     return "comment";
   }
@@ -106,7 +106,7 @@ CodeMirror.defineMode("d", function(config, parserConfig) {
         state.tokenize = null;
         break;
       }
-      maybeEnd = (ch == "+");
+      maybeEnd = (ch === "+");
     }
     return "comment";
   }
