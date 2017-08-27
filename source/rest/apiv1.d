@@ -25,22 +25,16 @@ class ApiV1: IApiV1
 	+/
 	private static void parseErrorsAndWarnings(ref RunOutput output)
 	{
-		import std.regex;
-		import std.algorithm: splitter;
+		import std.regex: ctRegex, matchFirst, replaceAll;
 		import std.conv: to;
-		import std.process : pipeProcess, Redirect, wait;
+		import std.string: lineSplitter;
 
-        // TODO: do this purely in D
-		auto removeColoring = pipeProcess(["sed", "-r", `s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g`], Redirect.stdout | Redirect.stderrToStdout | Redirect.stdin);
-		removeColoring.stdin.rawWrite(output.output);
-		removeColoring.stdin.flush();
-		removeColoring.stdin.close();
-		removeColoring.pid.wait;
-
+		static coloring = ctRegex!
+			`\x1B\[[0-9;]*[mGK]`;
 		static ctr = ctRegex!
 			`^[^(]+\(([0-9]+)(,[0-9]+)?\): ([a-zA-Z]+): (.*)$`;
 
-        foreach(line; removeColoring.stdout.byLineCopy) {
+		foreach(line; output.output.replaceAll(coloring, "").lineSplitter) {
 			auto m = line.matchFirst(ctr);
 			if (m.empty)
 				continue;
@@ -176,6 +170,25 @@ Failed: ["dmd", "-v", "-o-", "onlineapp.d", "-I."]`;
 	assert(test3.warnings[1].line == 21);
 	assert(test3.warnings[2].line == 679);
 	assert(test3.warnings[3].line == 171);
+
+	auto run3 =
+	"\u001B[1md.d(1): \u001B[1;31mError: \u001B[mbasic type expected, not {\n" ~
+	"\u001B[1md.d(1): \u001B[1;31mError: \u001B[mfound '{' when expecting ')'\n" ~
+	"\u001B[1md.d(1): \u001B[1;31mError: \u001B[msemicolon expected following function declaration\n" ~
+	"\u001B[1md.d(1): \u001B[1;31mError: \u001B[munrecognized declaration\n";
+
+	auto test4 = ApiV1.RunOutput(run3, false);
+	ApiV1.parseErrorsAndWarnings(test4);
+
+	assert(test4.errors.length == 4);
+	assert(test4.errors[0] ==
+	       ApiV1.RunOutput.Message(1, "basic type expected, not {"));
+	assert(test4.errors[1] ==
+	       ApiV1.RunOutput.Message(1, "found '{' when expecting ')'"));
+	assert(test4.errors[2] ==
+	       ApiV1.RunOutput.Message(1, "semicolon expected following function declaration"));
+	assert(test4.errors[3] ==
+	       ApiV1.RunOutput.Message(1, "unrecognized declaration"));
 }
 
 // remove weird unicode spaces
