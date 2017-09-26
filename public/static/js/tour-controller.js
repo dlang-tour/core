@@ -274,7 +274,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 
 	$scope.availableLibraries = [
 		{name: "mir", version:"1.1.1"},
-		{name: "mir-algorithm", version:"0.6.7"},
+		{name: "mir-algorithm", version:"0.6.14"},
 		{name: "vibe-d", version:"0.8.0"},
 		{name: "libdparse", version:"0.7.0"}
 	];
