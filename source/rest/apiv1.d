@@ -108,13 +108,16 @@ class ApiV1: IApiV1
 		return output;
 	}
 
-	ShortenOutput shorten(string source, string compiler)
+	ShortenOutput shorten(string source, string compiler, string args)
 	{
 		import std.format : format;
 		import std.uri : encodeComponent;
 
 		ShortenOutput output;
 		auto url = "https://run.dlang.io?compiler=%s&source=%s".format(compiler, source.encodeComponent);
+		if (args.length > 0)
+			url ~= "&args=" ~ args.encodeComponent;
+
 		auto isURL= "https://is.gd/create.php?format=simple&url=%s".format(url.encodeComponent);
 		output.url = requestHTTP(isURL, (scope req) {
 			req.method = HTTPMethod.POST;

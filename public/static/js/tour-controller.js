@@ -34,6 +34,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 	$scope.nextPage = null;
 	$scope.shortLinkURL = "";
 	$scope.compiler = $location.search().compiler || "dmd";
+	$scope.args = $location.search().args || "";
 	$scope.inProgress = false;
 
 	$scope.updateErrorsAndWarnings = function(doc, options, editor) {
@@ -157,6 +158,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		$http.post('/api/v1/run', {
 			source: $scope.sourceCode,
 			compiler: $scope.compiler,
+			args: $scope.args,
 			color: true
 		}).then(function(body) {
 			var data = body.data;
@@ -191,7 +193,11 @@ dlangTourApp.controller('DlangTourAppCtrl',
 	}
 
 	function editorParams() {
-		return "?compiler=" + $scope.compiler;
+		var url = "?compiler=" + $scope.compiler;
+		if ($scope.args && $scope.args.length > 0) {
+			url += "&args=" + encodeURIComponent($scope.args);
+		}
+		return url;
 	}
 
 	$scope.export = function() {
@@ -214,7 +220,8 @@ dlangTourApp.controller('DlangTourAppCtrl',
 	$scope.shorten = function() {
 		$http.post('/api/v1/shorten', {
 			source: $scope.sourceCode,
-			compiler: $scope.compiler
+			compiler: $scope.compiler,
+			args: $scope.args,
 		}).then(function(body) {
 			var data = body.data;
 			$scope.shortLinkURL = data.url;
