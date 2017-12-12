@@ -38,6 +38,9 @@ block content
 					select#add-library-select(ng-model="availableLibrary", name="availableLibrary", ng-change="onAddLibrary()", ng-blur="onBlurLibrary()")
 						option(value="none") None
 						option(ng-repeat="lib in availableLibraries", ng-value="lib.name + ' ' + lib.version") {{ lib.name }} {{ lib.version }}
+
+				div.editor-btn-container
+					input(ng-model="args", name="args", placeholder="Compiler arguments")
 				button.btn.btn-default(ng-click="format()")
 					span Format
 					i.fa.fa-magic(aria-hidden="true")

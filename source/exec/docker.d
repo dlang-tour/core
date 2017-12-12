@@ -121,15 +121,21 @@ class Docker: IExecProvider
 		const dockerImage = (r.length > 0) ? r[0] : DockerImages[0];
 
         auto env = [
-            "DOCKER_ARGS": input.args,
+            "DOCKER_FLAGS": input.args,
             "DOCKER_COLOR": input.color ? "on" : "off",
         ];
-		auto docker = pipeProcess([this.dockerBinaryPath_, "run", "--rm",
-		        "-e", "DOCKER_COLOR",
-		        "-e", "DOCKER_ARGS",
-				"--net=none", "--memory-swap=-1",
-				"-m", to!string(memoryLimitMB_ * 1024 * 1024),
-				dockerImage, encoded],
+
+        auto args = [this.dockerBinaryPath_, "run", "--rm",
+		    "-e", "DOCKER_COLOR",
+		    "-e", "DOCKER_FLAGS",
+			"--net=none", "--memory-swap=-1",
+			"-m", to!string(memoryLimitMB_ * 1024 * 1024),
+			dockerImage, encoded];
+		if (input.stdin) {
+			args ~= Base64.encode(cast(ubyte[]) input.stdin);
+		}
+
+		auto docker = pipeProcess(args,
 				Redirect.stdout | Redirect.stderrToStdout | Redirect.stdin, env);
 		docker.stdin.write(encoded);
 		docker.stdin.flush();
