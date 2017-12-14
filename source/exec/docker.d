@@ -13,7 +13,7 @@ import std.conv: to;
 
 /+
 	Execution provider that uses the Docker iamge
-	stonemaster/dlang-tour-rdmd to compile and run
+	dlangtour/core-exec to compile and run
 	the resulting binary.
 +/
 class Docker: IExecProvider

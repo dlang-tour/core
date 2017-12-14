@@ -1,7 +1,7 @@
 # Deployment of dlang-tour
 
 The preferred way to deploy the dlang-tour on a production
-server is to use the **Travis CI** built [docker image](https://hub.docker.com/r/stonemaster/dlang-tour/).
+server is to use the **Travis CI** built [docker image](https://hub.docker.com/r/dlangtour/core).
 To simplify container deployment it's recommended
 to use [docker-compose](https//docs.docker.com/compose).
 

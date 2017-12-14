@@ -1,5 +1,5 @@
 tour:
-  image: stonemaster/dlang-tour:latest
+  image: dlangtour/core:latest
   container_name: tour
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
