@@ -153,7 +153,8 @@ shared static this()
 		auto googleAnalyticsId = config.googleAnalyticsId;
 		auto chapterId = "";
 		auto language = "en";
-		res.render!("error.dt", req, error, language, googleAnalyticsId, chapterId, toc, title)();
+		const name = "DLang Tour";
+		res.render!("error.dt", req, error, language, googleAnalyticsId, chapterId, toc, title, name)();
 		res.finalize();
 	};
 
