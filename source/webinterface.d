@@ -164,10 +164,11 @@ class WebInterface
 		auto meta = contentProvider_.getMeta(_language);
 		auto githubRepo = meta.repo;
 		auto translations = meta.translator;
+		const name = "DLang Tour";
 		render!("tour.dt", htmlContent, language, section, sectionId,
 				sectionCount, chapterId, hasSourceCode, sourceCodeEnabled,
 				nextSection, previousSection, googleAnalyticsId,
-				toc, title, githubRepo, translations)();
+				toc, title, githubRepo, translations, name)();
 	}
 
 	private static auto buildDlangToc()
@@ -281,11 +282,12 @@ class WebInterface
 
 	void showEditor(string sourceCode) {
 	    string googleAnalyticsId = googleAnalyticsId_;
-		auto title = "Editor";
-		auto chapterId = "";
-		auto language = "en";
+		const title = "Editor";
+		const chapterId = "";
+		const language = "en";
+		const name = "DRun";
 		static immutable toc = buildDlangToc();
-		render!("editor.dt", googleAnalyticsId, title, toc, chapterId, language, sourceCode)();
+		render!("editor.dt", googleAnalyticsId, title, toc, chapterId, language, sourceCode, name)();
 	}
 
 	@path("/is/:id")
