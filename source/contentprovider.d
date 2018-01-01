@@ -259,7 +259,8 @@ class ContentProvider
 	{
 		auto processed = expandMacros(content, mustacheContext_);
 		auto settings = new MarkdownSettings;
-		settings.flags = MarkdownFlags.backtickCodeBlocks | MarkdownFlags.vanillaMarkdown | MarkdownFlags.tables;
+		with(MarkdownFlags)
+		settings.flags = backtickCodeBlocks | vanillaMarkdown | tables;
 		settings.urlFilter = (string link, bool) {
 			import std.algorithm.searching : startsWith;
 			if (link.startsWith("http", "https", "irc", "/"))
@@ -270,19 +271,43 @@ class ContentProvider
 				return "/tour/%s/%s".format(language, link);
 			}
 		};
-		return filterMarkdown(processed, settings);
+		auto text = filterMarkdown(processed, settings);
+		// workaround against vibe.textfiler.markdown inserting empty newlines
+		// in inline code blocks
+		import std.array : replace;
+		text = text.replace("\n\n</code></pre>", "\n</code></pre>");
+		return text;
 	}
 
 	unittest
 	{
-		import std.stdio;
-		import std.algorithm;
 		string contentDir = "public/content";
 		auto cp = new ContentProvider(contentDir);
 		cp.addLanguage(contentDir.buildPath("en"));
 
 		assert(cp.processMarkdown("[foo](welcome/welcome-to-d)", "en") == "<p><a href=\"/tour/en/welcome/welcome-to-d\">foo</a>\n</p>\n");
 		assert(cp.processMarkdown("[foo](http://dlang.org)", "en") == "<p><a href=\"http://dlang.org\">foo</a>\n</p>\n");
+	}
+
+	unittest
+	{
+		string contentDir = "public/content";
+		auto cp = new ContentProvider(contentDir);
+		cp.addLanguage(contentDir.buildPath("en"));
+		auto expected = `<p>Text before
+</p>
+<pre class="prettyprint"><code>import std.stdio;
+</code></pre>
+<p>Text after
+</p>
+`;
+		auto result = cp.processMarkdown(`
+Text before
+
+	import std.stdio;
+
+Text after`, "en");
+		assert(expected == result);
 	}
 
 	/++
