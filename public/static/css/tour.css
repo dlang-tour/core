@@ -60,6 +60,11 @@ pre, pre.prettyprint, div.prototype
 	width: auto;
 	font-size: 14px;
 }
+pre.prettyprint
+{
+	display: inline-block;
+	width: 100%;
+}
 pre
 {
 	white-space: pre-wrap;		 /* css-3 */
@@ -139,13 +144,13 @@ pre, code, .tt, .d_inlinecode, td.param_id, .CodeMirror pre, .d_decl {
 
 .img-right {
     float: right;
-    max-width: 200px;
+    max-width: 250px;
     padding-bottom: 15px;
 }
 
 @media only screen and (max-width: 600px) {
 	.img-right {
-		max-width: 120px;
+		max-width: 150px;
 	}
 }
 
