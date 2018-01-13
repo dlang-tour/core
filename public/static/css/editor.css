@@ -58,3 +58,14 @@
 	width: 115px;
 	height: 34px;
 }
+
+#editor-right-group {
+	text-align: right;
+}
+
+@media only screen and (min-width: 700px) {
+	#command-box {
+		display: flex;
+		justify-content: space-between;
+	}
+}

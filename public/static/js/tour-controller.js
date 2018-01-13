@@ -156,7 +156,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 	var ansi_up = new AnsiUp;
 	ansi_up.use_classes = true;
 
-	$scope.run = function() {
+	$scope.run = function(args) {
 		$scope.programOutput = $sce.trustAsHtml("... Waiting for remote service ...");
 		$scope.inProgress = true;
 		var currentNanobarValue = 0;
@@ -178,7 +178,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		$http.post('/api/v1/run', {
 			source: $scope.sourceCode,
 			compiler: $scope.compiler,
-			args: $scope.args,
+			args: args || $scope.args,
 			color: true
 		}).then(function(body) {
 			var data = body.data;
@@ -196,6 +196,33 @@ dlangTourApp.controller('DlangTourAppCtrl',
 			clearInterval(progressInterval);
 			$scope.inProgress = false;
 		});
+	}
+
+	$scope.asm = function() {
+		var args = $scope.args || "";
+		if ($scope.compiler.indexOf("dmd") >=0) {
+			args += " -asm";
+		} else if ($scope.compiler.indexOf("ldc") >=0) {
+			args += " -output-s";
+		} else {
+			$scope.programOutput = $scope.compiler + " doesn't support ASM output";
+		}
+		$scope.run(args);
+	}
+
+	$scope.ir = function() {
+		var args = $scope.args || "";
+		if ($scope.compiler.indexOf("ldc") >=0) {
+			args += " -output-ll";
+		} else {
+			$scope.programOutput = $scope.compiler + " doesn't support ASM output";
+		}
+		$scope.run(args);
+	}
+
+	$scope.ast = function() {
+		var args = ($scope.args || "") + " -vcg-ast";
+		$scope.run(args);
 	}
 
 	$scope.reset = function() {
