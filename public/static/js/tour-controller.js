@@ -63,12 +63,16 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		return lintings;
 	}
 
+	function storeState() {
+		localStorage.setItem($scope.sourceCodeKey,
+				$scope.editor.getDoc().getValue());
+		localStorage.setItem($scope.sourceCodeKey + "_compiler", $scope.compiler);
+		localStorage.setItem($scope.sourceCodeKey + "_args", $scope.args);
+	}
+
 	$scope.codemirrorLoaded = function(editor) {
 		$scope.editor = editor;
-		$scope.editor.on("change", function() {
-			localStorage.setItem($scope.sourceCodeKey,
-				 $scope.editor.getDoc().getValue());
-		});
+		$scope.editor.on("change", storeState);
 	}
 
 	$scope.editorOptions = {
@@ -128,8 +132,8 @@ dlangTourApp.controller('DlangTourAppCtrl',
 	}
 
 	$scope.initEditor = function(sourceCode) {
-
-		var source = $location.search().source;
+		var loc = $location.search()
+		var source = loc.source;
 		if (!source) {
 			source = b64DecodeUnicode(sourceCode);
 			$scope.sourceCodeKey = window.location.hostname;
@@ -142,6 +146,12 @@ dlangTourApp.controller('DlangTourAppCtrl',
 			$scope.sourceCode = sessionSC;
 		} else {
 			$scope.sourceCode = $scope.resetCode;
+		}
+		if (typeof(loc.compiler) === "undefined") {
+			$scope.compiler = localStorage.getItem($scope.sourceCodeKey + "_compiler") || $scope.compiler;
+		}
+		if (typeof(loc.args) === "undefined") {
+			$scope.args = localStorage.getItem($scope.sourceCodeKey + "_args") || $scope.args;
 		}
 	}
 
@@ -174,6 +184,8 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		$scope.errors = [];
 		// Don't lint now
 		$scope.editor.setOption("lint", {});
+
+		storeState();
 
 		$http.post('/api/v1/run', {
 			source: $scope.sourceCode,
@@ -227,6 +239,9 @@ dlangTourApp.controller('DlangTourAppCtrl',
 
 	$scope.reset = function() {
 		$scope.sourceCode = $scope.resetCode;
+		$scope.compiler = "dmd";
+		$scope.args = "";
+		storeState();
 	}
 
 	function editorHost() {
