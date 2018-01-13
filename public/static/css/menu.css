@@ -72,7 +72,7 @@
 
 #top #cssmenu
 {
-    width: 100%; /* take all available space */
+    max-width: 100%; /* take all available space */
 }
 
 /* Hide expandable sections by default in #cssmenu. They have fallback URLs. */
