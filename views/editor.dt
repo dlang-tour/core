@@ -20,46 +20,59 @@ block content
 			pre#program-output(ng-bind-html="programOutput")
 		div(style="padding-left: 0px; padding-right: 0px")
 			div#command-box
-				button.btn.btn-primary(ng-click="run()")
-					span Run
-					i.fa.fa-play(aria-hidden="true")
-				div.editor-btn-container
-					select(ng-model="compiler", name="compiler")
-						option(value="dmd", selected) dmd
-						option(value="dmd-beta") dmd-beta
-						option(value="dmd-nightly") dmd-nightly
-						option(value="ldc-beta") ldc-beta
-						option(value="ldc") ldc
-						option(value="dreg") All
-				div#add-library
-					button.btn.btn-default(ng-click="addLibrary()")
-						span Add library
-						i.fa.fa-plus(aria-hidden="true")
-					select#add-library-select(ng-model="availableLibrary", name="availableLibrary", ng-change="onAddLibrary()", ng-blur="onBlurLibrary()")
-						option(value="none") None
-						option(ng-repeat="lib in availableLibraries", ng-value="lib.name + ' ' + lib.version") {{ lib.name }} {{ lib.version }}
+				span#editor-left-group
+					button.btn.btn-primary(ng-click="run()")
+						span Run
+						i.fa.fa-play(aria-hidden="true")
+					div.editor-btn-container
+						select(ng-model="compiler", name="compiler")
+							option(value="dmd", selected) dmd
+							option(value="dmd-beta") dmd-beta
+							option(value="dmd-nightly") dmd-nightly
+							option(value="ldc-beta") ldc-beta
+							option(value="ldc") ldc
+							option(value="dreg") All
+					div.editor-btn-container
+						input(ng-model="args", name="args", placeholder="Compiler arguments")
+					div#add-library
+						button.btn.btn-default(ng-click="addLibrary()")
+							span Add library
+							i.fa.fa-plus(aria-hidden="true")
+						select#add-library-select(ng-model="availableLibrary", name="availableLibrary", ng-change="onAddLibrary()", ng-blur="onBlurLibrary()")
+							option(value="none") None
+							option(ng-repeat="lib in availableLibraries", ng-value="lib.name + ' ' + lib.version") {{ lib.name }} {{ lib.version }}
 
-				div.editor-btn-container
-					input(ng-model="args", name="args", placeholder="Compiler arguments")
-				button.btn.btn-default(ng-click="format()")
-					span Format
-					i.fa.fa-magic(aria-hidden="true")
-				button.btn.btn-default(ng-click="reset()")
-					span Reset
-					i.fa.fa-undo(aria-hidden="true")
-				button.btn.btn-default(ng-click="shorten()")
-					span Shorten
-					i.fa.fa-share(aria-hidden="true")
-				button.btn.btn-default(ng-click="importFromGist()")
-					span Import Gist
-					i.fa.fa-cloud-download(aria-hidden="true")
-				button.btn.btn-default(ng-click="gist()")
-					span Export Gist
-					i.fa.fa-cloud-upload(aria-hidden="true")
-				div.editor-btn-container(ng-show="shortLinkURL.length > 0")
-					input#shortlink-input(ng-value="shortLinkURL", size="24")
-					button.copy-btn(data-clipboard-target="#shortlink-input", data-clipboard-action="copy")
-						img.clipy(src="/static/img/clippy.svg", alt="Copy to clipboard", width="13")
+					span.hidden-xs.hidden-sm.hidden-md
+						button.btn.btn-default(ng-click="ir()",ng-show="compiler.indexOf('ldc') >= 0")
+							span IR
+							i.fa.fa-text-o(aria-hidden="true")
+						button.btn.btn-default(ng-click="asm()")
+							span ASM
+							i.fa.fa-flask(aria-hidden="true")
+						button.btn.btn-default(ng-click="ast()")
+							span AST
+							i.fa.fa-tree(aria-hidden="true")
+				span#editor-center-group
+					button.btn.btn-default(ng-click="format()")
+						span Format
+						i.fa.fa-magic(aria-hidden="true")
+					button.btn.btn-default(ng-click="reset()")
+						span Reset
+						i.fa.fa-undo(aria-hidden="true")
+				span#editor-right-group
+					button.btn.btn-default(ng-click="shorten()")
+						span Shorten
+						i.fa.fa-share(aria-hidden="true")
+					button.btn.btn-default(ng-click="importFromGist()")
+						span Import Gist
+						i.fa.fa-cloud-download(aria-hidden="true")
+					button.btn.btn-default(ng-click="gist()")
+						span Export Gist
+						i.fa.fa-cloud-upload(aria-hidden="true")
+					div.editor-btn-container(ng-show="shortLinkURL.length > 0")
+						input#shortlink-input(ng-value="shortLinkURL", size="24")
+						button.copy-btn(data-clipboard-target="#shortlink-input", data-clipboard-action="copy")
+							img.clipy(src="/static/img/clippy.svg", alt="Copy to clipboard", width="13")
 		div(class="col-md-7 col-sm-12': showContent", style="padding-left: 0px; padding-right: 0px")
 			ui-codemirror(ui-codemirror-opts="editorOptions", ui-codemirror="{ onLoad : codemirrorLoaded }", ng-model="sourceCode")
 		div(ng-show="showProgramOutput", class="col-md-5 hidden-xs")
