@@ -10,9 +10,12 @@ d:
   - dmd-beta
   - dmd-nightly
   - ldc
-  - ldc-beta
-  # used to build the release application
-  - ldc-1.3.0-beta2
+
+matrix:
+  include:
+    - d: ldc-1.7.0
+      env: TOUR_DEPLOY=1
+
 
 cache:
   - $HOME/.dub
@@ -40,6 +43,6 @@ script:
   - if [[ "${DC}" == "ldc2" ]]; then docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -ti dlangtour/core --wait-until-pulled --sanitycheck ; fi
 
 after_success:
-  - if [[ "${DC}" == "ldc2" && "$(ldc2 --version | head -n1 | sed -E 's/.*\((.*)\).*/\1/')" == "1.3.0-beta2" && "${TRAVIS_BRANCH}" == "master" && "${TRAVIS_PULL_REQUEST}" == "false" ]]; then docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"; fi
-  - if [[ "${DC}" == "ldc2" && "$(ldc2 --version | head -n1 | sed -E 's/.*\((.*)\).*/\1/')" == "1.3.0-beta2" && "${TRAVIS_BRANCH}" == "master" && "${TRAVIS_PULL_REQUEST}" == "false" ]]; then docker push dlangtour/core       ; fi
+  - if [[ "${TOUR_DEPLOY}" == "1" && "${TRAVIS_BRANCH}" == "master" && "${TRAVIS_PULL_REQUEST}" == "false" ]]; then docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"; fi
+  - if [[ "${TOUR_DEPLOY}" == "1" && "${TRAVIS_BRANCH}" == "master" && "${TRAVIS_PULL_REQUEST}" == "false" ]]; then docker push dlangtour/core ; fi
   - bash <(curl -s https://codecov.io/bash)
