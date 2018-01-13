@@ -66,7 +66,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 	$scope.codemirrorLoaded = function(editor) {
 		$scope.editor = editor;
 		$scope.editor.on("change", function() {
-			sessionStorage.setItem($scope.sourceCodeKey,
+			localStorage.setItem($scope.sourceCodeKey,
 				 $scope.editor.getDoc().getValue());
 		});
 	}
@@ -104,7 +104,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 				$scope.resetCode = data.sourceCode;
 				$scope.sourceCodeKey = "sourcecode_" + language + "_" + chapterId + "_" + section;
 
-				var sessionSC = sessionStorage.getItem($scope.sourceCodeKey)
+				var sessionSC = localStorage.getItem($scope.sourceCodeKey)
 				if (sessionSC) {
 					$scope.sourceCode = sessionSC;
 				} else {
@@ -115,14 +115,34 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		$scope.showSourceCode = hasSourceCode;
 	}
 
+	// https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript-jquery
+	function hashCode(str) {
+		var hash = 0, i, chr;
+		if (str.length === 0) return hash;
+		for (i = 0; i < str.length; i++) {
+			chr   = str.charCodeAt(i);
+			hash  = ((hash << 5) - hash) + chr;
+			hash |= 0; // Convert to 32bit integer
+	  }
+	  return hash;
+	}
+
 	$scope.initEditor = function(sourceCode) {
 
 		var source = $location.search().source;
 		if (!source) {
 			source = b64DecodeUnicode(sourceCode);
+			$scope.sourceCodeKey = window.location.hostname;
+		} else {
+			$scope.sourceCodeKey = "run_import_" + hashCode(source);
 		}
 		$scope.resetCode = source;
-		$scope.sourceCode = $scope.resetCode;
+		var sessionSC = localStorage.getItem($scope.sourceCodeKey)
+		if (sessionSC) {
+			$scope.sourceCode = sessionSC;
+		} else {
+			$scope.sourceCode = $scope.resetCode;
+		}
 	}
 
 	// we have at most two nanobars on the screen
