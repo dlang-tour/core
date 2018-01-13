@@ -285,7 +285,7 @@ class WebInterface
 		const title = "Editor";
 		const chapterId = "";
 		const language = "en";
-		const name = "DRun";
+		const name = "run.dlang.io";
 		static immutable toc = buildDlangToc();
 		render!("editor.dt", googleAnalyticsId, title, toc, chapterId, language, sourceCode, name)();
 	}
