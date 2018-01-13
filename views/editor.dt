@@ -19,7 +19,7 @@ block content
 			div#nanobar(ng-show="inProgress")
 			pre#program-output(ng-bind-html="programOutput")
 		div(style="padding-left: 0px; padding-right: 0px")
-			div#command-box.text-right
+			div#command-box
 				button.btn.btn-primary(ng-click="run()")
 					span Run
 					i.fa.fa-play(aria-hidden="true")
