@@ -212,9 +212,9 @@ dlangTourApp.controller('DlangTourAppCtrl',
 
 	$scope.asm = function() {
 		var args = $scope.args || "";
-		if ($scope.compiler.indexOf("dmd") >=0) {
+		if ($scope.compiler.indexOf("dmd") >=0 && args.indexOf("-asm") < 0) {
 			args += " -asm";
-		} else if ($scope.compiler.indexOf("ldc") >=0) {
+		} else if ($scope.compiler.indexOf("ldc") >=0 && args.indexOf("-output-s") < 0) {
 			args += " -output-s";
 		} else {
 			$scope.programOutput = $scope.compiler + " doesn't support ASM output";
@@ -224,7 +224,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 
 	$scope.ir = function() {
 		var args = $scope.args || "";
-		if ($scope.compiler.indexOf("ldc") >=0) {
+		if ($scope.compiler.indexOf("ldc") >=0 && args.indexOf("-output-ll") < 0) {
 			args += " -output-ll";
 		} else {
 			$scope.programOutput = $scope.compiler + " doesn't support ASM output";
