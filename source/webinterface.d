@@ -256,7 +256,7 @@ class WebInterface
 		} else if (auto s = "b64source" in req.query) {
 			sourceCode = *s;
 		} else {
-			auto sourceCodeRaw = "import std.stdio;\nvoid main(string[] args)\n{\n    writeln(\"Hello D\");\n}";
+			auto sourceCodeRaw = "import std.stdio;\nvoid main()\n{\n    writeln(\"Hello D\");\n}";
 			sourceCode = Base64.encode(cast(ubyte[]) sourceCodeRaw);
 		}
 		auto googleAnalyticsId = googleAnalyticsId_;
