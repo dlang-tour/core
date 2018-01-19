@@ -34,9 +34,9 @@ editor. The content is written in standard *markdown*. The filename minus
 the extension of each chaper denotes the internal chapter ID used
 for constructing URLs.
 
-Within the content source code examples can be inserted by indenting each line by **4 whitespaces**:
+Within the content, source code examples can be inserted by indenting each line by **4 whitespaces**:
 
-   writeln("hello");
+    writeln("hello");
 
 _Make sure to also indent empty lines by 4 whitespaces otherwise two separate code
 boxes will be rendered_. Code is automatically highlighted as D code.
