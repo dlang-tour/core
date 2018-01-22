@@ -186,11 +186,7 @@ shared static this()
 		// parse json sent via text/plain to avoid an additional preflight OPTIONS request
 		// https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS#Preflighted_requests
 		if (req.contentType == "text/plain")
-		{
 			req.contentType = "application/json; charset=UTF-8";
-			auto bodyStr = req.bodyReader.readAllUTF8;
-			if (!bodyStr.empty) req.json = parseJson(bodyStr);
-		}
 	}
 
 	urlRouter
