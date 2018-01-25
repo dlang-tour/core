@@ -3,7 +3,7 @@
 	"versions": {
 		"botan": "1.12.9",
 		"botan-math": "1.0.3",
-		"dfmt": "0.5.0",
+		"dfmt": "0.5.1",
 		"diet-ng": "1.4.3",
 		"dyaml": "0.6.4",
 		"eventcore": "0.8.27",
