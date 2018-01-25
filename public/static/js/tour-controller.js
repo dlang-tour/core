@@ -167,6 +167,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 	ansi_up.use_classes = true;
 
 	$scope.run = function(args) {
+		args = args || "";
 		$scope.programOutput = $sce.trustAsHtml("... Waiting for remote service ...");
 		$scope.inProgress = true;
 		var currentNanobarValue = 0;
@@ -187,14 +188,21 @@ dlangTourApp.controller('DlangTourAppCtrl',
 
 		storeState();
 
-		$http.post('/api/v1/run', {
+		$http.post('https://run.dlang.io/api/v1/run', {
 			source: $scope.sourceCode,
 			compiler: $scope.compiler,
 			args: args || $scope.args,
 			color: true
 		}).then(function(body) {
 			var data = body.data;
-			$scope.programOutput = $sce.trustAsHtml(ansi_up.ansi_to_html(data.output));
+			var html = data.output;
+			if (args.indexOf("-output-s") >=0 || args.indexOf("-output-ll") >= 0 ||
+				args.indexOf("-asm") >= 0 || args.indexOf("-vcg-ast") >= 0) {
+				html = hljs.highlightAuto(html).value;
+			} else if (args.indexOf("-D") < 0) {
+				html = ansi_up.ansi_to_html(html);
+			}
+			$scope.programOutput = $sce.trustAsHtml(html);
 			$scope.warnings = data.warnings;
 			$scope.errors = data.errors;
 			// Enable linting

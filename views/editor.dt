@@ -8,6 +8,7 @@ block head
 	link(rel="stylesheet", href="/static/lib/grid12.min.css")
 	link(rel="stylesheet", href="/static/css/editor.css")
 	link(rel="stylesheet", href="/static/css/ansi.css")
+	link(rel="stylesheet", href="/static/lib/highlight.css")
 
 block content
 	.row(ng-controller="DlangTourAppCtrl as ctrl", ng-init="initEditor('#{sourceCode}')")
@@ -93,3 +94,4 @@ block js
 	script(src="/static/lib/clipboard.min.js")
 	script(src="/static/lib/ansi_up.min.js")
 	script(src="/static/lib/nanobar.min.js")
+	script(src="/static/lib/highlight.pack.js")
