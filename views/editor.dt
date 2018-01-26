@@ -18,7 +18,8 @@ block content
 					span.fa.fa-close
 			h2.program-output-title rdmd playground.d
 			div#nanobar(ng-show="inProgress")
-			pre#program-output(ng-bind-html="programOutput")
+			pre#program-output(ng-bind-html="programOutput", ng-if="!useOutputIFrame")
+			preview(content="programOutput", ng-if="useOutputIFrame")
 		div(style="padding-left: 0px; padding-right: 0px")
 			div#command-box
 				span#editor-left-group
@@ -80,7 +81,8 @@ block content
 			b.program-output-title > rdmd playground.d
 			hr
 			div#nanobar2(ng-show="inProgress")
-			pre#program-output(ng-bind-html="programOutput")
+			pre#program-output(ng-bind-html="programOutput", ng-if="!useOutputIFrame")
+			preview(content="programOutput", ng-if="useOutputIFrame")
 
 block js
 	script(src="/static/js/tour-controller.js")

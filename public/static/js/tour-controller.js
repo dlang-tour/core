@@ -167,7 +167,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 	ansi_up.use_classes = true;
 
 	$scope.run = function(args) {
-		args = args || "";
+		args = args || $scope.args;
 		$scope.programOutput = $sce.trustAsHtml("... Waiting for remote service ...");
 		$scope.inProgress = true;
 		var currentNanobarValue = 0;
@@ -180,6 +180,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		}, 100);
 
 		$scope.showProgramOutput = true;
+		$scope.useOutputIFrame = false;
 		$scope.showContent = true;
 		$scope.warnings = [];
 		$scope.errors = [];
@@ -188,10 +189,10 @@ dlangTourApp.controller('DlangTourAppCtrl',
 
 		storeState();
 
-		$http.post('https://run.dlang.io/api/v1/run', {
+		$http.post('/api/v1/run', {
 			source: $scope.sourceCode,
 			compiler: $scope.compiler,
-			args: args || $scope.args,
+			args: args,
 			color: true
 		}).then(function(body) {
 			var data = body.data;
@@ -199,7 +200,11 @@ dlangTourApp.controller('DlangTourAppCtrl',
 			if (args.indexOf("-output-s") >=0 || args.indexOf("-output-ll") >= 0 ||
 				args.indexOf("-asm") >= 0 || args.indexOf("-vcg-ast") >= 0) {
 				html = hljs.highlightAuto(html).value;
-			} else if (args.indexOf("-D") < 0) {
+			} else if (args.indexOf("-D") >= 0) {
+				// removes padding on the left side
+				html = html.replace("max-width: 980px;", "max-width: default;");
+				$scope.useOutputIFrame = true;
+			} else {
 				html = ansi_up.ansi_to_html(html);
 			}
 			$scope.programOutput = $sce.trustAsHtml(html);
@@ -433,6 +438,28 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		$window.open(url, '_blank');
 	}
 }]);
+
+dlangTourApp.directive("preview", function () {
+  function link(scope, element) {
+    var iframe = document.createElement('iframe');
+    var element0 = element[0];
+    element0.appendChild(iframe);
+    var doc = iframe.contentWindow.document;
+
+    scope.$watch('content', function () {
+      doc.body.innerHTML = "";
+      doc.write(scope.content);
+    });
+  }
+
+  return {
+    link: link,
+    restrict: 'E',
+    scope: {
+      content: '='
+    }
+  };
+});
 
 // use CodeMirror to highlight pre
 function start() {
