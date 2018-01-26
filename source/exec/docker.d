@@ -166,8 +166,8 @@ class Docker: IExecProvider
 		foreach (chunk; docker.stdout.byChunk(4096)) {
 			output ~= chunk;
 			if (output.length > maximumOutputSize_) {
-				return typeof(return)("Program's output exceeds limit of %d bytes.".format(maximumOutputSize_),
-						false);
+				output ~= "\n\n---Program's output exceeds limit of %d bytes.---".format(maximumOutputSize_);
+				return typeof(return)(output, success);
 			}
 		}
 
