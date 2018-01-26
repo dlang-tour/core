@@ -74,12 +74,12 @@ iframe {
     display: block;
     border: none;         /* Reset default border */
     width: 100%;
-	min-height: 100%;
-	position: fixed;
+    height: calc(100vh - 165px);
+	position: relative;
 }
 
 @media only screen and (max-width: 767px) {
 	iframe {
-		position: relative;
+		height: 30vh;
 	}
 }
