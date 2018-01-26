@@ -48,3 +48,11 @@ cd core/deploy
  * Run `docker-compose up -d`.
  * Running `docker-compose logs tour` will show logfiles of the currently
    running `dlang-tour` container.
+
+### Daily cron jobs
+
+Copy `docker_update.sh` to `/etc/cron.daily/docker_update.sh`
+This is necessary to
+- remove old, unused images
+- remove left-overs containers (Docker `--rm` isn't perfect)
+- update the execution images (the watchtower only updates the base docker container)
