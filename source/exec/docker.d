@@ -144,6 +144,25 @@ class Docker: IExecProvider
 		bool success;
 		auto startTime = Clock.currTime();
 
+		logInfo("Executing Docker image %s with env='%s'", dockerImage, env);
+
+		string output;
+		enum bufReadLength = 4096;
+		// returns true if the maximum output limit has been exceeded
+		bool readFromPipe() {
+            while (true) {
+                auto buf = docker.stdout.rawRead(new char[bufReadLength]);
+                output ~= buf;
+				if (output.length > maximumOutputSize_) {
+					output ~= "\n\n---Program's output exceeds limit of %d bytes.---".format(maximumOutputSize_);
+					return true;
+				}
+				if (buf.length < bufReadLength)
+				    break;
+			}
+			return false;
+		}
+
 		// Don't block and give away current time slice
 		// by sleeping for a certain time until child process has finished. Kill process if time limit
 		// has been reached.
@@ -159,17 +178,11 @@ class Docker: IExecProvider
 				break;
 			}
 
-			sleep(300.msecs);
-		}
-
-		string output;
-		foreach (chunk; docker.stdout.byChunk(4096)) {
-			output ~= chunk;
-			if (output.length > maximumOutputSize_) {
-				output ~= "\n\n---Program's output exceeds limit of %d bytes.---".format(maximumOutputSize_);
+			sleep(50.msecs);
+			if (readFromPipe())
 				return typeof(return)(output, success);
-			}
 		}
+		readFromPipe();
 
 		return typeof(return)(output, success);
 	}
