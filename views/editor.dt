@@ -33,7 +33,7 @@ block content
 							option(value="dmd-nightly") dmd-nightly
 							option(value="ldc-beta") ldc-beta
 							option(value="ldc") ldc
-							option(value="dreg") All
+							option(value="dreg") All dmd compilers (2.060 - latest)
 					div.editor-btn-container
 						input(ng-model="args", name="args", placeholder="Compiler arguments")
 					div#add-library

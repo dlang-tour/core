@@ -45,6 +45,12 @@
     box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
 }
 
+.editor-btn-container select {
+	/*The last element All compilers is quite long. Cut so that all other elements
+	are still visible */
+	width: 125px;
+}
+
 #add-library {
 	display: inline-block;
 }
