@@ -1,7 +1,5 @@
 # The Dlang Online Tour
 
-[![Join the chat at https://gitter.im/dlang-tour/core](https://badges.gitter.im/dlang-tour/core.svg)](https://gitter.im/dlang-tour/core?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 [![Build Status](https://travis-ci.org/dlang-tour/core.svg?branch=master)](https://travis-ci.org/dlang-tour/core)
 
 This is the [D language](https://dlang.org) online tour which
@@ -12,17 +10,25 @@ The most recent version of this tour can be seen here: http://tour.dlang.org.
 
 ### Running offline
 
-With D's package manager DUB the tour can be downloaded for offline access:
+The tour can be downloaded for offline access:
 
 ```sh
-dub fetch dlang-tour # only once
-dub run dlang-tour   # to execute the tour
+git clone https://github.com/dlang-tour/core && cd core
+git submodule foreach git pull origin master
+dub
 ```
 
+This requires DUB - D's package manager. DUB is part of the [release installer and archives](https://dlang.org/download.html).
+
+### Specifying a language directory
+
+For translator it's often convenient to clone their directory and run the tour
+only with their language.
 A custom language can be loaded directly using the `-l` / `--lang-dir` option
 with the path to the directoy of the to be loaded language:
 
 ```sh
+dub fetch dlang-tour # only once
 dub run dlang-tour -- --lang-dir .
 ```
 
