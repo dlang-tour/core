@@ -92,7 +92,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 			},
 			'Alt-F': function(cm) {
 				$scope.$apply('format()');
-			}
+			},
 		}
 	};
 
@@ -153,6 +153,9 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		if (typeof(loc.args) === "undefined") {
 			$scope.args = localStorage.getItem($scope.sourceCodeKey + "_args") || $scope.args;
 		}
+		$scope.editorOptions.extraKeys['Ctrl-S'] = function(cm) {
+			$scope.$apply('shorten()');
+		};
 	}
 
 	// we have at most two nanobars on the screen
