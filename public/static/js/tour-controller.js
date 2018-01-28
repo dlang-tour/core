@@ -189,6 +189,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 				var resp = JSON.parse(request.responseText);
 				$scope.shortLinkURL = resp.url;
 				copyText($scope.shortLinkURL);
+				$scope.$apply();
 			}
 		};
 	}
