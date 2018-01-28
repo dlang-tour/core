@@ -131,6 +131,24 @@ dlangTourApp.controller('DlangTourAppCtrl',
 	  return hash;
 	}
 
+
+	// Programmatic copy-to-clipboard
+	// No one ever said that JavaScript is sane
+	function copyText(text) {
+		var fakeElement = document.createElement('textarea');
+		// Move element out of screen vertically
+		fakeElement.style.position = 'fixed';
+		fakeElement.style.top = '100%';
+		fakeElement.readOnly = true;
+		fakeElement.value = text;
+		document.body.appendChild(fakeElement);
+
+		fakeElement.select();
+		document.execCommand('copy');
+
+		document.body.removeChild(fakeElement);
+	}
+
 	$scope.initEditor = function(sourceCode) {
 		var loc = $location.search()
 		var source = loc.source;
@@ -154,7 +172,24 @@ dlangTourApp.controller('DlangTourAppCtrl',
 			$scope.args = localStorage.getItem($scope.sourceCodeKey + "_args") || $scope.args;
 		}
 		$scope.editorOptions.extraKeys['Ctrl-S'] = function(cm) {
-			$scope.$apply('shorten()');
+			$scope.$apply('shorten');
+			// copyText _only_ works within a user event
+			// It doesn't work after an async request
+			// This is a limitation by the browsers
+			// Workaround for now: use deprecated, synchronous Ajax requests
+			var request = new XMLHttpRequest();
+			request.open('POST', '/api/v1/shorten', false);  // `false` makes the request synchronous
+			request.send(JSON.stringify({
+				source: $scope.sourceCode,
+				compiler: $scope.compiler,
+				args: $scope.args,
+			}));
+			if (request.status / 100 == 2)
+			{
+				var resp = JSON.parse(request.responseText);
+				$scope.shortLinkURL = resp.url;
+				copyText($scope.shortLinkURL);
+			}
 		};
 	}
 
