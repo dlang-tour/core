@@ -55,7 +55,7 @@ body(ng-app="DlangTourApp", class="ng-cloak")
 					#github_avatar
 						a(href="https://github.com/dlang-tour/core")
 							i(class="fa fa-github",aria-hidden="true")
-						a(href="https://github.com/dlang-tour/core/issues/new")
+						a(ng-href=(topHelpLink))
 							i(class="fa fa-question-circle",aria-hidden="true")
 
 	block content

@@ -165,10 +165,11 @@ class WebInterface
 		auto githubRepo = meta.repo;
 		auto translations = meta.translator;
 		const name = "DLang Tour";
+		const topHelpLink = "https://github.com/dlang-tour/core/issues/new";
 		render!("tour.dt", htmlContent, language, section, sectionId,
 				sectionCount, chapterId, hasSourceCode, sourceCodeEnabled,
 				nextSection, previousSection, googleAnalyticsId,
-				toc, title, githubRepo, translations, name)();
+				toc, title, githubRepo, translations, name, topHelpLink)();
 	}
 
 	private static auto buildDlangToc()
@@ -287,7 +288,8 @@ class WebInterface
 		const language = "en";
 		const name = "run.dlang.io";
 		static immutable toc = buildDlangToc();
-		render!("editor.dt", googleAnalyticsId, title, toc, chapterId, language, sourceCode, name)();
+		string topHelpLink = "https://github.com/dlang-tour/core/wiki/run.dlang.io";
+		render!("editor.dt", googleAnalyticsId, title, toc, chapterId, language, sourceCode, name, topHelpLink)();
 	}
 
 	@path("/is/:id")

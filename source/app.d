@@ -154,7 +154,8 @@ shared static this()
 		auto chapterId = "";
 		auto language = "en";
 		const name = "DLang Tour";
-		res.render!("error.dt", req, error, language, googleAnalyticsId, chapterId, toc, title, name)();
+		const topHelpLink = "https://github.com/dlang-tour/core/issues/new";
+		res.render!("error.dt", req, error, language, googleAnalyticsId, chapterId, toc, title, name, topHelpLink)();
 		res.finalize();
 	};
 
