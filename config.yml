@@ -17,5 +17,5 @@ exec:
     #     maximum_queue_size: 10
     #     time_limit: 10
     #     maximum_output_size: 4096
-    #     docker_binary_path: "/usr/local/bin/docker"
+    #     docker_binary_path: "/usr/bin/docker"
     cache: true
