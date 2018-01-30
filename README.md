@@ -13,7 +13,7 @@ The most recent version of this tour can be seen here: http://tour.dlang.org.
 The tour can be downloaded for offline access:
 
 ```sh
-git clone https://github.com/dlang-tour/core && cd core
+git clone --recursive https://github.com/dlang-tour/core && cd core
 git submodule foreach git pull origin master
 dub
 ```
@@ -43,13 +43,24 @@ in the [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Compile & Run
 
-Make sure [dub](http://code.dlang.org/download) is installed and simply run this in
+Make sure [dub](http://code.dlang.org/download) is installed and simply run `dub` in
 the `dlang-tour` folder:
 
-	dub
+```sh
+git clone --recursive https://github.com/dlang-tour/core && cd core
+dub
+```
 
 You might want to change the settings in `config.yml` to change
 the ports the tour is listening to.
+
+### OpenSSL 1.1
+
+If you see linker errors regarding OpenSSL/1.1, try:
+
+```sh
+dub --override-config="vibe-d:tls/openssl-1.1
+```
 
 ## Compiling & running of user source code
 
@@ -61,7 +72,7 @@ implemented within the dlang-tour:
    will be returned.
  * `stupidlocal`: an unsafe method that just runs `rdmd` on the local host system
    and returns its output. ***Very unsafe*** and musn't ever be used in production!
- * `docker`: runs `rdmd` within a special Docker container ([dlang-tour-rdmd](https://github.com/dlang-tour/core-rdmd))
+ * `docker`: runs `dmd` within a special Docker container ([core-exec](https://github.com/dlang-tour/core-exec))
    and returns its output. The driver imposes the Docker container memory and
    execution time limits. Additional configurations options available in `config.yml`.
 
@@ -78,10 +89,10 @@ is configured to use Docker itself to compile and run D source code
 in the online editor. For that to work the host system's Docker `/var/run/docker.sock`
 Unix domain socket has to be mounted to work inside the container. A
 **sandbox** for compiling will then be started on the host system actually,
-and not within the Dlang Tour Docker container itself.
+and not within the DLang Tour Docker container itself.
 
 The code for running the D compilers in a Docker sandbox can be found here:
-[dlang-tour-rdmd](https://github.com/dlang-tour/core-exec).
+[core-exec](https://github.com/dlang-tour/core-exec).
 
 So to run the latest dlang-tour
 version in a Docker container, run the following command:
