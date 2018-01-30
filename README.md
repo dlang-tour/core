@@ -59,7 +59,7 @@ the ports the tour is listening to.
 If you see linker errors regarding OpenSSL/1.1, try:
 
 ```sh
-dub --override-config="vibe-d:tls/openssl-1.1
+dub --override-config="vibe-d:tls/openssl-1.1"
 ```
 
 ## Compiling & running of user source code
