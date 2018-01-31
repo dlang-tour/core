@@ -63,15 +63,13 @@ class StupidLocal: IExecProvider
 		do {
 			tempname = "%s/temp_dlang_tour_%s.d".format(tempdir, randomName());
 		} while (exists(tempname));
-
-		File tempfile;
-		tempfile.open(tempname, "wb");
-		return tempfile;
+		return File(tempname, "wb");
 	}
 
 	Tuple!(string, "output", bool, "success") compileAndExecute(RunInput input)
 	{
 		import std.array : join, split;
+		import std.algorithm.searching : canFind;
 		typeof(return) result;
 		auto task = runTask(() {
 			auto tmpfile = getTempFile();
@@ -79,24 +77,37 @@ class StupidLocal: IExecProvider
 
 			tmpfile.write(input.source);
 			tmpfile.close();
-			auto args = [dCompiler];
-			args ~= input.args.split(" ");
-			args ~= "-color=" ~ (input.color ? "on " : "off ");
-			args ~= "-run";
-			args ~= tmpfile.name;
 
-			// DMD requires a TTY for colored output
-			//auto rdmd = args.execute;
-			auto env = [
-				"TERM": "dtour"
-			];
-			auto fakeTty = `
-faketty () { script -qfc "$(printf "%q " "$@")" /dev/null ; }
-faketty ` ~ args.join(" ") ~  ` | cat | sed 's/\r$//'`;
+			const isDub = input.source.canFind("dub.sdl", "dub.json");
+			string[] args;
 
-			auto rdmd = fakeTty.executeShell(env);
-			result.success = rdmd.status == 0;
-			result.output = rdmd.output;
+			typeof(args.execute) res;
+			// support execution of dub single file packages
+			if (isDub)
+			{
+				args = ["dub", "-q", "--compiler=" ~ dCompiler, "--single", tmpfile.name];
+				res = args.execute;
+			}
+			else
+			{
+				args = [dCompiler];
+				args ~= input.args.split(" ");
+				args ~= "-color=" ~ (input.color ? "on " : "off ");
+				args ~= "-run";
+				args ~= tmpfile.name;
+
+				// DMD requires a TTY for colored output
+				auto env = [
+					"TERM": "dtour"
+				];
+				auto fakeTty = `
+faketty () {	 script -qfc "$(printf "%q " "$@")" /dev/null ; }
+faketty ` ~ 	args.join(" ") ~  ` | cat | sed 's/\r$//'`;
+
+				res = fakeTty.executeShell(env);
+			}
+			result.success = res.status == 0;
+			result.output = res.output;
 		});
 
 		while (task.running)

@@ -26,11 +26,10 @@ alias MustacheEngine!(string) Mustache;
 class ContentProvider
 {
 	private immutable MarkdownExtension = "md";
-	private immutable SourceCodeSectionTitle ="{SourceCode}";
-	private immutable SourceCodeDisabledSectionTitle =
-		"{SourceCode:disabled}";
-	private immutable SourceCodeIncompleteSectionTitle =
-		"{SourceCode:incomplete}";
+	private immutable SourceCodeSectionTitle ="{SourceCode";
+	private immutable SourceCodeDisabled = ":disabled";
+	private immutable SourceCodeIncomplete = ":incomplete";
+	private immutable SourceCodeFullWidth =":fullWidth";
 	private immutable SourceCodeMaxCharsPerLine = 48;
 
 	private {
@@ -206,13 +205,12 @@ class ContentProvider
 
 	private Content* addSection(string filename, string chapter, string currentSection, string language)
 	{
+		import std.algorithm.searching : canFind, startsWith;
 		Content* content = updateContent(language, chapter, currentSection);
 		enforce(exists(filename), "couldn't find " ~ filename);
 		scope (failure) logError("lang: %s, chapter: %s, section: %s failed", language, chapter, currentSection);
 		foreach (ref section; splitMarkdownBySection(readText(filename))) {
-			if (section.title == SourceCodeSectionTitle ||
-				section.title == SourceCodeDisabledSectionTitle ||
-				section.title == SourceCodeIncompleteSectionTitle) {
+			if (section.title.startsWith(SourceCodeSectionTitle)) {
 				enforce(section.level == 2, new Exception("%s: %s section expected to be on 2nd level"
 							.format(filename, SourceCodeSectionTitle)));
 				enforce(!content.html.empty, new Exception("%s: %s section must be within existing section."
@@ -229,9 +227,10 @@ class ContentProvider
 	                // remove three first and last backticks
 					content.sourceCode = content.sourceCode[startPos + 1 .. $ - 4];
 				}
-				content.sourceCodeEnabled = section.title != SourceCodeDisabledSectionTitle;
-				content.sourceCodeIncomplete = section.title == SourceCodeIncompleteSectionTitle;
-				checkSourceCodeLineWidth(content.sourceCode, content.title);
+				content.sourceCodeEnabled = !section.title.canFind(SourceCodeDisabled);
+				content.sourceCodeIncomplete = section.title.canFind(SourceCodeIncomplete);
+				if (!section.title.canFind(SourceCodeFullWidth))
+					checkSourceCodeLineWidth(content.sourceCode, content.title);
 			} else if (section.level == 1) {
 					enforce(content.title.length == 0,
 							new Exception("%s: Just one chapter title allowed: %s".format(filename, section.title)));
