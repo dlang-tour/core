@@ -103,7 +103,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		$scope.section = section;
 		$scope.prevPage = prevPage;
 		$scope.nextPage = nextPage;
-		$http.get('/api/v1/source/' + language + "/" + chapterId + "/" + section)
+		$http.get('https://run.dlang.io/api/v1/source/' + language + "/" + chapterId + "/" + section)
 			.success(function(data) {
 				$scope.resetCode = data.sourceCode;
 				$scope.sourceCodeKey = "sourcecode_" + language + "_" + chapterId + "_" + section;
@@ -228,7 +228,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 
 		storeState();
 
-		$http.post('/api/v1/run', {
+		$http.post('https://run.dlang.io/api/v1/run', {
 			source: $scope.sourceCode,
 			compiler: $scope.compiler,
 			args: args,
@@ -482,6 +482,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 dlangTourApp.directive("preview", function () {
   function link(scope, element) {
     var iframe = document.createElement('iframe');
+    iframe.setAttribute("sandbox", "allow-same-origin");
     var element0 = element[0];
     element0.appendChild(iframe);
     var doc = iframe.contentWindow.document;
