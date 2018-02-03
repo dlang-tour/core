@@ -186,4 +186,23 @@ class Docker: IExecProvider
 
 		return typeof(return)(output, success);
 	}
+
+	Package[] installedPackages()
+	{
+		import std.array : array;
+		import std.algorithm.iteration : filter, joiner, map, splitter;
+		import std.range : empty, dropOne;
+		import std.functional;
+
+		auto res = execute([dockerBinaryPath_, "run", "--rm", "--entrypoint=/bin/cat", DockerImages[0], "/installed_packages"]);
+		enforce(res.status == 0, "Error:" ~ res.output);
+		return res.output
+			.splitter("\n")
+			.filter!(not!empty)
+			.map!((l){
+				auto ps = l.splitter(":");
+				return Package(ps.front, ps.dropOne.front.filter!(a => a != '"').to!string);
+			})
+			.array;
+	}
 }

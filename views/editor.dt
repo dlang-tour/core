@@ -42,7 +42,8 @@ block content
 							i.fa.fa-plus(aria-hidden="true")
 						select#add-library-select(ng-model="availableLibrary", name="availableLibrary", ng-change="onAddLibrary()", ng-blur="onBlurLibrary()")
 							option(value="none") None
-							option(ng-repeat="lib in availableLibraries", ng-value="lib.name + ' ' + lib.version") {{ lib.name }} {{ lib.version }}
+							- foreach (p; installedPackages)
+								option(value="#{p.name} #{p.version_}") #{p.name } #{p.version_}
 
 					span.hidden-xs.hidden-sm.hidden-md
 						button.btn.btn-default(ng-click="ir()",ng-show="compiler.indexOf('ldc') >= 0")

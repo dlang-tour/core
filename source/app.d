@@ -190,9 +190,12 @@ shared static this()
 			req.contentType = "application/json; charset=UTF-8";
 	}
 
+	// refresh the list of DUB packages installed once on the start
+	auto installedPackages = execProvider.installedPackages();
+	logInfo("Installed DUB Packages: %s", installedPackages);
 	urlRouter
 		.any("/api/*", &cors)
-		.registerWebInterface(new WebInterface(contentProvider, config.googleAnalyticsId, defaultLang))
+		.registerWebInterface(new WebInterface(contentProvider, config.googleAnalyticsId, defaultLang, installedPackages))
 		.registerRestInterface(new ApiV1(execProvider, contentProvider))
 		.get("/static/*", serveStaticFiles(publicDir.buildPath("static"), fsettings));
 

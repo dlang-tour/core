@@ -6,6 +6,7 @@ import std.traits: ReturnType;
 import std.typecons: Tuple;
 
 import contentprovider;
+import exec.iexecprovider;
 
 /++
 	Main entry point for user visible content
@@ -23,14 +24,17 @@ class WebInterface
 			///< language, chapter and section indexing
 		string googleAnalyticsId_; ///< ID for google analytics
 		string defaultLang = "en";
+
+		Package[] installedPackages_;
 	}
 
 	this(ContentProvider contentProvider,
-		string googleAnalyticsId, string defaultLang)
+		string googleAnalyticsId, string defaultLang, Package[] installedPackages)
 	{
 		this.contentProvider_ = contentProvider;
 		this.googleAnalyticsId_ = googleAnalyticsId;
 		this.defaultLang = defaultLang;
+		this.installedPackages_ = installedPackages;
 
 		// Fetch all table-of-contents for all supported
 		// languages (just 'en' for now) and generate
@@ -289,7 +293,8 @@ class WebInterface
 		const name = "run.dlang.io";
 		static immutable toc = buildDlangToc();
 		string topHelpLink = "https://github.com/dlang-tour/core/wiki/run.dlang.io";
-		render!("editor.dt", googleAnalyticsId, title, toc, chapterId, language, sourceCode, name, topHelpLink)();
+		auto installedPackages = installedPackages_;
+		render!("editor.dt", googleAnalyticsId, title, toc, chapterId, language, sourceCode, name, topHelpLink, installedPackages)();
 	}
 
 	@path("/is/:id")

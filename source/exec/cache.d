@@ -55,6 +55,11 @@ class Cache: IExecProvider
 			return result;
 		}
 	}
+
+	Package[] installedPackages()
+	{
+		return realExecProvider_.installedPackages;
+	}
 }
 
 private uint getSourceCodeHash(string source)
