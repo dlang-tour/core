@@ -10,4 +10,9 @@ class Off: IExecProvider
 	{
 		return typeof(return)("Service currently unavailable", false);
 	}
+
+	Package[] installedPackages()
+	{
+		return null;
+	}
 }

@@ -115,4 +115,9 @@ faketty ` ~ 	args.join(" ") ~  ` | cat | sed 's/\r$//'`;
 
 		return result;
 	}
+
+	Package[] installedPackages()
+	{
+		return null;
+	}
 }

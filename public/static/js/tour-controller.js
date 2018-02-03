@@ -393,13 +393,6 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		$scope.sourceCode = after.join("+/");
 	}
 
-	$scope.availableLibraries = [
-		{name: "mir", version:"1.1.1"},
-		{name: "mir-algorithm", version:"0.6.14"},
-		{name: "vibe-d", version:"0.8.2"},
-		{name: "libdparse", version:"0.7.2"},
-		{name: "emsi_containers", version:"0.6.0"},
-	];
 	$scope.showAvailableLibraries = false;
 	$scope.availableLibrary = "none";
 	var addLibrarySelect = document.getElementById("add-library-select");
