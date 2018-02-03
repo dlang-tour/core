@@ -13,4 +13,4 @@
 .ansi-bright-blue-fg { color: blue; }
 .ansi-bright-magenta-fg { color: magenta; }
 .ansi-bright-cyan-fg { color: cyan; }
-.ansi-bright-white-fg { color: black; }
+.ansi-bright-white-fg { color: black; font-weight: bold; }
