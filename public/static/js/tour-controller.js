@@ -237,7 +237,8 @@ dlangTourApp.controller('DlangTourAppCtrl',
 			var data = body.data;
 			var html = data.output;
 			if (args.indexOf("-output-s") >=0 || args.indexOf("-output-ll") >= 0 ||
-				args.indexOf("-asm") >= 0 || args.indexOf("-vcg-ast") >= 0) {
+				args.indexOf("-asm") >= 0 || args.indexOf("-vcg-ast") >= 0 ||
+				args.indexOf("-Xf=-") >= 0) {
 				html = hljs.highlightAuto(html).value;
 			} else if (args.indexOf("-D") >= 0) {
 				// removes padding on the left side
@@ -286,6 +287,16 @@ dlangTourApp.controller('DlangTourAppCtrl',
 
 	$scope.ast = function() {
 		var args = ($scope.args || "") + " -vcg-ast";
+		$scope.run(args);
+	}
+
+	$scope.ddoc = function() {
+		var args = ($scope.args || "") + " -D";
+		$scope.run(args);
+	}
+
+	$scope.jsonOutput = function() {
+		var args = ($scope.args || "") + " -Xf=-";
 		$scope.run(args);
 	}
 

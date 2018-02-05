@@ -89,3 +89,9 @@ iframe {
 		height: 30vh;
 	}
 }
+
+@media only screen and (max-width: 1400px) {
+	.hidden-except-huge {
+		display: none;
+	}
+}

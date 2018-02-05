@@ -55,6 +55,13 @@ block content
 						button.btn.btn-default(ng-click="ast()")
 							span AST
 							i.fa.fa-tree(aria-hidden="true")
+					span.hidden-except-huge
+						button.btn.btn-default(ng-click="jsonOutput()")
+							span -X
+							i.fa.fa-code(aria-hidden="true")
+						button.btn.btn-default(ng-click="ddoc()")
+							span -D
+							i.fa.fa-file(aria-hidden="true")
 				span#editor-center-group
 					button.btn.btn-default(ng-click="format()")
 						span Format
