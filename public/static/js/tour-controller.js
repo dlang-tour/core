@@ -103,7 +103,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		$scope.section = section;
 		$scope.prevPage = prevPage;
 		$scope.nextPage = nextPage;
-		$http.get('https://run.dlang.io/api/v1/source/' + language + "/" + chapterId + "/" + section)
+		$http.get('/api/v1/source/' + language + "/" + chapterId + "/" + section)
 			.success(function(data) {
 				$scope.resetCode = data.sourceCode;
 				$scope.sourceCodeKey = "sourcecode_" + language + "_" + chapterId + "_" + section;
@@ -228,7 +228,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 
 		storeState();
 
-		$http.post('https://run.dlang.io/api/v1/run', {
+		$http.post('/api/v1/run', {
 			source: $scope.sourceCode,
 			compiler: $scope.compiler,
 			args: args,
@@ -237,7 +237,8 @@ dlangTourApp.controller('DlangTourAppCtrl',
 			var data = body.data;
 			var html = data.output;
 			if (args.indexOf("-output-s") >=0 || args.indexOf("-output-ll") >= 0 ||
-				args.indexOf("-asm") >= 0 || args.indexOf("-vcg-ast") >= 0) {
+				args.indexOf("-asm") >= 0 || args.indexOf("-vcg-ast") >= 0 ||
+				args.indexOf("-Xf=-") >= 0) {
 				html = hljs.highlightAuto(html).value;
 			} else if (args.indexOf("-D") >= 0) {
 				// removes padding on the left side
@@ -286,6 +287,16 @@ dlangTourApp.controller('DlangTourAppCtrl',
 
 	$scope.ast = function() {
 		var args = ($scope.args || "") + " -vcg-ast";
+		$scope.run(args);
+	}
+
+	$scope.ddoc = function() {
+		var args = ($scope.args || "") + " -D";
+		$scope.run(args);
+	}
+
+	$scope.jsonOutput = function() {
+		var args = ($scope.args || "") + " -Xf=-";
 		$scope.run(args);
 	}
 
