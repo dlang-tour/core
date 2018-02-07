@@ -39,9 +39,6 @@ script:
   # Compile & test with all compilers
   # https://issues.dlang.org/show_bug.cgi?id=13742 + separate linking not implemented for LDC
   - if [[ "${DC}" == "dmd" ]]; then  dub test --compiler=${DC} --build=unittest-cov --build-mode=singleFile ; else dub test --compiler=${DC} ; fi
-  # Temporarily disable the vibe-d test until vibe.d 0.8.3 has been releases
-  # At the moment vibe.d 0.8.2 will be fetched by default - this version doesn't work with dmd-nightly
-  - echo > public/content/en/dub/vibe-d.md
   - dub --compiler=${DC} -- --sanitycheck
   # Compile to static binary with ldc
   - if [[ "${DC}" == "ldc2" ]]; then  dub build -c static --compiler=${DC}; fi
