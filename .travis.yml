@@ -25,9 +25,12 @@ branches:
     - master
     - testing
 
-before_install:
-  - sudo apt-get -qq update
-  - sudo apt-get install -y libevent-dev
+addons:
+  apt:
+    packages:
+    - libevent-dev
+    - libblas-dev
+    - liblapack-dev
 
 script:
   # Update all language repos to their latest content
