@@ -287,7 +287,7 @@ class WebInterface
 
 	void showEditor(string sourceCode) {
 	    string googleAnalyticsId = googleAnalyticsId_;
-		const title = "Editor";
+		const title = "Online D Editor";
 		const chapterId = "";
 		const language = "en";
 		const name = "run.dlang.io";

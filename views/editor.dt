@@ -9,6 +9,7 @@ block head
 	link(rel="stylesheet", href="/static/css/editor.css")
 	link(rel="stylesheet", href="/static/css/ansi.css")
 	link(rel="stylesheet", href="/static/lib/highlight.css")
+	meta(name="description", content="Online playground for interactively running D code.")
 
 block content
 	.row(ng-controller="DlangTourAppCtrl as ctrl", ng-init="initEditor('#{sourceCode}')")
