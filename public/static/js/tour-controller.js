@@ -343,6 +343,13 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		}
 	}
 	$scope.shorten = function() {
+		// short urls currently don't support long source code
+		// fallback to GitHub's Gist for now
+		// https://stackoverflow.com/questions/417142/what-is-the-maximum-length-of-a-url-in-different-browsers
+		if ($scope.sourceCode.length > 2000)
+		{
+			return shortenToGist();
+		}
 		$http.post('/api/v1/shorten', {
 			source: $scope.sourceCode,
 			compiler: $scope.compiler,
@@ -362,6 +369,11 @@ dlangTourApp.controller('DlangTourAppCtrl',
 	}
 
 	$scope.gist = function() {
+		return shortenToGist().then(function(data){
+			window.open(data.html_url, "_blank");
+		});
+	}
+	function shortenToGist() {
 		$http.post('https://api.github.com/gists', {
 			public: true,
 			files: {
@@ -371,8 +383,8 @@ dlangTourApp.controller('DlangTourAppCtrl',
 			}
 		}).then(function(body) {
 			var data = body.data;
-			window.open(data.html_url, "_blank");
 			$scope.shortLinkURL = window.location.origin + "/gist/" + gistURLToId(data.html_url) + editorParams();
+			return data;
 		}, function(error) {
 			var msg = (error || {}).statusMessage || "";
 			$scope.programOutput = "Server error: " + msg;
