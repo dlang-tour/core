@@ -40,3 +40,6 @@
 [submodule "public/content/sk"]
 	path = public/content/sk
 	url = https://github.com/dlang-tour/slovak
+[submodule "public/content/mir"]
+	path = public/content/mir
+	url = https://github.com/dlang-tour/mir
