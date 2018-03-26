@@ -497,7 +497,7 @@ unittest
 {
 	assert(splitMarkdownBySection("").length == 0);
 
-	string markdown = q{
+	string markdown = `
 #Hello World
 
 This is a test!
@@ -510,7 +510,7 @@ My third level text.
 
 Hello
 
-## Guten Tag};
+## Guten Tag`;
 
 	auto sections = splitMarkdownBySection(markdown);
 	assert(sections.length == 5, "%s".format(sections));
