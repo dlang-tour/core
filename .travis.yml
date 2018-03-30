@@ -9,7 +9,7 @@ d:
   - dmd
   - dmd-beta
   - dmd-nightly
-  - ldc
+  #- ldc
 
 matrix:
   include:
