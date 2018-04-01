@@ -142,6 +142,7 @@ shared static this()
 
 	logInfo("Starting Dlang-tour on %s, port %d", config.bindAddresses, config.port);
 	logInfo("Google Analytics ID: %s", config.googleAnalyticsId);
+	logInfo("GitHub Token: %s", config.githubToken);
 
 	auto settings = new HTTPServerSettings;
 	settings.port = config.port;
@@ -196,7 +197,7 @@ shared static this()
 	urlRouter
 		.any("/api/*", &cors)
 		.registerWebInterface(new WebInterface(contentProvider, config.googleAnalyticsId, defaultLang, installedPackages))
-		.registerRestInterface(new ApiV1(execProvider, contentProvider))
+		.registerRestInterface(new ApiV1(execProvider, contentProvider, config.githubToken))
 		.get("/static/*", serveStaticFiles(publicDir.buildPath("static"), fsettings));
 
 	if (startHTTPS) {

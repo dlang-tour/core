@@ -365,25 +365,24 @@ dlangTourApp.controller('DlangTourAppCtrl',
 	}
 
 	function gistURLToId(url) {
-		return url.replace("https://gist.github.com/", "").replace("anonymous/", "");
+		return url.replace("https://gist.github.com/", "")
+			      .replace("anonymous/", "")
+				  .replace("d-run/", "")
 	}
 
 	$scope.gist = function() {
 		return shortenToGist().then(function(data){
-			window.open(data.html_url, "_blank");
+			window.open(data.htmlUrl, "_blank");
 		});
 	}
 	function shortenToGist() {
-		$http.post('https://api.github.com/gists', {
-			public: true,
-			files: {
-				"main.d": {
-					content: $scope.sourceCode
-				}
-			}
+		return $http.post('/api/v1/gist', {
+			source: $scope.sourceCode,
+			compiler: $scope.compiler,
+			args: $scope.args,
 		}).then(function(body) {
 			var data = body.data;
-			$scope.shortLinkURL = window.location.origin + "/gist/" + gistURLToId(data.html_url) + editorParams();
+			$scope.shortLinkURL = window.location.origin + data.url;
 			return data;
 		}, function(error) {
 			var msg = (error || {}).statusMessage || "";

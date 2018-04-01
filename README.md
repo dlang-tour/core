@@ -129,6 +129,13 @@ To enable **Google Analytics** please specify the environment variable
 `GOOGLE_ANALYTICS_ID` and set it to the tracking ID provided
 for your Analytics account.
 
+#### `GITHUB_TOKEN`
+
+> default: (empty)
+
+Required for exporting Gists to GitHub.
+Follow [these instrutions](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line) to generate a CLI GitHub token.
+
 #### `EXEC_DOCKER_MEMORY_LIMIT`
 
 > default: 256
