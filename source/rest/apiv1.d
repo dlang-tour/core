@@ -160,7 +160,7 @@ class ApiV1: IApiV1
 			output.url ~= "?compiler=%s".format(compiler);
 			if (args.length > 0)
 				output.url ~= "&args=" ~ args.encodeComponent;
-		if (args.length > 0)
+		else if (args.length > 0)
 			output.url ~= "?args=" ~ args.encodeComponent;
 
 		return output;
