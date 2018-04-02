@@ -11,6 +11,7 @@ class Config
 	private bool enableExecCache_;
 	private string publicDir_;
 	private string googleAnalyticsId_;
+	private string githubToken_;
 	private string tlsCaChainFile_;
 	private string tlsPrivateKeyFile_;
 	private ushort tlsPort_;
@@ -49,10 +50,11 @@ class Config
 	@property bool enableExecCache() { return enableExecCache_; }
 	@property string publicDir() { return publicDir_; }
 	@property string googleAnalyticsId() { return googleAnalyticsId_; }
+	@property string githubToken() { return githubToken_; }
 	@property string tlsCaChainFile() { return tlsCaChainFile_; }
 	@property string tlsPrivateKeyFile() { return tlsPrivateKeyFile_; }
 	@property ushort tlsPort() { return tlsPort_; }
-	
+
 	this(string configFile)
 	{
 		auto root = Loader(configFile).load();
@@ -63,6 +65,7 @@ class Config
 		enableExecCache_ = root["exec"]["cache"].as!bool();
 		publicDir_ = root["public_dir"].as!string();
 		googleAnalyticsId_ = root["google_analytics_id"].as!string();
+		githubToken_ = root["github_token"].as!string();
 		if ("tls" in root) {
 			tlsCaChainFile_ = root["tls"]["caChainFile"].as!string;
 			tlsPrivateKeyFile_ = root["tls"]["privateKeyFile"].as!string;

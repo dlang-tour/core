@@ -3,6 +3,7 @@ public_dir: "public"
 listen:
     - 0.0.0.0
 google_analytics_id: "%GOOGLE_ANALYTICS_ID%"
+github_token: "%GITHUB_TOKEN%"
 tls:
     caChainFile: "%TLS_CA_CHAIN_FILE%"
     privateKeyFile: "%TLS_PRIVATE_KEY_FILE%"

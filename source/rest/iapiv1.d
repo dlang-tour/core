@@ -95,6 +95,33 @@ interface IApiV1
 	ShortenOutput shorten(string source, string compiler, string args);
 
 	/+
+		POST /api/v1/gi
+		{
+			source: "...",
+			compiler: "dmd" (available: ["dmd-nightly", "dmd-beta", "dmd", "ldc-beta", "ldc", "gdc"]),
+			args: ""
+		}
+
+		Returns: short url to given D source
+		with success flag
+		{
+			id: "abcdef",
+			url: "/gist/abcdef",
+			htmlUrl: "http://gist.github.com/abcdef",
+		}
+	+/
+
+	struct GistOutput
+	{
+		string id;
+		string url;
+		string htmlUrl;
+	}
+	@method(HTTPMethod.POST)
+	@path("/api/v1/gist")
+	GistOutput gist(string source, string compiler, string args);
+
+	/+
 		GET /api/v1/source/CHAPTER/SECTION
 
 		Returns: source code (or empty if none) for the given

@@ -9,11 +9,13 @@ class ApiV1: IApiV1
 {
 	private IExecProvider execProvider_;
 	private ContentProvider contentProvider_;
+	string githubToken; /// Token for authenticating GitHub requests
 
-	this(IExecProvider execProvider, ContentProvider contentProvider)
+	this(IExecProvider execProvider, ContentProvider contentProvider, string githubToken)
 	{
 		this.execProvider_ = execProvider;
 		this.contentProvider_ = contentProvider;
+		this.githubToken = "token " ~ githubToken;
 	}
 
 	/++
@@ -126,10 +128,48 @@ class ApiV1: IApiV1
 		return output;
 	}
 
+	GistOutput gist(string source, string compiler, string args)
+	{
+		import std.format : format;
+		import std.uri : encodeComponent;
+
+		GistOutput output;
+
+	    auto res = requestHTTP("https://api.github.com/gists", (scope req) {
+			req.headers["Authorization"] = githubToken;
+			Json data = Json.emptyObject;
+			data["description"] = "Code shared from run.dlang.io";
+			data["public"] = true;
+			Json files = Json.emptyObject;
+			files["main.d"] = Json([
+				"content": Json(source),
+			]);
+			data["files"] = files;
+			req.method = HTTPMethod.POST;
+            req.writeJsonBody(data);
+		});
+		enforceHTTP(res.statusCode / 100 == 2, HTTPStatus.internalServerError, "GitHub API not available.");
+		auto json = res.readJson;
+		auto gistId = json["id"].get!string;
+        logInfo("Gist created: %s", gistId);
+		output.id = gistId;
+		output.htmlUrl = json["html_url"].get!string;
+
+		output.url = "/gist/" ~ gistId;
+		if (compiler != "dmd")
+			output.url ~= "?compiler=%s".format(compiler);
+			if (args.length > 0)
+				output.url ~= "&args=" ~ args.encodeComponent;
+		if (args.length > 0)
+			output.url ~= "?args=" ~ args.encodeComponent;
+
+		return output;
+	}
+
 unittest
 {
 	string source = `void main() {}`;
-	ApiV1 api = new ApiV1(null, null);
+	ApiV1 api = new ApiV1(null, null, null);
 	auto res = api.format(source);
 	assert(res == FormatOutput("void main()\n{\n}", false));
 }
