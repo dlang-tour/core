@@ -154,7 +154,7 @@ dlangTourApp.controller('DlangTourAppCtrl',
 		var source = loc.source;
 		if (!source) {
 			source = b64DecodeUnicode(sourceCode);
-			$scope.sourceCodeKey = window.location.hostname;
+			$scope.sourceCodeKey = window.location.href;
 		} else {
 			$scope.sourceCodeKey = "run_import_" + hashCode(source);
 		}
