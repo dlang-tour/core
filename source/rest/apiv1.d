@@ -138,7 +138,8 @@ class ApiV1: IApiV1
 	    auto res = requestHTTP("https://api.github.com/gists", (scope req) {
 			req.headers["Authorization"] = githubToken;
 			Json data = Json.emptyObject;
-			data["description"] = "Code shared from run.dlang.io";
+			data["description"] = "Code shared from run.dlang.io.%s".format(args ?
+				" Run with '%s'".format(args) : "");
 			data["public"] = true;
 			Json files = Json.emptyObject;
 			files["main.d"] = Json([
@@ -156,12 +157,13 @@ class ApiV1: IApiV1
 		output.htmlUrl = json["html_url"].get!string;
 
 		output.url = "/gist/" ~ gistId;
-		if (compiler != "dmd")
+		if (compiler != "dmd") {
 			output.url ~= "?compiler=%s".format(compiler);
 			if (args.length > 0)
 				output.url ~= "&args=" ~ args.encodeComponent;
-		else if (args.length > 0)
+		} else if (args.length > 0) {
 			output.url ~= "?args=" ~ args.encodeComponent;
+		}
 
 		return output;
 	}
