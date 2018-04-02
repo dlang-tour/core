@@ -271,13 +271,24 @@ class WebInterface
 	@path("/gist/:gist")
 	void getGist(string _gist)
 	{
-	    getGist("anonymous", _gist);
+		import std.range : front;
+
+		// make a request to the public GitHub page to identify the user name
+		// without running into rate-limiting
+		auto res = requestHTTP("https://gist.github.com/%s".format(_gist));
+		scope(exit) res.dropBody;
+
+		string user = "";
+		auto location = URL(res.headers.get("Location", "https://gist.github.com/run-dlang")).path.bySegment;
+		if (!location.empty)
+			user = location.front.toString;
+
+		getGist(user, _gist);
 	}
 
 	@path("/gist/:user/:gist")
 	void getGist(string _user, string _gist)
 	{
-	    import std.stdio;
 		import std.base64;
 	    auto sourceCode = requestHTTP("https://gist.githubusercontent.com/%s/%s/raw".format(_user, _gist))
 	                .bodyReader
