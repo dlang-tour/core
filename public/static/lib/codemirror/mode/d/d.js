@@ -94,7 +94,7 @@ CodeMirror.defineMode("d", function(config, parserConfig) {
         state.tokenize = null;
         break;
       }
-      maybeEnd = (ch === "*");
+      maybeEnd = (ch == "*");
     }
     return "comment";
   }
@@ -106,7 +106,7 @@ CodeMirror.defineMode("d", function(config, parserConfig) {
         state.tokenize = null;
         break;
       }
-      maybeEnd = (ch === "+");
+      maybeEnd = (ch == "+");
     }
     return "comment";
   }

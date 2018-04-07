@@ -2,8 +2,8 @@ extends base
 
 block head
 	link(rel="stylesheet", href="/static/lib/hotkeys.min.css")
-	link(rel="stylesheet", href="/static/lib/codemirror/lib/codemirror.min.css")
-	link(rel="stylesheet", href="/static/lib/codemirror/addon/lint/lint.min.css")
+	link(rel="stylesheet", href="/static/lib/codemirror/lib/codemirror.css")
+	link(rel="stylesheet", href="/static/lib/codemirror/addon/lint/lint.css")
 	link(rel="stylesheet", href="/static/lib/codemirror/theme/elegant.css")
 	link(rel="stylesheet", href="/static/lib/grid12.min.css")
 	link(rel="stylesheet", href="/static/css/ansi.css")
@@ -67,10 +67,10 @@ block content
 block js
 	script(src="/static/js/tour-controller.js")
 	script(src="/static/js/swipe.js")
-	script(src="/static/lib/codemirror/lib/codemirror.min.js")
-	script(src="/static/lib/codemirror/mode/d/d.min.js")
-	script(src="/static/lib/codemirror/addon/lint/lint.min.js")
-	script(src="/static/lib/codemirror/addon/runmode.js")
+	script(src="/static/lib/codemirror/lib/codemirror.js")
+	script(src="/static/lib/codemirror/mode/d/d.js")
+	script(src="/static/lib/codemirror/addon/lint/lint.js")
+	script(src="/static/lib/codemirror/addon/runmode/runmode.js")
 	script(src="/static/lib/ui-codemirror.min.js")
 	script(src="/static/lib/hotkeys.min.js")
 	script(src="/static/lib/nanobar.min.js")
