@@ -136,7 +136,7 @@ shared static this()
 
 	if (sanityCheck) {
 		doSanityCheck(contentProvider, execProvider);
-		import std.c.stdlib: exit;
+		import core.stdc.stdlib: exit;
 		exit(0);
 	}
 
