@@ -5,6 +5,19 @@ import rest.iapiv1;
 import exec.iexecprovider;
 import contentprovider;
 
+// decodes a string to UTF32 with replacing invalid UTF characters,
+// but returns a newly allocated string with replaced invalid characters
+private string toValidUTF(string s)
+{
+	import std.algorithm.iteration : map;
+	import std.range : iota;
+	import std.utf;
+	return s.representation.length
+		.iota
+		.map!(i => s.decode!(UseReplacementDchar.yes)(i))
+		.toUTF8;
+}
+
 class ApiV1: IApiV1
 {
 	private IExecProvider execProvider_;
@@ -27,16 +40,27 @@ class ApiV1: IApiV1
 	+/
 	private static void parseErrorsAndWarnings(ref RunOutput output)
 	{
-		import std.regex: ctRegex, matchFirst, replaceAll;
+		import std.regex: regex, matchFirst, replaceAll;
 		import std.conv: to;
 		import std.string: lineSplitter;
+		import std.utf : UTFException, validate;
 
-		static coloring = ctRegex!
-			`\x1B\[[0-9;]*[mGK]`;
-		static ctr = ctRegex!
-			`^[^(]+\(([0-9]+)(,[0-9]+)?\): ([a-zA-Z]+): (.*)$`;
+		static coloring = regex(
+			`\x1B\[[0-9;]*[mGK]`);
+		static ctr = regex(
+			`^[^(]+\(([0-9]+)(,[0-9]+)?\): ([a-zA-Z]+): (.*)$`);
 
-		foreach(line; output.output.replaceAll(coloring, "").lineSplitter) {
+		// ugly workaround: deal with invalid UTF
+		// https://github.com/dlang-tour/core/issues/672
+		// https://issues.dlang.org/show_bug.cgi?id=18462
+		string outStream = output.output;
+		try {
+			outStream.validate;
+		} catch (UTFException) {
+			outStream = outStream.toValidUTF;
+		}
+
+		foreach(line; outStream.replaceAll(coloring, "").lineSplitter) {
 			auto m = line.matchFirst(ctr);
 			if (m.empty)
 				continue;
@@ -253,4 +277,22 @@ unittest {
 	ubyte[] helloWorldAndroid = [10, 32, 194, 160, 32, 194, 160, 32, 32, 119, 114, 105];
 	string res = cast(string) helloWorldAndroid;
 	assert(res.removeUnicodeSpaces.representation == helloWorldNormal);
+}
+
+// https://github.com/dlang-tour/core/issues/672 - problems with \x characters
+unittest
+{
+	auto output = ApiV1.RunOutput("\xB5", true, [], []);
+	ApiV1.parseErrorsAndWarnings(output);
+}
+
+// https://github.com/dlang-tour/core/issues/672 - problems with \x characters
+unittest
+{
+	import exec.stupidlocal;
+	string source = "import std.stdio : writeln;\n\nvoid main()\n{\n    writeln('\\x80');\n}";
+	auto runner = new ApiV1(new StupidLocal(), null);
+	auto input = ApiV1.RunInput(source);
+	auto res = runner.run(input);
+	assert(res == ApiV1.RunOutput(x"80 0A"c, true, [], []), res.to!string);
 }
