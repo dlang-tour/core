@@ -281,7 +281,7 @@ class WebInterface
 		string user = "";
 		auto location = URL(res.headers.get("Location", "https://gist.github.com/run-dlang")).path.bySegment;
 		if (!location.empty)
-			user = location.front.toString;
+			user = location.front.name;
 
 		getGist(user, _gist);
 	}
