@@ -31,6 +31,7 @@ addons:
     - libevent-dev
     - libblas-dev
     - liblapack-dev
+    - libopenblas-dev
 
 script:
   # Update all language repos to their latest content
