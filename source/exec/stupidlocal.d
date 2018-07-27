@@ -17,7 +17,7 @@ import std.string: format;
 private string findDCompiler()
 {
 	string dCompiler = "dmd";
-	foreach (compiler; ["dmd", "ldmd2", "gdmd"])
+	foreach (compiler; ["dmd", "ldmd", "ldmd2", "gdmd"])
 	{
 		try {
 			if (execute([compiler, "--version"]).status == 0)
@@ -85,7 +85,26 @@ class StupidLocal: IExecProvider
 			// support execution of dub single file packages
 			if (isDub)
 			{
-				args = ["dub", "-q", "--compiler=" ~ dCompiler, "--single", tmpfile.name];
+				string dubCompiler;
+				switch (dCompiler)
+				{
+					case "dmd":
+						dubCompiler = "dmd";
+						break;
+					case "ldmd":
+						dubCompiler = "ldc";
+						break;
+					case "ldmd2":
+						dubCompiler = "ldc2";
+						break;
+					case "gdmd", "gdmd2":
+						dubCompiler = "gdc";
+						break;
+					default:
+						assert(0, "Unknown compiler found.");
+				}
+
+				args = ["dub", "-q", "--compiler=" ~ dubCompiler, "--single", tmpfile.name];
 				res = args.execute;
 			}
 			else
