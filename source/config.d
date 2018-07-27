@@ -57,7 +57,7 @@ class Config
 
 	this(string configFile)
 	{
-		auto root = Loader(configFile).load();
+		auto root = Loader.fromFile(configFile).load();
 		port_ = root["port"].as!ushort();
 		foreach (string address; root["listen"])
 			bindAddresses_ ~= address;
