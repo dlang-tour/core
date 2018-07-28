@@ -43,3 +43,6 @@
 [submodule "public/content/mir"]
 	path = public/content/mir
 	url = https://github.com/dlang-tour/mir
+[submodule "public/content/vi"]
+	path = public/content/vi
+	url = https://github.com/dlang-tour/vietnamese
