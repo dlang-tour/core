@@ -3,12 +3,12 @@
 	"versions": {
 		"botan": "1.12.10",
 		"botan-math": "1.0.3",
-		"dfmt": "0.8.2",
+		"dfmt": "0.5.3",
 		"diet-ng": "1.5.0",
-		"dyaml": "0.7.0",
+		"dyaml": "0.6.5",
 		"eventcore": "0.8.35",
 		"libasync": "0.8.3",
-		"libdparse": "0.8.8",
+		"libdparse": "0.7.2-alpha.6",
 		"libevent": "2.0.2+2.0.16",
 		"memutils": "0.4.11",
 		"mir-linux-kernel": "1.0.0",
@@ -16,7 +16,7 @@
 		"openssl": "1.1.6+1.0.1g",
 		"stdx-allocator": "2.77.2",
 		"taggedalgebraic": "0.10.11",
-		"tinyendian": "0.2.0",
+		"tinyendian": "0.1.2",
 		"vibe-core": "1.4.1",
 		"vibe-d": "0.8.4"
 	}
