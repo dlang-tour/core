@@ -144,7 +144,7 @@ class ContentProvider
 		}
 
 		auto language = langDirectory.baseName;
-		auto root = Loader(configFile).load();
+		auto root = Loader.fromFile(configFile).load();
 
 		// store the directory to be able to link to other requests
 		langWithPath[language] = langDirectory;
@@ -189,7 +189,7 @@ class ContentProvider
 	private void addChapter(string chapter, string chapterDir, string language)
 	{
 		auto configFile = buildPath(chapterDir, "index.yml");
-		auto root = Loader(configFile).load();
+		auto root = Loader.fromFile(configFile).load();
 		// TODO: add title
 		enforce("title" in root, "title required for chapter");
 		chapter_[language][chapter].title = root["title"].as!string;
