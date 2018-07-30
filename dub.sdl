@@ -5,9 +5,11 @@ authors "André Stein" "Sebastian Wilzbach"
 homepage "http://tour.dlang.org"
 license "Boost"
 dependency "vibe-d" version="~>0.8.0"
+dependency "vibe-d:core" version="~>0.8"
 dependency "dyaml" version="~>0.6.1"
 dependency "dfmt" version="~>0.5.0"
 dependency "mustache-d" version="~>0.1.3"
+subConfiguration "vibe-d:core" "libevent"
 
 copyFiles "config.yml"
 
