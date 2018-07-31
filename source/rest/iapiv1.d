@@ -1,6 +1,8 @@
 module rest.iapiv1;
 
-import vibe.d;
+import vibe.web.rest;
+import vibe.data.serialization;
+import vibe.http.common;
 
 /++
 	Interface definition for JSON REST  API.

@@ -1,9 +1,16 @@
 module rest.apiv1;
 
-import vibe.d;
+import vibe.core.log;
+import vibe.data.json;
+import vibe.http.client;
+import vibe.stream.operations : readAllUTF8;
+
 import rest.iapiv1;
 import exec.iexecprovider;
 import contentprovider;
+
+import std.array : replace;
+import std.format : format;
 
 class ApiV1: IApiV1
 {

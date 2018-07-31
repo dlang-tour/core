@@ -1,5 +1,15 @@
-import vibe.d;
+import vibe.core.log;
+import vibe.core.args : readOption;
+import vibe.http.fileserver;
+import vibe.http.router;
+import vibe.http.server;
+import vibe.stream.tls;
+import vibe.web.rest;
+import vibe.web.web;
+
 import std.array: array;
+import std.format: format;
+import std.range: empty;
 
 import webinterface;
 import contentprovider;
