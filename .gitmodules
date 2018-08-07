@@ -28,9 +28,6 @@
 [submodule "public/content/es"]
 	path = public/content/es
 	url = https://github.com/dlang-tour/spanish
-[submodule "public/content/pt"]
-	path = public/content/pt
-	url = https://github.com/dlang-tour/portuguese
 [submodule "public/content/fr"]
 	path = public/content/fr
 	url = https://github.com/dlang-tour/french
@@ -46,3 +43,9 @@
 [submodule "public/content/vi"]
 	path = public/content/vi
 	url = https://github.com/dlang-tour/vietnamese
+[submodule "public/content/pt-br"]
+	path = public/content/pt-br
+	url = https://github.com/dlang-tour/brazilian-portuguese
+[submodule "public/content/pt"]
+	path = public/content/pt
+	url = https://github.com/dlang-tour/portuguese
