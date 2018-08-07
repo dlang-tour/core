@@ -1,7 +1,13 @@
-import vibe.d;
+import vibe.http.client;
+import vibe.http.server;
+import vibe.stream.operations : readAllUTF8;
+import vibe.web.web;
 
 import std.algorithm: countUntil;
-import std.string: format;
+import std.exception : enforce;
+import std.format : format;
+import std.range : empty;
+import std.string: representation;
 import std.traits: ReturnType;
 import std.typecons: Tuple;
 
