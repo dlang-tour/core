@@ -12,6 +12,8 @@ d:
   #- ldc
 
 matrix:
+  allow_failures:
+    - d: dmd-nightly
   include:
     - d: ldc-1.10.0
       env: TOUR_DEPLOY=1
