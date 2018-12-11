@@ -5,7 +5,7 @@
 		"botan-math": "1.0.3",
 		"dfmt": "0.8.2",
 		"diet-ng": "1.5.0",
-		"dyaml": "0.7.0",
+		"dyaml": "0.7.1",
 		"eventcore": "0.8.35",
 		"libasync": "0.8.3",
 		"libdparse": "0.8.8",
