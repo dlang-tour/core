@@ -52,7 +52,7 @@ class Cache: IExecProvider
 			//auto result = realExecProvider_.compileAndExecute(input);
 			//return result;
 		if (auto cache = hash in sourceHashToOutput_) {
-			logInfo("Fetching %s from cache", input.source[0 .. min($, 20)]);
+			logInfo("Fetching '%s...' from cache", input.source[0 .. min($, 20)]);
 			return *cache;
 		} else {
 			auto result = realExecProvider_.compileAndExecute(input);
