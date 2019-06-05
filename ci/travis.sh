@@ -4,8 +4,8 @@ set -u
 set -o errexit
 
 # Update all language repos to their latest content
-git pull --recurse-submodules
-git submodule update --remote --recursive
+git submodule update --init
+git submodule foreach 'git fetch && git checkout origin/master'
 
 # Compile & test with all compilers
 # https://issues.dlang.org/show_bug.cgi?id=13742 + separate linking not implemented for LDC
