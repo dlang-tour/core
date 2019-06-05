@@ -37,6 +37,7 @@ class ContentProvider
 		string contentDirectory;
 
 		struct Content {
+			string filename;
 			string sourceCode;
 			bool sourceCodeEnabled = true;
 			bool sourceCodeIncomplete = false;
@@ -217,6 +218,7 @@ class ContentProvider
 							.format(filename, SourceCodeSectionTitle)));
 				enforce(content.sourceCode.empty, new Exception("%s: Double %s section in '%s'"
 							.format(filename, SourceCodeSectionTitle, content.title)));
+				content.filename = filename;
 				content.sourceCode = section.bodyOnly;
 				// ignore markdown code blocks
 				if (content.sourceCode[0..3] == "```")

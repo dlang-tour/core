@@ -78,20 +78,20 @@ private void doSanityCheck(ContentProvider contentProvider, IExecProvider execPr
 	auto content = contentProvider.getContent();
 	foreach (section; parallel(content)) {
 		if (section.sourceCode.empty) {
-			logInfo("[%s] Sanity check: Ignoring source code for section '%s' because it is empty.",
-					section.language, section.title);
+			logInfo("[%s] Sanity check: Ignoring source code for section '%s' in %s because it is empty.",
+					section.language, section.title, section.filename);
 			continue;
 		}
 
 		if (!section.sourceCodeEnabled) {
-			logInfo("[%s] Sanity check: Ignoring source code for section '%s' because it is disabled.",
-					section.language, section.title);
+			logInfo("[%s] Sanity check: Ignoring source code for section '%s' in %s because it is disabled.",
+					section.language, section.title, section.filename);
 			continue;
 		}
 
 		if (section.sourceCodeIncomplete) {
-			logInfo("[%s] Sanity check: Ignoring source code for section '%s' because it is incomplete.",
-					section.language, section.title);
+			logInfo("[%s] Sanity check: Ignoring source code for section '%s' in %s because it is incomplete.",
+					section.language, section.title, section.filename);
 			continue;
 		}
 
@@ -103,8 +103,8 @@ private void doSanityCheck(ContentProvider contentProvider, IExecProvider execPr
 		};
 		auto result = execProvider.compileAndExecute(input);
 		enforce(result.success,
-			"[%s] Sanity check: Source code for section '%s' doesn't compile:\n%s"
-			.format(section.language, section.title, result.output));
+			"[%s] Sanity check: Source code for section '%s' in %s doesn't compile:\n%s"
+			.format(section.language, section.title, section.filename, result.output));
 	}
 }
 
