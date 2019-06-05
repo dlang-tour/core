@@ -1,51 +1,51 @@
-[submodule "public/content/en"]
+[submodule "en"]
 	path = public/content/en
 	url = https://github.com/dlang-tour/english
-[submodule "public/content/de"]
+[submodule "de"]
 	path = public/content/de
 	url = https://github.com/dlang-tour/german
-[submodule "public/content/it"]
+[submodule "it"]
 	path = public/content/it
 	url = https://github.com/dlang-tour/italian
-[submodule "public/content/sv"]
+[submodule "sv"]
 	path = public/content/sv
 	url = https://github.com/dlang-tour/swedish
-[submodule "public/content/ja"]
+[submodule "ja"]
 	path = public/content/ja
 	url = https://github.com/dlang-tour/japanese
-[submodule "public/content/tr"]
+[submodule "tr"]
 	path = public/content/tr
 	url = https://github.com/dlang-tour/turkish
-[submodule "public/content/zh"]
+[submodule "zh"]
 	path = public/content/zh
 	url = https://github.com/dlang-tour/chinese
-[submodule "public/content/ru"]
+[submodule "ru"]
 	path = public/content/ru
 	url = https://github.com/dlang-tour/russian
-[submodule "public/content/uk"]
+[submodule "uk"]
 	path = public/content/uk
 	url = https://github.com/dlang-tour/ukrainian
-[submodule "public/content/es"]
+[submodule "es"]
 	path = public/content/es
 	url = https://github.com/dlang-tour/spanish
-[submodule "public/content/fr"]
+[submodule "fr"]
 	path = public/content/fr
 	url = https://github.com/dlang-tour/french
-[submodule "public/content/kr"]
+[submodule "kr"]
 	path = public/content/kr
 	url = https://github.com/dlang-tour/korean
-[submodule "public/content/sk"]
+[submodule "sk"]
 	path = public/content/sk
 	url = https://github.com/dlang-tour/slovak
-[submodule "public/content/mir"]
+[submodule "mir"]
 	path = public/content/mir
 	url = https://github.com/dlang-tour/mir
-[submodule "public/content/vi"]
+[submodule "vi"]
 	path = public/content/vi
 	url = https://github.com/dlang-tour/vietnamese
-[submodule "public/content/pt-br"]
+[submodule "pt-br"]
 	path = public/content/pt-br
 	url = https://github.com/dlang-tour/brazilian-portuguese
-[submodule "public/content/pt"]
+[submodule "pt"]
 	path = public/content/pt
 	url = https://github.com/dlang-tour/portuguese
