@@ -11,7 +11,7 @@ import std.typecons: Tuple;
 import std.file: exists, remove, tempDir;
 import std.stdio: File;
 import std.random: uniform;
-import std.string: format;
+import std.string: stripRight, format;
 
 // searches the local system for valid D compilers
 private string findDCompiler()
@@ -47,7 +47,7 @@ class StupidLocal: IExecProvider
 
 	private File getTempFile()
 	{
-		auto tempdir = tempDir();
+		auto tempdir = tempDir().stripRight("/");  // dub has issues with // in path
 
 		static string randomName()
 		{
