@@ -3,21 +3,21 @@
 	"versions": {
 		"botan": "1.12.10",
 		"botan-math": "1.0.3",
-		"dfmt": "0.8.2",
-		"diet-ng": "1.5.0",
-		"dyaml": "0.7.1",
-		"eventcore": "0.8.35",
-		"libasync": "0.8.3",
-		"libdparse": "0.8.8",
+		"dfmt": "0.10.1",
+		"diet-ng": "1.6.0",
+		"dyaml": "0.8.0",
+		"eventcore": "0.8.46",
+		"libasync": "0.8.4",
+		"libdparse": "0.11.6",
 		"libevent": "2.0.2+2.0.16",
-		"memutils": "0.4.11",
-		"mir-linux-kernel": "1.0.0",
+		"memutils": "0.4.13",
+		"mir-linux-kernel": "1.0.1",
 		"mustache-d": "0.1.3",
 		"openssl": "1.1.6+1.0.1g",
-		"stdx-allocator": "2.77.2",
-		"taggedalgebraic": "0.10.11",
+		"stdx-allocator": "2.77.5",
+		"taggedalgebraic": "0.11.4",
 		"tinyendian": "0.2.0",
-		"vibe-core": "1.4.1",
-		"vibe-d": "0.8.4"
+		"vibe-core": "1.6.2",
+		"vibe-d": "0.8.5"
 	}
 }
