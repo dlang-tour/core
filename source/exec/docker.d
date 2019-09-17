@@ -142,7 +142,7 @@ class Docker: IExecProvider
 		docker.stdin.close();
 
 		bool success;
-		auto startTime = Clock.currTime();
+		auto startTime = MonoTime.currTime();
 
 		logInfo("Executing Docker image %s with env='%s'", dockerImage, env);
 
@@ -168,7 +168,7 @@ class Docker: IExecProvider
 		// has been reached.
 		while (true) {
 			auto result = tryWait(docker.pid);
-			if (Clock.currTime() - startTime > timeLimitInSeconds_.seconds) {
+			if (MonoTime.currTime() - startTime > timeLimitInSeconds_.seconds) {
 				// send SIGKILL 9 to process
 				kill(docker.pid, 9);
 				return typeof(return)("Compilation or running program took longer than %d seconds. Aborted!".format(timeLimitInSeconds_), false);
