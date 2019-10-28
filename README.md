@@ -43,6 +43,17 @@ in the [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Compile & Run
 
+On a minimal Ubuntu system the following command will install the system packages needed to run all examples:
+
+```sh
+apt update && apt install \
+    curl xz-utils unzip gnupg `# Needed for the install.sh script` \
+    build-essential `# C toolchain for compiling and linking` \
+    libssl-dev libevent-dev `# Vibe-d network dependencies`\
+    libopenblas-dev `# lubeck computer library dependency` \
+    libxml++2.6-2v5 zlib1g-dev `# LDC dependencies`
+```
+
 Make sure [dub](http://code.dlang.org/download) is installed and simply run `dub` in
 the `dlang-tour` folder:
 
