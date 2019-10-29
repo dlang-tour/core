@@ -73,39 +73,49 @@ private IExecProvider createExecProvider(Config config,
 private void doSanityCheck(ContentProvider contentProvider, IExecProvider execProvider)
 {
 	import std.exception: enforce;
+
+	void runChecks(R)(R range)
+	{
+		foreach (section; range) {
+			if (section.sourceCode.empty) {
+				logInfo("[%s] Sanity check: Ignoring source code for section '%s' in %s because it is empty.",
+						section.language, section.title, section.filename);
+				continue;
+			}
+
+			if (!section.sourceCodeEnabled) {
+				logInfo("[%s] Sanity check: Ignoring source code for section '%s' in %s because it is disabled.",
+						section.language, section.title, section.filename);
+				continue;
+			}
+
+			if (section.sourceCodeIncomplete) {
+				logInfo("[%s] Sanity check: Ignoring source code for section '%s' in %s because it is incomplete.",
+						section.language, section.title, section.filename);
+				continue;
+			}
+
+			logInfo("[%s] Doing sanity check for section '%s'...",
+					section.language, section.title);
+
+			IExecProvider.RunInput input = {
+				source: section.sourceCode
+			};
+			auto result = execProvider.compileAndExecute(input);
+			enforce(result.success,
+				"[%s] Sanity check: Source code for section '%s' in %s doesn't compile:\n%s"
+				.format(section.language, section.title, section.filename, result.output));
+		}
+	}
+
 	import std.parallelism : parallel;
 
 	auto content = contentProvider.getContent();
-	foreach (section; parallel(content)) {
-		if (section.sourceCode.empty) {
-			logInfo("[%s] Sanity check: Ignoring source code for section '%s' in %s because it is empty.",
-					section.language, section.title, section.filename);
-			continue;
-		}
 
-		if (!section.sourceCodeEnabled) {
-			logInfo("[%s] Sanity check: Ignoring source code for section '%s' in %s because it is disabled.",
-					section.language, section.title, section.filename);
-			continue;
-		}
-
-		if (section.sourceCodeIncomplete) {
-			logInfo("[%s] Sanity check: Ignoring source code for section '%s' in %s because it is incomplete.",
-					section.language, section.title, section.filename);
-			continue;
-		}
-
-		logInfo("[%s] Doing sanity check for section '%s'...",
-				section.language, section.title);
-
-		IExecProvider.RunInput input = {
-			source: section.sourceCode
-		};
-		auto result = execProvider.compileAndExecute(input);
-		enforce(result.success,
-			"[%s] Sanity check: Source code for section '%s' in %s doesn't compile:\n%s"
-			.format(section.language, section.title, section.filename, result.output));
-	}
+	if (cast(Docker) execProvider)
+		runChecks(content.parallel);
+	else
+		runChecks(content);
 }
 
 version(unittest) {} else
