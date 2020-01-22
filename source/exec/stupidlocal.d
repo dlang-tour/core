@@ -114,6 +114,7 @@ class StupidLocal: IExecProvider
 				args ~= "-color=" ~ (input.color ? "on " : "off ");
 				args ~= "-run";
 				args ~= tmpfile.name;
+				args ~= "--DRT-testmode=run-main";
 
 				// DMD requires a TTY for colored output
 				auto env = [
