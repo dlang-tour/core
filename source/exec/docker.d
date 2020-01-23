@@ -122,12 +122,14 @@ class Docker: IExecProvider
 
         auto env = [
             "DOCKER_FLAGS": input.args,
+            "DOCKER_RUNTIME_ARGS": input.runtimeArgs,
             "DOCKER_COLOR": input.color ? "on" : "off",
         ];
 
         auto args = [this.dockerBinaryPath_, "run", "--rm",
 		    "-e", "DOCKER_COLOR",
 		    "-e", "DOCKER_FLAGS",
+		    "-e", "DOCKER_RUNTIME_ARGS",
 			"--net=none", "--memory-swap=-1",
 			"-m", to!string(memoryLimitMB_ * 1024 * 1024),
 			dockerImage, encoded];

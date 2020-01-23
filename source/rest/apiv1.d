@@ -86,6 +86,7 @@ class ApiV1: IApiV1
 			source: input.source,
 			compiler : input.compiler,
 			args: input.args,
+			runtimeArgs: input.runtimeArgs,
 			stdin: input.stdin,
 			color: input.color,
 		};

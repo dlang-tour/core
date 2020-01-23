@@ -76,6 +76,7 @@ private uint getSourceCodeHash(IExecProvider.RunInput input)
 	crc.put(input.compiler.representation);
 	crc.put(input.stdin.representation);
 	crc.put(input.args.representation);
+	crc.put(input.runtimeArgs.representation);
 	crc.put(input.color);
 	union view {
 		ubyte[4] source;
