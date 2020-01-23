@@ -114,6 +114,7 @@ class StupidLocal: IExecProvider
 				args ~= "-color=" ~ (input.color ? "on " : "off ");
 				args ~= "-run";
 				args ~= tmpfile.name;
+				args ~= input.runtimeArgs.split(" ");
 
 				// DMD requires a TTY for colored output
 				auto env = [

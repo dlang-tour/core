@@ -42,6 +42,7 @@ interface IApiV1
 		@optional string compiler = "dmd";
 		@optional string stdin;
 		@optional string args;
+		@optional string runtimeArgs;
 		@optional bool color;
 	}
 

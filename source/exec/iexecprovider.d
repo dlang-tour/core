@@ -15,6 +15,7 @@ interface IExecProvider
 		string source;
 		string compiler = "dmd";
 		string args;
+		string runtimeArgs;
 		string stdin;
 		bool color;
 	}
