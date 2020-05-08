@@ -5,7 +5,7 @@ ENV RDMD_BRANCH "v2.091.0"
 
 RUN apk add --no-cache llvm5-libs g++ binutils-gold clang \
     llvm8-libs llvm8-static llvm8-dev \
-    cmake ninja zlib-dev curl-dev curl-static openssl-dev git make
+    cmake ninja zlib-dev curl-dev curl-static openssl openssl-dev git make
 
 # build ldc2 ########################################################
 

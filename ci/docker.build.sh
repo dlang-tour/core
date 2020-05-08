@@ -2,4 +2,4 @@
 set -e -u
 
 cd /core/
-dub build -c static --compiler=ldc2
+DFLAGS="-linker=bfd" dub build -c static --compiler=ldc2
