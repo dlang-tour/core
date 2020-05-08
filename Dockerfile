@@ -1,4 +1,4 @@
-FROM busybox:glibc
+FROM busybox
 
 MAINTAINER "André Stein <andre.stein.1985@gmail.com>"
 
