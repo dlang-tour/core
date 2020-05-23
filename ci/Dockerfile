@@ -1,6 +1,6 @@
 FROM alpine:edge
 
-RUN apk add --no-cache g++ binutils-gold clang \
+RUN apk add --no-cache g++ clang \
     zlib-dev curl-dev curl-static openssl openssl-dev make git \
     ldc dub dtools-rdmd
 
