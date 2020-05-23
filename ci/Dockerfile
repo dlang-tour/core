@@ -1,7 +1,7 @@
 FROM alpine:edge
 
 RUN apk add --no-cache g++ clang \
-    zlib-dev curl-dev curl-static openssl openssl-dev make git \
+    zlib-dev zlib-static curl-dev curl-static openssl openssl-dev openssl-libs-static \
     ldc dub dtools-rdmd
 
 COPY docker.build.sh /docker.build.sh
