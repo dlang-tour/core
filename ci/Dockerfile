@@ -1,4 +1,4 @@
-FROM alpine:edge
+FROM alpine:3.12
 
 RUN apk add --no-cache g++ clang \
     zlib-dev zlib-static curl-dev curl-static openssl openssl-dev openssl-libs-static \
