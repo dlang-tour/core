@@ -12,7 +12,7 @@ matrix:
   allow_failures:
     - d: dmd-nightly
   include:
-    - d: ldc-1.18.0
+    - d: ldc-1.22.0
       env: TOUR_DEPLOY=1
 
 
