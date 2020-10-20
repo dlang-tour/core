@@ -15,10 +15,6 @@ matrix:
     - d: ldc-1.23.0
       env: TOUR_DEPLOY=1
 
-
-cache:
-  - $HOME/.dub
-
 branches:
   only:
     - master
