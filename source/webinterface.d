@@ -271,7 +271,7 @@ class WebInterface
 			sourceCode = Base64.encode(cast(ubyte[]) sourceCodeRaw);
 		}
 		auto googleAnalyticsId = googleAnalyticsId_;
-        showEditor(sourceCode);
+		showEditor(sourceCode);
 	}
 
 	@path("/gist/:gist")
@@ -287,7 +287,17 @@ class WebInterface
 		string user = "";
 		auto location = URL(res.headers.get("Location", "https://gist.github.com/run-dlang")).path.bySegment;
 		if (!location.empty)
-			user = location.front.name;
+		{
+			auto first_loc = location.front.name;
+			// skip first slash from path
+			if(first_loc.empty) {
+				location.popFront;
+				user = location.front.name;
+			}
+			else {
+				user = first_loc;
+			}
+		}
 
 		getGist(user, _gist);
 	}
@@ -296,14 +306,14 @@ class WebInterface
 	void getGist(string _user, string _gist)
 	{
 		import std.base64;
-	    auto sourceCode = requestHTTP("https://gist.githubusercontent.com/%s/%s/raw".format(_user, _gist))
-	                .bodyReader
-	                .readAllUTF8;
-        showEditor(Base64.encode(sourceCode.representation));
+		auto sourceCode = requestHTTP("https://gist.githubusercontent.com/%s/%s/raw".format(_user, _gist))
+					.bodyReader
+					.readAllUTF8;
+		showEditor(Base64.encode(sourceCode.representation));
 	}
 
 	void showEditor(string sourceCode) {
-	    string googleAnalyticsId = googleAnalyticsId_;
+		string googleAnalyticsId = googleAnalyticsId_;
 		const title = "Online D Editor";
 		const chapterId = "";
 		const language = "en";
