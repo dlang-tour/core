@@ -1,6 +1,6 @@
 FROM busybox:glibc
 
-MAINTAINER "André Stein <andre.stein.1985@gmail.com>"
+LABEL maintainer="André Stein <andre.stein.1985@gmail.com>"
 
 EXPOSE 8080
 
