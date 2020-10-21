@@ -1,4 +1,4 @@
-FROM busybox:glibc
+FROM busybox
 
 LABEL maintainer="André Stein <andre.stein.1985@gmail.com>"
 

@@ -19,7 +19,9 @@ dub --compiler=${DC} -- --sanitycheck
 
 # Compile to static binary with ldc
 if [[ "${DC}" == "ldc2" ]]; then
-    dub build -c static --compiler=${DC}
+    docker build -t dlangtour_build ./ci/
+    docker run --rm -v `pwd`:/core/ -ti dlangtour_build
+
     docker build -t dlangtour_test_image ./
     docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -ti dlangtour_test_image --wait-until-pulled --sanitycheck
 fi
