@@ -13,4 +13,4 @@ set -eu
   sed "s@%TLS_PRIVATE_KEY_FILE%@${TLS_PRIVATE_KEY_FILE:-}@g" \
   > ./config.yml
 
-exec ./dlang-tour "$*"
+exec ./dlang-tour "$@"
