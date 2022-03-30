@@ -1,0 +1,57 @@
+# Action to build, test and publish the Docker image
+# Uploading to Docker Hub only happens on changes to master
+name: default
+
+on:
+  # Enable option to manually run the action:
+  workflow_dispatch:
+
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+
+jobs:
+  main:
+    name: Build and test image
+    runs-on: ubuntu-latest
+    # Only run for the main repository - not forks 
+    if: github.repository == 'dlang-tour/core-dreg'
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Checkout the master branch of all submodules
+        run: git submodule foreach 'git fetch && git checkout origin/master'
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+
+      - name: Build image
+        uses: docker/build-push-action@v2
+        with:
+          push: false
+          load: true
+          tags: dlangtour/core:ci_test
+
+      - name: Run test.sh
+        run: ./ci/travis.sh
+
+      - name: Login to DockerHub
+        if: ${{ github.event_name == 'push' || github.event_name == 'schedule' }}
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Push image
+        uses: docker/build-push-action@v2
+        with:
+          push: ${{ github.event_name == 'push' || github.event_name == 'schedule' }}
+          load: false
+          tags: dlangtour/core:latest
