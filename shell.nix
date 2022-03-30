@@ -2,9 +2,9 @@
 mkShell {
   buildInputs = [
     figlet
-    glibc.static
-    zlib.static
-    (openssl.override { static = true; }).dev
+    glibc
+    zlib
+    openssl.dev
     dmd
     dtools
     dub
