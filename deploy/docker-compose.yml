@@ -5,16 +5,56 @@ tour:
     - /var/run/docker.sock:/var/run/docker.sock
     - /etc/letsencrypt:/etc/letsencrypt
   ports:
-    - "80:8080"
-    - "443:8443"
+    - "8080:8080"
+    - "8443:8443"
   environment:
     - GOOGLE_ANALYTICS_ID=UA-76170840-1
-    - TLS_CA_CHAIN_FILE=/etc/letsencrypt/live/tour.dlang.io/cert.pem
-    - TLS_PRIVATE_KEY_FILE=/etc/letsencrypt/live/tour.dlang.io/privkey.pem
+    - EXEC_DOCKER_MAX_OUTPUT_SIZE=500000
+    - GITHUB_TOKEN=_token_
   restart: always
+  dns:
+    - 8.8.8.8
+    - 9.9.9.9
+
 watchtower:
-  image: centurylink/watchtower
-  command: --cleanup
+  image: containrrr/watchtower
+  command: --interval 240 --cleanup --debug
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
+    # Used to avoid Dockerhub API rate limit:
+    - ~/.docker/config.json:/config.json
   restart: always
+
+# Watchtower is only able to update the images of existing containers.  If no
+# containers (no matter their state) are using a given image, it won't be
+# considered for update.
+#
+# Since the images below are always deleted after execution, we need to create a
+# dummy service to "pin" them.
+#
+# Use `tail -F <any missing file>` so simulate a 0% cpu usage infinite loop.
+#
+core-dreg_latest:
+  image: "dlangtour/core-dreg:latest"
+  container_name: core-dreg_latest
+  entrypoint: ['/usr/bin/tail', '-F', 'missing']
+core-exec_dmd:
+  image: "dlangtour/core-exec:dmd"
+  container_name: core-exec_dmd
+  entrypoint: ['/bin/tail', '-F', 'missing']
+core-exec_dmd-beta:
+  image: "dlangtour/core-exec:dmd-beta"
+  container_name: core-exec_dmd-beta
+  entrypoint: ['/bin/tail', '-F', 'missing']
+core-exec_dmd-nightly:
+  image: "dlangtour/core-exec:dmd-nightly"
+  container_name: core-exec_dmd-nightly
+  entrypoint: ['/bin/tail', '-F', 'missing']
+core-exec_ldc:
+  image: "dlangtour/core-exec:ldc"
+  container_name: core-exec_ldc
+  entrypoint: ['/bin/tail', '-F', 'missing']
+core-exec_ldc-beta:
+  image: "dlangtour/core-exec:ldc-beta"
+  container_name: core-exec_ldc-beta
+  entrypoint: ['/bin/tail', '-F', 'missing']
