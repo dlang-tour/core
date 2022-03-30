@@ -41,6 +41,8 @@ jobs:
           load: false
           target: unit-test-runner
           tags: dlangtour/core:ci_test
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Run integration tests
         uses: docker/build-push-action@v2
@@ -50,6 +52,8 @@ jobs:
           load: false
           target: integration-test-runner
           tags: dlangtour/core:ci_test
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Login to DockerHub
         if: ${{ github.event_name == 'push' || github.event_name == 'schedule' }}
@@ -66,3 +70,5 @@ jobs:
           load: false
           target: runner
           tags: dlangtour/core:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
