@@ -1,13 +1,14 @@
-.dub
+# Dub build artifacts:
+.dub/
+build/
 docs.json
 __dummy.html
-*.o
-*.obj
-dlang-tour
-__test__library__
-*.swp
 
-dlang-tour-test-library
+# dotenv files:
+.env
+
+# Vim swap files:
+*.swp
 
 # Nix build artifact:
 result

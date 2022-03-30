@@ -1,5 +1,5 @@
 port: 8080
-public_dir: "public"
+public_dir: "../public"
 listen:
     - 127.0.0.1
 google_analytics_id: ""
