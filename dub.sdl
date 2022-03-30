@@ -1,19 +1,17 @@
 name "dlang-tour"
 description "The Dlang Tour"
 copyright "Copyright © 2016, André Stein"
-authors "André Stein" "Sebastian Wilzbach"
+authors "André Stein" "Sebastian Wilzbach" "Petar Kirov"
 homepage "http://tour.dlang.org"
 license "Boost"
+
 dependency "vibe-d:web" version="~>0.9"
 dependency "dyaml" version="~>0.8"
 dependency "dfmt" version="~>0.13"
 dependency "mustache-d" version="~>0.1"
 
-copyFiles "config.yml"
+targetPath "build"
 
-// Commented out until GDC is up to date. Doesn't work
-// with 2.066.1 frontends currently.
-// subConfiguration "vibe-d" "libasync"
 configuration "executable" {
 	targetType "executable"
 	versions "VibeDefaultMain"
