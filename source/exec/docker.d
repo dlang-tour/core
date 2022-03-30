@@ -49,10 +49,11 @@ class Docker: IExecProvider
 		this.dockerBinaryPath_ = dockerBinaryPath;
 
 		logInfo("Initializing Docker driver");
-		logInfo("Time Limit: %d", timeLimitInSeconds_);
+		logInfo("Docker binary path: %s", dockerBinaryPath_);
+		logInfo("Time Limit: %d s", timeLimitInSeconds_);
+		logInfo("Output size limit: %d B", maximumOutputSize_);
 		logInfo("Maximum Queue Size: %d", maximumQueueSize_);
 		logInfo("Memory Limit: %d MB", memoryLimitMB_);
-		logInfo("Output size limit: %d B", maximumQueueSize_);
 
 		import std.algorithm.iteration : filter;
 		import std.concurrency : ownerTid, receiveOnly, send, spawn;
