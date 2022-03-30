@@ -8,3 +8,10 @@ __test__library__
 *.swp
 
 dlang-tour-test-library
+
+# Nix build artifact:
+result
+
+# Direnv:
+.direnv/*
+!.direnv/.gitkeep
