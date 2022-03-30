@@ -2,7 +2,9 @@ ARG BASE_IMAGE=alpine:edge
 
 # ----------------------------------- Base ----------------------------------- #
 FROM $BASE_IMAGE AS base
-RUN apk --no-cache add build-base coreutils dub dtools ldc openssl-dev zlib-dev
+RUN apk --no-cache add build-base \
+  dub dtools ldc \
+  openssl-dev zlib-dev openblas-dev
 WORKDIR /src
 
 # ------------------------ Gather dub package metadata ----------------------- #
@@ -32,7 +34,8 @@ RUN dub --cache=local build
 FROM dependencies-cache AS app-builder
 COPY source ./source
 COPY views ./views
-COPY dub.sdl ./dub.sdl
+COPY dub.sdl .
+COPY config.yml .
 RUN dub --cache=local build -c executable
 
 FROM app-builder AS prod-builder
@@ -44,8 +47,6 @@ COPY public ./public
 RUN dub --cache=local test
 
 FROM unit-test-runner AS integration-test-runner
-COPY ./config.yml ./build
-RUN apk add openblas-dev
 RUN dub --cache=local run -- --sanitycheck
 
 # ---------------------------------------------------------------------------- #
