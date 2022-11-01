@@ -99,7 +99,8 @@ private void doSanityCheck(ContentProvider contentProvider, IExecProvider execPr
 					section.language, section.title);
 
 			IExecProvider.RunInput input = {
-				source: section.sourceCode
+				source: section.sourceCode,
+				color: false,
 			};
 			auto result = execProvider.compileAndExecute(input);
 			enforce(result.success,

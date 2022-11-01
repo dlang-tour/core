@@ -111,20 +111,25 @@ class StupidLocal: IExecProvider
 			{
 				args = [dCompiler];
 				args ~= input.args.split(" ");
-				args ~= "-color=" ~ (input.color ? "on " : "off ");
+				args ~= "-color=" ~ (input.color ? "on" : "off");
 				args ~= "-run";
 				args ~= tmpfile.name;
 				args ~= input.runtimeArgs.split(" ");
 
-				// DMD requires a TTY for colored output
-				auto env = [
-					"TERM": "dtour"
-				];
-				auto fakeTty = `
-faketty () {	 script -qfc "$(printf "%q " "$@")" /dev/null ; }
-faketty ` ~ 	args.join(" ") ~  ` | cat | sed 's/\r$//'`;
+				if (input.color)
+				{
+					// DMD requires a TTY for colored output
+					auto env = [
+						"TERM": "dtour"
+					];
+					auto fakeTty = `
+faketty () {		 script -qfc "$(printf "%q " "$@")" /dev/null ; }
+faketty ` ~ 		args.join(" ") ~  ` | cat | sed 's/\r$//'`;
 
-				res = fakeTty.executeShell(env);
+					res = fakeTty.executeShell(env);
+				} else {
+					res = execute(args);
+				}
 			}
 			result.success = res.status == 0;
 			result.output = res.output;
