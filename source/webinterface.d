@@ -3,7 +3,7 @@ import vibe.http.server;
 import vibe.stream.operations : readAllUTF8;
 import vibe.web.web;
 
-import std.algorithm: countUntil;
+import std.algorithm: countUntil, among;
 import std.exception : enforce;
 import std.format : format;
 import std.range : empty;
@@ -119,7 +119,7 @@ class WebInterface
 	void index(HTTPServerRequest req, HTTPServerResponse res)
 	{
 		// support "standalone" mode of the editor
-		if (req.host == "run.dlang.io")
+		if (req.host.among("run.dlang.io", "run.dlang.org"))
 			getEditor(req, res);
 		else
 			getStart(req, res, defaultLang);
