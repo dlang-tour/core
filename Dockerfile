@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=alpine:edge
+ARG BASE_IMAGE=alpine:3.16
 
 # ----------------------------------- Base ----------------------------------- #
 FROM $BASE_IMAGE AS base
