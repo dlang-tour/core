@@ -271,7 +271,7 @@ class WebInterface
 			sourceCode = Base64.encode(cast(ubyte[]) sourceCodeRaw);
 		}
 		auto googleAnalyticsId = googleAnalyticsId_;
-		showEditor(sourceCode);
+        showEditor(sourceCode);
 	}
 
 	@path("/gist/:gist")
