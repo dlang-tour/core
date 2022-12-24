@@ -290,11 +290,10 @@ class WebInterface
 		{
 			auto first_loc = location.front.name;
 			// skip first slash from path
-			if(first_loc.empty) {
-				location.popFront;
+			if (first_loc.empty) {
+				location.popFront();
 				user = location.front.name;
-			}
-			else {
+			} else {
 				user = first_loc;
 			}
 		}
