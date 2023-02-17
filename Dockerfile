@@ -1,4 +1,7 @@
-ARG BASE_IMAGE=alpine:3.16
+# Use edge to get dub v1.30 instead of v1.28 (3.16),
+# as we otherwise hit https://github.com/dlang/dub/issues/2192
+# Change to alpine:3.17 when released.
+ARG BASE_IMAGE=alpine:edge
 
 # ----------------------------------- Base ----------------------------------- #
 FROM $BASE_IMAGE AS base
@@ -53,7 +56,7 @@ RUN dub --cache=local run -- --sanitycheck
 #                                    Runner                                    #
 # ---------------------------------------------------------------------------- #
 FROM $BASE_IMAGE as runner-cache
-RUN apk --no-cache add ldc-runtime libexecinfo libgcc tzdata docker-cli
+RUN apk --no-cache add ldc-runtime libgcc tzdata docker-cli
 EXPOSE 8080
 WORKDIR /app
 
