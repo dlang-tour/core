@@ -6,7 +6,6 @@ import std.algorithm: splitter, filter, countUntil;
 import std.array: array, empty;
 import std.string: split, strip;
 import std.typecons: Tuple;
-import std.exception: enforce;
 import std.string: format;
 import std.path: baseName, buildPath;
 
@@ -14,7 +13,13 @@ import dyaml: Loader;
 
 import translator: Translator;
 
+alias enforce = imported!"std.exception".enforce!ContentProviderException;
 alias Mustache = imported!"mustache".MustacheEngine!(string);
+
+class ContentProviderException : Exception
+{
+	mixin imported!"std.exception".basicExceptionCtors;
+}
 
 /++
 	Manages the mark down files found in public/content
@@ -210,12 +215,12 @@ class ContentProvider
 		scope (failure) logError("lang: %s, chapter: %s, section: %s failed", language, chapter, currentSection);
 		foreach (ref section; splitMarkdownBySection(readText(filename))) {
 			if (section.title.startsWith(SourceCodeSectionTitle)) {
-				enforce(section.level == 2, new Exception("%s: %s section expected to be on 2nd level"
-							.format(filename, SourceCodeSectionTitle)));
-				enforce(!content.html.empty, new Exception("%s: %s section must be within existing section."
-							.format(filename, SourceCodeSectionTitle)));
-				enforce(content.sourceCode.empty, new Exception("%s: Double %s section in '%s'"
-							.format(filename, SourceCodeSectionTitle, content.title)));
+				enforce(section.level == 2, "%s: %s section expected to be on 2nd level"
+							.format(filename, SourceCodeSectionTitle));
+				enforce(!content.html.empty, "%s: %s section must be within existing section."
+							.format(filename, SourceCodeSectionTitle));
+				enforce(content.sourceCode.empty, "%s: Double %s section in '%s'"
+							.format(filename, SourceCodeSectionTitle, content.title));
 				content.filename = filename;
 				content.sourceCode = section.bodyOnly;
 				// ignore markdown code blocks
@@ -233,14 +238,14 @@ class ContentProvider
 					checkSourceCodeLineWidth(content.sourceCode, content.title);
 			} else if (section.level == 1) {
 					enforce(content.title.length == 0,
-							new Exception("%s: Just one chapter title allowed: %s".format(filename, section.title)));
+							"%s: Just one chapter title allowed: %s".format(filename, section.title));
 					content.title = section.title;
 					content.html = processMarkdown(section.content, language);
 			} else if (section.level >= 2) {
-				enforce(content.title.length != 0, new Exception("%s: level 3 section can't be first (%s)".format(filename, section.title)));
+				enforce(content.title.length != 0, "%s: level 3 section can't be first (%s)".format(filename, section.title));
 				content.html ~= processMarkdown(section.content, language);
 			} else {
-				throw new Exception("%s: Illegal section %s".format(filename, section.title));
+				throw new ContentProviderException("%s: Illegal section %s".format(filename, section.title));
 			}
 		}
 		return content;
@@ -315,7 +320,7 @@ Text after`, "en");
 		to the SourceCodeMaxCharsPerLine bytes per lines
 		restriction.
 
-		Throws: Exception when contraint doesn't apply.
+		Throws: ContentProviderException when contraint doesn't apply.
 	+/
 	private void checkSourceCodeLineWidth(string sourceCode, string sectionTitle)
 	{
@@ -325,7 +330,7 @@ Text after`, "en");
 		foreach (line; splitter(sourceCode, '\n')) {
 			++lineNo;
 			if (line.byGrapheme.walkLength(SourceCodeMaxCharsPerLine + 1) > SourceCodeMaxCharsPerLine) {
-				throw new Exception("Source code line length exceeds %d limit in '%s': %s"
+				throw new ContentProviderException("Source code line length exceeds %d limit in '%s': %s"
 						.format(SourceCodeMaxCharsPerLine, sectionTitle, line));
 			}
 		}
@@ -379,7 +384,7 @@ Text after`, "en");
 			Tuple!(string, "title", string, "sectionId")[] sections;
 		}
 		auto chapterMeta = language in chapter_;
-		enforce(chapterMeta !is null, new Exception("%s not known.".format(language)));
+		enforce(chapterMeta !is null, "%s not known.".format(language));
 		Chapter[] toc = new Chapter[content_[language].length];
 
 		foreach (chapterId, sections; content_[language]) {
@@ -583,7 +588,7 @@ private string expandMacros(string content, Mustache.Context context)
 {
 	Mustache.Option options;
 	options.handler = (string tag) {
-		throw new Exception("Unknown template tag " ~ tag);
+		throw new ContentProviderException("Unknown template tag " ~ tag);
 	};
 	auto mustache = Mustache(options);
 	return mustache.renderString(content, context);
