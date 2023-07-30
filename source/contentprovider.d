@@ -1,7 +1,7 @@
-import vibe.core.log;
-import vibe.textfilter.markdown;
+import vibe.core.log: logInfo, logError;
+import vibe.textfilter.markdown: MarkdownFlags, MarkdownSettings, filterMarkdown;
 
-import std.file;
+import std.file: exists, readText, dirEntries, isDir, SpanMode;
 import std.algorithm: splitter, filter, countUntil;
 import std.array: array, empty;
 import std.string: split, strip;
@@ -10,12 +10,11 @@ import std.exception: enforce;
 import std.string: format;
 import std.path: baseName, buildPath;
 
-import dyaml;
-import mustache;
+import dyaml: Loader;
 
-import translator;
+import translator: Translator;
 
-alias MustacheEngine!(string) Mustache;
+alias Mustache = imported!"mustache".MustacheEngine!(string);
 
 /++
 	Manages the mark down files found in public/content
@@ -29,7 +28,7 @@ class ContentProvider
 	private immutable SourceCodeSectionTitle ="{SourceCode";
 	private immutable SourceCodeDisabled = ":disabled";
 	private immutable SourceCodeIncomplete = ":incomplete";
-	private immutable SourceCodeFullWidth =":fullWidth";
+	private immutable SourceCodeFullWidth = ":fullWidth";
 	private immutable SourceCodeMaxCharsPerLine = 48;
 
 	private {
@@ -105,15 +104,15 @@ class ContentProvider
 	private bool isValidLink(string link, string language)
 	{
 		import std.algorithm.searching : count;
+		import std.array : split;
+
 		if (link.count("/") != 1)
 			return false;
 
 		// check for existence in file system
-		import std.array : split;
 		auto parts = link.split("/");
 		enforce(language in langWithPath, "Language hasn't been seen before.");
 		string fileName = buildPath(langWithPath[language], parts[0], parts[1] ~ ".md");
-		import std.stdio;
 		return exists(fileName);
 	}
 
@@ -170,8 +169,7 @@ class ContentProvider
 			langMeta.translator = new Translator();
 		}
 
-		import std.meta : AliasSeq;
-		foreach (attr; AliasSeq!("title", "repo"))
+		foreach (attr; imported!"std.meta".AliasSeq!("title", "repo"))
 		{
 			enforce(attr in root, "'" ~ attr ~ "' point required in language-specific yaml");
 			 mixin("langMeta." ~ attr ~ " = root[attr].as!string;");
@@ -258,12 +256,14 @@ class ContentProvider
 	+/
 	private string processMarkdown(string content, string language)
 	{
+		import std.array : replace;
+		import std.algorithm.searching : startsWith;
+
 		auto processed = expandMacros(content, mustacheContext_);
 		auto settings = new MarkdownSettings;
 		with(MarkdownFlags)
 		settings.flags = backtickCodeBlocks | vanillaMarkdown | tables;
 		settings.urlFilter = (string link, bool) {
-			import std.algorithm.searching : startsWith;
 			if (link.startsWith("http", "https", "irc", "/"))
 				return link;
 			else
@@ -275,7 +275,6 @@ class ContentProvider
 		auto text = filterMarkdown(processed, settings);
 		// workaround against vibe.textfiler.markdown inserting empty newlines
 		// in inline code blocks
-		import std.array : replace;
 		text = text.replace("\n\n</code></pre>", "\n</code></pre>");
 		return text;
 	}
@@ -320,7 +319,6 @@ Text after`, "en");
 	+/
 	private void checkSourceCodeLineWidth(string sourceCode, string sectionTitle)
 	{
-		import std.algorithm: all;
 		import std.range.primitives : walkLength;
 		import std.uni : byGrapheme;
 		auto lineNo = 0;
