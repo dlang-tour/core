@@ -4,7 +4,7 @@ import exec.iexecprovider;
 
 import vibe.core.core: sleep, runTask;
 import core.time : msecs;
-import vibe.core.log : logInfo;
+import vibe.core.log : logInfo, logError;
 
 import std.process;
 import std.typecons: Tuple;
@@ -71,63 +71,70 @@ class StupidLocal: IExecProvider
 		import std.array : join, split;
 		import std.algorithm.searching : canFind;
 		typeof(return) result;
-		auto task = runTask(() {
-			auto tmpfile = getTempFile();
-			scope(exit) tmpfile.name.remove;
+		auto task = runTask(() nothrow {
+			try {
+				auto tmpfile = getTempFile();
+				scope(exit) tmpfile.name.remove;
 
-			tmpfile.write(input.source);
-			tmpfile.close();
+				tmpfile.write(input.source);
+				tmpfile.close();
 
-			const isDub = input.source.canFind("dub.sdl", "dub.json");
-			string[] args;
+				const isDub = input.source.canFind("dub.sdl", "dub.json");
+				string[] args;
 
-			typeof(args.execute) res;
-			// support execution of dub single file packages
-			if (isDub)
-			{
-				string dubCompiler;
-				switch (dCompiler)
+				typeof(args.execute) res;
+				// support execution of dub single file packages
+				if (isDub)
 				{
-					case "dmd":
-						dubCompiler = "dmd";
-						break;
-					case "ldmd":
-						dubCompiler = "ldc";
-						break;
-					case "ldmd2":
-						dubCompiler = "ldc2";
-						break;
-					case "gdmd", "gdmd2":
-						dubCompiler = "gdc";
-						break;
-					default:
-						assert(0, "Unknown compiler found.");
+					string dubCompiler;
+					switch (dCompiler)
+					{
+						case "dmd":
+							dubCompiler = "dmd";
+							break;
+						case "ldmd":
+							dubCompiler = "ldc";
+							break;
+						case "ldmd2":
+							dubCompiler = "ldc2";
+							break;
+						case "gdmd", "gdmd2":
+							dubCompiler = "gdc";
+							break;
+						default:
+							assert(0, "Unknown compiler found.");
+					}
+
+					args = ["dub", "-q", "--compiler=" ~ dubCompiler, "--single", tmpfile.name];
+					res = args.execute;
 				}
+				else
+				{
+					args = [dCompiler];
+					args ~= input.args.split(" ");
+					args ~= "-color=" ~ (input.color ? "on " : "off ");
+					args ~= "-run";
+					args ~= tmpfile.name;
+					args ~= input.runtimeArgs.split(" ");
 
-				args = ["dub", "-q", "--compiler=" ~ dubCompiler, "--single", tmpfile.name];
-				res = args.execute;
+					// DMD requires a TTY for colored output
+					auto env = [
+						"TERM": "dtour"
+					];
+					auto fakeTty = `
+	faketty () {	 script -qfc "$(printf "%q " "$@")" /dev/null ; }
+	faketty ` ~ 	args.join(" ") ~  ` | cat | sed 's/\r$//'`;
+
+					res = fakeTty.executeShell(env);
+				}
+				result.success = res.status == 0;
+				result.output = res.output;
 			}
-			else
+			catch (Exception e)
 			{
-				args = [dCompiler];
-				args ~= input.args.split(" ");
-				args ~= "-color=" ~ (input.color ? "on " : "off ");
-				args ~= "-run";
-				args ~= tmpfile.name;
-				args ~= input.runtimeArgs.split(" ");
-
-				// DMD requires a TTY for colored output
-				auto env = [
-					"TERM": "dtour"
-				];
-				auto fakeTty = `
-faketty () {	 script -qfc "$(printf "%q " "$@")" /dev/null ; }
-faketty ` ~ 	args.join(" ") ~  ` | cat | sed 's/\r$//'`;
-
-				res = fakeTty.executeShell(env);
+				result.success = false;
+				logError("Execution failed. Error: %s", e);
 			}
-			result.success = res.status == 0;
-			result.output = res.output;
 		});
 
 		while (task.running)
