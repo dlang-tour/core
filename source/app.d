@@ -57,7 +57,7 @@ private IExecProvider createExecProvider(Config config,
 
 	if (config.enableExecCache) {
 		import std.algorithm: map;
-		auto allowedSources = contentProvider.getContent()
+		auto allowedSources = contentProvider.getAllContent()
 			.map!(x => x.sourceCode.idup)
 			.array;
 		return new Cache(execProvider, allowedSources);
@@ -110,7 +110,7 @@ private void doSanityCheck(ContentProvider contentProvider, IExecProvider execPr
 
 	import std.parallelism : parallel;
 
-	auto content = contentProvider.getContent();
+	auto content = contentProvider.getAllContent();
 
 	if (cast(Docker) execProvider)
 		runChecks(content.parallel);

@@ -423,18 +423,15 @@ Text after`, "en");
 	  over the whole content, regardless of language. Content
 	  doesn't guarantee any order.
 	+/
-	auto getContent() const
+	auto getAllContent() const
 	{
-		alias Element = const(Content)*;
-		Element[] range;
-		foreach(ref chapters; content_) {
-			foreach(ref sections; chapters) {
-				foreach(ref content; sections) {
-					range ~= &content;
-				}
-			}
-		}
-		return range;
+		import std.algorithm : map, joiner;
+		return content_
+			.byValue
+			.map!byValue
+			.joiner
+			.map!byValue
+			.joiner;
 	}
 
 } // class ContentProvider
