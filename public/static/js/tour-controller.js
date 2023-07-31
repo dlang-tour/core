@@ -15,6 +15,14 @@ if (location.origin.indexOf("run.dlang.io") >= 0 || location.pathname.startsWith
 			requireBase: false
 		});
 	}]);
+} else {
+	dlangTourApp.config(['$locationProvider', function($locationProvider) {
+		$locationProvider.html5Mode({
+			enabled: true,
+			requireBase: false,
+			rewriteLinks: false,
+		});
+	}]);
 }
 
 dlangTourApp.controller('DlangTourAppCtrl',

@@ -106,19 +106,50 @@ class ContentProvider
 		return content;
 	}
 
-	private bool isValidLink(string link, string language)
+	private auto isValidLink(string link, string language)
 	{
-		import std.algorithm.searching : count;
 		import std.array : split;
 
-		if (link.count("/") != 1)
-			return false;
+		static struct Result
+		{
+			string baseDir, path, fragment;
+
+			enum invalid = typeof(this).init;
+
+			bool opCast(T: bool)() => !!path;
+			string filename() => buildPath(baseDir, path ~ ".md");
+			string fragmentSuffix() => !fragment ? "" : '#' ~ fragment;
+			string routePath() => "/tour/%s/%s"
+				.format(baseDir.baseName, path ~ fragmentSuffix);
+		}
+
+		enforce(language in langWithPath, "Language hasn't been seen before.");
+
+		auto parts = link.split("/");
+
+		if (parts.length != 2 || parts[0].empty || parts[1].empty)
+			return Result.invalid;
+
+		// Support links to chapter/section#heading
+		auto sectionAndFragment = parts[1].split("#");
+		parts[1] = sectionAndFragment[0];
+
+		Result r = {
+			baseDir: langWithPath[language],
+			path: buildPath(parts[0], parts[1]),
+			fragment: sectionAndFragment.length == 2
+				? sectionAndFragment[1]
+				: null,
+		};
+
+		enforce(r.fragment is null || r.fragment.length > 0,
+			"Fragment following # must not be empty.");
 
 		// check for existence in file system
-		auto parts = link.split("/");
-		enforce(language in langWithPath, "Language hasn't been seen before.");
-		string fileName = buildPath(langWithPath[language], parts[0], parts[1] ~ ".md");
-		return exists(fileName);
+		if (!exists(r.filename))
+			return Result.invalid;
+
+		return r;
 	}
 
 	this(string contentDirectory)
@@ -273,8 +304,9 @@ class ContentProvider
 				return link;
 			else
 			{
-				enforce(isValidLink(link, language), "Invalid link given: " ~ link);
-				return "/tour/%s/%s".format(language, link);
+				return isValidLink(link, language)
+					.enforce("Invalid link given: " ~ link)
+					.routePath;
 			}
 		};
 		auto text = filterMarkdown(processed, settings);
@@ -291,6 +323,8 @@ class ContentProvider
 		cp.addLanguage(contentDir.buildPath("en"));
 
 		assert(cp.processMarkdown("[foo](welcome/welcome-to-d)", "en") == "<p><a href=\"/tour/en/welcome/welcome-to-d\">foo</a>\n</p>\n");
+		assert(cp.processMarkdown("[foo](welcome/welcome-to-d#what-is-d)", "en") == "<p><a href=\"/tour/en/welcome/welcome-to-d#what-is-d\">foo</a>\n</p>\n");
+		assert(cp.processMarkdown("[foo](basics/delegates#anonymous-functions-lambdas)", "en") == "<p><a href=\"/tour/en/basics/delegates#anonymous-functions-lambdas\">foo</a>\n</p>\n");
 		assert(cp.processMarkdown("[foo](http://dlang.org)", "en") == "<p><a href=\"http://dlang.org\">foo</a>\n</p>\n");
 	}
 
