@@ -277,8 +277,6 @@ class WebInterface
 	@path("/gist/:gist")
 	void getGist(string _gist)
 	{
-		import std.range : front;
-
 		// make a request to the public GitHub page to identify the user name
 		// without running into rate-limiting
 		auto res = requestHTTP("https://gist.github.com/%s".format(_gist));
@@ -287,7 +285,7 @@ class WebInterface
 		string user = "";
 		auto location = URL(res.headers.get("Location", "https://gist.github.com/run-dlang")).path.bySegment;
 		if (!location.empty)
-			user = location.front.name;
+			user = location.front.name.toString;
 
 		getGist(user, _gist);
 	}
