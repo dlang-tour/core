@@ -174,3 +174,7 @@ pre code {
 .table-hover>tbody>tr:hover {
     background-color: #f5f5f5;
 }
+
+:target {
+  background-color: yellow;
+}

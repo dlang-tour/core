@@ -16,6 +16,8 @@ targetPath "build"
 
 // debugVersions "CodeHash"
 
+dflags "-preview=shortenedMethods"
+
 configuration "executable" {
 	targetType "executable"
 	versions "VibeDefaultMain"
