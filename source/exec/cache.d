@@ -98,13 +98,12 @@ unittest
 		return input;
 	}
 
-	import std.stdio: writeln;
+	import std.stdio: writefln;
 	auto hash1 = getSourceCodeHash2(sourceCode1);
-	writeln("hash1 = ", hash1);
 	auto hash2 = getSourceCodeHash2(sourceCode2);
-	writeln("hash2 = ", hash2);
 	auto hash3 = getSourceCodeHash2(sourceCode3);
-	writeln("hash3 = ", hash3);
+
+	debug(CodeHash) writefln("hash1 = %s, hash2 = %s, hash3 = %s", hash1, hash2, hash3);
 
 	assert(hash1 != hash2);
 	assert(hash2 != hash3);
@@ -122,18 +121,17 @@ unittest
 // #668 - different compilers should not use the same hash
 unittest
 {
-	import std.stdio: writeln;
+	import std.stdio: writefln;
 	IExecProvider.RunInput input;
 	auto hash1 = getSourceCodeHash(input);
-	writeln("hash1 = ", hash1);
 
 	input.source = "aa";
 	auto hash2 = getSourceCodeHash(input);
-	writeln("hash2 = ", hash2);
 
 	input.compiler = "ldc";
 	auto hash3 = getSourceCodeHash(input);
-	writeln("hash3 = ", hash3);
+
+	debug(CodeHash) writefln("hash1 = %s, hash2 = %s, hash3 = %s", hash1, hash2, hash3);
 
 	assert(hash1 != hash2 && hash2 != hash3 && hash1 != hash3);
 
