@@ -12,7 +12,7 @@
 		"memutils": "1.0.9",
 		"mir-linux-kernel": "1.0.1",
 		"mustache-d": "0.1.5",
-		"openssl": "3.3.0",
+		"openssl": "3.3.4",
 		"openssl-static": "1.0.2+3.0.8",
 		"stdx-allocator": "2.77.5",
 		"taggedalgebraic": "0.11.22",
