@@ -32,7 +32,7 @@ class ApiV1: IApiV1
 		Note: parsing s just done when $(D output.success)
 		is false.
 	+/
-	private static void parseErrorsAndWarnings(ref RunOutput output)
+	private static void parseErrorsAndWarnings(ref RunOutput output) @safe
 	{
 		import std.regex: ctRegex, matchFirst, replaceAll;
 		import std.conv: to;
@@ -118,7 +118,7 @@ class ApiV1: IApiV1
 		return output;
 	}
 
-	ShortenOutput shorten(string source, string compiler, string args)
+	ShortenOutput shorten(string source, string compiler, string args) @safe
 	{
 		import std.format : format;
 		import std.uri : encodeComponent;
@@ -136,7 +136,7 @@ class ApiV1: IApiV1
 		return output;
 	}
 
-	GistOutput gist(string source, string compiler, string args)
+	GistOutput gist(string source, string compiler, string args) @safe
 	{
 		import std.format : format;
 		import std.uri : encodeComponent;
@@ -184,7 +184,7 @@ unittest
 	assert(res == FormatOutput("void main()\n{\n}", false));
 }
 
-	SourceOutput getSource(string _language, string _chapter, string _section)
+	SourceOutput getSource(string _language, string _chapter, string _section) @safe
 	{
 		auto tourData = contentProvider_.getContent(_language, _chapter, _section);
 		if (tourData.content == null) {
@@ -245,13 +245,14 @@ Failed: ["dmd", "-v", "-o-", "onlineapp.d", "-I."]`;
 }
 
 // remove weird unicode spaces
-private string removeUnicodeSpaces(S)(S input) {
+private string removeUnicodeSpaces(S)(S input) @safe {
 	import std.algorithm.iteration : map;
 	import std.array : array;
 	import std.uni : isSpace;
 	// selective import will trigger false-positive deprecation warning
 	import std.utf;
-	return (cast(dstring) input.map!(c => c.isSpace ? ' ' : c).array).toUTF8;
+	dstring ds = input.map!(c => c.isSpace ? ' ' : c).array;
+	return ds.toUTF8;
 }
 
 // weird 0xa0 unicode space tokens on android
